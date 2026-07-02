@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // Zero-cost, fully static configuration.
 // Guardrails (see docs/ARCHITECTURE.md, docs/DEPLOYMENT.md):
@@ -21,4 +22,6 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  // Build-time only; @astrojs/sitemap emits static XML (no runtime service).
+  integrations: [sitemap()],
 });

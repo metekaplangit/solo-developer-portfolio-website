@@ -21,6 +21,8 @@
 | Content validation | Zod via `astro/zod` (content collections) | bundled with Astro 7 | docs.astro.build | MIT |
 | Runtime (build) | Node.js | 24.16 LTS (Astro 7 needs ≥22.12) | nodejs.org | MIT-like |
 | Type/content check | `@astrojs/check` | ^0.9 (dev only) | npm | MIT |
+| Sitemap | `@astrojs/sitemap` | 3.7.3 (build-time integration, emits static XML) | docs.astro.build | MIT |
+| Unit tests | `vitest` | ^4.1 (dev only) | npm | MIT |
 | Hosting | GitHub Pages (static) | n/a | docs.github.com/pages | — |
 | Domain / DNS | Cloudflare Registrar + DNS | n/a | developers.cloudflare.com/registrar | — |
 

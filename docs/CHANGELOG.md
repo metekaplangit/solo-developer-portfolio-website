@@ -14,7 +14,30 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. Next: continue Milestone 2 polish / begin Milestone 3 store-support pages._
+_Nothing yet. Next: Milestone 4 — GitHub Pages deployment proof (custom domain, HTTPS)._
+
+## [0.3.0] — 2026-07-02
+
+Core site-completeness essentials (STEP-0003).
+
+### Added
+
+- Custom **404** page linking back to the main sections.
+- **`robots.txt`** allowing crawlers and referencing the sitemap.
+- Auto-generated **sitemap** (`/sitemap-index.xml`) via `@astrojs/sitemap`
+  (build-time only; static XML; MIT).
+- **Favicon** (inline SVG) linked from every page.
+
+### Changed
+
+- CI now runs the unit-test suite (`npm test`) as a merge gate (was previously
+  not wired) — from Discussion checkpoint DISC-0001.
+
+### Notes
+
+- Sitemap/robots use a placeholder domain until the custom domain is live (M4).
+- Still fully static; `@astrojs/sitemap` adds no runtime service. `npm audit`
+  clean.
 
 ## [0.2.0] — 2026-07-02
 
