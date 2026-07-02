@@ -102,8 +102,9 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 Completed **feature** steps: **8** (STEP-0001..0008). Checkpoints run: MC-0001(2),
 DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6), ENH-0001(7),
-**MC-0004**(8), plus on-demand MC-OD-0001. Next: Discussion after step **9**;
-Audit + Markdown Consistency after **10**. Calibration: completed 2026-07-02.
+**MC-0004**(8), plus on-demand MC-OD-0001 + MC-OD-0002. Next: Discussion after
+step **9**; Audit + Markdown Consistency after **10**. Calibration: completed
+2026-07-02.
 
 ## Issues
 
