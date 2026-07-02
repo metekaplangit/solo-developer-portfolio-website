@@ -115,9 +115,10 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   Markdown Consistency **MC-0004** run. **Release-critical live-HTTPS is BLOCKED**
   pending user-side Cloudflare DNS + GitHub cert (records + steps in
   `DEPLOYMENT.md`).
-- **Follow-up (small):** once DNS resolves — enable Enforce HTTPS, verify
-  `metkapstudio.com` 200 + `www`→apex, GitHub domain verification, Cloudflare
-  Email Routing for `support@`, DNSSEC.
+- **DONE (2026-07-02):** DNS live, cert approved, **Enforce HTTPS on**,
+  `https://metkapstudio.com` 200 + `www`→apex verified. Domain fully live/secure.
+- **Optional user extras (not blocking):** Cloudflare Email Routing for
+  `support@metkapstudio.com`, DNSSEC, GitHub domain verification.
 
 ## Backlog — accepted enhancements (from ENH-0001)
 
