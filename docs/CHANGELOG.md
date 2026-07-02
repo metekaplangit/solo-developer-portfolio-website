@@ -14,7 +14,23 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / Cloudflare proxy / more products)._
+_UI polish pass in progress (alignment / spacing rhythm / cross-page consistency)._
+
+## [0.13.0] — 2026-07-02
+
+Product app icon on privacy pages + current Sole Focus icon (STEP-0013).
+
+### Added
+
+- Each per-product privacy page now shows the **app's icon** beside the title,
+  as a rounded app tile with a soft shadow. The site-wide policy shows none.
+
+### Changed
+
+- Replaced the Sole Focus icon with the **current** one shipped in the app
+  (orange-rimmed clock, dark center, sepia tile), sourced from the app's own
+  SVG export so it stays crisp at any size. Home card and privacy header share
+  the single source.
 
 ## [0.12.0] — 2026-07-02
 
