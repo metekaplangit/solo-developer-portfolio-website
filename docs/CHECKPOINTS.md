@@ -22,17 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **9** (STEP-0001..STEP-0009).
+- Completed **feature** Steps: **10** (STEP-0001..STEP-0010).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0010**.
-- Next-due: **Audit** + **Markdown Consistency** after feature step **10**;
-  Discussion after **12**; next Enhancement after **14**.
+- Next feature step: **STEP-0011**.
+- Next-due: **Discussion** + **Markdown Consistency** after feature step **12**;
+  next Enhancement after **14**; Audit after **15**.
 
 ## Due now
 
 **None.** MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6),
-ENH-0001(7), MC-0004(8), DISC-0003(9) done (+ on-demand MC-OD-0001/0002/0003).
-Audit + Markdown Consistency next fall due at step 10. No checkpoint blocks the
+ENH-0001(7), MC-0004(8), DISC-0003(9), AUDIT-0002+MC-0005(10) done (+ on-demand
+MC-OD-0001/0002/0003). Nothing falls due until step 12. No checkpoint blocks the
 next packet.
 
 ## Ledger
@@ -53,6 +53,8 @@ next packet.
 | MC-OD-0002 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0002.md` | No drift at v0.8.0; domain consistent; HTTPS still Blocked. Does not reset cadence. |
 | MC-OD-0003 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0003.md` | HTTPS now live; fixed stale ROADMAP M5 follow-up. No other drift. Does not reset cadence. |
 | DISC-0003 | STEP-0009 complete (feature #9) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0003.md` | App-review readiness reviewed; guidance-only finding (sample draft policy) |
+| AUDIT-0002 | STEP-0010 complete (feature #10) | Audit | Done | `docs/audits/AUDIT_AUDIT-0002.md` | All areas Pass; logged avatar-dup (LEDGER-001) + tagline note |
+| MC-0005 | STEP-0010 complete (feature #10) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0005.md` | Sole Focus/placeholder removal synced; no drift |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

@@ -47,7 +47,13 @@ const seoDescription = product.seo?.description ?? product.summary;
 
   <article class="detail">
     <header class="detail-head">
-      <span class="monogram" aria-hidden="true">{monogram}</span>
+      {
+        product.icon ? (
+          <img class="app-icon" src={withBase(product.icon.path)} alt="" width="64" height="64" />
+        ) : (
+          <span class="monogram" aria-hidden="true">{monogram}</span>
+        )
+      }
       <div>
         <h1>{product.name}</h1>
         <div class="tags">
@@ -193,6 +199,13 @@ const seoDescription = product.seo?.description ?? product.summary;
     font-weight: 700;
     font-size: 1.25rem;
     flex: none;
+  }
+  .app-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radius);
+    flex: none;
+    box-shadow: var(--shadow-sm);
   }
   .detail h1 {
     margin: 0 0 var(--space-2);

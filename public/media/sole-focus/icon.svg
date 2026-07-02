@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="Sole Focus">
+  <defs>
+    <linearGradient id="soleFocusBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9a4d" />
+      <stop offset="1" stop-color="#f2700f" />
+    </linearGradient>
+  </defs>
+  <!-- App tile -->
+  <rect x="0" y="0" width="1024" height="1024" rx="232" fill="url(#soleFocusBg)" />
+  <!-- Timer knob -->
+  <rect x="470" y="150" width="84" height="74" rx="26" fill="#ffffff" />
+  <!-- Dial ring -->
+  <circle cx="512" cy="566" r="298" fill="none" stroke="#ffffff" stroke-width="72" />
+  <!-- Hand pointing to ~1 o'clock -->
+  <rect x="486" y="356" width="52" height="246" rx="26" fill="#ffffff" transform="rotate(38 512 566)" />
+</svg>
