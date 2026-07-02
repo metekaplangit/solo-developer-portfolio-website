@@ -14,7 +14,29 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / more real products)._
+_Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / Cloudflare proxy / more products)._
+
+## [0.12.0] — 2026-07-02
+
+Privacy pages redesigned for readability (STEP-0012).
+
+### Changed
+
+- Privacy pages are now **easy to scan**: an "at a glance" chip strip (data /
+  account / third-party status), a one-line summary, then **strictly separated
+  sections** — each with its own headline, bullets, and divider.
+- The long retention paragraph is split into a **"Stored only on your device"**
+  bullet list plus a short deletion line, and a **Permissions** section.
+- Policy content trimmed to remove the redundant prose narrative.
+
+### Added
+
+- `storedLocally[]` and `permissions[]` fields on the privacy content model.
+
+### Notes
+
+- Full Apple Guideline 5.1.1(i) coverage preserved. UI/content/schema only;
+  still fully static.
 
 ## [0.11.0] — 2026-07-02
 

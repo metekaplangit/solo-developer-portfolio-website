@@ -108,8 +108,15 @@ export const privacyPolicyEntrySchema = z.object({
   dataUse: z.array(z.string()).default([]),
   dataNotCollected: z.array(z.string()).default([]),
   thirdPartyServices: z.array(z.string()).default([]),
+  // Data kept locally on the user's device (rendered as bullets in the
+  // "keeping & deleting" section). Empty when nothing is stored.
+  storedLocally: z.array(z.string()).default([]),
+  // Optional device permissions the app may request (each a short "Name — why"
+  // line), rendered as a bulleted "Permissions" section when present.
+  permissions: z.array(z.string()).default([]),
   // Apple 5.1.1(i): retention/deletion policy AND how to revoke consent /
-  // request deletion. REQUIRED so an incomplete policy fails the build.
+  // request deletion. REQUIRED so an incomplete policy fails the build. Keep it
+  // short — one or two sentences on how the user deletes / requests deletion.
   retention: z
     .string()
     .min(1, 'Apple requires a data retention/deletion + how-to-request-deletion statement'),

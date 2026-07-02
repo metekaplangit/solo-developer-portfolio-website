@@ -7,104 +7,128 @@ interface Props {
 }
 const { policy } = Astro.props;
 
-// Derived flags for the Apple 5.1.1(i) checklist sections.
 const collectsData = policy.dataCollected.length > 0;
 const hasThirdParties = policy.thirdPartyServices.length > 0;
+
+// At-a-glance chips — the gist in one scan. Each: label + tone.
+const chips: { label: string; ok: boolean }[] = [
+  { label: collectsData ? 'Minimal data collected' : 'No data collected', ok: !collectsData },
+  { label: policy.hasAccounts ? 'Account-based' : 'No account needed', ok: !policy.hasAccounts },
+  { label: hasThirdParties ? 'Uses named services' : 'No third-party sharing', ok: !hasThirdParties },
+];
 ---
 
 <article class="policy">
-  <header>
+  <header class="policy-head">
     <h1>{policy.title}</h1>
     <p class="policy-meta">
-      Last updated <time datetime={policy.lastUpdated.toISOString()}
-        >{formatDate(policy.lastUpdated)}</time
-      > · Scope: {policy.effectiveScope}
+      Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{policy.effectiveScope}
     </p>
   </header>
 
-  <div class="policy-body">
-    <slot />
-  </div>
+  <ul class="glance" aria-label="At a glance">
+    {chips.map((c) => <li class={c.ok ? 'chip chip-ok' : 'chip'}>{c.label}</li>)}
+  </ul>
 
-  <dl class="policy-facts">
-    <dt>What data we collect</dt>
-    <dd>
+  <div class="policy-lead"><slot /></div>
+
+  <div class="sections">
+    <section class="sec">
+      <h2>What we collect</h2>
       {
         collectsData ? (
           <ul>{policy.dataCollected.map((d) => <li>{d}</li>)}</ul>
         ) : (
-          'None. This product does not collect personal data.'
+          <p class="sec-plain">Nothing. This product doesn't collect personal data.</p>
         )
       }
-    </dd>
-
-    <dt>How that data is used</dt>
-    <dd>
-      {
-        policy.dataUse.length > 0 ? (
-          <ul>{policy.dataUse.map((d) => <li>{d}</li>)}</ul>
-        ) : collectsData ? (
-          'Only as described above; not used for advertising, profiling, or tracking.'
-        ) : (
-          'Not applicable — no data is collected.'
-        )
-      }
-    </dd>
+    </section>
 
     {
-      policy.dataNotCollected.length > 0 && (
-        <>
-          <dt>Explicitly not collected</dt>
-          <dd>
-            <ul>{policy.dataNotCollected.map((d) => <li>{d}</li>)}</ul>
-          </dd>
-        </>
+      collectsData && (
+        <section class="sec">
+          <h2>How we use it</h2>
+          {policy.dataUse.length > 0 ? (
+            <ul>{policy.dataUse.map((d) => <li>{d}</li>)}</ul>
+          ) : (
+            <p class="sec-plain">Only as described above — never for advertising, profiling, or tracking.</p>
+          )}
+        </section>
       )
     }
 
-    <dt>Third-party services</dt>
-    <dd>
+    {
+      policy.dataNotCollected.length > 0 && (
+        <section class="sec">
+          <h2>What we never collect</h2>
+          <ul>{policy.dataNotCollected.map((d) => <li>{d}</li>)}</ul>
+        </section>
+      )
+    }
+
+    <section class="sec">
+      <h2>Third-party sharing</h2>
       {
         hasThirdParties ? (
           <>
             <ul>{policy.thirdPartyServices.map((d) => <li>{d}</li>)}</ul>
-            <p class="fact-note">
-              Any third party with access to this data is required to provide the
-              same or equal protection of it as described in this policy. Data is
-              not shared with third-party AI services.
+            <p class="sec-note">
+              Any third party that touches this data must protect it the same way this
+              policy describes. It is never shared with third-party AI services.
             </p>
           </>
         ) : (
-          'None. Data is not shared with third parties, including third-party AI services.'
+          <p class="sec-plain">
+            None. Your data isn't shared with anyone — including third-party AI services.
+          </p>
         )
       }
-    </dd>
+    </section>
 
-    <dt>Data retention &amp; deletion</dt>
-    <dd>{policy.retention}</dd>
+    <section class="sec">
+      <h2>Keeping &amp; deleting your data</h2>
+      {
+        policy.storedLocally.length > 0 && (
+          <>
+            <p class="sec-label">Stored only on your device:</p>
+            <ul>{policy.storedLocally.map((d) => <li>{d}</li>)}</ul>
+          </>
+        )
+      }
+      <p class="sec-plain">{policy.retention}</p>
+    </section>
 
     {
-      policy.hasAccounts && (
-        <>
-          <dt>Account deletion</dt>
-          <dd>
-            You can delete your account and its associated data from within the
-            app, or by emailing <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
-          </dd>
-        </>
+      policy.permissions.length > 0 && (
+        <section class="sec">
+          <h2>Permissions</h2>
+          <ul>{policy.permissions.map((d) => <li>{d}</li>)}</ul>
+        </section>
       )
     }
 
-    <dt>Contact &amp; requests</dt>
-    <dd>
-      Questions, consent changes, or deletion requests:
-      <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
-    </dd>
-  </dl>
+    {
+      policy.hasAccounts && (
+        <section class="sec">
+          <h2>Your account</h2>
+          <p class="sec-plain">
+            Delete your account and its data from within the app, or email{' '}
+            <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+          </p>
+        </section>
+      )
+    }
 
-  <p class="policy-note">
-    This page is written in plain language and is not legal advice.
-  </p>
+    <section class="sec">
+      <h2>Contact &amp; requests</h2>
+      <p class="sec-plain">
+        Questions, consent changes, or deletion requests —
+        <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+      </p>
+    </section>
+  </div>
+
+  <p class="policy-note">Written in plain language. This is not legal advice.</p>
 </article>
 
 <style>
@@ -112,48 +136,99 @@ const hasThirdParties = policy.thirdPartyServices.length > 0;
     max-width: 44rem;
     padding-block: var(--space-12) var(--space-8);
   }
-  .policy h1 {
+  .policy-head h1 {
     margin: 0 0 var(--space-2);
   }
   .policy-meta {
-    margin: 0 0 var(--space-6);
+    margin: 0;
     color: var(--muted);
-    font-size: 0.9375rem;
+    font-size: var(--text-sm);
   }
-  .policy-body :global(p) {
-    margin-block: var(--space-3);
+
+  /* At a glance */
+  .glance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
   }
-  .policy-facts {
-    margin: var(--space-10) 0 0;
-    padding: var(--space-6) var(--space-6) var(--space-8);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-  }
-  .policy-facts dt {
+  .chip {
+    font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--text-strong);
-    margin-top: var(--space-5);
-  }
-  .policy-facts dt:first-of-type {
-    margin-top: 0;
-  }
-  .policy-facts dd {
-    margin: var(--space-1) 0 0;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
     color: var(--muted);
   }
-  .policy-facts ul {
-    margin: var(--space-1) 0 0;
-    padding-left: var(--space-6);
+  .chip-ok {
+    border-color: transparent;
+    background: var(--accent-soft);
+    color: var(--accent-hover);
   }
-  .policy-facts .fact-note {
-    margin: var(--space-2) 0 0;
+
+  .policy-lead {
+    margin-top: var(--space-6);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .policy-lead :global(p) {
+    margin: 0;
+  }
+
+  /* Strictly separated sections */
+  .sections {
+    margin-top: var(--space-10);
+  }
+  .sec {
+    padding-top: var(--space-6);
+    margin-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .sec:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .sec h2 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+    color: var(--text-strong);
+  }
+  .sec ul {
+    margin: 0;
+    padding-left: var(--space-6);
+    display: grid;
+    gap: var(--space-2);
+    color: var(--muted);
+  }
+  .sec-plain {
+    margin: 0;
+    color: var(--muted);
+  }
+  .sec ul + .sec-plain {
+    margin-top: var(--space-3);
+  }
+  .sec-label {
+    margin: 0 0 var(--space-2);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .sec-note {
+    margin: var(--space-3) 0 0;
     font-size: var(--text-sm);
     color: var(--faint);
   }
+  .sec a {
+    margin-left: 0.25ch;
+  }
+
   .policy-note {
-    margin-top: var(--space-8);
-    color: var(--muted);
-    font-size: 0.875rem;
+    margin-top: var(--space-10);
+    color: var(--faint);
+    font-size: var(--text-sm);
   }
 </style>

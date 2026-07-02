@@ -29,6 +29,8 @@ function policy(productId: string): PrivacyPolicyEntry {
     dataUse: [],
     dataNotCollected: [],
     thirdPartyServices: [],
+    storedLocally: [],
+    permissions: [],
     retention: 'No data collected; nothing to retain or delete.',
     hasAccounts: false,
     contact: 'support@example.com',

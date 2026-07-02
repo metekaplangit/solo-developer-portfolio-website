@@ -22,19 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **11** (STEP-0001..STEP-0011).
+- Completed **feature** Steps: **12** (STEP-0001..STEP-0012).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0012**.
-- Next-due: **Discussion** + **Markdown Consistency** after feature step **12**;
-  next Enhancement after **14**; Audit after **15**.
+- Next feature step: **STEP-0013**.
+- Next-due: **Markdown Consistency** after feature step **14**; **Enhancement**
+  after **14**; **Discussion + Audit** after **15**.
 
 ## Due now
 
-**None.** Through step 10: MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5),
-MC-0003+DISC-0002(6), ENH-0001(7), MC-0004(8), DISC-0003(9), AUDIT-0002+MC-0005(10)
-done (+ on-demand MC-OD-0001..0004). **Step 11 (branding) triggered no scheduled
-checkpoint.** Discussion + Markdown Consistency next fall due at step 12. No
-checkpoint blocks the next packet.
+**None.** Through step 12: … AUDIT-0002+MC-0005(10), step 11 none, **DISC-0004 +
+MC-0006(12)** done (+ on-demand MC-OD-0001..0004). Nothing falls due until step
+14. No checkpoint blocks the next packet.
 
 ## Ledger
 
@@ -57,6 +55,8 @@ checkpoint blocks the next packet.
 | AUDIT-0002 | STEP-0010 complete (feature #10) | Audit | Done | `docs/audits/AUDIT_AUDIT-0002.md` | All areas Pass; logged avatar-dup (LEDGER-001) + tagline note |
 | MC-0005 | STEP-0010 complete (feature #10) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0005.md` | Sole Focus/placeholder removal synced; no drift |
 | MC-OD-0004 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0004.md` | v0.10.0 consistent; placeholder strings are test fixtures/history only. Does not reset cadence. |
+| DISC-0004 | STEP-0012 complete (feature #12) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0004.md` | Privacy readability redesign reviewed; no blocking findings |
+| MC-0006 | STEP-0012 complete (feature #12) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0006.md` | Privacy redesign + schema fields synced; no drift |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

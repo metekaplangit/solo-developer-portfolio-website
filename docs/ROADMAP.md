@@ -148,6 +148,11 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   2026-07-02).* Installed the studio favicon + PWA icon set + web manifest + OG
   image + nav logo mark from the user's icon-generator export v0001. No scheduled
   checkpoint at feature step #11.
+- **STEP-0012 — Privacy readability redesign** *(COMPLETE — merged, tagged
+  `v0.12.0`, 2026-07-02).* Rebuilt `PolicyArticle` (at-a-glance chips + separated
+  headlined sections + bullets); added `storedLocally`/`permissions`; tightened
+  policy content. Full Apple 5.1.1(i) preserved. **Discussion DISC-0004 +
+  Markdown Consistency MC-0006** run (feature step #12).
 
 ## Backlog — accepted enhancements (from ENH-0001)
 
