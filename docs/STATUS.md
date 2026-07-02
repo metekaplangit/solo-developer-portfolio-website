@@ -9,36 +9,42 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0009 complete** — privacy/support pages made
-  **App-Store-review-ready** (Apple Guidelines 5.1.1(i) + 1.5). Merged to `main`,
-  tagged **v0.9.0**, deployed. 34 tests green. **DISC-0003** run (feature step #9).
-- **Live:** **metkapstudio.com fully live over HTTPS** (cert approved,
-  `https_enforced: true`, `http→https` 301, `www`→apex).
+- **State:** **STEP-0010 complete** — **Sole Focus** (first real product) published:
+  accurate entry + review-ready privacy policy + real icon; 3 placeholder demo
+  products retired. Merged to `main`, tagged **v0.10.0**, deployed. 34 tests green.
+  **AUDIT-0002 + MC-0005** run (feature step #10).
+- **Live:** **metkapstudio.com** over HTTPS; now shows the real Sole Focus product.
 - **Next action:** pick the next packet — **changelog/updates block**,
-  **a11y/Lighthouse CI** (LEDGER-002), **real image pipeline** (needs assets), or
-  **real product content**. Freeze a Task Card before editing.
-- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`
-  (App-review readiness + developer responsibilities).
-- **Blockers:** none. **Before real App Store submissions:** enable Cloudflare
-  Email Routing so `support@metkapstudio.com` receives mail, and keep each real
-  app's policy **truthful** (samples say "no data collected") — see `SECURITY.md`.
+  **a11y/Lighthouse CI** (LEDGER-002), or **more real products** as the user
+  supplies them. Freeze a Task Card before editing.
+- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
+  `DATA_STORAGE.md`.
+- **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
+  so `support@metkapstudio.com` receives mail; add real screenshots + the Mac App
+  Store link once published; keep the policy truthful (see `SECURITY.md`).
+
+## Working with app codebases (convention)
+
+The user provides each app's full codebase folder (e.g. `../PromodoApp/` for Sole
+Focus) as **read-only** source of truth (product info, privacy, icon). **Never
+modify those folders.** Learn from them and build website content here. Key files
+to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
+`src-tauri/tauri.conf.json` (name/version/bundle id).
 
 ## Last completed Step Packet
 
-- **STEP-0009 — App Store review readiness** — **DONE**, merged to `main`, tagged
-  **v0.9.0**, live. Task Card: `docs/tasks/STEP-0009.md`.
-- Delivered: privacy schema now requires Apple's retention/deletion statement
-  (+ `dataUse`/`hasAccounts`); `PolicyArticle` renders the 5.1.1(i) checklist as
-  labeled sections (collect / use / third-party equal-protection + no-AI /
-  retention+deletion / contact); support response line; corrected support email
-  in policies; SECURITY.md dev-responsibility + not-legal-advice note.
-- (Prior: STEP-0008 domain v0.8.0; STEP-0007 theme v0.7.0; … v0.1.0.)
+- **STEP-0010 — Sole Focus (first real product)** — **DONE**, merged, tagged
+  **v0.10.0**, live. Task Card: `docs/tasks/STEP-0010.md`.
+- Delivered: `sole-focus` product + privacy policy (accurate to the app), real
+  icon rendered on card/detail (`ProductCard`/detail render `product.icon` when
+  present, else monogram), placeholder demo products removed.
+- (Prior: STEP-0009 app-review v0.9.0; STEP-0008 domain v0.8.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
 - **Not yet chosen.** Candidates: **changelog/updates block**, **a11y/Lighthouse
-  CI** (LEDGER-002), **real image pipeline** `astro:assets` (needs assets), **real
-  product content**. See `ROADMAP.md` backlog. One outcome only.
+  CI** (LEDGER-002), **more real products** (user supplies each codebase). See
+  `ROADMAP.md` backlog. One outcome only.
 
 ## Machine-readable state
 
@@ -47,11 +53,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0009
-next_step: undecided (changelog block / a11y CI / real content)
+current_step: STEP-0010
+next_step: undecided (changelog block / a11y CI / more real products)
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.9.0
+product_tag: v0.10.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -87,7 +93,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 | Gate | Result | Class | Evidence |
 |---|---|---|---|
-| Static build (`npm run build`) | Pass | Merge-critical | 11 routes + sitemap/robots/404/favicon, `output: "static"` |
+| Static build (`npm run build`) | Pass | Merge-critical | 8 routes (1 real product) + sitemap/robots/404/favicon, `output: "static"` |
 | Type + content check (`npm run check`) | Pass | Merge-critical | 0 errors / 0 warnings / 0 hints |
 | Unit tests (`npm test`) | Pass | Merge-critical | 34 passed (incl. required-retention negative test); run in CI |
 | Dependency audit (`npm audit`) | Pass | Merge-critical | `found 0 vulnerabilities` |
@@ -100,14 +106,15 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 Completed **feature** steps: **8** (STEP-0001..0008). Checkpoints run: MC-0001(2),
 DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6), ENH-0001(7),
-MC-0004(8), **DISC-0003**(9), plus on-demand MC-OD-0001/0002/0003. Next: **Audit
-+ Markdown Consistency** after step **10**; Discussion after **12**. Calibration:
-completed 2026-07-02.
+MC-0004(8), DISC-0003(9), **AUDIT-0002 + MC-0005**(10), plus on-demand
+MC-OD-0001/0002/0003. Next: Discussion + Markdown Consistency after step **12**;
+Audit after **15**. Calibration: completed 2026-07-02.
 
 ## Issues
 
-- **LEDGER-001** (`type:technical-debt`, `priority:low`) — monogram logic
-  duplicated (2 uses). Watch; extract on 3rd use. From DISC-0001.
+- **LEDGER-001** (`type:technical-debt`, `priority:low`) — product avatar
+  (icon-or-monogram) duplicated in ProductCard + detail. Ripe; extract a
+  `ProductAvatar` next refactor pass. From DISC-0001 / AUDIT-0002.
 - **LEDGER-002** (`type:accessibility`, `priority:low`) — no automated a11y /
   visual-regression check; UI verified manually. From AUDIT-0001. Advisory.
 
@@ -122,7 +129,7 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.9.0** (STEP-0009 merge
-commit); prior v0.8.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.10.0** (STEP-0010 merge
+commit); prior v0.9.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).

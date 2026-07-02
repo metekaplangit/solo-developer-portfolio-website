@@ -15,15 +15,16 @@ first maintained release (see `ISSUE_TRACKING.md`).
 
 ## Open entries
 
-- LEDGER-001 | type:technical-debt | priority:low | Monogram logic duplicated
-  (2 uses)
-  observed: the initials/monogram computation appears in
-  `src/components/ProductCard.astro` and `src/pages/apps/[slug].astro`.
-  expected: a single shared helper once a third use appears.
-  evidence: DISC-0001 (F2). impact: minor duplication; no defect.
-  step-or-commit: found at STEP-0003. acceptance: extract a `monogram()` helper
-  into `src/lib/` on the third use (rule-of-three per `REFACTORING.md`).
-  status: open (watch — do not extract yet at 2 uses).
+- LEDGER-001 | type:technical-debt | priority:low | Product "avatar"
+  (icon-or-monogram) block duplicated
+  observed: the icon-or-monogram avatar (and monogram computation) appears in
+  both `src/components/ProductCard.astro` and `src/pages/apps/[slug].astro`.
+  expected: a single shared `ProductAvatar` component.
+  evidence: DISC-0001 (F2), AUDIT-0002 (F1). impact: minor duplication; no defect.
+  step-or-commit: found STEP-0003, grew at STEP-0010 (icon rendering added to
+  both). acceptance: extract a `ProductAvatar.astro` (icon when present, else
+  monogram) in a dedicated refactor pass per `REFACTORING.md`.
+  status: open (ripe — extract next refactor pass; 2 sites, low urgency).
 
 - LEDGER-002 | type:accessibility | priority:low | No automated a11y / visual
   regression check

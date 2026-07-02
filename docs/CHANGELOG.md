@@ -14,7 +14,30 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / real content)._
+_Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / more real products)._
+
+## [0.10.0] — 2026-07-02
+
+First real product: **Sole Focus** (STEP-0010).
+
+### Added
+
+- **Sole Focus** product page — a calm, local-first Pomodoro + stopwatch focus
+  app for macOS (in development), with real features and its **real app icon**.
+- Sole Focus **privacy policy**, accurate to the app: collects nothing, fully
+  offline/local-first, with the retention/deletion statement.
+- Product cards and detail pages now render a product's **real icon** when
+  present (falling back to the initials monogram).
+
+### Removed
+
+- The three placeholder demo products (Aurora Notes, Pixel Drift, Tempo Timer)
+  and their per-product policies, so the live site shows only the real product.
+
+### Notes
+
+- Learned from the read-only `../PromodoApp/` codebase (unmodified). Sole Focus
+  store link + screenshots to follow once it's published. Still fully static.
 
 ## [0.9.0] — 2026-07-02
 

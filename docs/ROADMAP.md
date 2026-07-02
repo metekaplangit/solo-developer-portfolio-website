@@ -134,6 +134,17 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   Cloudflare Email Routing, disclose third-party AI, get human/legal review. See
   `SECURITY.md`.
 
+### Milestone 7 — Real products ▶ in progress
+
+- **STEP-0010 — Sole Focus (first real product)** *(COMPLETE — merged, tagged
+  `v0.10.0`, 2026-07-02).* Published Sole Focus (calm local-first Pomodoro +
+  stopwatch for macOS, in development) with an accurate review-ready privacy
+  policy and its real icon; retired the 3 placeholder demo products. Learned from
+  the read-only `../PromodoApp/` codebase. **Audit AUDIT-0002 + Markdown
+  Consistency MC-0005** run (feature step #10).
+- **Next real-product packets:** one per app the user supplies (each folder is
+  read-only). Add screenshots + Mac App Store link for Sole Focus once published.
+
 ## Backlog — accepted enhancements (from ENH-0001)
 
 Not scheduled yet; promote to a Step Packet when triggered.
