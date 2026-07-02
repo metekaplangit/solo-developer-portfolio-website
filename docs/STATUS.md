@@ -134,3 +134,11 @@ Repo slug `solo-developer-portfolio-website` (local folder
 commit); prior v0.10.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
+
+**Deploy reliability note:** GitHub Pages' publish step (`actions/deploy-pages`)
+intermittently sits in `deployment_queued` and times out (GitHub-side congestion;
+our build is fast and always succeeds). Hardened `deploy.yml`: skip docs-only
+commits (`paths-ignore: docs/**`), `cancel-in-progress: true`, and a 20-min
+deploy timeout. If a deploy still fails, just re-run it (`gh run rerun` /
+workflow_dispatch) — it's transient. Cloudflare Pages is the documented faster
+fallback if it persists.

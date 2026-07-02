@@ -3,6 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    # Skip deploys for docs-only commits — governance/checkpoint docs don't
+    # change the built site, so there's no reason to run (and queue) a deploy.
+    # Note: src/content/**/*.md IS build content and is NOT ignored.
+    paths-ignore:
+      - 'docs/**'
   workflow_dispatch:
 
 # Least privilege: only what Pages deployment needs.
@@ -11,10 +16,11 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+# Only the latest commit needs to publish; cancel an older superseded deploy
+# instead of queuing behind it (avoids pile-ups during GitHub Pages congestion).
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -37,3 +43,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Ride out transient GitHub Pages queue congestion (deployment_queued)
+          # instead of failing at the default 10-minute timeout.
+          timeout: 1200000
