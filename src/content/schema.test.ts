@@ -87,6 +87,7 @@ describe('privacyPolicyEntrySchema', () => {
     productId: 'global',
     title: 'Privacy Overview',
     lastUpdated: '2026-06-20',
+    retention: 'No data is collected, so there is nothing to retain or delete.',
     contact: 'support@example.com',
     effectiveScope: 'This website.',
   };
@@ -94,8 +95,15 @@ describe('privacyPolicyEntrySchema', () => {
   it('accepts a valid policy and defaults arrays + reviewStatus', () => {
     const r = privacyPolicyEntrySchema.parse(validPolicy);
     expect(r.dataCollected).toEqual([]);
+    expect(r.dataUse).toEqual([]);
+    expect(r.hasAccounts).toBe(false);
     expect(r.reviewStatus).toBe('draft');
     expect(r.lastUpdated).toBeInstanceOf(Date);
+  });
+
+  it('rejects a policy missing the retention/deletion statement (Apple 5.1.1)', () => {
+    const { retention, ...rest } = validPolicy;
+    expect(privacyPolicyEntrySchema.safeParse(rest).success).toBe(false);
   });
 
   it('rejects a policy without a scope', () => {

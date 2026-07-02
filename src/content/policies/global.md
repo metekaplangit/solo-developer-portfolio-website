@@ -9,7 +9,9 @@ dataNotCollected:
   - Location data
   - Analytics or tracking identifiers
 thirdPartyServices: []
-contact: support@example.com
+retention: "This website collects no personal data, so there is nothing to retain or delete. To ask a privacy question — or request removal of anything you believe relates to you — email support@metkapstudio.com and we will respond."
+hasAccounts: false
+contact: support@metkapstudio.com
 effectiveScope: This website and any product without its own privacy policy.
 reviewStatus: reviewed
 ---
@@ -21,5 +23,5 @@ Individual apps and games may handle data differently. Where a product has its
 own privacy policy, that policy applies to the product and is linked from the
 product's page. If a product has no separate policy, this overview applies.
 
-For any privacy question, contact **support@example.com**. This page is written
+For any privacy question, contact **support@metkapstudio.com**. This page is written
 in plain language and is not legal advice.

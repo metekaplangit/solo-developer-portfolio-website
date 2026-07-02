@@ -22,17 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **8** (STEP-0001..STEP-0008).
+- Completed **feature** Steps: **9** (STEP-0001..STEP-0009).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0009**.
-- Next-due: **Discussion** after feature step **9**; **Audit** + Markdown
-  Consistency after **10**; next Enhancement after **14**.
+- Next feature step: **STEP-0010**.
+- Next-due: **Audit** + **Markdown Consistency** after feature step **10**;
+  Discussion after **12**; next Enhancement after **14**.
 
 ## Due now
 
 **None.** MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6),
-ENH-0001(7), MC-0004(8) done (+ on-demand MC-OD-0001). Discussion next falls due
-at step 9. No checkpoint blocks the next packet.
+ENH-0001(7), MC-0004(8), DISC-0003(9) done (+ on-demand MC-OD-0001/0002/0003).
+Audit + Markdown Consistency next fall due at step 10. No checkpoint blocks the
+next packet.
 
 ## Ledger
 
@@ -51,6 +52,7 @@ at step 9. No checkpoint blocks the next packet.
 | MC-0004 | STEP-0008 complete (feature #8) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0004.md` | Domain switch synced; live-HTTPS correctly recorded Blocked |
 | MC-OD-0002 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0002.md` | No drift at v0.8.0; domain consistent; HTTPS still Blocked. Does not reset cadence. |
 | MC-OD-0003 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0003.md` | HTTPS now live; fixed stale ROADMAP M5 follow-up. No other drift. Does not reset cadence. |
+| DISC-0003 | STEP-0009 complete (feature #9) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0003.md` | App-review readiness reviewed; guidance-only finding (sample draft policy) |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

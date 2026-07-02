@@ -47,6 +47,33 @@ privacy/support text but must flag legal uncertainty and recommend human review
 before public release for anything touching real personal data, kids, health,
 finance, ads, analytics, or third-party SDKs. This is **not legal advice.**
 
+## App Store review readiness (STEP-0009)
+
+Privacy/support pages are structured to satisfy Apple App Review
+([Guidelines](https://developer.apple.com/app-store/review/guidelines/) 5.1.1(i)
+and 1.5). Each per-product privacy page explicitly states, as labeled sections:
+what data is collected, **how it's used**, third-party sharing **with an
+equal-protection confirmation** (and a "no third-party AI" statement), and a
+**retention/deletion + how-to-request-deletion/revoke-consent** statement. The
+`privacyPolicyEntrySchema` makes `retention` **required**, so an incomplete
+policy fails the build. Support page shows a genuine, monitored contact email
+with a response expectation.
+
+**Developer responsibilities before submitting a real app (MUST):**
+
+- Make each app's policy **truthful** to that app's *actual* data practices —
+  the samples claim "no data collected"; a real app that collects anything must
+  say exactly what, how, and why, or risk rejection and legal exposure.
+- If an app has **user accounts**, set `hasAccounts: true` **and** provide
+  in-app account deletion (Apple 5.1.1(v)).
+- Ensure `support@metkapstudio.com` **actually receives mail** (Cloudflare Email
+  Routing) — reviewers test the Support URL.
+- Disclose any **third-party AI** data sharing and obtain explicit permission
+  (2025 guideline update).
+- **Get human/legal review** of real policy text. This site reduces common
+  structural rejection causes; it does not guarantee approval or constitute
+  legal advice.
+
 ## Release gate
 
 No secrets; `npm audit` clean; production output free of debug/verbose internals;

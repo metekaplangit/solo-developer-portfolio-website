@@ -28,6 +28,9 @@ const subject = encodeURIComponent('Support request');
     >
       {site.supportEmail}
     </a>
+    <p class="response">
+      This inbox is monitored — I usually reply within 2–3 business days.
+    </p>
 
     <div class="cols">
       <section aria-labelledby="include-h">
@@ -61,6 +64,11 @@ const subject = encodeURIComponent('Support request');
   .email {
     font-size: var(--text-lg);
     padding: 0.85rem 1.5rem;
+  }
+  .response {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
   }
   .cols {
     display: grid;

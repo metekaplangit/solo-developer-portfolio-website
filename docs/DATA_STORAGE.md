@@ -28,9 +28,12 @@ build; invalid content **fails the build loudly**.
   supportUrl, privacyPolicyUrl, screenshots[], icon, features[], releaseDate,
   lastUpdated, seo`.
 - **StoreLink:** `store, url, status, countryOrRegionLimit?, notes?`.
-- **PrivacyPolicyEntry:** `productId, lastUpdated, dataCollected[],
-  dataNotCollected[], thirdPartyServices[], contact, effectiveScope,
-  reviewStatus`. Supports one global policy + per-product entries.
+- **PrivacyPolicyEntry:** `productId, title, lastUpdated, dataCollected[],
+  dataUse[], dataNotCollected[], thirdPartyServices[], retention (REQUIRED),
+  hasAccounts, contact, effectiveScope, reviewStatus`. Supports one global policy
+  + per-product entries. `retention` is required (Apple 5.1.1(i)) so an
+  incomplete policy fails the build; `dataUse`/`hasAccounts` map to Apple's
+  "uses of data" and in-app account-deletion (5.1.1(v)). See `SECURITY.md`.
 - **MediaAsset:** `id, productId, type(icon|screenshot|hero|logo|press), path,
   altText, dimensions, source, licenseOrOwnership`.
 

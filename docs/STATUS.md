@@ -9,36 +9,35 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0001 complete** — content model (Zod) + static shell + routes
-  (home, Apps & Games, privacy global + per-product, support, about) merged to
-  `main`, tagged **v0.8.0**. 33 tests green. **MC-0004** run (feature step #8).
-- **Domain:** **metkapstudio.com is fully LIVE over HTTPS.** DNS propagated;
-  cert **approved**; `https_enforced: true`; `https://` returns 200 with a valid
-  cert; `http://`→`https://` 301; `www`→apex. Custom-domain step fully complete.
-- **Next action:** pick the next packet — **changelog/updates block** (user asked
-  about it), **a11y/Lighthouse CI** (LEDGER-002), **real image pipeline** (needs
-  assets), or **real product content**. Optional (user, 2 min each): Cloudflare
-  Email Routing for `support@metkapstudio.com`, DNSSEC.
-- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `DEPLOYMENT.md`.
-- **Required checks:** `npm run build`, `npm run check`, `npm test`,
-  `python3 scripts/validate-governance.py`.
-- **Blockers:** **metkapstudio.com live-HTTPS Blocked** pending Cloudflare DNS
-  records + GitHub cert (up to 24h). Old github.io URL now redirects to the domain.
+- **State:** **STEP-0009 complete** — privacy/support pages made
+  **App-Store-review-ready** (Apple Guidelines 5.1.1(i) + 1.5). Merged to `main`,
+  tagged **v0.9.0**, deployed. 34 tests green. **DISC-0003** run (feature step #9).
+- **Live:** **metkapstudio.com fully live over HTTPS** (cert approved,
+  `https_enforced: true`, `http→https` 301, `www`→apex).
+- **Next action:** pick the next packet — **changelog/updates block**,
+  **a11y/Lighthouse CI** (LEDGER-002), **real image pipeline** (needs assets), or
+  **real product content**. Freeze a Task Card before editing.
+- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`
+  (App-review readiness + developer responsibilities).
+- **Blockers:** none. **Before real App Store submissions:** enable Cloudflare
+  Email Routing so `support@metkapstudio.com` receives mail, and keep each real
+  app's policy **truthful** (samples say "no data collected") — see `SECURITY.md`.
 
 ## Last completed Step Packet
 
-- **STEP-0008 — Custom domain (metkapstudio.com)** — **DONE** (code/GitHub side),
-  merged to `main`, tagged **v0.8.0**. Task Card: `docs/tasks/STEP-0008.md`.
-- Delivered: root-served config (`site` metkapstudio.com, `base '/'`), `CNAME`,
-  robots/sitemap domain, `support@metkapstudio.com`, Pages custom domain set.
-  Live-HTTPS verification Blocked pending user DNS.
-- (Prior: STEP-0007 theme rollout v0.7.0; STEP-0006 rebrand v0.6.0; … v0.1.0.)
+- **STEP-0009 — App Store review readiness** — **DONE**, merged to `main`, tagged
+  **v0.9.0**, live. Task Card: `docs/tasks/STEP-0009.md`.
+- Delivered: privacy schema now requires Apple's retention/deletion statement
+  (+ `dataUse`/`hasAccounts`); `PolicyArticle` renders the 5.1.1(i) checklist as
+  labeled sections (collect / use / third-party equal-protection + no-AI /
+  retention+deletion / contact); support response line; corrected support email
+  in policies; SECURITY.md dev-responsibility + not-legal-advice note.
+- (Prior: STEP-0008 domain v0.8.0; STEP-0007 theme v0.7.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** After DNS is live: enable Enforce HTTPS + domain
-  verification (small follow-up). Other candidates: **a11y/Lighthouse CI**
-  (LEDGER-002); **real image pipeline** `astro:assets` (needs assets); **real
+- **Not yet chosen.** Candidates: **changelog/updates block**, **a11y/Lighthouse
+  CI** (LEDGER-002), **real image pipeline** `astro:assets` (needs assets), **real
   product content**. See `ROADMAP.md` backlog. One outcome only.
 
 ## Machine-readable state
@@ -48,11 +47,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0008
-next_step: undecided (post-DNS: enable HTTPS + verify; or new packet)
+current_step: STEP-0009
+next_step: undecided (changelog block / a11y CI / real content)
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.8.0
+product_tag: v0.9.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -90,7 +89,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 |---|---|---|---|
 | Static build (`npm run build`) | Pass | Merge-critical | 11 routes + sitemap/robots/404/favicon, `output: "static"` |
 | Type + content check (`npm run check`) | Pass | Merge-critical | 0 errors / 0 warnings / 0 hints |
-| Unit tests (`npm test`) | Pass | Merge-critical | 33 passed (incl. `withBase`); run in CI |
+| Unit tests (`npm test`) | Pass | Merge-critical | 34 passed (incl. required-retention negative test); run in CI |
 | Dependency audit (`npm audit`) | Pass | Merge-critical | `found 0 vulnerabilities` |
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
 | Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
@@ -101,9 +100,9 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 Completed **feature** steps: **8** (STEP-0001..0008). Checkpoints run: MC-0001(2),
 DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6), ENH-0001(7),
-**MC-0004**(8), plus on-demand MC-OD-0001/0002/0003. Next: Discussion after
-step **9**; Audit + Markdown Consistency after **10**. Calibration: completed
-2026-07-02.
+MC-0004(8), **DISC-0003**(9), plus on-demand MC-OD-0001/0002/0003. Next: **Audit
++ Markdown Consistency** after step **10**; Discussion after **12**. Calibration:
+completed 2026-07-02.
 
 ## Issues
 
@@ -123,7 +122,7 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.8.0** (STEP-0008 merge
-commit); prior v0.7.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.9.0** (STEP-0009 merge
+commit); prior v0.8.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
-(HTTPS pending DNS).
+(HTTPS enforced).

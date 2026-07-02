@@ -14,7 +14,33 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. metkapstudio.com is fully live over HTTPS (cert approved, Enforce HTTPS on). Next packet undecided — see ROADMAP._
+_Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / real content)._
+
+## [0.9.0] — 2026-07-02
+
+App Store review readiness for privacy/support pages (STEP-0009).
+
+### Changed
+
+- **Privacy pages** now present Apple Guideline 5.1.1(i) as clear labeled
+  sections: what data is collected, **how it's used**, third-party sharing with
+  an **equal-protection** confirmation (and a "no third-party AI" statement), and
+  a **retention/deletion + how-to-request** statement.
+- Privacy content model now **requires** a `retention` statement (plus optional
+  `dataUse`, `hasAccounts`) — an incomplete policy fails the build.
+- Support page shows a monitored-inbox **response expectation** (Guideline 1.5).
+- Corrected the contact email in policy content to `support@metkapstudio.com`.
+
+### Added
+
+- `SECURITY.md` "App Store review readiness" section with developer
+  responsibilities and a clear **not-legal-advice** caveat.
+
+### Notes
+
+- Reduces common *structural* rejection causes; does **not** guarantee approval.
+  Real apps must keep policies truthful, enable the support mailbox, and add
+  in-app account deletion where accounts exist. Still fully static.
 
 ## [0.8.0] — 2026-07-02
 

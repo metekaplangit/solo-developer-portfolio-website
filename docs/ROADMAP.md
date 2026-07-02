@@ -120,6 +120,20 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
 - **Optional user extras (not blocking):** Cloudflare Email Routing for
   `support@metkapstudio.com`, DNSSEC, GitHub domain verification.
 
+### Milestone 6 — App Store review readiness ✅ DONE (v0.9.0)
+
+- **STEP-0009 — App Store review readiness** *(COMPLETE — merged, tagged
+  `v0.9.0`, 2026-07-02).* Privacy pages present Apple Guideline 5.1.1(i) as
+  labeled sections (collect / use / third-party equal-protection + no-AI /
+  retention+deletion / contact); schema **requires** the retention/deletion
+  statement; support response line (1.5); corrected support email in policies;
+  SECURITY.md developer-responsibility + not-legal-advice note. Discussion
+  **DISC-0003** run (feature step #9).
+- **Developer responsibility (ongoing, per real app):** keep each policy
+  truthful, set `hasAccounts: true` + in-app deletion when accounts exist, enable
+  Cloudflare Email Routing, disclose third-party AI, get human/legal review. See
+  `SECURITY.md`.
+
 ## Backlog — accepted enhancements (from ENH-0001)
 
 Not scheduled yet; promote to a Step Packet when triggered.

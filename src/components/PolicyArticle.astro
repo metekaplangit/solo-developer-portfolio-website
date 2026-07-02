@@ -6,6 +6,10 @@ interface Props {
   policy: PrivacyPolicyEntry;
 }
 const { policy } = Astro.props;
+
+// Derived flags for the Apple 5.1.1(i) checklist sections.
+const collectsData = policy.dataCollected.length > 0;
+const hasThirdParties = policy.thirdPartyServices.length > 0;
 ---
 
 <article class="policy">
@@ -23,13 +27,26 @@ const { policy } = Astro.props;
   </div>
 
   <dl class="policy-facts">
-    <dt>Data collected</dt>
+    <dt>What data we collect</dt>
     <dd>
       {
-        policy.dataCollected.length > 0 ? (
+        collectsData ? (
           <ul>{policy.dataCollected.map((d) => <li>{d}</li>)}</ul>
         ) : (
-          'None.'
+          'None. This product does not collect personal data.'
+        )
+      }
+    </dd>
+
+    <dt>How that data is used</dt>
+    <dd>
+      {
+        policy.dataUse.length > 0 ? (
+          <ul>{policy.dataUse.map((d) => <li>{d}</li>)}</ul>
+        ) : collectsData ? (
+          'Only as described above; not used for advertising, profiling, or tracking.'
+        ) : (
+          'Not applicable — no data is collected.'
         )
       }
     </dd>
@@ -48,16 +65,41 @@ const { policy } = Astro.props;
     <dt>Third-party services</dt>
     <dd>
       {
-        policy.thirdPartyServices.length > 0 ? (
-          <ul>{policy.thirdPartyServices.map((d) => <li>{d}</li>)}</ul>
+        hasThirdParties ? (
+          <>
+            <ul>{policy.thirdPartyServices.map((d) => <li>{d}</li>)}</ul>
+            <p class="fact-note">
+              Any third party with access to this data is required to provide the
+              same or equal protection of it as described in this policy. Data is
+              not shared with third-party AI services.
+            </p>
+          </>
         ) : (
-          'None.'
+          'None. Data is not shared with third parties, including third-party AI services.'
         )
       }
     </dd>
 
-    <dt>Contact</dt>
-    <dd><a href={`mailto:${policy.contact}`}>{policy.contact}</a></dd>
+    <dt>Data retention &amp; deletion</dt>
+    <dd>{policy.retention}</dd>
+
+    {
+      policy.hasAccounts && (
+        <>
+          <dt>Account deletion</dt>
+          <dd>
+            You can delete your account and its associated data from within the
+            app, or by emailing <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+          </dd>
+        </>
+      )
+    }
+
+    <dt>Contact &amp; requests</dt>
+    <dd>
+      Questions, consent changes, or deletion requests:
+      <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+    </dd>
   </dl>
 
   <p class="policy-note">
@@ -103,6 +145,11 @@ const { policy } = Astro.props;
   .policy-facts ul {
     margin: var(--space-1) 0 0;
     padding-left: var(--space-6);
+  }
+  .policy-facts .fact-note {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+    color: var(--faint);
   }
   .policy-note {
     margin-top: var(--space-8);
