@@ -89,7 +89,10 @@ brief SSL warning right after is normal. Keep GitHub "Enforce HTTPS" on — it i
 compatible with Cloudflare `Full (strict)`. Verify: `https://metkapstudio.com/`
 loads with a padlock and `curl -sI` shows a `cf-cache-status`/`server: cloudflare`
 header. If a loop/525/526 appears, re-check that SSL mode is `Full (strict)`.
-**Status: pending user Cloudflare-dashboard action.**
+**Status: DONE + verified 2026-07-02** — domain resolves to Cloudflare IPs
+(`172.67…`/`104.21…`), `server: cloudflare` + `cf-ray` on HTTP/2 200, clean
+`http→https` 301 (no loop), `cf-cache-status: DYNAMIC` (HTML fresh; assets
+edge-cached). Live channel is now GitHub Pages **behind the Cloudflare proxy**.
 
 ## Build
 

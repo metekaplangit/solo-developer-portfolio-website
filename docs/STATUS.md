@@ -14,11 +14,12 @@
   retention prose split into `storedLocally`/`permissions` bullets). Merged,
   tagged **v0.12.0**, deployed. 34 tests green. **DISC-0004 + MC-0006** run
   (feature step #12).
-- **Live:** **metkapstudio.com** over HTTPS; gem logo; Sole Focus product +
+- **Live:** **metkapstudio.com** over HTTPS, now **served through the Cloudflare
+  proxy** (edge CDN; instant visitor freshness); gem logo; Sole Focus product +
   scannable privacy pages.
 - **Next action:** pick the next packet — **changelog/updates block**,
-  **a11y/Lighthouse CI** (LEDGER-002), **Cloudflare proxy** (faster/instant
-  freshness), or **more real products**. Freeze a Task Card before editing.
+  **a11y/Lighthouse CI** (LEDGER-002), or **more real products**. Freeze a Task
+  Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -56,7 +57,7 @@ profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
 current_step: STEP-0012
-next_step: Cloudflare proxy (edge caching/freshness) — pending user dashboard action; steps in DEPLOYMENT.md
+next_step: not yet chosen — Cloudflare proxy DONE+verified 2026-07-02 (orange-cloud, Full-strict, server:cloudflare, no loop). Candidates: changelog block, a11y CI, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
 product_tag: v0.12.0
@@ -143,6 +144,8 @@ docs/**`, `cancel-in-progress: true`, and a 20-min deploy timeout. Also note
 GitHub Pages hard-caps responses at `cache-control: max-age=600` — after a green
 deploy your **browser** may show the old page for ≤10 min; verify with
 `curl -sI` or a hard-refresh/incognito, not a normal reload. If a deploy fails,
-re-run it (transient). **Instant visitor freshness** requires enabling the
-Cloudflare proxy (orange-cloud, SSL/TLS Full-strict, cache rules) — a documented
-future step, not yet done.
+re-run it (transient). **Instant visitor freshness is now in place:** the
+**Cloudflare proxy is enabled** (orange-cloud apex `A` + `www` `CNAME`, SSL/TLS
+`Full (strict)`, Always-Use-HTTPS on) and verified 2026-07-02 — `server:
+cloudflare` on HTTP/2 200, clean `http→https` 301 (no loop), `cf-cache-status:
+DYNAMIC` (HTML served fresh; static assets edge-cached). See DEPLOYMENT.md.
