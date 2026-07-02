@@ -1,11 +1,14 @@
 ---
-import type { PrivacyPolicyEntry } from '../content/schema';
+import type { PrivacyPolicyEntry, MediaAsset } from '../content/schema';
 import { formatDate } from '../lib/format';
+import { withBase } from '../lib/url';
 
 interface Props {
   policy: PrivacyPolicyEntry;
+  /** The product's app icon, shown beside the title. Omitted for the site-wide policy. */
+  icon?: MediaAsset | null;
 }
-const { policy } = Astro.props;
+const { policy, icon = null } = Astro.props;
 
 const collectsData = policy.dataCollected.length > 0;
 const hasThirdParties = policy.thirdPartyServices.length > 0;
@@ -20,10 +23,21 @@ const chips: { label: string; ok: boolean }[] = [
 
 <article class="policy">
   <header class="policy-head">
-    <h1>{policy.title}</h1>
-    <p class="policy-meta">
-      Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{policy.effectiveScope}
-    </p>
+    {icon && (
+      <img
+        class="policy-icon"
+        src={withBase(icon.path)}
+        alt={icon.altText}
+        width="72"
+        height="72"
+      />
+    )}
+    <div class="policy-head-text">
+      <h1>{policy.title}</h1>
+      <p class="policy-meta">
+        Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{policy.effectiveScope}
+      </p>
+    </div>
   </header>
 
   <ul class="glance" aria-label="At a glance">
@@ -135,6 +149,22 @@ const chips: { label: string; ok: boolean }[] = [
   .policy {
     max-width: 44rem;
     padding-block: var(--space-12) var(--space-8);
+  }
+  .policy-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .policy-icon {
+    flex: none;
+    width: 4.5rem;
+    height: 4.5rem;
+    /* Full-bleed square artwork — round it into an app tile, like the cards. */
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .policy-head-text {
+    min-width: 0;
   }
   .policy-head h1 {
     margin: 0 0 var(--space-2);

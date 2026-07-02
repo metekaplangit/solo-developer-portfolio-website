@@ -153,6 +153,14 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   headlined sections + bullets); added `storedLocally`/`permissions`; tightened
   policy content. Full Apple 5.1.1(i) preserved. **Discussion DISC-0004 +
   Markdown Consistency MC-0006** run (feature step #12).
+- **STEP-0013 — Privacy app icon + current Sole Focus icon** *(COMPLETE —
+  merged, tagged `v0.13.0`, 2026-07-02).* Added an optional app-icon tile to the
+  privacy page header (resolved by `productId`); replaced the Sole Focus icon
+  with the app's current SVG export, shared with the home card. No scheduled
+  checkpoint at feature step #13.
+- **STEP-0014 — UI polish pass** *(NEXT — Task Card to freeze).* Tighten visual
+  quality site-wide: consistent max-width/alignment, spacing on a shared scale,
+  no overflow/sticking-out elements, cross-page and token consistency.
 
 ## Backlog — accepted enhancements (from ENH-0001)
 

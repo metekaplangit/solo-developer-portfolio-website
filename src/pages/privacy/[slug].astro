@@ -19,11 +19,15 @@ interface Props {
 }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+// The product this policy belongs to supplies the app icon shown in the header.
+const products = await getCollection('products');
+const icon = products.find((p) => p.data.id === entry.data.productId)?.data.icon ?? null;
 ---
 
 <BaseLayout title={entry.data.title} description={`Privacy policy — ${entry.data.title}.`}>
   <p class="back"><a href={withBase('/privacy/')}>← All privacy policies</a></p>
-  <PolicyArticle policy={entry.data}>
+  <PolicyArticle policy={entry.data} icon={icon}>
     <Content />
   </PolicyArticle>
 </BaseLayout>

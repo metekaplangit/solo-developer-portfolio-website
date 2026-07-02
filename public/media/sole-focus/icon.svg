@@ -1,16 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="Sole Focus">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
-    <linearGradient id="soleFocusBg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ff9a4d" />
-      <stop offset="1" stop-color="#f2700f" />
-    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#faf4e4"/><stop offset="1" stop-color="#f0e6cf"/></linearGradient>
+    <radialGradient id="rim" cx="0.40" cy="0.34" r="0.82"><stop offset="0" stop-color="#ffae5f"/><stop offset="0.6" stop-color="#d85b09"/><stop offset="1" stop-color="#a8430a"/></radialGradient>
+    <radialGradient id="face" cx="0.43" cy="0.39" r="0.85"><stop offset="0" stop-color="#fdf8ec"/><stop offset="1" stop-color="#f1e6ce"/></radialGradient>
   </defs>
-  <!-- App tile -->
-  <rect x="0" y="0" width="1024" height="1024" rx="232" fill="url(#soleFocusBg)" />
-  <!-- Timer knob -->
-  <rect x="470" y="150" width="84" height="74" rx="26" fill="#ffffff" />
-  <!-- Dial ring -->
-  <circle cx="512" cy="566" r="298" fill="none" stroke="#ffffff" stroke-width="72" />
-  <!-- Hand pointing to ~1 o'clock -->
-  <rect x="486" y="356" width="52" height="246" rx="26" fill="#ffffff" transform="rotate(38 512 566)" />
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <circle cx="512" cy="512" r="458" fill="#e4d8bb"/>
+  <circle cx="512" cy="512" r="448" fill="url(#rim)"/>
+  <circle cx="512" cy="512" r="360" fill="url(#face)"/>
+  <circle cx="512" cy="512" r="360" fill="none" stroke="#a8430a" stroke-width="4" opacity="0.55"/>
+  <g fill="#c4540a">
+    <rect x="504" y="168" width="16" height="40"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(30 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(60 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(90 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(120 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(150 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(180 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(210 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(240 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(270 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(300 512 512)"/>
+    <rect x="504" y="168" width="16" height="40" transform="rotate(330 512 512)"/>
+  </g>
+  <circle cx="512" cy="512" r="168" fill="#3a3124" fill-opacity="1.0"/>
 </svg>

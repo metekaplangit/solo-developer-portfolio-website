@@ -23,7 +23,7 @@ icon:
   productId: sole-focus
   type: icon
   path: /media/sole-focus/icon.svg
-  altText: Sole Focus app icon — a white timer dial on a warm orange tile
+  altText: Sole Focus app icon — an orange-rimmed clock with a dark center on a soft sepia tile
   licenseOrOwnership: owned
 lastUpdated: 2026-07-02
 seo:
