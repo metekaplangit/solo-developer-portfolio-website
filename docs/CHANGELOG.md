@@ -14,7 +14,29 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_UI polish pass in progress (alignment / spacing rhythm / cross-page consistency)._
+_Nothing pending. Next packet undecided — see ROADMAP._
+
+## [0.14.0] — 2026-07-02
+
+UI polish pass + clearer website privacy scope (STEP-0014).
+
+### Changed
+
+- **Consistent layout across pages.** Introduced a shared `--maxw-prose` reading
+  column; every content page (about, support, privacy, app detail, page headers,
+  404) now uses the exact same measure, so text and edges line up page to page.
+- **Unified the product icon.** The app icon is now presented identically on a
+  product's detail page and its privacy page (same size, radius, shadow).
+- **Main privacy page is now explicitly the *website* policy** — retitled
+  "MetKap Studio Website Privacy Policy", states up front that the apps and games
+  are separate (and some collect data), and lists their own policies under an
+  "App & game privacy policies" section. Prevents confusing the website's
+  "collects nothing" statement with the apps.
+
+### Fixed
+
+- The app detail footer separator rendered as `·Support` (no space); now
+  `Privacy policy · Support`.
 
 ## [0.13.0] — 2026-07-02
 

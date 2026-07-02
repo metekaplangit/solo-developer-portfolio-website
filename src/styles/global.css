@@ -63,7 +63,12 @@
   --radius: 14px;
   --radius-lg: 20px;
   --radius-pill: 999px;
+
+  /* Layout measures — one shared reading column so every content page lines up.
+     --maxw    = wide shell (showcase grids: home, catalog)
+     --maxw-prose = reading column (about, support, privacy, detail, headers) */
   --maxw: 68rem;
+  --maxw-prose: 44rem;
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

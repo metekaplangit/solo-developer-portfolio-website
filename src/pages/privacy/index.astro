@@ -18,15 +18,19 @@ const { Content } = await render(globalEntry);
 ---
 
 <BaseLayout
-  title="Privacy"
-  description="Privacy overview for this site, plus per-product privacy policies."
+  title="Website Privacy Policy"
+  description="Privacy policy for the MetKap Studio website (metkapstudio.com). Apps and games each have their own policy, listed here."
 >
   <PolicyArticle policy={globalEntry.data}>
     <Content />
   </PolicyArticle>
 
   <section class="per-product" aria-labelledby="per-product-h">
-    <h2 id="per-product-h">Per-product privacy policies</h2>
+    <h2 id="per-product-h">App &amp; game privacy policies</h2>
+    <p class="per-product-lead">
+      These are separate from the website policy above. Some apps collect data
+      the website doesn't — open a policy for the details.
+    </p>
     <ul class="policy-list" role="list">
       {
         perProduct.map((e) => (
@@ -44,8 +48,18 @@ const { Content } = await render(globalEntry);
 
 <style>
   .per-product {
-    max-width: 44rem;
-    margin-top: var(--space-8);
+    max-width: var(--maxw-prose);
+    margin-top: var(--space-12);
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-8);
+  }
+  .per-product h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+  }
+  .per-product-lead {
+    margin: 0 0 var(--space-5);
+    color: var(--muted);
   }
   .policy-list {
     list-style: none;

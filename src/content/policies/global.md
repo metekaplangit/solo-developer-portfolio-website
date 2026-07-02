@@ -1,6 +1,6 @@
 ---
 productId: global
-title: Privacy Overview
+title: MetKap Studio Website Privacy Policy
 lastUpdated: 2026-07-02
 dataCollected: []
 dataUse: []
@@ -14,9 +14,14 @@ storedLocally: []
 retention: "There is nothing stored about you, so there is nothing to keep or delete. Email support@metkapstudio.com with any privacy request and we will respond."
 hasAccounts: false
 contact: support@metkapstudio.com
-effectiveScope: This website, and any product without its own privacy policy.
+effectiveScope: The MetKap Studio website (metkapstudio.com) — not the apps or games.
 reviewStatus: reviewed
 ---
 
-This website collects nothing — no cookies, no analytics, no tracking, no
-accounts. Individual products may differ; each links its own policy from its page.
+This policy covers the **MetKap Studio website** at metkapstudio.com — the pages
+you're reading right now. The website itself collects nothing: no cookies, no
+analytics, no tracking, no accounts.
+
+**The apps and games are separate, and some of them do collect data.** Each
+product has its own privacy policy — check the one linked from that product's
+page (they're also listed below) to see how that specific app handles your data.

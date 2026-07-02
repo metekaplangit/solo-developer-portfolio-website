@@ -158,9 +158,12 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   privacy page header (resolved by `productId`); replaced the Sole Focus icon
   with the app's current SVG export, shared with the home card. No scheduled
   checkpoint at feature step #13.
-- **STEP-0014 — UI polish pass** *(NEXT — Task Card to freeze).* Tighten visual
-  quality site-wide: consistent max-width/alignment, spacing on a shared scale,
-  no overflow/sticking-out elements, cross-page and token consistency.
+- **STEP-0014 — UI polish + website privacy scope** *(COMPLETE — merged, tagged
+  `v0.14.0`, 2026-07-02).* Shared `--maxw-prose` column across content pages
+  (consistent alignment, no overflow desktop/mobile); unified the product icon
+  across detail + privacy; fixed the `·Support` separator; retitled the main
+  privacy page "MetKap Studio Website Privacy Policy" with an explicit
+  website-vs-apps opening. **Markdown Consistency MC-0007** run (feature step #14).
 
 ## Backlog — accepted enhancements (from ENH-0001)
 
