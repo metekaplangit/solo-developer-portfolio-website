@@ -9,11 +9,11 @@
 
 ## Handoff (5 bullets)
 
-- **State:** Milestone 0 initialization complete — Astro 7 static baseline, full
-  docs system, governance validator, issue templates, CI, workflow seeds in
-  place. Baseline committed and pushed. **Not started: Step 1 (STEP-0001).**
-- **Next action:** Offer the pre-first-step AI calibration gate, then begin
-  **STEP-0001** (content model + static shell) on branch
+- **State:** Milestone 0 initialization complete + **pre-first-step calibration
+  done** — Astro 7 static baseline, full docs system, governance validator,
+  issue templates, CI, workflow seeds in place; baseline committed and pushed.
+  **Not started: Step 1 (STEP-0001).**
+- **Next action:** Begin **STEP-0001** (content model + static shell) on branch
   `feature/STEP-0001-content-model-shell`.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, then
   `DATA_STORAGE.md`, `ARCHITECTURE.md`, `TESTING.md` for STEP-0001.
@@ -52,6 +52,7 @@ due_checkpoints: none
 blockers: [npm-test-blocked-until-STEP-0001]
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, DATA_STORAGE.md, ARCHITECTURE.md, TESTING.md]
 required_checks: [npm run build, npm run check, scripts/validate-governance.py]
+calibration: completed
 updated_at: 2026-07-02
 ```
 
@@ -85,7 +86,8 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 ## Checkpoints
 
 None due (0 feature steps complete; baseline is non-feature). Calibration:
-**pending** (offer before STEP-0001).
+**completed 2026-07-02** (report in `docs/AI_SEARCH.md` + `AI_WORKFLOW.md`;
+workflow-only changes, no product/stack/architecture change).
 
 ## Issues
 
@@ -96,7 +98,7 @@ the owner of record once the remote is live.
 
 Followed: bounded intake (pre-answered), verified versions (Astro 7.0.5
 corrected), docs-before-features, non-destructive Git, remote pushed, calibration
-recorded as pending, validator gate installed. No deviations.
+completed, validator gate installed and passing. No deviations.
 
 ## Version control
 

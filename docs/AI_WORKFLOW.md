@@ -60,8 +60,33 @@ loaded/missing reads · controlling docs · branch/worktree · scope · checks +
 usability · issues · docs updated · deviations · gate owner/evidence/result/
 follow-up. Update `STATUS.md` once per step/checkpoint.
 
+## Local environment & Claude Code notes (from calibration 2026-07-02)
+
+Model-specific workflow facts for future Claude Code / AI sessions on this
+machine — kept here so they are not rediscovered the hard way:
+
+- **npm cache permission workaround.** `~/.npm` may contain root-owned files
+  (a legacy npm bug) that break `npm install` with `EACCES`. Do **not** run
+  `sudo` unprompted. Instead point npm at a writable cache for the command:
+  `npm_config_cache=<writable-scratch-dir> npm install`. The permanent user-side
+  fix (their choice) is `sudo chown -R $(id -u):$(id -g) ~/.npm`.
+- **Agent-friendly Astro 7.** `npm run dev` detects coding agents, runs the dev
+  server in the background, and can emit structured JSON logs. For gates prefer
+  the non-interactive `npm run build` and `npm run check` (machine-readable exit
+  codes/logs). Never leave an interactive dev server blocking the session.
+- **Runtime / visual proof.** The product requires browser review of rendered
+  pages (home, catalog, product detail, privacy, support/contact, about, mobile).
+  Produce it with `npm run preview` on the built `dist/`, then a browser/Preview
+  screenshot per route. This is `needs-human-runtime`/`manual-runtime` evidence
+  for visual polish; automated build/route/a11y checks are machine-verifiable.
+- **Editor integration.** `.vscode/extensions.json` recommends the Astro +
+  MDX extensions for content-collection type hints (optional; Claude Code edits
+  files directly regardless).
+
 ## Calibration
 
 The pre-first-step AI calibration gate (adapt docs/workflow to this model) is
-offered after the clean baseline and before Step 1. Its status is recorded in
-`STATUS.md`.
+offered after the clean baseline and before Step 1. **Status: completed
+2026-07-02** (see `STATUS.md`). It added the local-environment notes above, the
+VS Code extension recommendations, and an `AI_SEARCH.md` entry; it made no
+product, stack, architecture, or roadmap changes.

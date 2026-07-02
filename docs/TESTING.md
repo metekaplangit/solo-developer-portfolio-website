@@ -43,6 +43,12 @@ Every Step acceptance criterion maps to an evidence method (command/log,
 automated test, screenshot, or explicit Blocked) before implementation — see each
 Task Card's **Evidence method** / **Proof classification** fields.
 
+**Runtime / visual proof:** `npm run preview` on the built `dist/`, then a browser
+(or Preview MCP) screenshot per route (home, catalog, product detail, privacy,
+support/contact, about; plus a mobile viewport). This is the `manual-runtime` /
+`needs-human-runtime` evidence for visual polish and store-reviewer readability
+that automated build/route/a11y checks cannot fully cover.
+
 ## Definition of Done (per step)
 
 Build + check + governance validator pass; unit/schema tests for new logic pass
