@@ -62,13 +62,13 @@ remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
     Consistency becomes due after step #2.
   - **Rollback:** revert the feature merge commit; branch from baseline tag.
 
-### Milestone 2 — Premium minimal showcase *(in progress)*
+### Milestone 2 — Premium minimal showcase ✅ core DONE (v0.2.0)
 
 - **STEP-0002 — Product detail page pattern** *(COMPLETE — merged, tagged `v0.2.0`,
   2026-07-02)*. Delivered `/apps/<slug>/` detail pages, card→detail links,
   related products, per-product SEO. Markdown Consistency **MC-0001** run (no drift).
-- *Remaining M2 candidates (future packets):* site-wide visual polish, real
-  image-optimization pipeline for screenshots/icons, richer social cards.
+- *Visual polish now lives in the UI/Design phase below* (site-wide theme, real
+  image-optimization pipeline, richer social cards).
 
 ### Milestone 3 — Core site essentials ✅ DONE (v0.3.0)
 

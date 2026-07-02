@@ -100,7 +100,8 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 Completed **feature** steps: **4** (STEP-0001..0004). Checkpoints run: MC-0001
 (step 2), DISC-0001 (step 3), **MC-0002** (step 4;
 `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0002.md`). Next: **Audit**
-after step **5**; Discussion after step **6**; MC after step **6**. Calibration:
+after step **5**; Discussion after step **6**; MC after step **6**. On-demand **MC-OD-0001** run 2026-07-02
+(wrap-up; no drift beyond a stale M2 label, fixed). Calibration:
 completed 2026-07-02.
 
 ## Issues
