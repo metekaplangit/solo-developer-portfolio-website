@@ -1,18 +1,26 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { site } from '../../lib/site';
 import { withBase } from '../../lib/url';
+
+const values = [
+  'Privacy first — collect as little as possible, and say so plainly.',
+  'Offline-friendly and fast wherever it makes sense.',
+  'No dark patterns, ads, or tracking.',
+];
 ---
 
 <BaseLayout
   title="About"
   description="About MetKap Studio and the developer behind these apps and games."
 >
-  <div class="about">
-    <h1>About</h1>
-    <p class="lede">{site.tagline}</p>
+  <PageHeader title="About">
+    <p>{site.tagline}</p>
+  </PageHeader>
 
-    <p>
+  <div class="about">
+    <p class="intro">
       MetKap Studio is the one-person studio of {site.person}. I build small,
       focused apps and games and try to keep them calm, fast, and respectful of
       your attention and your data.
@@ -20,16 +28,14 @@ import { withBase } from '../../lib/url';
 
     <section aria-labelledby="values-h">
       <h2 id="values-h">How I build</h2>
-      <ul>
-        <li>Privacy first — collect as little as possible, say so plainly.</li>
-        <li>Offline-friendly and fast wherever it makes sense.</li>
-        <li>No dark patterns, ads, or tracking.</li>
+      <ul class="values" role="list">
+        {values.map((v) => <li>{v}</li>)}
       </ul>
     </section>
 
     <section aria-labelledby="links-h">
       <h2 id="links-h">Elsewhere</h2>
-      <ul>
+      <ul class="links" role="list">
         <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
         <li><a href={withBase('/support/')}>Support</a> ({site.supportEmail})</li>
         {
@@ -48,15 +54,51 @@ import { withBase } from '../../lib/url';
 
 <style>
   .about {
-    max-width: 42rem;
-    padding-block: var(--space-12) var(--space-8);
+    max-width: 44rem;
   }
-  .about h1 {
-    margin: 0 0 var(--space-3);
+  .intro {
+    font-size: var(--text-lg);
+    color: var(--text);
+    margin: 0 0 var(--space-12);
+    line-height: 1.6;
   }
-  .lede {
-    margin: 0 0 var(--space-6);
+  .about h2 {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-4);
+  }
+  .about section {
+    margin-bottom: var(--space-10);
+  }
+  .values {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+  .values li {
+    position: relative;
+    padding: var(--space-4) var(--space-5) var(--space-4) var(--space-8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
     color: var(--muted);
-    font-size: 1.125rem;
+  }
+  .values li::before {
+    content: '';
+    position: absolute;
+    left: var(--space-4);
+    top: 1.35em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
   }
 </style>
