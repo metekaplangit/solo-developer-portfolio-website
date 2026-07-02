@@ -10,24 +10,29 @@ const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
 const featured = getFeatured(products);
 const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
+const shippedCount = products.filter((p) => p.status === 'released').length;
 ---
 
 <BaseLayout title={site.name} description={site.description}>
   <section class="hero">
     <p class="eyebrow">{site.tagline}</p>
-    <h1>{site.name}</h1>
+    <h1 class="hero-title">{site.name}</h1>
     <p class="lede">{site.description}</p>
-    <p class="hero-links">
-      <a href={withBase('/apps/')}>See all apps &amp; games</a>
-      <span aria-hidden="true">·</span>
-      <a href={withBase('/support/')}>Support</a>
-      <span aria-hidden="true">·</span>
-      <a href={withBase('/privacy/')}>Privacy</a>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href={withBase('/apps/')}>See apps &amp; games</a>
+      <a class="btn btn-secondary" href={withBase('/support/')}>Get support</a>
+    </div>
+    <p class="hero-meta">
+      {shippedCount > 0 ? `${shippedCount} shipped · ` : ''}Privacy &amp; support
+      for every product
     </p>
   </section>
 
-  <section aria-labelledby="featured-h">
-    <h2 id="featured-h">Featured</h2>
+  <section class="featured" aria-labelledby="featured-h">
+    <div class="section-head">
+      <h2 id="featured-h">Featured</h2>
+      <a class="section-link" href={withBase('/apps/')}>All apps &amp; games →</a>
+    </div>
     <ul class="grid" role="list">
       {showcase.map((p) => <li><ProductCard product={p} /></li>)}
     </ul>
@@ -36,35 +41,73 @@ const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0
 
 <style>
   .hero {
-    padding-block: var(--space-16) var(--space-8);
-    max-width: 42rem;
+    padding-block: var(--space-24) var(--space-16);
+    max-width: 46rem;
   }
-  .eyebrow {
-    margin: 0 0 var(--space-2);
-    color: var(--color-accent);
-    font-weight: 600;
-  }
-  .hero h1 {
-    margin: 0 0 var(--space-4);
-    font-size: clamp(2rem, 6vw, 3rem);
+  .hero-title {
+    margin: var(--space-3) 0 var(--space-5);
+    font-size: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
   }
   .lede {
-    margin: 0 0 var(--space-4);
-    color: var(--color-muted);
-    font-size: 1.125rem;
+    margin: 0 0 var(--space-8);
+    color: var(--muted);
+    font-size: var(--text-xl);
+    line-height: 1.5;
+    max-width: 38rem;
   }
-  .hero-links {
+  .hero-cta {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
     align-items: center;
+  }
+  .hero-meta {
+    margin: var(--space-6) 0 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+  .section-head h2 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  .section-link {
+    font-size: var(--text-sm);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .section-link:hover {
+    color: var(--text-strong);
   }
   .grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-4);
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero > * {
+      animation: rise 0.6s var(--ease) both;
+    }
+    .hero .hero-title { animation-delay: 0.05s; }
+    .hero .lede { animation-delay: 0.1s; }
+    .hero .hero-cta { animation-delay: 0.15s; }
+    .hero .hero-meta { animation-delay: 0.2s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   }
 </style>

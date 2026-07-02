@@ -11,36 +11,35 @@
 
 - **State:** **STEP-0001 complete** — content model (Zod) + static shell + routes
   (home, Apps & Games, privacy global + per-product, support, about) merged to
-  `main`, tagged **v0.4.0**, and **deployed live to GitHub Pages**. 33 tests
-  green. Markdown Consistency MC-0002 run.
+  `main`, tagged **v0.5.0**, and **live**. 33 tests green. **Audit AUDIT-0001**
+  run (feature step #5) — all areas Pass, 2 low advisories logged.
 - **Live URL:** `https://metekaplangit.github.io/solo-developer-portfolio-website/`
   (project site; custom domain deferred to a late step).
-- **Next action:** **STEP-0005 — dark-premium Apple-minimal design system + home**
-  (UI/design phase begins). Freeze its Task Card before editing.
+- **Next action:** **STEP-0006 — roll the dark-premium theme across the remaining
+  pages** (catalog, product detail, privacy, support, about, 404 — bespoke polish
+  on top of the shared tokens). Freeze its Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, then
   `UI_DESIGN.md`, `ARCHITECTURE.md`.
 - **Required checks:** `npm run build`, `npm run check`, `npm test`,
   `python3 scripts/validate-governance.py`.
-- **Blockers:** none. (Custom domain + on-domain robots/HTTPS deferred to a late
-  deployment step, by user decision.)
+- **Blockers:** none. (Custom domain deferred to a late step, by user decision.)
 
 ## Last completed Step Packet
 
-- **STEP-0004 — GitHub Pages deployment (project site)** — **DONE**, merged to
-  `main`, tagged **v0.4.0**, live. Task Card: `docs/tasks/STEP-0004.md`.
-- Delivered: base-path config + `withBase()` link helper (all links based),
-  `deploy.yml` (Actions→Pages), Pages enabled. Domain deferred.
-- (Prior: STEP-0003 essentials v0.3.0; STEP-0002 detail v0.2.0; STEP-0001 v0.1.0.)
+- **STEP-0005 — Dark-premium Apple-minimal design system + home** — **DONE**,
+  merged to `main`, tagged **v0.5.0**, live. Task Card: `docs/tasks/STEP-0005.md`.
+- Delivered: "light dark" graphite token system, SF Pro scale, restrained accent,
+  soft depth + translucent sticky header, tasteful motion (reduced-motion aware),
+  button styles, elevated cards, and a cinematic home. UI-only.
+- (Prior: STEP-0004 deploy v0.4.0; STEP-0003 v0.3.0; STEP-0002 v0.2.0; STEP-0001 v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **STEP-0005 — Dark-premium Apple-minimal design system + home** (UI phase;
-  versionable → target `v0.5.0`). Elevated "light dark" theme (graphite surfaces,
-  not black), refined type scale (SF Pro), restrained accent, soft depth
-  (hairline borders, gentle shadows, translucent sticky header), generous
-  spacing, tasteful motion (reduced-motion respected). Apply to tokens + shell +
-  home first; roll to other pages in following steps. One outcome; split if it
-  grows. **UI-only phase** — no product/data/logic changes.
+- **STEP-0006 — Theme rollout to remaining pages** (UI phase; versionable →
+  target `v0.6.0`). Apply the design system's bespoke polish to catalog, product
+  detail, privacy (global + per-product), support, about, and 404 — they already
+  inherit the tokens; refine their page-specific layouts, spacing, and depth. One
+  page-group per packet if it grows. **UI-only** — no product/data/logic changes.
 
 ## Machine-readable state
 
@@ -49,11 +48,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0004
-next_step: STEP-0005
+current_step: STEP-0005
+next_step: STEP-0006
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.4.0
+product_tag: v0.5.0
 live_url: https://metekaplangit.github.io/solo-developer-portfolio-website/
 dirty: false
 dirty_paths: []
@@ -92,26 +91,25 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 | Unit tests (`npm test`) | Pass | Merge-critical | 33 passed (incl. `withBase`); run in CI |
 | Dependency audit (`npm audit`) | Pass | Merge-critical | `found 0 vulnerabilities` |
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
-| Runtime route smoke | Pass | Advisory | based routes 200; nav aria-current correct under base |
+| Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
 | Deployment (Pages project site) | Pass | Release-critical (channel) | live URL 200; custom domain deferred |
 
 ## Checkpoints
 
-Completed **feature** steps: **4** (STEP-0001..0004). Checkpoints run: MC-0001
-(step 2), DISC-0001 (step 3), **MC-0002** (step 4;
-`docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0002.md`). Next: **Audit**
-after step **5**; Discussion after step **6**; MC after step **6**. On-demand **MC-OD-0001** run 2026-07-02
-(wrap-up; no drift beyond a stale M2 label, fixed). Calibration:
+Completed **feature** steps: **5** (STEP-0001..0005). Checkpoints run: MC-0001
+(2), DISC-0001 (3), MC-0002 (4), **AUDIT-0001** (5;
+`docs/audits/AUDIT_AUDIT-0001.md`), plus on-demand MC-OD-0001. Next: Discussion +
+Markdown Consistency after step **6**; Audit after step **10**. Calibration:
 completed 2026-07-02.
 
 ## Issues
 
 - **LEDGER-001** (`type:technical-debt`, `priority:low`) — monogram logic
-  duplicated in `ProductCard.astro` + `apps/[slug].astro` (2 uses). Watch;
-  extract on 3rd use per REFACTORING. From DISC-0001. Not release-blocking.
+  duplicated (2 uses). Watch; extract on 3rd use. From DISC-0001.
+- **LEDGER-002** (`type:accessibility`, `priority:low`) — no automated a11y /
+  visual-regression check; UI verified manually. From AUDIT-0001. Advisory.
 
-Fallback ledger: `docs/issues/LEDGER.md`. GitHub Issues become the owner of
-record once the finding warrants it / at first maintained release.
+Neither is release-blocking. Fallback ledger: `docs/issues/LEDGER.md`.
 
 ## Compliance (Critical Operating Contract)
 
@@ -122,6 +120,6 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.4.0** (STEP-0004 merge
-commit); prior v0.3.0, v0.2.0, v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync. **Live channel:** GitHub Pages project site (Actions deploy).
+`solo-dev-portfolio-website`). Latest product tag: **v0.5.0** (STEP-0005 merge
+commit); prior v0.4.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+in sync. **Live channel:** GitHub Pages project site (Actions deploy).

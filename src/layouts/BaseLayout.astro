@@ -19,6 +19,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#16171b" />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />

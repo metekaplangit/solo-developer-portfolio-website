@@ -14,7 +14,28 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. Next: UI/design phase — dark-premium Apple-minimal redesign (STEP-0005)._
+_Nothing yet. Next: roll the dark-premium theme across the remaining pages (STEP-0006)._
+
+## [0.5.0] — 2026-07-02
+
+Dark-premium Apple-minimal design system + home (STEP-0005).
+
+### Changed
+
+- New **"light dark" design system**: elevated graphite surfaces (not black),
+  SF Pro type scale, restrained periwinkle accent, hairline borders + soft
+  shadows, spacing rhythm, and motion tokens — all in `src/styles/global.css`.
+- **Shell** reflects it: translucent sticky header, refined nav pills, footer,
+  and badges; new primary/secondary button styles.
+- **Home page** redesigned: cinematic hero with accent glow, display type, CTA
+  buttons; refined featured grid; elevated product cards with tasteful hover.
+- Site is now dark-first (`color-scheme: dark`, theme-color). Other pages inherit
+  the new tokens; bespoke per-page polish follows in later steps.
+
+### Notes
+
+- UI-only — no product/data/logic changes. Motion respects
+  `prefers-reduced-motion`; contrast meets WCAG AA. Audit AUDIT-0001 (all Pass).
 
 ## [0.4.0] — 2026-07-02
 

@@ -68,14 +68,24 @@ const stores = visibleStoreLinks(product);
 
 <style>
   .card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    background: var(--color-surface);
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
     padding: var(--space-6);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
     height: 100%;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
   }
   .card-head {
     display: flex;
@@ -88,22 +98,25 @@ const stores = visibleStoreLinks(product);
     width: 3rem;
     height: 3rem;
     border-radius: var(--radius);
-    background: var(--color-accent);
-    color: var(--color-accent-contrast);
+    background: linear-gradient(145deg, var(--accent-hover), var(--accent));
+    color: var(--accent-contrast);
     font-weight: 700;
+    letter-spacing: 0.01em;
     flex: none;
+    box-shadow: 0 6px 16px -6px var(--accent-glow);
   }
   .card-name {
     margin: 0;
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
+    letter-spacing: -0.01em;
   }
   .card-name a {
-    color: var(--color-text);
+    color: var(--text);
     text-decoration: none;
   }
   .card-name a:hover {
     text-decoration: underline;
-    text-decoration-color: var(--color-accent);
+    text-decoration-color: var(--accent);
   }
   .card-tags {
     display: flex;
@@ -112,7 +125,7 @@ const stores = visibleStoreLinks(product);
   }
   .card-summary {
     margin: 0;
-    color: var(--color-muted);
+    color: var(--muted);
   }
   .platforms,
   .store-links {
@@ -134,7 +147,7 @@ const stores = visibleStoreLinks(product);
   }
   .unreleased {
     margin: 0;
-    color: var(--color-muted);
+    color: var(--muted);
     font-size: 0.875rem;
   }
   .privacy-link {

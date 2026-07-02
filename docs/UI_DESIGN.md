@@ -41,8 +41,26 @@ are merge-critical for user-facing pages (see `TESTING.md`).
 ## Design tokens
 
 Spacing, type scale, color, focus/hover/pressed/disabled states live in
-`src/styles/` as CSS custom properties — one source, no scattered magic values.
-Extract a component when a second cross-cutting concern appears (rule-of-three).
+`src/styles/global.css` as CSS custom properties — one source, no scattered magic
+values. Extract a component when a second cross-cutting concern appears
+(rule-of-three).
+
+### Implemented theme (STEP-0005): dark-premium "light dark"
+
+- **Dark-first by design** (`color-scheme: dark`). Elevated graphite surfaces
+  (`--bg #16171b`, `--surface`, `--surface-2`) — never pure black. A future light
+  theme/toggle stays possible without touching components (tokens only).
+- **Type:** SF Pro / system stack; modular scale (`--text-*`, `--display`);
+  tight letter-spacing on large headings; body ~17px, generous line-height.
+- **Accent:** restrained periwinkle-blue (`--accent #7f8dff`) + soft/glow variants.
+- **Depth (Apple "deference/depth"):** hairline borders (`--border`), soft
+  shadows (`--shadow-*`), rounded corners (`--radius*`), a **translucent sticky
+  header** (backdrop-blur), and a faint hero accent-glow.
+- **Motion:** `--ease`/`--dur` tokens; subtle hover lifts + a hero entrance
+  animation, all gated by `prefers-reduced-motion`.
+- **Buttons:** `.btn` / `.btn-primary` (filled accent) / `.btn-secondary` (ghost).
+- Applied to tokens + shell (Nav/Footer/Badge/BaseLayout) + home in STEP-0005;
+  other pages inherit the tokens and get bespoke polish in later UI-phase packets.
 
 ## Visual assets
 
