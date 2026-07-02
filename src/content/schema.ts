@@ -103,8 +103,19 @@ export const privacyPolicyEntrySchema = z.object({
   title: z.string().min(1),
   lastUpdated: z.coerce.date(),
   dataCollected: z.array(z.string()).default([]),
+  // Apple 5.1.1(i): all USES of collected data. Empty is fine when nothing is
+  // collected.
+  dataUse: z.array(z.string()).default([]),
   dataNotCollected: z.array(z.string()).default([]),
   thirdPartyServices: z.array(z.string()).default([]),
+  // Apple 5.1.1(i): retention/deletion policy AND how to revoke consent /
+  // request deletion. REQUIRED so an incomplete policy fails the build.
+  retention: z
+    .string()
+    .min(1, 'Apple requires a data retention/deletion + how-to-request-deletion statement'),
+  // Whether the product has user accounts. Apple 5.1.1(v) requires in-app
+  // account deletion when accounts exist; the page surfaces a deletion note.
+  hasAccounts: z.boolean().default(false),
   contact: z.string().min(1),
   effectiveScope: z.string().min(1),
   reviewStatus: z.enum(['draft', 'reviewed', 'published']).default('draft'),
