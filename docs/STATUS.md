@@ -56,7 +56,7 @@ profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
 current_step: STEP-0012
-next_step: undecided (changelog block / a11y CI / Cloudflare proxy / more products)
+next_step: Cloudflare proxy (edge caching/freshness) — pending user dashboard action; steps in DEPLOYMENT.md
 branch: main
 head: regenerate-live (git rev-parse HEAD)
 product_tag: v0.12.0

@@ -66,6 +66,31 @@ the address exists but won't deliver.
 DNS can take up to 24h. Confirmed live only when `https://metkapstudio.com/`
 returns 200 over HTTPS and `www` redirects to the apex.
 
+### Cloudflare proxy — edge caching & instant freshness (optional, free)
+
+Speeds up the *served* experience (Cloudflare CDN + Brotli + HTTP/3) and
+overrides GitHub Pages' `cache-control: max-age=600`, so published changes appear
+fast/fresh. It does **not** speed up GitHub's Actions publish step (their infra).
+Stays static / zero-cost (DNS/CDN only — no Workers/Pages).
+
+**Order matters — SSL first, then proxy (else redirect loop):**
+
+1. Cloudflare → **SSL/TLS → Overview → set encryption mode to `Full (strict)`**.
+   (Never `Flexible`/`Off` with GitHub Pages — that loops.)
+2. Cloudflare → **SSL/TLS → Edge Certificates → `Always Use HTTPS` = On**.
+3. Cloudflare → **DNS → Records** → flip the apex `A` records **and** the `www`
+   `CNAME` from grey cloud (DNS only) to **orange cloud (Proxied)**.
+4. Optional tuning: a **Cache Rule** for `/_astro/*` (immutable, content-hashed)
+   with a long edge TTL. HTML is not cached by Cloudflare by default, so updates
+   stay fresh without a purge.
+
+After enabling, Cloudflare provisions its Universal SSL cert (a few minutes); a
+brief SSL warning right after is normal. Keep GitHub "Enforce HTTPS" on — it is
+compatible with Cloudflare `Full (strict)`. Verify: `https://metkapstudio.com/`
+loads with a padlock and `curl -sI` shows a `cf-cache-status`/`server: cloudflare`
+header. If a loop/525/526 appears, re-check that SSL mode is `Full (strict)`.
+**Status: pending user Cloudflare-dashboard action.**
+
 ## Build
 
 - Command: `npm run build` → output dir: `dist/` (static).
