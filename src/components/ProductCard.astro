@@ -8,6 +8,7 @@ import {
   statusLabel,
 } from '../lib/products';
 import { canonicalPrivacyUrl } from '../lib/privacy';
+import { withBase } from '../lib/url';
 
 interface Props {
   product: Product;
@@ -27,7 +28,7 @@ const stores = visibleStoreLinks(product);
     <span class="monogram" aria-hidden="true">{monogram}</span>
     <div class="card-titles">
       <h3 class="card-name">
-        <a href={`/apps/${product.slug}/`}>{product.name}</a>
+        <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
       </h3>
       <div class="card-tags">
         <Badge label={product.type === 'game' ? 'Game' : 'App'} tone="accent" />
@@ -59,7 +60,7 @@ const stores = visibleStoreLinks(product);
         <p class="unreleased">Not yet available</p>
       )
     }
-    <a class="privacy-link" href={canonicalPrivacyUrl(product)}>
+    <a class="privacy-link" href={withBase(canonicalPrivacyUrl(product))}>
       Privacy<span class="visually-hidden"> for {product.name}</span>
     </a>
   </div>

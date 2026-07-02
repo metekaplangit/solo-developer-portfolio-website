@@ -11,6 +11,7 @@ import {
 } from '../../lib/products';
 import { canonicalPrivacyUrl } from '../../lib/privacy';
 import { formatDate } from '../../lib/format';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -42,7 +43,7 @@ const seoDescription = product.seo?.description ?? product.summary;
 ---
 
 <BaseLayout title={seoTitle} description={seoDescription}>
-  <p class="back"><a href="/apps/">← All apps &amp; games</a></p>
+  <p class="back"><a href={withBase('/apps/')}>← All apps &amp; games</a></p>
 
   <article class="detail">
     <header class="detail-head">
@@ -133,8 +134,8 @@ const seoDescription = product.seo?.description ?? product.summary;
       }
       <dt>Privacy &amp; support</dt>
       <dd>
-        <a href={canonicalPrivacyUrl(product)}>Privacy policy</a> ·
-        <a href={product.supportUrl}>Support</a>
+        <a href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a> ·
+        <a href={withBase(product.supportUrl)}>Support</a>
       </dd>
     </dl>
   </article>
@@ -146,7 +147,7 @@ const seoDescription = product.seo?.description ?? product.summary;
         <ul role="list">
           {related.map((r) => (
             <li>
-              <a href={`/apps/${r.slug}/`}>{r.name}</a>
+              <a href={withBase(`/apps/${r.slug}/`)}>{r.name}</a>
             </li>
           ))}
         </ul>

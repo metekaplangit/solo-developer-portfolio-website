@@ -1,22 +1,26 @@
 ---
 import { nav, site } from '../lib/site';
+import { withBase } from '../lib/url';
 const { pathname } = Astro.url;
+const norm = (s: string): string => s.replace(/\/+$/, '') || '/';
 function isCurrent(href: string): boolean {
-  if (href === '/') return pathname === '/' || pathname === '';
-  return pathname.startsWith(href);
+  const target = norm(withBase(href));
+  const here = norm(pathname);
+  if (href === '/') return here === target;
+  return here === target || here.startsWith(`${target}/`);
 }
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/">{site.brand}</a>
+    <a class="brand" href={withBase('/')}>{site.brand}</a>
     <nav aria-label="Primary">
       <ul class="nav-list">
         {
           nav.map((item) => (
             <li>
               <a
-                href={item.href}
+                href={withBase(item.href)}
                 aria-current={isCurrent(item.href) ? 'page' : undefined}
               >
                 {item.label}

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../lib/site';
 import { sortProducts } from '../../lib/products';
+import { withBase } from '../../lib/url';
 
 const products = sortProducts((await getCollection('products')).map((e) => e.data));
 const subject = encodeURIComponent('Support request');
@@ -42,7 +43,7 @@ const subject = encodeURIComponent('Support request');
     </section>
 
     <p class="privacy-ref">
-      See the <a href="/privacy/">privacy overview</a> for how data is handled.
+      See the <a href={withBase('/privacy/')}>privacy overview</a> for how data is handled.
     </p>
   </div>
 </BaseLayout>

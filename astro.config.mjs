@@ -15,9 +15,11 @@ import sitemap from '@astrojs/sitemap';
 //     `base: '/solo-dev-portfolio-website'`. Documented in docs/DEPLOYMENT.md.
 export default defineConfig({
   output: 'static',
-  // TODO(STEP: deployment): replace with the real Cloudflare-managed domain.
-  site: 'https://example.com',
-  base: '/',
+  // GitHub Pages *project site* (no custom domain yet). When the real
+  // Cloudflare-managed domain lands (late step), set `site` to that domain and
+  // `base` back to '/', and update public/robots.txt to match.
+  site: 'https://metekaplangit.github.io',
+  base: '/solo-developer-portfolio-website',
   trailingSlash: 'ignore',
   build: {
     format: 'directory',

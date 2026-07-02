@@ -79,14 +79,31 @@ remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
 - *Store-support page content polish* (per-product privacy prose, support/about
   refinement) folds into product-content work, deferred per user steer.
 
-### Milestone 4 — GitHub Pages deployment proof *(next)*
+### Milestone 4 — GitHub Pages deployment ✅ DONE (v0.4.0)
 
-- **STEP-0004** *(next; versionable → target `v0.4.0`; Task Card to be frozen).*
-  Actions→Pages deploy workflow, `public/CNAME` + custom-domain/Cloudflare DNS
-  notes, HTTPS verification, deploy smoke, rollback; update `site`/robots domain.
-  Release-critical gates apply; some proof may be `Blocked` pending the real
-  domain (record exact manual steps). No **Audit** checkpoint is due until
-  feature step #5.
+- **STEP-0004 — GitHub Pages deployment (project site)** *(COMPLETE — merged,
+  tagged `v0.4.0`, live, 2026-07-02).* Base-path config + `withBase()` links,
+  `deploy.yml` (Actions→Pages), Pages enabled. **Custom domain deferred** to the
+  end of the project per user decision. Markdown Consistency **MC-0002** run.
+
+### Phase: UI / Design (dark-premium Apple-minimal) *(active — next steps)*
+
+UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
+**Forbidden without a separate packet:** product/data/schema/logic changes.
+
+- **STEP-0005 — Design system + home** *(next; → `v0.5.0`).* Elevated "light
+  dark" theme (graphite, not black), SF Pro type scale, restrained accent, soft
+  depth (hairline borders, gentle shadows, translucent sticky header), generous
+  spacing, tasteful motion (reduced-motion respected). Tokens + shell + home.
+- **STEP-0006+** *(planned):* roll the theme to catalog, detail, privacy/support/
+  about; refine cards, badges, screenshots framing. One page-group per packet.
+
+### Milestone 5 — Custom domain + HTTPS *(deferred to end of project)*
+
+- **STEP-00xx** *(late; → version TBD).* Purchase domain; set `site` to it +
+  `base` back to `/`; `public/CNAME`; Cloudflare DNS (apex `A`/`ALIAS`, `www`
+  `CNAME`, no wildcard); verify domain in GitHub; enforce HTTPS; update
+  robots/sitemap. Release-critical; done when the user has a domain.
 
 ## Planning rules
 

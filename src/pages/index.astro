@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import { site } from '../lib/site';
+import { withBase } from '../lib/url';
 import { getFeatured, sortProducts } from '../lib/products';
 
 const entries = await getCollection('products');
@@ -17,11 +18,11 @@ const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0
     <h1>{site.name}</h1>
     <p class="lede">{site.description}</p>
     <p class="hero-links">
-      <a href="/apps/">See all apps &amp; games</a>
+      <a href={withBase('/apps/')}>See all apps &amp; games</a>
       <span aria-hidden="true">·</span>
-      <a href="/support/">Support</a>
+      <a href={withBase('/support/')}>Support</a>
       <span aria-hidden="true">·</span>
-      <a href="/privacy/">Privacy</a>
+      <a href={withBase('/privacy/')}>Privacy</a>
     </p>
   </section>
 

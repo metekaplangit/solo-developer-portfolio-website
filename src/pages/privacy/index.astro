@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PolicyArticle from '../../components/PolicyArticle.astro';
 import { formatDate } from '../../lib/format';
+import { withBase } from '../../lib/url';
 
 const entries = await getCollection('policies');
 const globalEntry = entries.find((e) => e.data.productId === 'global');
@@ -30,7 +31,7 @@ const { Content } = await render(globalEntry);
       {
         perProduct.map((e) => (
           <li>
-            <a href={`/privacy/${e.data.productId}/`}>{e.data.title}</a>
+            <a href={withBase(`/privacy/${e.data.productId}/`)}>{e.data.title}</a>
             <span class="policy-date">
               updated {formatDate(e.data.lastUpdated)}
             </span>
