@@ -137,8 +137,12 @@ in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 
 **Deploy reliability note:** GitHub Pages' publish step (`actions/deploy-pages`)
 intermittently sits in `deployment_queued` and times out (GitHub-side congestion;
-our build is fast and always succeeds). Hardened `deploy.yml`: skip docs-only
-commits (`paths-ignore: docs/**`), `cancel-in-progress: true`, and a 20-min
-deploy timeout. If a deploy still fails, just re-run it (`gh run rerun` /
-workflow_dispatch) — it's transient. Cloudflare Pages is the documented faster
-fallback if it persists.
+our build is fast and always succeeds). `deploy.yml` is a **single job** (Node
+from `.nvmrc`, npm cache, no build→deploy artifact handoff) with `paths-ignore:
+docs/**`, `cancel-in-progress: true`, and a 20-min deploy timeout. Also note
+GitHub Pages hard-caps responses at `cache-control: max-age=600` — after a green
+deploy your **browser** may show the old page for ≤10 min; verify with
+`curl -sI` or a hard-refresh/incognito, not a normal reload. If a deploy fails,
+re-run it (transient). **Instant visitor freshness** requires enabling the
+Cloudflare proxy (orange-cloud, SSL/TLS Full-strict, cache rules) — a documented
+future step, not yet done.

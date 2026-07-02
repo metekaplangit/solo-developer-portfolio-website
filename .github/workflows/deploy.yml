@@ -4,8 +4,7 @@ on:
   push:
     branches: [main]
     # Skip deploys for docs-only commits — governance/checkpoint docs don't
-    # change the built site, so there's no reason to run (and queue) a deploy.
-    # Note: src/content/**/*.md IS build content and is NOT ignored.
+    # change the built site. Note: src/content/**/*.md IS build content (not ignored).
     paths-ignore:
       - 'docs/**'
   workflow_dispatch:
@@ -16,30 +15,39 @@ permissions:
   pages: write
   id-token: write
 
-# Only the latest commit needs to publish; cancel an older superseded deploy
-# instead of queuing behind it (avoids pile-ups during GitHub Pages congestion).
+# Only the latest commit needs to publish; cancel a superseded run instead of
+# queuing behind it (fewer competing GitHub Pages deployments).
 concurrency:
   group: pages
   cancel-in-progress: true
 
+# Single job (no build→deploy artifact handoff / second runner cold-start) with
+# npm caching and Node from .nvmrc. Build is fast; the remaining latency is
+# GitHub's own Pages publish step (deploy-pages), which is out of our control.
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build with Astro
-        uses: withastro/action@v3
-        with:
-          node-version: 24
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build (produces dist/, incl. CNAME from public/)
+        run: npm run build
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
