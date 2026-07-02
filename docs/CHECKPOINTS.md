@@ -22,16 +22,16 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **1** (STEP-0001).
+- Completed **feature** Steps: **2** (STEP-0001, STEP-0002).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0002**.
-- Next-due: Markdown Consistency after feature step **2** (i.e. when STEP-0002
-  completes); Discussion after **3**; Audit after **5**; Enhancement after **7**.
+- Next feature step: **STEP-0003**.
+- Next-due: **Discussion** after feature step **3** (when STEP-0003 completes);
+  Markdown Consistency after step **4**; Audit after **5**; Enhancement after **7**.
 
 ## Due now
 
-**None.** 1 feature step complete; Markdown Consistency first falls due at
-feature step 2. No checkpoint blocks the next packet.
+**None.** Markdown Consistency MC-0001 satisfied the step-2 cadence. Discussion
+first falls due at feature step 3. No checkpoint blocks the next packet.
 
 ## Ledger
 
@@ -39,6 +39,7 @@ feature step 2. No checkpoint blocks the next packet.
 |---|---|---|---|---|---|
 | — | Initialization (M0 baseline) | n/a | n/a | — | Non-feature; no checkpoint due |
 | — | STEP-0001 complete (feature #1) | n/a | n/a | — | Below every-2 cadence; none due |
+| MC-0001 | STEP-0002 complete (feature #2) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0001.md` | 1 drift found + repaired (duplicate M3 heading) |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

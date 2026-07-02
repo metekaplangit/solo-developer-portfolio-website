@@ -1,0 +1,276 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Badge from '../../components/Badge.astro';
+import {
+  visibleStoreLinks,
+  hasStoreLinks,
+  storeLabel,
+  statusLabel,
+  relatedProducts,
+} from '../../lib/products';
+import { canonicalPrivacyUrl } from '../../lib/privacy';
+import { formatDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('products');
+  const all = entries.map((e) => e.data);
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry, related: relatedProducts(all, entry.data) },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'products'>;
+  related: Array<CollectionEntry<'products'>['data']>;
+}
+const { entry, related } = Astro.props;
+const product = entry.data;
+const { Content } = await render(entry);
+
+const monogram = product.name
+  .split(/\s+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+const stores = visibleStoreLinks(product);
+
+const seoTitle = product.seo?.title ?? product.name;
+const seoDescription = product.seo?.description ?? product.summary;
+---
+
+<BaseLayout title={seoTitle} description={seoDescription}>
+  <p class="back"><a href="/apps/">← All apps &amp; games</a></p>
+
+  <article class="detail">
+    <header class="detail-head">
+      <span class="monogram" aria-hidden="true">{monogram}</span>
+      <div>
+        <h1>{product.name}</h1>
+        <div class="tags">
+          <Badge label={product.type === 'game' ? 'Game' : 'App'} tone="accent" />
+          <Badge label={statusLabel(product.status)} />
+        </div>
+        <p class="summary">{product.summary}</p>
+      </div>
+    </header>
+
+    <ul class="platforms" aria-label="Platforms">
+      {product.platforms.map((p) => <li><Badge label={p} tone="muted" /></li>)}
+    </ul>
+
+    {
+      product.screenshots.length > 0 && (
+        <section aria-labelledby="shots-h">
+          <h2 id="shots-h" class="visually-hidden">Screenshots</h2>
+          <ul class="shots" role="list">
+            {product.screenshots.map((shot) => (
+              <li>
+                <figure class="shot">
+                  <div class="shot-frame" aria-hidden="true">
+                    Preview
+                  </div>
+                  <figcaption>{shot.altText}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="prose"><Content /></div>
+
+    {
+      product.features.length > 0 && (
+        <section aria-labelledby="features-h">
+          <h2 id="features-h">Features</h2>
+          <ul>
+            {product.features.map((f) => <li>{f}</li>)}
+          </ul>
+        </section>
+      )
+    }
+
+    <section aria-labelledby="get-h">
+      <h2 id="get-h">Get it</h2>
+      {
+        hasStoreLinks(product) ? (
+          <ul class="store-links" role="list">
+            {stores.map((link) => (
+              <li>
+                <a class="store" href={link.url} rel="noopener" target="_blank">
+                  {storeLabel(link.store)}
+                  {link.status === 'coming-soon' ? ' (soon)' : ''}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="unreleased">Not yet available — check back soon.</p>
+        )
+      }
+    </section>
+
+    <dl class="meta">
+      {
+        product.releaseDate && (
+          <>
+            <dt>Released</dt>
+            <dd>{formatDate(product.releaseDate)}</dd>
+          </>
+        )
+      }
+      {
+        product.lastUpdated && (
+          <>
+            <dt>Last updated</dt>
+            <dd>{formatDate(product.lastUpdated)}</dd>
+          </>
+        )
+      }
+      <dt>Privacy &amp; support</dt>
+      <dd>
+        <a href={canonicalPrivacyUrl(product)}>Privacy policy</a> ·
+        <a href={product.supportUrl}>Support</a>
+      </dd>
+    </dl>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="related" aria-labelledby="related-h">
+        <h2 id="related-h">More {product.type === 'game' ? 'games' : 'apps'}</h2>
+        <ul role="list">
+          {related.map((r) => (
+            <li>
+              <a href={`/apps/${r.slug}/`}>{r.name}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .back {
+    max-width: 48rem;
+    margin: 0;
+    padding-top: var(--space-8);
+  }
+  .detail {
+    max-width: 48rem;
+    padding-block: var(--space-6) var(--space-8);
+  }
+  .detail-head {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .monogram {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex: none;
+  }
+  .detail h1 {
+    margin: 0 0 var(--space-2);
+  }
+  .tags {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .summary {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 1.125rem;
+  }
+  .platforms,
+  .store-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+  }
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: var(--space-4);
+    list-style: none;
+    margin: var(--space-8) 0 0;
+    padding: 0;
+  }
+  .shot {
+    margin: 0;
+  }
+  .shot-frame {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    background: var(--color-surface);
+  }
+  .shot figcaption {
+    margin-top: var(--space-2);
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+  }
+  .prose {
+    margin-top: var(--space-8);
+  }
+  .prose :global(p) {
+    margin-block: var(--space-3);
+  }
+  .store {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+  .unreleased {
+    color: var(--color-muted);
+  }
+  .meta {
+    margin-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+  .meta dt {
+    font-weight: 600;
+    margin-top: var(--space-3);
+  }
+  .meta dd {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+  }
+  .related {
+    max-width: 48rem;
+    margin-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-6);
+  }
+  .related ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+</style>

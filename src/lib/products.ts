@@ -46,6 +46,20 @@ export function hasStoreLinks(product: Product): boolean {
   return visibleStoreLinks(product).length > 0;
 }
 
+/**
+ * Other products of the same type as `product`, excluding itself, sorted and
+ * limited. Pure — safe for unit testing.
+ */
+export function relatedProducts(
+  all: Product[],
+  product: Product,
+  limit = 3,
+): Product[] {
+  return sortProducts(
+    all.filter((p) => p.id !== product.id && p.type === product.type),
+  ).slice(0, limit);
+}
+
 const STATUS_LABELS: Record<Product['status'], string> = {
   released: 'Released',
   beta: 'Beta',

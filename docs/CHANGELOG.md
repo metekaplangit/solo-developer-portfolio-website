@@ -14,7 +14,27 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. Next: Milestone 2 — premium minimal product showcase (STEP-0002)._
+_Nothing yet. Next: continue Milestone 2 polish / begin Milestone 3 store-support pages._
+
+## [0.2.0] — 2026-07-02
+
+Reusable product-detail page pattern (STEP-0002).
+
+### Added
+
+- Per-product detail page at `/apps/<slug>/`, generated for every product,
+  rendering identity, platforms, summary, long description, features, store
+  links, screenshot placeholders (with alt text), release/updated metadata, and
+  canonical privacy + support links.
+- "More apps/games" related-products section (same type, self excluded) via a
+  new `relatedProducts` helper.
+- Home and catalog product cards now link to the detail page.
+- Per-product SEO/OpenGraph title + description on detail pages.
+
+### Notes
+
+- Screenshots remain honest placeholders; a real image-optimization pipeline is
+  a later packet. Still fully static, no backend or third-party services.
 
 ## [0.1.0] — 2026-07-02
 
