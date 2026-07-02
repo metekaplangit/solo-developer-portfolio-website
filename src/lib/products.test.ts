@@ -6,6 +6,7 @@ import {
   hasStoreLinks,
   storeLabel,
   statusLabel,
+  relatedProducts,
 } from './products';
 import type { Product } from '../content/schema';
 
@@ -72,6 +73,33 @@ describe('visibleStoreLinks / hasStoreLinks', () => {
   it('reports whether visible links exist', () => {
     expect(hasStoreLinks(product)).toBe(true);
     expect(hasStoreLinks(make({ storeLinks: [] }))).toBe(false);
+  });
+});
+
+describe('relatedProducts', () => {
+  const all = [
+    make({ id: 'a1', name: 'A1', type: 'app', status: 'released' }),
+    make({ id: 'a2', name: 'A2', type: 'app', status: 'beta' }),
+    make({ id: 'g1', name: 'G1', type: 'game', status: 'released' }),
+  ];
+
+  it('returns same-type products excluding self, sorted', () => {
+    const result = relatedProducts(all, all[0], 3);
+    expect(result.map((p) => p.id)).toEqual(['a2']);
+  });
+
+  it('returns nothing when no other same-type product exists', () => {
+    expect(relatedProducts(all, all[2], 3)).toEqual([]);
+  });
+
+  it('respects the limit', () => {
+    const many = [
+      make({ id: 's', name: 'Self', type: 'app' }),
+      make({ id: 'x1', name: 'X1', type: 'app' }),
+      make({ id: 'x2', name: 'X2', type: 'app' }),
+      make({ id: 'x3', name: 'X3', type: 'app' }),
+    ];
+    expect(relatedProducts(many, many[0], 2)).toHaveLength(2);
   });
 });
 

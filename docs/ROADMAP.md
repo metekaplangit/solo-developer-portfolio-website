@@ -62,19 +62,24 @@ remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
     Consistency becomes due after step #2.
   - **Rollback:** revert the feature merge commit; branch from baseline tag.
 
-### Milestone 2 — Premium minimal showcase *(next)*
+### Milestone 2 — Premium minimal showcase *(in progress)*
 
-- **STEP-0002 — Premium minimal product showcase** *(next; versionable → target
-  `v0.2.0`; Task Card to be frozen at start).* Home, catalog, product-detail page
-  pattern, responsive cards, media/screenshot handling, SEO/social metadata.
-  Accessibility checks merge-critical. Freeze to one outcome and split if it
-  grows; a Markdown Consistency checkpoint becomes due when this step completes
-  (feature step #2).
+- **STEP-0002 — Product detail page pattern** *(COMPLETE — merged, tagged `v0.2.0`,
+  2026-07-02)*. Delivered `/apps/<slug>/` detail pages, card→detail links,
+  related products, per-product SEO. Markdown Consistency **MC-0001** run (no drift).
+- *Remaining M2 candidates (future packets):* site-wide visual polish, real
+  image-optimization pipeline for screenshots/icons, richer social cards.
 
-### Milestone 3 — Store-support pages
-Global privacy page, per-product privacy routes, support/contact, about, footer
-links. No placeholder legal text in release content. Commercial/compliance
-overlay controls active.
+### Milestone 3 — Store-support pages *(next)*
+
+- **STEP-0003** *(next; versionable → target `v0.3.0`; Task Card to be frozen).*
+  Polished global privacy page, per-product privacy prose review, support/about
+  refinement, footer legal links. Keep language clear and non-advisory
+  (`SECURITY.md` legal boundary). One outcome only. A **Discussion** checkpoint
+  becomes due when this step completes (feature step #3).
+- M3 scope: global privacy page, per-product privacy routes, support/contact,
+  about, footer links. **No placeholder legal text in release content.**
+  Commercial/compliance overlay controls active.
 
 ### Milestone 4 — GitHub Pages deployment proof
 Pages Actions workflow, custom-domain + Cloudflare DNS notes, HTTPS verification,

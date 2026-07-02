@@ -26,7 +26,9 @@ const stores = visibleStoreLinks(product);
   <div class="card-head">
     <span class="monogram" aria-hidden="true">{monogram}</span>
     <div class="card-titles">
-      <h3 class="card-name">{product.name}</h3>
+      <h3 class="card-name">
+        <a href={`/apps/${product.slug}/`}>{product.name}</a>
+      </h3>
       <div class="card-tags">
         <Badge label={product.type === 'game' ? 'Game' : 'App'} tone="accent" />
         <Badge label={statusLabel(product.status)} />
@@ -93,6 +95,14 @@ const stores = visibleStoreLinks(product);
   .card-name {
     margin: 0;
     font-size: 1.125rem;
+  }
+  .card-name a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .card-name a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
   }
   .card-tags {
     display: flex;
