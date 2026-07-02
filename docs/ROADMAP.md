@@ -95,10 +95,22 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   2026-07-02).* "Light dark" graphite tokens, SF Pro scale, restrained accent,
   soft depth + translucent sticky header, tasteful motion, buttons, elevated
   cards, cinematic home. **Audit AUDIT-0001** run (feature step #5; all Pass).
-- **STEP-0006 — Theme rollout to remaining pages** *(next; → `v0.6.0`).* Bespoke
+- **STEP-0006 — Rebrand to MetKap Studio** *(COMPLETE — merged, tagged `v0.6.0`,
+  2026-07-02).* Brand = "MetKap Studio" (wordmark/title/hero/footer/SEO) via
+  `site.ts`; About attributes the studio to Mete Kaplan. Checkpoints **MC-0003 +
+  DISC-0002** run (feature step #6). *Reorder note:* the rebrand was inserted at
+  the user's request ahead of the theme rollout, which moved from STEP-0006 →
+  STEP-0007 (no completed IDs renumbered).
+- **STEP-0007 — Theme rollout to remaining pages** *(next; → `v0.7.0`).* Bespoke
   polish for catalog, detail, privacy/support/about, 404 (they inherit tokens
-  already). One page-group per packet if it grows. Discussion + Markdown
-  Consistency checkpoints both come due at feature step #6.
+  already). One page-group per packet if it grows. Enhancement checkpoint comes
+  due at feature step #7.
+
+### Milestone: Custom domain (metkapstudio.com) — *(deferred to end)*
+
+Fold `metkapstudio.com` into the deferred Milestone 5 custom-domain step: set
+`site` to it, `base` → `/`, add `CNAME`, update robots/sitemap, Cloudflare DNS,
+and switch the support email to `support@metkapstudio.com`.
 
 ### Milestone 5 — Custom domain + HTTPS *(deferred to end of project)*
 

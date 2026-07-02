@@ -14,7 +14,25 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. Next: roll the dark-premium theme across the remaining pages (STEP-0006)._
+_Nothing yet. Next: roll the dark-premium theme across the remaining pages (STEP-0007)._
+
+## [0.6.0] — 2026-07-02
+
+Rebrand to MetKap Studio (STEP-0006).
+
+### Changed
+
+- The site brand is now **MetKap Studio** — wordmark, page titles, hero, footer,
+  and SEO/OpenGraph. Centralized in `src/lib/site.ts` (new `person` field keeps
+  the studio brand distinct from the developer's name).
+- About page attributes the studio to Mete Kaplan; tagline/description use the
+  studio voice.
+
+### Notes
+
+- Future domain **metkapstudio.com** is deferred to the custom-domain step (set
+  `site`/`base`/`CNAME`/robots + `support@metkapstudio.com` there). Support email
+  stays a placeholder until then. Content-only; no data/logic changes.
 
 ## [0.5.0] — 2026-07-02
 
