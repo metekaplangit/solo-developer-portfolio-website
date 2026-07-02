@@ -22,17 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **7** (STEP-0001..STEP-0007).
+- Completed **feature** Steps: **8** (STEP-0001..STEP-0008).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0008**.
-- Next-due: **Markdown Consistency** after feature step **8**; Discussion after
-  **9**; Audit after **10**; next Enhancement after **14**.
+- Next feature step: **STEP-0009**.
+- Next-due: **Discussion** after feature step **9**; **Audit** + Markdown
+  Consistency after **10**; next Enhancement after **14**.
 
 ## Due now
 
 **None.** MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6),
-ENH-0001(7) done (+ on-demand MC-OD-0001). Markdown Consistency next falls due at
-step 8. No checkpoint blocks the next packet.
+ENH-0001(7), MC-0004(8) done (+ on-demand MC-OD-0001). Discussion next falls due
+at step 9. No checkpoint blocks the next packet.
 
 ## Ledger
 
@@ -48,6 +48,7 @@ step 8. No checkpoint blocks the next packet.
 | MC-0003 | STEP-0006 complete (feature #6) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0003.md` | Rebrand + roadmap reorder synced; no drift |
 | DISC-0002 | STEP-0006 complete (feature #6) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0002.md` | Rebrand review; fixed stale About meta (DISC-0002-F1) |
 | ENH-0001 | STEP-0007 complete (feature #7) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0001.md` | Accepted E1 (image pipeline) + E2 (a11y CI) to backlog; parked E3–E6 |
+| MC-0004 | STEP-0008 complete (feature #8) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0004.md` | Domain switch synced; live-HTTPS correctly recorded Blocked |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

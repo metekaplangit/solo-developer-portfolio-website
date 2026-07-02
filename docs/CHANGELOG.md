@@ -14,7 +14,25 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. UI/Design phase complete through v0.7.0; next packet undecided (see ROADMAP backlog)._
+_Post-DNS follow-up: enable Enforce HTTPS + GitHub domain verification once metkapstudio.com resolves._
+
+## [0.8.0] — 2026-07-02
+
+Custom domain metkapstudio.com (STEP-0008).
+
+### Changed
+
+- Site now targets **metkapstudio.com** at the root: `astro.config` `site` +
+  `base: '/'`, `public/CNAME`, `robots.txt`/sitemap on the domain, and
+  `support@metkapstudio.com`. `withBase()` is a no-op at root (kept for safety).
+- GitHub Pages custom domain set to metkapstudio.com.
+
+### Notes
+
+- **Live HTTPS on the domain is pending user-side Cloudflare DNS + GitHub
+  certificate provisioning** (up to 24h) — records and steps in `DEPLOYMENT.md`.
+  Enforce HTTPS + domain verification + Cloudflare Email Routing are the
+  post-DNS follow-ups. Still fully static.
 
 ## [0.7.0] — 2026-07-02
 

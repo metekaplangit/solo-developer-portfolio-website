@@ -11,35 +11,35 @@
 
 - **State:** **STEP-0001 complete** — content model (Zod) + static shell + routes
   (home, Apps & Games, privacy global + per-product, support, about) merged to
-  `main`, tagged **v0.7.0**, and **live**. 33 tests green. **Enhancement ENH-0001**
-  run (feature step #7).
-- **Live URL:** `https://metekaplangit.github.io/solo-developer-portfolio-website/`
-  (project site; **brand: MetKap Studio**; custom domain metkapstudio.com deferred).
-- **Next action:** UI phase is essentially done — pick the next packet: a backlog
-  enhancement (real image pipeline once assets exist; a11y/Lighthouse CI), the
-  deferred custom-domain step (needs the domain), or new product/content work.
-  Freeze a Task Card before editing.
-- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, then the
-  owner doc for the chosen packet.
+  `main`, tagged **v0.8.0**. 33 tests green. **MC-0004** run (feature step #8).
+- **Domain:** switched to **metkapstudio.com** (`site`/`base '/'`/`CNAME`/robots/
+  support email + Pages custom domain set). **Live-HTTPS is BLOCKED pending
+  user-side Cloudflare DNS + GitHub cert provisioning** — see DEPLOYMENT.md for
+  the exact DNS records.
+- **Next action:** (user) add the Cloudflare DNS records (DEPLOYMENT.md), then I
+  verify `https://metkapstudio.com/` 200 + enable Enforce HTTPS. Otherwise pick
+  the next packet (a11y/Lighthouse CI; real image pipeline; real content).
+- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `DEPLOYMENT.md`.
 - **Required checks:** `npm run build`, `npm run check`, `npm test`,
   `python3 scripts/validate-governance.py`.
-- **Blockers:** none. (Custom domain + real product assets pending the user.)
+- **Blockers:** **metkapstudio.com live-HTTPS Blocked** pending Cloudflare DNS
+  records + GitHub cert (up to 24h). Old github.io URL now redirects to the domain.
 
 ## Last completed Step Packet
 
-- **STEP-0007 — Theme rollout to remaining pages** — **DONE**, merged to `main`,
-  tagged **v0.7.0**, live. Task Card: `docs/tasks/STEP-0007.md`.
-- Delivered: shared `PageHeader`; polished catalog, product detail (button CTAs,
-  panel header, gradient screenshot frames), privacy article panel, support (email
-  as primary button), about. Whole site now matches the home's quality. UI-only.
-- (Prior: STEP-0006 rebrand v0.6.0; STEP-0005 design system v0.5.0; … v0.1.0.)
+- **STEP-0008 — Custom domain (metkapstudio.com)** — **DONE** (code/GitHub side),
+  merged to `main`, tagged **v0.8.0**. Task Card: `docs/tasks/STEP-0008.md`.
+- Delivered: root-served config (`site` metkapstudio.com, `base '/'`), `CNAME`,
+  robots/sitemap domain, `support@metkapstudio.com`, Pages custom domain set.
+  Live-HTTPS verification Blocked pending user DNS.
+- (Prior: STEP-0007 theme rollout v0.7.0; STEP-0006 rebrand v0.6.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: (a) **a11y/Lighthouse CI** (ties off LEDGER-002),
-  (b) **real image pipeline** `astro:assets` (needs real screenshots/icons),
-  (c) **custom domain** metkapstudio.com (needs the domain), (d) new product/
-  content. See `ROADMAP.md` backlog + `ENHANCEMENT_ENH-0001.md`. One outcome only.
+- **Not yet chosen.** After DNS is live: enable Enforce HTTPS + domain
+  verification (small follow-up). Other candidates: **a11y/Lighthouse CI**
+  (LEDGER-002); **real image pipeline** `astro:assets` (needs assets); **real
+  product content**. See `ROADMAP.md` backlog. One outcome only.
 
 ## Machine-readable state
 
@@ -48,19 +48,19 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0007
-next_step: undecided (see Next Step Packet)
+current_step: STEP-0008
+next_step: undecided (post-DNS: enable HTTPS + verify; or new packet)
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.7.0
-live_url: https://metekaplangit.github.io/solo-developer-portfolio-website/
+product_tag: v0.8.0
+live_url: https://metkapstudio.com/ (pending Cloudflare DNS + cert)
 brand: MetKap Studio
-future_domain: metkapstudio.com (deferred)
+domain: metkapstudio.com (Pages custom domain set; DNS pending user)
 dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
-blockers: none
+blockers: metkapstudio.com live-HTTPS pending Cloudflare DNS + GitHub cert (<=24h)
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
@@ -94,14 +94,15 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 | Dependency audit (`npm audit`) | Pass | Merge-critical | `found 0 vulnerabilities` |
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
 | Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
-| Deployment (Pages project site) | Pass | Release-critical (channel) | live URL 200; custom domain deferred |
+| Deployment code/config (domain) | Pass | Merge-critical | build at root; CNAME/canonical/robots on metkapstudio.com; Pages cname set |
+| Live domain HTTPS | Blocked | Release-critical (channel) | pending Cloudflare DNS + GitHub cert; steps in DEPLOYMENT.md |
 
 ## Checkpoints
 
-Completed **feature** steps: **7** (STEP-0001..0007). Checkpoints run: MC-0001(2),
-DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6), **ENH-0001**(7),
-plus on-demand MC-OD-0001. Next: Markdown Consistency after step **8**; Discussion
-after step **9**; Audit after **10**. Calibration: completed 2026-07-02.
+Completed **feature** steps: **8** (STEP-0001..0008). Checkpoints run: MC-0001(2),
+DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6), ENH-0001(7),
+**MC-0004**(8), plus on-demand MC-OD-0001. Next: Discussion after step **9**;
+Audit + Markdown Consistency after **10**. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -121,6 +122,7 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.7.0** (STEP-0007 merge
-commit); prior v0.6.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
-in sync. **Live channel:** GitHub Pages project site (Actions deploy).
+`solo-dev-portfolio-website`). Latest product tag: **v0.8.0** (STEP-0008 merge
+commit); prior v0.7.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
+(HTTPS pending DNS).

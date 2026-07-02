@@ -8,7 +8,7 @@ export const site = {
   tagline: 'An independent studio building calm apps and small games.',
   description:
     'MetKap Studio — the apps and games of an independent studio, with clear privacy and support pages for every product.',
-  supportEmail: 'support@example.com',
+  supportEmail: 'support@metkapstudio.com',
   social: [
     { label: 'GitHub', url: 'https://github.com/metekaplangit' },
   ],
