@@ -22,22 +22,23 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **0**.
-- Calibration status: **pending** (offered before Step 1 / STEP-0001).
-- Next feature step: **STEP-0001**.
-- Next-due: Markdown Consistency after feature step **2**; Discussion after **3**;
-  Audit after **5**; Enhancement after **7**.
+- Completed **feature** Steps: **1** (STEP-0001).
+- Calibration status: **completed** (2026-07-02).
+- Next feature step: **STEP-0002**.
+- Next-due: Markdown Consistency after feature step **2** (i.e. when STEP-0002
+  completes); Discussion after **3**; Audit after **5**; Enhancement after **7**.
 
 ## Due now
 
-**None.** No feature step has completed yet, so no scheduled checkpoint is due.
-The baseline (Milestone 0) is a non-feature step.
+**None.** 1 feature step complete; Markdown Consistency first falls due at
+feature step 2. No checkpoint blocks the next packet.
 
 ## Ledger
 
 | Checkpoint ID | Trigger (Step/event) | Type | Status | Report | Notes |
 |---|---|---|---|---|---|
-| — | Initialization (STEP baseline) | n/a | n/a | — | Baseline is non-feature; no checkpoint due |
+| — | Initialization (M0 baseline) | n/a | n/a | — | Non-feature; no checkpoint due |
+| — | STEP-0001 complete (feature #1) | n/a | n/a | — | Below every-2 cadence; none due |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

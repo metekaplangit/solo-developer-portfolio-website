@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../lib/site';
+import { sortProducts } from '../../lib/products';
+
+const products = sortProducts((await getCollection('products')).map((e) => e.data));
+const subject = encodeURIComponent('Support request');
+---
+
+<BaseLayout
+  title="Support"
+  description="How to get support for any app or game — a direct email, no forms."
+>
+  <div class="support">
+    <h1>Support</h1>
+    <p class="lede">
+      Need help with an app or game? Email me directly — there is no form and
+      nothing is tracked.
+    </p>
+
+    <p class="cta">
+      <a class="email" href={`mailto:${site.supportEmail}?subject=${subject}`}>
+        {site.supportEmail}
+      </a>
+    </p>
+
+    <section aria-labelledby="include-h">
+      <h2 id="include-h">What to include</h2>
+      <ul>
+        <li>The product name and the platform you are using.</li>
+        <li>The app or game version, if you know it.</li>
+        <li>What happened and what you expected instead.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="products-h">
+      <h2 id="products-h">Supported products</h2>
+      <ul>
+        {products.map((p) => <li>{p.name}</li>)}
+      </ul>
+    </section>
+
+    <p class="privacy-ref">
+      See the <a href="/privacy/">privacy overview</a> for how data is handled.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .support {
+    max-width: 42rem;
+    padding-block: var(--space-12) var(--space-8);
+  }
+  .support h1 {
+    margin: 0 0 var(--space-3);
+  }
+  .lede {
+    margin: 0 0 var(--space-6);
+    color: var(--color-muted);
+    font-size: 1.125rem;
+  }
+  .cta {
+    margin: 0 0 var(--space-8);
+  }
+  .email {
+    display: inline-block;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+  .privacy-ref {
+    margin-top: var(--space-8);
+    color: var(--color-muted);
+  }
+</style>

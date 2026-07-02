@@ -1,25 +1,69 @@
 ---
-// Baseline scaffold page only. The real home page is built in STEP-0002
-// (premium minimal showcase). This exists so the static build is valid at the
-// clean baseline and is intentionally free of product content.
-const title = 'Solo Developer Portfolio — baseline scaffold';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { site } from '../lib/site';
+import { getFeatured, sortProducts } from '../lib/products';
+
+const entries = await getCollection('products');
+const products = entries.map((e) => e.data);
+const featured = getFeatured(products);
+const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>Baseline scaffold</h1>
-      <p>
-        This is the initialized Astro static baseline. Feature work begins at
-        STEP-0001. See <code>docs/STATUS.md</code> for current state.
-      </p>
-    </main>
-  </body>
-</html>
+<BaseLayout title={site.name} description={site.description}>
+  <section class="hero">
+    <p class="eyebrow">{site.tagline}</p>
+    <h1>{site.name}</h1>
+    <p class="lede">{site.description}</p>
+    <p class="hero-links">
+      <a href="/apps/">See all apps &amp; games</a>
+      <span aria-hidden="true">·</span>
+      <a href="/support/">Support</a>
+      <span aria-hidden="true">·</span>
+      <a href="/privacy/">Privacy</a>
+    </p>
+  </section>
+
+  <section aria-labelledby="featured-h">
+    <h2 id="featured-h">Featured</h2>
+    <ul class="grid" role="list">
+      {showcase.map((p) => <li><ProductCard product={p} /></li>)}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-16) var(--space-8);
+    max-width: 42rem;
+  }
+  .eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  .hero h1 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+  .lede {
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+    font-size: 1.125rem;
+  }
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+</style>
