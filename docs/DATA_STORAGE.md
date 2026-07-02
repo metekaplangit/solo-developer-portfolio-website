@@ -29,11 +29,13 @@ build; invalid content **fails the build loudly**.
   lastUpdated, seo`.
 - **StoreLink:** `store, url, status, countryOrRegionLimit?, notes?`.
 - **PrivacyPolicyEntry:** `productId, title, lastUpdated, dataCollected[],
-  dataUse[], dataNotCollected[], thirdPartyServices[], retention (REQUIRED),
-  hasAccounts, contact, effectiveScope, reviewStatus`. Supports one global policy
-  + per-product entries. `retention` is required (Apple 5.1.1(i)) so an
-  incomplete policy fails the build; `dataUse`/`hasAccounts` map to Apple's
-  "uses of data" and in-app account-deletion (5.1.1(v)). See `SECURITY.md`.
+  dataUse[], dataNotCollected[], thirdPartyServices[], storedLocally[],
+  permissions[], retention (REQUIRED), hasAccounts, contact, effectiveScope,
+  reviewStatus`. Supports one global policy + per-product entries. `retention` is
+  required (Apple 5.1.1(i)); `dataUse`/`hasAccounts` map to Apple's "uses of data"
+  and in-app account-deletion (5.1.1(v)). `storedLocally[]`/`permissions[]` render
+  as bullet sections. `PolicyArticle` presents these as an at-a-glance chip strip
+  + separated headlined sections. See `SECURITY.md` and `UI_DESIGN.md`.
 - **MediaAsset:** `id, productId, type(icon|screenshot|hero|logo|press), path,
   altText, dimensions, source, licenseOrOwnership`.
 

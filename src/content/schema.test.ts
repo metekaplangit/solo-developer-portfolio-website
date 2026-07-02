@@ -96,6 +96,8 @@ describe('privacyPolicyEntrySchema', () => {
     const r = privacyPolicyEntrySchema.parse(validPolicy);
     expect(r.dataCollected).toEqual([]);
     expect(r.dataUse).toEqual([]);
+    expect(r.storedLocally).toEqual([]);
+    expect(r.permissions).toEqual([]);
     expect(r.hasAccounts).toBe(false);
     expect(r.reviewStatus).toBe('draft');
     expect(r.lastUpdated).toBeInstanceOf(Date);
