@@ -11,35 +11,35 @@
 
 - **State:** **STEP-0001 complete** — content model (Zod) + static shell + routes
   (home, Apps & Games, privacy global + per-product, support, about) merged to
-  `main`, tagged **v0.5.0**, and **live**. 33 tests green. **Audit AUDIT-0001**
-  run (feature step #5) — all areas Pass, 2 low advisories logged.
+  `main`, tagged **v0.6.0**, and **live**. 33 tests green. Checkpoints
+  **MC-0003 + DISC-0002** run (feature step #6).
 - **Live URL:** `https://metekaplangit.github.io/solo-developer-portfolio-website/`
-  (project site; custom domain deferred to a late step).
-- **Next action:** **STEP-0006 — roll the dark-premium theme across the remaining
+  (project site; **brand: MetKap Studio**; custom domain metkapstudio.com deferred).
+- **Next action:** **STEP-0007 — roll the dark-premium theme across the remaining
   pages** (catalog, product detail, privacy, support, about, 404 — bespoke polish
-  on top of the shared tokens). Freeze its Task Card before editing.
+  on the shared tokens). Freeze its Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, then
   `UI_DESIGN.md`, `ARCHITECTURE.md`.
 - **Required checks:** `npm run build`, `npm run check`, `npm test`,
   `python3 scripts/validate-governance.py`.
-- **Blockers:** none. (Custom domain deferred to a late step, by user decision.)
+- **Blockers:** none. (Custom domain metkapstudio.com deferred to a late step;
+  support email stays a placeholder until then.)
 
 ## Last completed Step Packet
 
-- **STEP-0005 — Dark-premium Apple-minimal design system + home** — **DONE**,
-  merged to `main`, tagged **v0.5.0**, live. Task Card: `docs/tasks/STEP-0005.md`.
-- Delivered: "light dark" graphite token system, SF Pro scale, restrained accent,
-  soft depth + translucent sticky header, tasteful motion (reduced-motion aware),
-  button styles, elevated cards, and a cinematic home. UI-only.
-- (Prior: STEP-0004 deploy v0.4.0; STEP-0003 v0.3.0; STEP-0002 v0.2.0; STEP-0001 v0.1.0.)
+- **STEP-0006 — Rebrand to MetKap Studio** — **DONE**, merged to `main`, tagged
+  **v0.6.0**, live. Task Card: `docs/tasks/STEP-0006.md`.
+- Delivered: brand = "MetKap Studio" (wordmark/title/hero/footer/SEO) via
+  `site.ts`; About attributes the studio to Mete Kaplan (`person` field).
+- (Prior: STEP-0005 design system v0.5.0; STEP-0004 deploy v0.4.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **STEP-0006 — Theme rollout to remaining pages** (UI phase; versionable →
-  target `v0.6.0`). Apply the design system's bespoke polish to catalog, product
-  detail, privacy (global + per-product), support, about, and 404 — they already
-  inherit the tokens; refine their page-specific layouts, spacing, and depth. One
-  page-group per packet if it grows. **UI-only** — no product/data/logic changes.
+- **STEP-0007 — Theme rollout to remaining pages** (UI phase; versionable →
+  target `v0.7.0`). Apply bespoke polish to catalog, product detail, privacy
+  (global + per-product), support, about, and 404 — they already inherit the
+  tokens; refine page-specific layouts, spacing, and depth. One page-group per
+  packet if it grows. **UI-only** — no product/data/logic changes.
 
 ## Machine-readable state
 
@@ -48,12 +48,14 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0005
-next_step: STEP-0006
+current_step: STEP-0006
+next_step: STEP-0007
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.5.0
+product_tag: v0.6.0
 live_url: https://metekaplangit.github.io/solo-developer-portfolio-website/
+brand: MetKap Studio
+future_domain: metkapstudio.com (deferred)
 dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
@@ -96,11 +98,11 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **5** (STEP-0001..0005). Checkpoints run: MC-0001
-(2), DISC-0001 (3), MC-0002 (4), **AUDIT-0001** (5;
-`docs/audits/AUDIT_AUDIT-0001.md`), plus on-demand MC-OD-0001. Next: Discussion +
-Markdown Consistency after step **6**; Audit after step **10**. Calibration:
-completed 2026-07-02.
+Completed **feature** steps: **6** (STEP-0001..0006). Checkpoints run: MC-0001(2),
+DISC-0001(3), MC-0002(4), AUDIT-0001(5), **MC-0003 + DISC-0002**(6), plus
+on-demand MC-OD-0001. Next: **Enhancement** after step **7**; Markdown
+Consistency after step **8**; Discussion after step **9**; Audit after **10**.
+Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -120,6 +122,6 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.5.0** (STEP-0005 merge
-commit); prior v0.4.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.6.0** (STEP-0006 merge
+commit); prior v0.5.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages project site (Actions deploy).

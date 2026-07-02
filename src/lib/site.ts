@@ -1,11 +1,13 @@
 // Single source of site-level identity + navigation. Placeholder values are
 // safe to edit without touching components. See docs/ARCHITECTURE.md (DRY).
 export const site = {
-  name: 'Mete Kaplan',
-  brand: 'Mete Kaplan',
-  tagline: 'Solo developer building calm apps and small games.',
+  name: 'MetKap Studio',
+  brand: 'MetKap Studio',
+  /** The person behind the studio (used on the About page). */
+  person: 'Mete Kaplan',
+  tagline: 'An independent studio building calm apps and small games.',
   description:
-    'The apps and games of a solo developer — with clear privacy and support pages for every product.',
+    'MetKap Studio — the apps and games of an independent studio, with clear privacy and support pages for every product.',
   supportEmail: 'support@example.com',
   social: [
     { label: 'GitHub', url: 'https://github.com/metekaplangit' },
