@@ -91,12 +91,14 @@ remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
 UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
 **Forbidden without a separate packet:** product/data/schema/logic changes.
 
-- **STEP-0005 — Design system + home** *(next; → `v0.5.0`).* Elevated "light
-  dark" theme (graphite, not black), SF Pro type scale, restrained accent, soft
-  depth (hairline borders, gentle shadows, translucent sticky header), generous
-  spacing, tasteful motion (reduced-motion respected). Tokens + shell + home.
-- **STEP-0006+** *(planned):* roll the theme to catalog, detail, privacy/support/
-  about; refine cards, badges, screenshots framing. One page-group per packet.
+- **STEP-0005 — Design system + home** *(COMPLETE — merged, tagged `v0.5.0`,
+  2026-07-02).* "Light dark" graphite tokens, SF Pro scale, restrained accent,
+  soft depth + translucent sticky header, tasteful motion, buttons, elevated
+  cards, cinematic home. **Audit AUDIT-0001** run (feature step #5; all Pass).
+- **STEP-0006 — Theme rollout to remaining pages** *(next; → `v0.6.0`).* Bespoke
+  polish for catalog, detail, privacy/support/about, 404 (they inherit tokens
+  already). One page-group per packet if it grows. Discussion + Markdown
+  Consistency checkpoints both come due at feature step #6.
 
 ### Milestone 5 — Custom domain + HTTPS *(deferred to end of project)*
 

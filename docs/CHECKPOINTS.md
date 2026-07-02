@@ -22,16 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **4** (STEP-0001..STEP-0004).
+- Completed **feature** Steps: **5** (STEP-0001..STEP-0005).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0005**.
-- Next-due: **Audit** after feature step **5**; Discussion + Markdown Consistency
-  after step **6**; Enhancement after **7**.
+- Next feature step: **STEP-0006**.
+- Next-due: **Discussion** + **Markdown Consistency** after feature step **6**;
+  Enhancement after **7**; Audit after **10**.
 
 ## Due now
 
-**None.** MC-0001 (step 2), DISC-0001 (step 3), and MC-0002 (step 4) are done.
-Audit first falls due at feature step 5. No checkpoint blocks the next packet.
+**None.** MC-0001 (2), DISC-0001 (3), MC-0002 (4), AUDIT-0001 (5) done (+ on-demand
+MC-OD-0001). Discussion + Markdown Consistency next fall due at step 6. No
+checkpoint blocks the next packet.
 
 ## Ledger
 
@@ -43,6 +44,7 @@ Audit first falls due at feature step 5. No checkpoint blocks the next packet.
 | DISC-0001 | STEP-0003 complete (feature #3) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0001.md` | Fixed CI test gap; logged LEDGER-001 (monogram dup) |
 | MC-0002 | STEP-0004 complete (feature #4) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0002.md` | Synced deploy/base-path across docs; roadmap phase reorg |
 | MC-OD-0001 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0001.md` | Relabelled stale M2 heading; all owners in sync. Does not reset cadence. |
+| AUDIT-0001 | STEP-0005 complete (feature #5) | Audit | Done | `docs/audits/AUDIT_AUDIT-0001.md` | All areas Pass; logged LEDGER-002 (a11y automation) + noted LEDGER-001 |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

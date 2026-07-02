@@ -25,6 +25,16 @@ first maintained release (see `ISSUE_TRACKING.md`).
   into `src/lib/` on the third use (rule-of-three per `REFACTORING.md`).
   status: open (watch — do not extract yet at 2 uses).
 
+- LEDGER-002 | type:accessibility | priority:low | No automated a11y / visual
+  regression check
+  observed: UI correctness (contrast, focus, layout) is verified manually via
+  screenshots only; no automated axe/pa11y/Lighthouse gate.
+  expected: an automated accessibility check in CI for user-facing pages.
+  evidence: AUDIT-0001 (F1). impact: manual checks can miss regressions as the
+  UI grows. step-or-commit: found at STEP-0005. acceptance: add a Lighthouse or
+  axe/pa11y check (own packet) during the UI phase or launch-hardening.
+  status: open (advisory; not merge-blocking).
+
 ## Entry format
 
 ```
