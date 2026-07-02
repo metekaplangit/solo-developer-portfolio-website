@@ -22,18 +22,19 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **10** (STEP-0001..STEP-0010).
+- Completed **feature** Steps: **11** (STEP-0001..STEP-0011).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0011**.
+- Next feature step: **STEP-0012**.
 - Next-due: **Discussion** + **Markdown Consistency** after feature step **12**;
   next Enhancement after **14**; Audit after **15**.
 
 ## Due now
 
-**None.** MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6),
-ENH-0001(7), MC-0004(8), DISC-0003(9), AUDIT-0002+MC-0005(10) done (+ on-demand
-MC-OD-0001/0002/0003). Nothing falls due until step 12. No checkpoint blocks the
-next packet.
+**None.** Through step 10: MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5),
+MC-0003+DISC-0002(6), ENH-0001(7), MC-0004(8), DISC-0003(9), AUDIT-0002+MC-0005(10)
+done (+ on-demand MC-OD-0001..0004). **Step 11 (branding) triggered no scheduled
+checkpoint.** Discussion + Markdown Consistency next fall due at step 12. No
+checkpoint blocks the next packet.
 
 ## Ledger
 

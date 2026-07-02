@@ -144,6 +144,10 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   Consistency MC-0005** run (feature step #10).
 - **Next real-product packets:** one per app the user supplies (each folder is
   read-only). Add screenshots + Mac App Store link for Sole Focus once published.
+- **STEP-0011 — Studio Gem brand logo** *(COMPLETE — merged, tagged `v0.11.0`,
+  2026-07-02).* Installed the studio favicon + PWA icon set + web manifest + OG
+  image + nav logo mark from the user's icon-generator export v0001. No scheduled
+  checkpoint at feature step #11.
 
 ## Backlog — accepted enhancements (from ENH-0001)
 

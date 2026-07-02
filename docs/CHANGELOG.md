@@ -16,6 +16,27 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP (changelog block / a11y CI / more real products)._
 
+## [0.11.0] — 2026-07-02
+
+MetKap Studio brand logo — the "Studio Gem" (STEP-0011).
+
+### Added
+
+- Studio **favicon + PWA icon set** and `site.webmanifest` (`public/`): SVG +
+  16/32/48 favicons, apple-touch-icon, 192/512 + maskable PWA icons.
+- **OG/social image** (`og-image.png`) + `og:image`/`twitter:image` head tags.
+- Visible **logo mark** in the nav next to "MetKap Studio".
+
+### Changed
+
+- Replaced the placeholder "MK" favicon with the Studio Gem across tab, home
+  screen, and social previews.
+
+### Notes
+
+- Installed from the user's icon-generator export v0001 per its `web/AGENTS.md`
+  (export unmodified). Provenance recorded in `UI_DESIGN.md`. Still fully static.
+
 ## [0.10.0] — 2026-07-02
 
 First real product: **Sole Focus** (STEP-0010).

@@ -1,5 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="MK">
-  <rect width="32" height="32" rx="7" fill="#3a4ba0" />
-  <text x="16" y="21" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif"
-        font-size="14" font-weight="700" fill="#ffffff">MK</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="m3bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24262c"/><stop offset="1" stop-color="#15161a"/></linearGradient>
+    <linearGradient id="m3ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#aab4ff"/><stop offset="1" stop-color="#6b79f0"/></linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#m3bg)"/>
+  <!-- crafted "gem" frame: rounded diamond with an inner cutout -->
+  <g transform="rotate(45 512 512)">
+    <rect x="286" y="286" width="452" height="452" rx="86" fill="url(#m3ac)"/>
+    <rect x="378" y="378" width="268" height="268" rx="52" fill="#15161a"/>
+  </g>
+  <circle cx="512" cy="512" r="66" fill="url(#m3ac)"/>
 </svg>
