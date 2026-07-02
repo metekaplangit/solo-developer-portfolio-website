@@ -14,7 +14,30 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. Next: Milestone 4 — GitHub Pages deployment proof (custom domain, HTTPS)._
+_Nothing yet. Next: UI/design phase — dark-premium Apple-minimal redesign (STEP-0005)._
+
+## [0.4.0] — 2026-07-02
+
+Live on GitHub Pages (STEP-0004).
+
+### Added
+
+- Continuous deployment to a **GitHub Pages project site**
+  (`https://metekaplangit.github.io/solo-developer-portfolio-website/`) via
+  `.github/workflows/deploy.yml` (Actions → Pages, least-privilege).
+- `withBase()` link helper (`src/lib/url.ts`) so all internal links resolve under
+  the project sub-path; 5 unit tests.
+
+### Changed
+
+- `astro.config.mjs` now targets the Pages project site (`base` + `site`); all
+  internal links routed through `withBase()`.
+- `robots.txt` sitemap URL points at the project site.
+
+### Notes
+
+- **Custom domain deferred to the end of the project** (user decision). Reverting
+  is a documented late step (`site`→domain, `base`→`/`). Still fully static.
 
 ## [0.3.0] — 2026-07-02
 

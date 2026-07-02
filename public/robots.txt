@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 
-# NOTE (deploy/M4): update the domain below to the real custom domain when the
-# Cloudflare-managed domain is live. Must match `site` in astro.config.mjs.
-Sitemap: https://example.com/sitemap-index.xml
+# NOTE: while on the GitHub Pages *project site* this file is served under the
+# base path, so crawlers reading the domain-root /robots.txt won't see it — this
+# is fine for the temporary test deploy. When the custom domain lands (base '/'),
+# robots.txt returns to the domain root and this Sitemap URL must be updated.
+Sitemap: https://metekaplangit.github.io/solo-developer-portfolio-website/sitemap-index.xml

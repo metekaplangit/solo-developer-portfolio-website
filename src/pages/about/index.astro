@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../lib/site';
+import { withBase } from '../../lib/url';
 ---
 
 <BaseLayout
@@ -29,8 +30,8 @@ import { site } from '../../lib/site';
     <section aria-labelledby="links-h">
       <h2 id="links-h">Elsewhere</h2>
       <ul>
-        <li><a href="/apps/">Apps &amp; Games</a></li>
-        <li><a href="/support/">Support</a> ({site.supportEmail})</li>
+        <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
+        <li><a href={withBase('/support/')}>Support</a> ({site.supportEmail})</li>
         {
           site.social.map((s) => (
             <li>

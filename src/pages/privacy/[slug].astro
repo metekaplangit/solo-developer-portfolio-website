@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PolicyArticle from '../../components/PolicyArticle.astro';
+import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
   const entries = await getCollection('policies');
@@ -21,7 +22,7 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout title={entry.data.title} description={`Privacy policy — ${entry.data.title}.`}>
-  <p class="back"><a href="/privacy/">← All privacy policies</a></p>
+  <p class="back"><a href={withBase('/privacy/')}>← All privacy policies</a></p>
   <PolicyArticle policy={entry.data}>
     <Content />
   </PolicyArticle>

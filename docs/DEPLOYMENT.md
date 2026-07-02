@@ -13,6 +13,31 @@
 except the domain.** No Workers/Pages/serverless. Cloudflare Pages is a
 future-fallback only if GitHub Pages limits become a real blocker.
 
+## Current deployment: GitHub Pages project site (STEP-0004, no domain yet)
+
+Live since STEP-0004 for continuous preview; **custom domain deferred to a late
+step**.
+
+- **URL:** `https://metekaplangit.github.io/solo-developer-portfolio-website/`.
+- **Config:** `astro.config.mjs` `site: 'https://metekaplangit.github.io'`,
+  `base: '/solo-developer-portfolio-website'`. Internal links go through
+  `withBase()` (`src/lib/url.ts`) so they resolve under the sub-path.
+- **Workflow:** `.github/workflows/deploy.yml` — `withastro/action@v3` builds and
+  uploads, `actions/deploy-pages@v4` deploys, on push to `main`. Least-privilege
+  permissions (`pages: write`, `id-token: write`); `concurrency: pages`.
+- **Pages source:** GitHub Actions (enabled via `gh api … /pages` build_type
+  `workflow`).
+- **`robots.txt` caveat:** on a project site it is served under the base path,
+  so domain-root crawlers won't read it — acceptable for the temporary test
+  deploy.
+
+### Reverting to the custom domain (late step)
+
+Set `site` to the real domain and `base` back to `/`; `withBase()` then becomes a
+no-op. Add `public/CNAME`, configure Cloudflare DNS (apex `A`/`ALIAS`, `www`
+`CNAME`; no wildcard), verify the domain in GitHub before adding, enforce HTTPS,
+update `robots.txt` + sitemap URL. (Checklist below.)
+
 ## Build
 
 - Command: `npm run build` → output dir: `dist/` (static).
