@@ -27,7 +27,20 @@ Claude Code runs against the repository directly.
 | `astro check` in CI | TESTING.md, DEPLOYMENT.md, `.github/workflows/ci.yml` |
 | `yaml` security override | TECH_STACK.md, SECURITY.md |
 
+## Calibration findings (2026-07-02)
+
+Pre-first-step calibration adopted, as workflow (not product) changes:
+
+| Item | Source / trust | Status | Reason |
+|---|---|---|---|
+| VS Code Astro + MDX extensions (`.vscode/extensions.json`) | Official (astro-build.astro-vscode) | **Adopted** (recommend-only) | Content-collection type hints; optional. |
+| Local npm-cache permission workaround | Environment finding | **Adopted** (documented in AI_WORKFLOW.md) | Prevents `EACCES` install failures without sudo. |
+| Astro 7 agent-mode + `npm run preview` runtime proof | Official | **Adopted** (documented in AI_WORKFLOW.md, TESTING.md) | Machine-readable gates + browser runtime evidence path. |
+
+No new dependency, service, MCP, or paid tool was added. Product intent and stack
+are unchanged.
+
 ## Recurring search
 
 Run at scheduled audits (see `CHECKPOINTS.md`). Record query, source, result,
-adoption/rejection, and follow-up. None run yet beyond initialization.
+adoption/rejection, and follow-up. None run yet beyond initialization + calibration.
