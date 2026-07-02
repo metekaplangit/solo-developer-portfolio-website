@@ -14,7 +14,7 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Post-DNS follow-up: enable Enforce HTTPS + GitHub domain verification once metkapstudio.com resolves._
+_Nothing pending. metkapstudio.com is fully live over HTTPS (cert approved, Enforce HTTPS on). Next packet undecided — see ROADMAP._
 
 ## [0.8.0] — 2026-07-02
 

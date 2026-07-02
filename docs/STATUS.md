@@ -12,13 +12,13 @@
 - **State:** **STEP-0001 complete** — content model (Zod) + static shell + routes
   (home, Apps & Games, privacy global + per-product, support, about) merged to
   `main`, tagged **v0.8.0**. 33 tests green. **MC-0004** run (feature step #8).
-- **Domain:** **metkapstudio.com is LIVE.** DNS added + propagated (1.1.1.1 &
-  8.8.8.8 → GitHub IPs); site serves our content over HTTP (200); `www`→apex 301.
-  **HTTPS cert is provisioning** (GitHub, automatic). Once ready: tick Enforce
-  HTTPS in Settings → Pages.
-- **Next action:** wait for the GitHub cert (~mins–few hrs), then enable Enforce
-  HTTPS + optional domain verification. Optional now: Cloudflare Email Routing
-  for `support@`, DNSSEC. Then pick the next packet (a11y CI; real content).
+- **Domain:** **metkapstudio.com is fully LIVE over HTTPS.** DNS propagated;
+  cert **approved**; `https_enforced: true`; `https://` returns 200 with a valid
+  cert; `http://`→`https://` 301; `www`→apex. Custom-domain step fully complete.
+- **Next action:** pick the next packet — **changelog/updates block** (user asked
+  about it), **a11y/Lighthouse CI** (LEDGER-002), **real image pipeline** (needs
+  assets), or **real product content**. Optional (user, 2 min each): Cloudflare
+  Email Routing for `support@metkapstudio.com`, DNSSEC.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `DEPLOYMENT.md`.
 - **Required checks:** `npm run build`, `npm run check`, `npm test`,
   `python3 scripts/validate-governance.py`.
@@ -53,14 +53,14 @@ next_step: undecided (post-DNS: enable HTTPS + verify; or new packet)
 branch: main
 head: regenerate-live (git rev-parse HEAD)
 product_tag: v0.8.0
-live_url: https://metkapstudio.com/ (pending Cloudflare DNS + cert)
+live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
-domain: metkapstudio.com (Pages custom domain set; DNS pending user)
+domain: metkapstudio.com (live; cert approved; https_enforced: true)
 dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
-blockers: metkapstudio.com HTTPS cert provisioning (GitHub, automatic; DNS done, HTTP 200 live)
+blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
@@ -95,8 +95,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
 | Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
 | Deployment code/config (domain) | Pass | Merge-critical | build at root; CNAME/canonical/robots on metkapstudio.com; Pages cname set |
-| Live domain (HTTP) | Pass | Release-critical (channel) | DNS propagated; metkapstudio.com serves our site (200); www→apex 301 |
-| Live domain HTTPS | Blocked | Release-critical (channel) | GitHub cert provisioning (automatic); enable Enforce HTTPS when ready |
+| Live domain HTTPS | Pass | Release-critical (channel) | cert approved; https 200 + valid TLS; http→https 301; enforce_https on; www→apex |
 
 ## Checkpoints
 
