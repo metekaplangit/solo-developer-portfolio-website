@@ -49,7 +49,7 @@ const seoDescription = product.seo?.description ?? product.summary;
     <header class="detail-head">
       {
         product.icon ? (
-          <img class="app-icon" src={withBase(product.icon.path)} alt="" width="64" height="64" />
+          <img class="app-icon" src={withBase(product.icon.path)} alt="" width="72" height="72" />
         ) : (
           <span class="monogram" aria-hidden="true">{monogram}</span>
         )
@@ -145,8 +145,7 @@ const seoDescription = product.seo?.description ?? product.summary;
       }
       <dt>Privacy &amp; support</dt>
       <dd>
-        <a href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a> ·
-        <a href={withBase(product.supportUrl)}>Support</a>
+        <a href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>{' · '}<a href={withBase(product.supportUrl)}>Support</a>
       </dd>
     </dl>
   </article>
@@ -169,12 +168,12 @@ const seoDescription = product.seo?.description ?? product.summary;
 
 <style>
   .back {
-    max-width: 48rem;
+    max-width: var(--maxw-prose);
     margin: 0;
     padding-top: var(--space-8);
   }
   .detail {
-    max-width: 48rem;
+    max-width: var(--maxw-prose);
     padding-block: var(--space-6) var(--space-8);
   }
   .detail-head {
@@ -191,21 +190,22 @@ const seoDescription = product.seo?.description ?? product.summary;
   .monogram {
     display: grid;
     place-items: center;
-    width: 4rem;
-    height: 4rem;
-    border-radius: var(--radius);
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: var(--radius-lg);
     background: var(--accent);
     color: var(--accent-contrast);
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     flex: none;
   }
+  /* Matches the product icon treatment on the privacy page (same size/radius/shadow). */
   .app-icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: var(--radius);
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: var(--radius-lg);
     flex: none;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
   }
   .detail h1 {
     margin: 0 0 var(--space-2);
@@ -278,7 +278,7 @@ const seoDescription = product.seo?.description ?? product.summary;
     color: var(--muted);
   }
   .related {
-    max-width: 48rem;
+    max-width: var(--maxw-prose);
     margin-top: var(--space-8);
     border-top: 1px solid var(--border);
     padding-top: var(--space-6);

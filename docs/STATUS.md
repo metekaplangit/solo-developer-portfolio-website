@@ -9,17 +9,19 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0013 complete** — **product app icon on privacy pages** +
-  **current Sole Focus icon**. `PolicyArticle` now shows the app icon beside the
-  title (rounded tile); the Sole Focus icon is the app's current SVG export
-  (orange-rimmed clock / sepia tile), shared by the home card. Merged, tagged
-  **v0.13.0**. 34 tests green. No scheduled checkpoint at feature step #13.
+- **State:** **STEP-0014 complete** — **UI polish + clearer website privacy
+  scope**. Shared `--maxw-prose` column so every content page lines up; product
+  icon unified across detail + privacy; `·Support` separator fixed; main privacy
+  page retitled **"MetKap Studio Website Privacy Policy"** with an explicit
+  website-vs-apps opening. Merged, tagged **v0.14.0**. 34 tests green.
+  **Markdown Consistency MC-0007** run (feature step #14).
 - **Live:** **metkapstudio.com** over HTTPS, served through the **Cloudflare
   proxy** (edge CDN; instant visitor freshness); gem logo; Sole Focus product +
   scannable privacy pages with the current app icon.
-- **Next action:** **STEP-0014 — UI polish pass** (alignment, spacing rhythm,
-  nothing overflowing, cross-page/token consistency). Freeze a Task Card before
-  editing.
+- **Next action:** pick the next packet — continue **UI polish** (detail/privacy
+  header unification, vertical rhythm, home hero), **changelog/updates block**,
+  **a11y/Lighthouse CI** (LEDGER-002), or **more real products**. Freeze a Task
+  Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -36,20 +38,22 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0013 — Privacy app icon + current Sole Focus icon** — **DONE**, merged,
-  tagged **v0.13.0**. Task Card: `docs/tasks/STEP-0013.md`.
-- Delivered: `PolicyArticle` gained an optional `icon` prop rendered as a rounded
-  app tile; the privacy `[slug]` route resolves the product's icon by `productId`;
-  Sole Focus icon replaced with the app's current SVG export (single source shared
-  with the home card).
-- (Prior: STEP-0012 privacy readability v0.12.0; STEP-0011 logo v0.11.0; … v0.1.0.)
+- **STEP-0014 — UI polish + website privacy scope** — **DONE**, merged, tagged
+  **v0.14.0**. Task Card: `docs/tasks/STEP-0014.md`.
+- Delivered: shared `--maxw-prose` column across all content pages (consistent
+  alignment; no overflow at desktop/mobile); product icon unified across detail +
+  privacy; `·Support` separator fixed; main privacy page retitled "MetKap Studio
+  Website Privacy Policy" with an explicit website-vs-apps opening + "App & game
+  privacy policies" section. **MC-0007** run.
+- (Prior: STEP-0013 privacy icon v0.13.0; STEP-0012 privacy readability v0.12.0;
+  … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **STEP-0014 — UI polish pass.** One outcome: tighten visual quality across the
-  site — consistent max-width/alignment, spacing rhythm on a shared scale, no
-  overflow/sticking-out elements, and cross-page/token consistency. Freeze the
-  Task Card before editing.
+- **Not yet chosen.** Candidates: continue **UI polish** (detail/privacy header
+  unification, vertical rhythm, home hero treatment), **changelog/updates block**,
+  **a11y/Lighthouse CI** (LEDGER-002), **more real products** (user supplies each
+  codebase). One outcome only.
 
 ## Machine-readable state
 
@@ -58,11 +62,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0013
-next_step: STEP-0014 UI polish pass (alignment, spacing rhythm, no overflow, cross-page/token consistency)
+current_step: STEP-0014
+next_step: not yet chosen — continue UI polish (header unification, vertical rhythm, home hero), changelog block, a11y CI, or more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.13.0
+product_tag: v0.14.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -109,10 +113,10 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **13** (STEP-0001..0013). Checkpoints run through
+Completed **feature** steps: **14** (STEP-0001..0014). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); steps 11 and 13 had no scheduled
-checkpoint. Plus on-demand MC-OD-0001..0004. Next: **Markdown Consistency after
-step 14**; **Discussion + Audit after 15**. Calibration: completed 2026-07-02.
+checkpoint; **MC-0007**(14). Plus on-demand MC-OD-0001..0004. Next: **Discussion
++ Audit after step 15**. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -133,8 +137,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.13.0** (STEP-0013 merge
-commit); prior v0.12.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.14.0** (STEP-0014 merge
+commit); prior v0.13.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
 
