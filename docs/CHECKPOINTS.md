@@ -22,17 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **12** (STEP-0001..STEP-0012).
+- Completed **feature** Steps: **14** (STEP-0001..STEP-0014).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0013**.
-- Next-due: **Markdown Consistency** after feature step **14**; **Enhancement**
-  after **14**; **Discussion + Audit** after **15**.
+- Next feature step: **STEP-0015**.
+- Next-due: **Discussion + Audit** after feature step **15**; **Markdown
+  Consistency** after **16**; **Enhancement** after **21**.
 
 ## Due now
 
-**None.** Through step 12: … AUDIT-0002+MC-0005(10), step 11 none, **DISC-0004 +
-MC-0006(12)** done (+ on-demand MC-OD-0001..0004). Nothing falls due until step
-14. No checkpoint blocks the next packet.
+**None.** Through step 14: … AUDIT-0002+MC-0005(10), step 11 none, **DISC-0004 +
+MC-0006(12)**, step 13 none, **MC-0007 + ENH-0002(14)** done (+ on-demand
+MC-OD-0001..0005). Next scheduled is **Discussion + Audit after step 15**. No
+checkpoint blocks the next packet.
 
 ## Ledger
 
@@ -57,6 +58,10 @@ MC-0006(12)** done (+ on-demand MC-OD-0001..0004). Nothing falls due until step
 | MC-OD-0004 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0004.md` | v0.10.0 consistent; placeholder strings are test fixtures/history only. Does not reset cadence. |
 | DISC-0004 | STEP-0012 complete (feature #12) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0004.md` | Privacy readability redesign reviewed; no blocking findings |
 | MC-0006 | STEP-0012 complete (feature #12) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0006.md` | Privacy redesign + schema fields synced; no drift |
+| — | STEP-0013 complete (feature #13) | n/a | n/a | — | Off-cadence; no checkpoint due |
+| MC-0007 | STEP-0014 complete (feature #14) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0007.md` | UI polish + website privacy scope synced; no drift |
+| ENH-0002 | STEP-0014 complete (feature #14) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0002.md` | Accepted N1/N2/E7 (unify product header + ProductAvatar) as next UI packet; O1 email routing pre-launch; carried E1–E3 |
+| MC-OD-0005 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0005.md` | Repaired CHECKPOINTS ledger lag (MC-0007) + ran the due ENH-0002; owners in sync at v0.14.0. Does not reset cadence. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

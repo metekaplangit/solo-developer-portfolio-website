@@ -14,7 +14,7 @@
   icon unified across detail + privacy; `·Support` separator fixed; main privacy
   page retitled **"MetKap Studio Website Privacy Policy"** with an explicit
   website-vs-apps opening. Merged, tagged **v0.14.0**. 34 tests green.
-  **Markdown Consistency MC-0007** run (feature step #14).
+  **MC-0007 + ENH-0002** run (feature step #14); on-demand **MC-OD-0005** wrap-up.
 - **Live:** **metkapstudio.com** over HTTPS, served through the **Cloudflare
   proxy** (edge CDN; instant visitor freshness); gem logo; Sole Focus product +
   scannable privacy pages with the current app icon.
@@ -44,7 +44,7 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
   alignment; no overflow at desktop/mobile); product icon unified across detail +
   privacy; `·Support` separator fixed; main privacy page retitled "MetKap Studio
   Website Privacy Policy" with an explicit website-vs-apps opening + "App & game
-  privacy policies" section. **MC-0007** run.
+  privacy policies" section. **MC-0007 + ENH-0002** run; wrap-up **MC-OD-0005**.
 - (Prior: STEP-0013 privacy icon v0.13.0; STEP-0012 privacy readability v0.12.0;
   … v0.1.0.)
 
@@ -115,8 +115,9 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 Completed **feature** steps: **14** (STEP-0001..0014). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); steps 11 and 13 had no scheduled
-checkpoint; **MC-0007**(14). Plus on-demand MC-OD-0001..0004. Next: **Discussion
-+ Audit after step 15**. Calibration: completed 2026-07-02.
+checkpoint; **MC-0007 + ENH-0002**(14). Plus on-demand MC-OD-0001..0005. Next:
+**Discussion + Audit after step 15**; MC after 16; Enhancement after 21.
+Calibration: completed 2026-07-02.
 
 ## Issues
 

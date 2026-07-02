@@ -165,16 +165,24 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   privacy page "MetKap Studio Website Privacy Policy" with an explicit
   website-vs-apps opening. **Markdown Consistency MC-0007** run (feature step #14).
 
-## Backlog — accepted enhancements (from ENH-0001)
+## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 
 Not scheduled yet; promote to a Step Packet when triggered.
 
+- **Unify the product header + `ProductAvatar`** (ENH-0002 N1/N2/E7): one lockup
+  (icon-or-monogram + name/title) shared by the card, detail, and privacy pages;
+  standardize page-top vertical rhythm. Resolves LEDGER-001 (now ripe). Strong
+  next UI packet.
+- **Home hero treatment** (ENH-0002 N3) + on-site **changelog/updates block**
+  (C1) — polish follow-ups.
 - **Real image-optimization pipeline** (`astro:assets` `<Image>`) consuming the
   existing `MediaAsset` schema — do when real screenshots/icons exist (E1).
 - **Automated accessibility / Lighthouse CI** on built pages — ties off
   LEDGER-002 (E2).
+- **Pre-launch (user-run):** Cloudflare **Email Routing** so
+  `support@metkapstudio.com` receives mail — before Sole Focus ships (ENH-0002 O1).
 - Later/parked: per-page OG images (E3), View Transitions (E4), light theme +
-  toggle (E5), press-kit/devlog (E6). See `docs/enhancements/ENHANCEMENT_ENH-0001.md`.
+  toggle (E5), press-kit/devlog (E6). See `ENHANCEMENT_ENH-0001.md` / `ENH-0002.md`.
 
 ## Planning rules
 
