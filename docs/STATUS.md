@@ -12,13 +12,13 @@
 - **State:** **STEP-0001 complete** — content model (Zod) + static shell + routes
   (home, Apps & Games, privacy global + per-product, support, about) merged to
   `main`, tagged **v0.8.0**. 33 tests green. **MC-0004** run (feature step #8).
-- **Domain:** switched to **metkapstudio.com** (`site`/`base '/'`/`CNAME`/robots/
-  support email + Pages custom domain set). **Live-HTTPS is BLOCKED pending
-  user-side Cloudflare DNS + GitHub cert provisioning** — see DEPLOYMENT.md for
-  the exact DNS records.
-- **Next action:** (user) add the Cloudflare DNS records (DEPLOYMENT.md), then I
-  verify `https://metkapstudio.com/` 200 + enable Enforce HTTPS. Otherwise pick
-  the next packet (a11y/Lighthouse CI; real image pipeline; real content).
+- **Domain:** **metkapstudio.com is LIVE.** DNS added + propagated (1.1.1.1 &
+  8.8.8.8 → GitHub IPs); site serves our content over HTTP (200); `www`→apex 301.
+  **HTTPS cert is provisioning** (GitHub, automatic). Once ready: tick Enforce
+  HTTPS in Settings → Pages.
+- **Next action:** wait for the GitHub cert (~mins–few hrs), then enable Enforce
+  HTTPS + optional domain verification. Optional now: Cloudflare Email Routing
+  for `support@`, DNSSEC. Then pick the next packet (a11y CI; real content).
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `DEPLOYMENT.md`.
 - **Required checks:** `npm run build`, `npm run check`, `npm test`,
   `python3 scripts/validate-governance.py`.
@@ -60,7 +60,7 @@ dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
-blockers: metkapstudio.com live-HTTPS pending Cloudflare DNS + GitHub cert (<=24h)
+blockers: metkapstudio.com HTTPS cert provisioning (GitHub, automatic; DNS done, HTTP 200 live)
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
@@ -95,7 +95,8 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
 | Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
 | Deployment code/config (domain) | Pass | Merge-critical | build at root; CNAME/canonical/robots on metkapstudio.com; Pages cname set |
-| Live domain HTTPS | Blocked | Release-critical (channel) | pending Cloudflare DNS + GitHub cert; steps in DEPLOYMENT.md |
+| Live domain (HTTP) | Pass | Release-critical (channel) | DNS propagated; metkapstudio.com serves our site (200); www→apex 301 |
+| Live domain HTTPS | Blocked | Release-critical (channel) | GitHub cert provisioning (automatic); enable Enforce HTTPS when ready |
 
 ## Checkpoints
 
