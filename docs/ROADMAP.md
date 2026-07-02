@@ -107,18 +107,17 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   (email as primary button), about. **Enhancement ENH-0001** run (feature step
   #7) — accepted E1/E2 to backlog. The UI/Design phase is effectively complete.
 
-### Milestone: Custom domain (metkapstudio.com) — *(deferred to end)*
+### Milestone 5 — Custom domain (metkapstudio.com) ✅ code DONE (v0.8.0)
 
-Fold `metkapstudio.com` into the deferred Milestone 5 custom-domain step: set
-`site` to it, `base` → `/`, add `CNAME`, update robots/sitemap, Cloudflare DNS,
-and switch the support email to `support@metkapstudio.com`.
-
-### Milestone 5 — Custom domain + HTTPS *(deferred to end of project)*
-
-- **STEP-00xx** *(late; → version TBD).* Purchase domain; set `site` to it +
-  `base` back to `/`; `public/CNAME`; Cloudflare DNS (apex `A`/`ALIAS`, `www`
-  `CNAME`, no wildcard); verify domain in GitHub; enforce HTTPS; update
-  robots/sitemap. Release-critical; done when the user has a domain.
+- **STEP-0008 — Custom domain** *(COMPLETE code/GitHub side — merged, tagged
+  `v0.8.0`, 2026-07-02).* `site` → metkapstudio.com, `base` → `/`, `public/CNAME`,
+  robots/sitemap domain, `support@metkapstudio.com`, Pages custom domain set.
+  Markdown Consistency **MC-0004** run. **Release-critical live-HTTPS is BLOCKED**
+  pending user-side Cloudflare DNS + GitHub cert (records + steps in
+  `DEPLOYMENT.md`).
+- **Follow-up (small):** once DNS resolves — enable Enforce HTTPS, verify
+  `metkapstudio.com` 200 + `www`→apex, GitHub domain verification, Cloudflare
+  Email Routing for `support@`, DNSSEC.
 
 ## Backlog — accepted enhancements (from ENH-0001)
 

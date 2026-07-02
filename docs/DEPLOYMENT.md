@@ -13,30 +13,58 @@
 except the domain.** No Workers/Pages/serverless. Cloudflare Pages is a
 future-fallback only if GitHub Pages limits become a real blocker.
 
-## Current deployment: GitHub Pages project site (STEP-0004, no domain yet)
+## Current deployment: custom domain (STEP-0008)
 
-Live since STEP-0004 for continuous preview; **custom domain deferred to a late
-step**.
+Live on **metkapstudio.com** (Cloudflare Registrar/DNS + GitHub Pages), root-served.
 
-- **URL:** `https://metekaplangit.github.io/solo-developer-portfolio-website/`.
-- **Config:** `astro.config.mjs` `site: 'https://metekaplangit.github.io'`,
-  `base: '/solo-developer-portfolio-website'`. Internal links go through
-  `withBase()` (`src/lib/url.ts`) so they resolve under the sub-path.
-- **Workflow:** `.github/workflows/deploy.yml` — `withastro/action@v3` builds and
-  uploads, `actions/deploy-pages@v4` deploys, on push to `main`. Least-privilege
-  permissions (`pages: write`, `id-token: write`); `concurrency: pages`.
-- **Pages source:** GitHub Actions (enabled via `gh api … /pages` build_type
-  `workflow`).
-- **`robots.txt` caveat:** on a project site it is served under the base path,
-  so domain-root crawlers won't read it — acceptable for the temporary test
-  deploy.
+- **URL:** `https://metkapstudio.com/` (apex canonical; `www` redirects to apex).
+- **Config:** `astro.config.mjs` `site: 'https://metkapstudio.com'`, `base: '/'`.
+  `withBase()` (`src/lib/url.ts`) is a no-op at root but stays in the code so a
+  future sub-path move needs no rewrite. `public/CNAME` = `metkapstudio.com`.
+- **Workflow:** `.github/workflows/deploy.yml` — `withastro/action@v3` build +
+  `actions/deploy-pages@v4`, on push to `main`. The `CNAME` file ships in the
+  build artifact so Pages keeps the custom domain on each deploy.
 
-### Reverting to the custom domain (late step)
+### Cloudflare DNS (dashboard → metkapstudio.com → DNS → Records)
 
-Set `site` to the real domain and `base` back to `/`; `withBase()` then becomes a
-no-op. Add `public/CNAME`, configure Cloudflare DNS (apex `A`/`ALIAS`, `www`
-`CNAME`; no wildcard), verify the domain in GitHub before adding, enforce HTTPS,
-update `robots.txt` + sitemap URL. (Checklist below.)
+All records **DNS only (grey cloud / proxy OFF)** so GitHub can provision its
+Let's Encrypt certificate and serve HTTPS directly (avoids redirect-loop/cert
+issues). The proxy can be enabled later with SSL/TLS = Full (strict).
+
+| Type | Name | Value |
+|---|---|---|
+| A | `@` | 185.199.108.153 |
+| A | `@` | 185.199.109.153 |
+| A | `@` | 185.199.110.153 |
+| A | `@` | 185.199.111.153 |
+| AAAA | `@` | 2606:50c0:8000::153 |
+| AAAA | `@` | 2606:50c0:8001::153 |
+| AAAA | `@` | 2606:50c0:8002::153 |
+| AAAA | `@` | 2606:50c0:8003::153 |
+| CNAME | `www` | metekaplangit.github.io |
+
+No wildcard records (takeover risk). Enable **DNSSEC** (Cloudflare → DNS →
+Settings). WHOIS redaction is on by default for Cloudflare Registrar.
+
+### GitHub side
+
+- Pages custom domain set to `metkapstudio.com` (`CNAME` file + `gh api … /pages`).
+- **Enforce HTTPS** in Settings → Pages becomes available after the cert
+  provisions (up to 24h); enable it then.
+- **Recommended:** verify the domain (GitHub user Settings → Pages → Verify a
+  domain) via the `_github-pages-challenge-metekaplangit` TXT record — prevents
+  takeover.
+
+### Support email
+
+`support@metkapstudio.com` needs **Cloudflare Email Routing** (free) to receive
+mail: Cloudflare → Email → Email Routing → forward it to a real inbox. Until then
+the address exists but won't deliver.
+
+### Propagation / verification
+
+DNS can take up to 24h. Confirmed live only when `https://metkapstudio.com/`
+returns 200 over HTTPS and `www` redirects to the apex.
 
 ## Build
 
