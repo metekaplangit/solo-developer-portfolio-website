@@ -42,9 +42,9 @@ Enhancement every **7**. Event/on-demand runs do not reset cadence.
 Docs system, Git baseline, validator, workflow seeds, issue templates, CI,
 remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
 
-### Milestone 1 — Content model + static shell
+### Milestone 1 — Content model + static shell ✅ DONE (v0.1.0)
 
-- **STEP-0001 — Content model + static shell** *(active/next; versionable → target `v0.1.0`)*
+- **STEP-0001 — Content model + static shell** *(COMPLETE — merged, tagged `v0.1.0`, 2026-07-02)*
   - **Outcome:** typed content collections (Product, StoreLink,
     PrivacyPolicyEntry, MediaAsset) with Zod schemas, a base layout + nav +
     footer, and generated routes for home, catalog, privacy, support/contact,
@@ -62,10 +62,14 @@ remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
     Consistency becomes due after step #2.
   - **Rollback:** revert the feature merge commit; branch from baseline tag.
 
-### Milestone 2 — Premium minimal showcase
-Home, catalog, product-detail pattern, responsive cards, media handling, SEO/
-social metadata. Accessibility checks merge-critical. (Steps enumerated when M1
-completes.)
+### Milestone 2 — Premium minimal showcase *(next)*
+
+- **STEP-0002 — Premium minimal product showcase** *(next; versionable → target
+  `v0.2.0`; Task Card to be frozen at start).* Home, catalog, product-detail page
+  pattern, responsive cards, media/screenshot handling, SEO/social metadata.
+  Accessibility checks merge-critical. Freeze to one outcome and split if it
+  grows; a Markdown Consistency checkpoint becomes due when this step completes
+  (feature step #2).
 
 ### Milestone 3 — Store-support pages
 Global privacy page, per-product privacy routes, support/contact, about, footer

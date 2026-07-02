@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PolicyArticle from '../../components/PolicyArticle.astro';
+import { formatDate } from '../../lib/format';
+
+const entries = await getCollection('policies');
+const globalEntry = entries.find((e) => e.data.productId === 'global');
+const perProduct = entries
+  .filter((e) => e.data.productId !== 'global')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+if (!globalEntry) {
+  throw new Error('A global privacy policy (productId: global) is required.');
+}
+const { Content } = await render(globalEntry);
+---
+
+<BaseLayout
+  title="Privacy"
+  description="Privacy overview for this site, plus per-product privacy policies."
+>
+  <PolicyArticle policy={globalEntry.data}>
+    <Content />
+  </PolicyArticle>
+
+  <section class="per-product" aria-labelledby="per-product-h">
+    <h2 id="per-product-h">Per-product privacy policies</h2>
+    <ul class="policy-list" role="list">
+      {
+        perProduct.map((e) => (
+          <li>
+            <a href={`/privacy/${e.data.productId}/`}>{e.data.title}</a>
+            <span class="policy-date">
+              updated {formatDate(e.data.lastUpdated)}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .per-product {
+    max-width: 44rem;
+    margin-top: var(--space-8);
+  }
+  .policy-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .policy-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .policy-date {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+</style>

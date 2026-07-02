@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sortProducts } from '../../lib/products';
+
+const entries = await getCollection('products');
+const products = sortProducts(entries.map((e) => e.data));
+const apps = products.filter((p) => p.type === 'app');
+const games = products.filter((p) => p.type === 'game');
+---
+
+<BaseLayout
+  title="Apps & Games"
+  description="Every app and game — released, in beta, and planned — each with privacy and support links."
+>
+  <header class="page-head">
+    <h1>Apps &amp; Games</h1>
+    <p>Everything here links to its own privacy and support information.</p>
+  </header>
+
+  {
+    apps.length > 0 && (
+      <section aria-labelledby="apps-h">
+        <h2 id="apps-h">Apps</h2>
+        <ul class="grid" role="list">
+          {apps.map((p) => (
+            <li>
+              <ProductCard product={p} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    games.length > 0 && (
+      <section aria-labelledby="games-h">
+        <h2 id="games-h">Games</h2>
+        <ul class="grid" role="list">
+          {games.map((p) => (
+            <li>
+              <ProductCard product={p} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-block: var(--space-12) var(--space-6);
+    max-width: 42rem;
+  }
+  .page-head h1 {
+    margin: 0 0 var(--space-2);
+  }
+  .page-head p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+  .grid {
+    list-style: none;
+    margin: 0 0 var(--space-8);
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+</style>
