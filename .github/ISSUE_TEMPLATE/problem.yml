@@ -1,0 +1,40 @@
+name: Problem / task / risk
+description: Track a non-bug problem — debt, docs gap, accessibility, dependency, or process issue.
+title: "[problem]: "
+labels: ["needs:triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the problem, risk, or gap clearly.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact and urgency
+      description: Who/what is affected and how soon it matters (severity vs priority).
+    validations:
+      required: true
+  - type: textarea
+    id: completion
+    attributes:
+      label: Completion criteria
+      description: What must be true for this to be closed? Include evidence expected.
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - type:technical-debt
+        - type:docs
+        - type:accessibility
+        - type:performance
+        - type:dependency
+        - type:data
+        - type:task
+    validations:
+      required: true

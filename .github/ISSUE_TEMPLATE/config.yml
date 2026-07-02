@@ -1,0 +1,7 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/metekaplangit/solo-developer-portfolio-website/security/advisories/new
+    about: >-
+      Report security vulnerabilities privately via GitHub Security Advisories.
+      Do NOT open a public issue for a security problem. See docs/SECURITY.md.

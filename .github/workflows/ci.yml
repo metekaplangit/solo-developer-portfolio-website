@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  governance-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Governance validator (merge-critical)
+        run: python3 scripts/validate-governance.py
+
+      - name: Type + content schema check
+        run: npm run check
+
+      - name: Static build
+        run: npm run build
+
+      # `npm test` is added in STEP-0001; enable this step then.
+      # - name: Unit tests
+      #   run: npm test

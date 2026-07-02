@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a defect in the website build, content, or rendered pages.
+title: "[bug]: "
+labels: ["type:bug", "needs:triage"]
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: What actually happened? Include the affected page/route if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction and evidence
+      description: Exact steps, command output, screenshots, or logs (redact anything sensitive).
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Tag, commit SHA, or branch where you saw this.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity (impact)
+      options:
+        - critical
+        - high
+        - medium
+        - low
+    validations:
+      required: true

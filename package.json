@@ -1,0 +1,29 @@
+{
+  "name": "solo-dev-portfolio-website",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Static-first premium-minimal solo developer portfolio and store-support website.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro",
+    "validate:governance": "python3 scripts/validate-governance.py"
+  },
+  "dependencies": {
+    "astro": "^7.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.0",
+    "typescript": "^5.6.0"
+  },
+  "overrides": {
+    "yaml": "^2.8.3"
+  }
+}
