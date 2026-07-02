@@ -15,9 +15,15 @@ first maintained release (see `ISSUE_TRACKING.md`).
 
 ## Open entries
 
-_None._ No actionable bug, regression, security, or blocked-check finding is open
-at baseline. (`npm test` being unavailable until STEP-0001 is a **planned scope
-item**, not a defect — tracked in `STATUS.md` blockers and `TESTING.md`.)
+- LEDGER-001 | type:technical-debt | priority:low | Monogram logic duplicated
+  (2 uses)
+  observed: the initials/monogram computation appears in
+  `src/components/ProductCard.astro` and `src/pages/apps/[slug].astro`.
+  expected: a single shared helper once a third use appears.
+  evidence: DISC-0001 (F2). impact: minor duplication; no defect.
+  step-or-commit: found at STEP-0003. acceptance: extract a `monogram()` helper
+  into `src/lib/` on the third use (rule-of-three per `REFACTORING.md`).
+  status: open (watch — do not extract yet at 2 uses).
 
 ## Entry format
 

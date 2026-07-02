@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { nav } from '../lib/site';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page doesn't exist. Here are the main sections of the site."
+>
+  <section class="notfound">
+    <p class="code">404</p>
+    <h1>Page not found</h1>
+    <p class="lede">
+      The page you were looking for doesn't exist or may have moved.
+    </p>
+    <nav aria-label="Site sections">
+      <ul class="links">
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    max-width: 40rem;
+    padding-block: var(--space-16) var(--space-12);
+    text-align: center;
+  }
+  .code {
+    margin: 0;
+    font-size: clamp(3rem, 12vw, 5rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+  .notfound h1 {
+    margin: var(--space-2) 0 var(--space-3);
+  }
+  .lede {
+    margin: 0 0 var(--space-8);
+    color: var(--color-muted);
+    font-size: 1.125rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

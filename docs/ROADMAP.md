@@ -70,20 +70,23 @@ remote. **Internal-only** (no product tag). Ends by stopping before Step 1.
 - *Remaining M2 candidates (future packets):* site-wide visual polish, real
   image-optimization pipeline for screenshots/icons, richer social cards.
 
-### Milestone 3 — Store-support pages *(next)*
+### Milestone 3 — Core site essentials ✅ DONE (v0.3.0)
 
-- **STEP-0003** *(next; versionable → target `v0.3.0`; Task Card to be frozen).*
-  Polished global privacy page, per-product privacy prose review, support/about
-  refinement, footer legal links. Keep language clear and non-advisory
-  (`SECURITY.md` legal boundary). One outcome only. A **Discussion** checkpoint
-  becomes due when this step completes (feature step #3).
-- M3 scope: global privacy page, per-product privacy routes, support/contact,
-  about, footer links. **No placeholder legal text in release content.**
-  Commercial/compliance overlay controls active.
+- **STEP-0003 — Core site essentials** *(COMPLETE — merged, tagged `v0.3.0`,
+  2026-07-02).* Custom 404, `robots.txt`, auto sitemap, favicon; CI now runs
+  `npm test`. Discussion **DISC-0001** run (fixed CI test gap; logged monogram
+  duplication as LEDGER-001).
+- *Store-support page content polish* (per-product privacy prose, support/about
+  refinement) folds into product-content work, deferred per user steer.
 
-### Milestone 4 — GitHub Pages deployment proof
-Pages Actions workflow, custom-domain + Cloudflare DNS notes, HTTPS verification,
-deploy smoke, rollback notes. Release-critical gates apply.
+### Milestone 4 — GitHub Pages deployment proof *(next)*
+
+- **STEP-0004** *(next; versionable → target `v0.4.0`; Task Card to be frozen).*
+  Actions→Pages deploy workflow, `public/CNAME` + custom-domain/Cloudflare DNS
+  notes, HTTPS verification, deploy smoke, rollback; update `site`/robots domain.
+  Release-critical gates apply; some proof may be `Blocked` pending the real
+  domain (record exact manual steps). No **Audit** checkpoint is due until
+  feature step #5.
 
 ## Planning rules
 

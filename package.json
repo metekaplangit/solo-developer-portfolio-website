@@ -19,6 +19,7 @@
     "validate:governance": "python3 scripts/validate-governance.py"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.0.0"
   },
   "devDependencies": {

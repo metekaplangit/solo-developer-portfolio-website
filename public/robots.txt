@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# NOTE (deploy/M4): update the domain below to the real custom domain when the
+# Cloudflare-managed domain is live. Must match `site` in astro.config.mjs.
+Sitemap: https://example.com/sitemap-index.xml

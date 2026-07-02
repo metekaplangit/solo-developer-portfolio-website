@@ -36,9 +36,8 @@ jobs:
       - name: Type + content schema check
         run: npm run check
 
+      - name: Unit tests
+        run: npm test
+
       - name: Static build
         run: npm run build
-
-      # `npm test` is added in STEP-0001; enable this step then.
-      # - name: Unit tests
-      #   run: npm test
