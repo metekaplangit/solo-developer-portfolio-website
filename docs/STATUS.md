@@ -9,14 +9,15 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0010 complete** — **Sole Focus** (first real product) published:
-  accurate entry + review-ready privacy policy + real icon; 3 placeholder demo
-  products retired. Merged to `main`, tagged **v0.10.0**, deployed. 34 tests green.
-  **AUDIT-0002 + MC-0005** run (feature step #10).
-- **Live:** **metkapstudio.com** over HTTPS; now shows the real Sole Focus product.
+- **State:** **STEP-0011 complete** — installed the **"Studio Gem"** brand logo
+  (favicon + PWA icon set + web manifest + OG image + nav logo mark) from the
+  user's icon-generator export v0001. Merged to `main`, tagged **v0.11.0**,
+  deployed. 34 tests green. (No checkpoint due at feature step #11.)
+- **Live:** **metkapstudio.com** over HTTPS; new gem logo in the tab + nav; Sole
+  Focus product page live.
 - **Next action:** pick the next packet — **changelog/updates block**,
-  **a11y/Lighthouse CI** (LEDGER-002), or **more real products** as the user
-  supplies them. Freeze a Task Card before editing.
+  **a11y/Lighthouse CI** (LEDGER-002), or **more real products** (user supplies
+  each app folder, read-only). Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -33,12 +34,12 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0010 — Sole Focus (first real product)** — **DONE**, merged, tagged
-  **v0.10.0**, live. Task Card: `docs/tasks/STEP-0010.md`.
-- Delivered: `sole-focus` product + privacy policy (accurate to the app), real
-  icon rendered on card/detail (`ProductCard`/detail render `product.icon` when
-  present, else monogram), placeholder demo products removed.
-- (Prior: STEP-0009 app-review v0.9.0; STEP-0008 domain v0.8.0; … v0.1.0.)
+- **STEP-0011 — Studio Gem brand logo** — **DONE**, merged, tagged **v0.11.0**,
+  live. Task Card: `docs/tasks/STEP-0011.md`.
+- Delivered: favicon + PWA icon set + `site.webmanifest` + OG image in `public/`;
+  `BaseLayout` head links (svg/png favicons, apple-touch, manifest, og:image);
+  gem mark in the nav wordmark. From icon-generator export v0001 (see UI_DESIGN).
+- (Prior: STEP-0010 Sole Focus v0.10.0; STEP-0009 app-review v0.9.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
@@ -53,11 +54,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0010
+current_step: STEP-0011
 next_step: undecided (changelog block / a11y CI / more real products)
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.10.0
+product_tag: v0.11.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -104,11 +105,11 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **8** (STEP-0001..0008). Checkpoints run: MC-0001(2),
+Completed **feature** steps: **11** (STEP-0001..0011). Checkpoints run: MC-0001(2),
 DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6), ENH-0001(7),
-MC-0004(8), DISC-0003(9), **AUDIT-0002 + MC-0005**(10), plus on-demand
-MC-OD-0001/0002/0003/0004. Next: Discussion + Markdown Consistency after step
-**12**; Audit after **15**. Calibration: completed 2026-07-02.
+MC-0004(8), DISC-0003(9), AUDIT-0002+MC-0005(10); step 11 triggered no scheduled
+checkpoint. Plus on-demand MC-OD-0001/0002/0003/0004. Next: **Discussion +
+Markdown Consistency after step 12**; Audit after 15. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -129,7 +130,7 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.10.0** (STEP-0010 merge
-commit); prior v0.9.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.11.0** (STEP-0011 merge
+commit); prior v0.10.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).

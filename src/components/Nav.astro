@@ -13,7 +13,10 @@ function isCurrent(href: string): boolean {
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href={withBase('/')}>{site.brand}</a>
+    <a class="brand" href={withBase('/')}>
+      <img class="brand-mark" src={withBase('/favicon.svg')} alt="" width="28" height="28" />
+      <span>{site.brand}</span>
+    </a>
     <nav aria-label="Primary">
       <ul class="nav-list">
         {
@@ -53,11 +56,20 @@ function isCurrent(href: string): boolean {
     padding-block: var(--space-4);
   }
   .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     font-weight: 700;
     font-size: 1.0625rem;
     letter-spacing: -0.01em;
     text-decoration: none;
     color: var(--text-strong);
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: block;
   }
   .nav-list {
     display: flex;
