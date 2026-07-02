@@ -101,10 +101,11 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   DISC-0002** run (feature step #6). *Reorder note:* the rebrand was inserted at
   the user's request ahead of the theme rollout, which moved from STEP-0006 →
   STEP-0007 (no completed IDs renumbered).
-- **STEP-0007 — Theme rollout to remaining pages** *(next; → `v0.7.0`).* Bespoke
-  polish for catalog, detail, privacy/support/about, 404 (they inherit tokens
-  already). One page-group per packet if it grows. Enhancement checkpoint comes
-  due at feature step #7.
+- **STEP-0007 — Theme rollout to remaining pages** *(COMPLETE — merged, tagged
+  `v0.7.0`, 2026-07-02).* Shared `PageHeader`; polished catalog, detail (button
+  CTAs, panel header, gradient screenshots), privacy article panel, support
+  (email as primary button), about. **Enhancement ENH-0001** run (feature step
+  #7) — accepted E1/E2 to backlog. The UI/Design phase is effectively complete.
 
 ### Milestone: Custom domain (metkapstudio.com) — *(deferred to end)*
 
@@ -118,6 +119,17 @@ and switch the support email to `support@metkapstudio.com`.
   `base` back to `/`; `public/CNAME`; Cloudflare DNS (apex `A`/`ALIAS`, `www`
   `CNAME`, no wildcard); verify domain in GitHub; enforce HTTPS; update
   robots/sitemap. Release-critical; done when the user has a domain.
+
+## Backlog — accepted enhancements (from ENH-0001)
+
+Not scheduled yet; promote to a Step Packet when triggered.
+
+- **Real image-optimization pipeline** (`astro:assets` `<Image>`) consuming the
+  existing `MediaAsset` schema — do when real screenshots/icons exist (E1).
+- **Automated accessibility / Lighthouse CI** on built pages — ties off
+  LEDGER-002 (E2).
+- Later/parked: per-page OG images (E3), View Transitions (E4), light theme +
+  toggle (E5), press-kit/devlog (E6). See `docs/enhancements/ENHANCEMENT_ENH-0001.md`.
 
 ## Planning rules
 

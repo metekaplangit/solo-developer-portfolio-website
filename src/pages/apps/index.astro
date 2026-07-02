@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { sortProducts } from '../../lib/products';
 
 const entries = await getCollection('products');
@@ -14,15 +15,14 @@ const games = products.filter((p) => p.type === 'game');
   title="Apps & Games"
   description="Every app and game — released, in beta, and planned — each with privacy and support links."
 >
-  <header class="page-head">
-    <h1>Apps &amp; Games</h1>
+  <PageHeader title="Apps & Games">
     <p>Everything here links to its own privacy and support information.</p>
-  </header>
+  </PageHeader>
 
   {
     apps.length > 0 && (
-      <section aria-labelledby="apps-h">
-        <h2 id="apps-h">Apps</h2>
+      <section class="group" aria-labelledby="apps-h">
+        <h2 id="apps-h" class="group-title">Apps</h2>
         <ul class="grid" role="list">
           {apps.map((p) => (
             <li>
@@ -36,8 +36,8 @@ const games = products.filter((p) => p.type === 'game');
 
   {
     games.length > 0 && (
-      <section aria-labelledby="games-h">
-        <h2 id="games-h">Games</h2>
+      <section class="group" aria-labelledby="games-h">
+        <h2 id="games-h" class="group-title">Games</h2>
         <ul class="grid" role="list">
           {games.map((p) => (
             <li>
@@ -51,23 +51,21 @@ const games = products.filter((p) => p.type === 'game');
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding-block: var(--space-12) var(--space-6);
-    max-width: 42rem;
+  .group {
+    margin-bottom: var(--space-12);
   }
-  .page-head h1 {
-    margin: 0 0 var(--space-2);
-  }
-  .page-head p {
-    margin: 0;
+  .group-title {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-5);
     color: var(--muted);
+    font-weight: 600;
   }
   .grid {
     list-style: none;
-    margin: 0 0 var(--space-8);
+    margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-4);
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   }
 </style>

@@ -22,17 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **6** (STEP-0001..STEP-0006).
+- Completed **feature** Steps: **7** (STEP-0001..STEP-0007).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0007**.
-- Next-due: **Enhancement** after feature step **7**; Markdown Consistency after
-  **8**; Discussion after **9**; Audit after **10**.
+- Next feature step: **STEP-0008**.
+- Next-due: **Markdown Consistency** after feature step **8**; Discussion after
+  **9**; Audit after **10**; next Enhancement after **14**.
 
 ## Due now
 
-**None.** MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6)
-done (+ on-demand MC-OD-0001). Enhancement next falls due at step 7. No checkpoint
-blocks the next packet.
+**None.** MC-0001(2), DISC-0001(3), MC-0002(4), AUDIT-0001(5), MC-0003+DISC-0002(6),
+ENH-0001(7) done (+ on-demand MC-OD-0001). Markdown Consistency next falls due at
+step 8. No checkpoint blocks the next packet.
 
 ## Ledger
 
@@ -47,6 +47,7 @@ blocks the next packet.
 | AUDIT-0001 | STEP-0005 complete (feature #5) | Audit | Done | `docs/audits/AUDIT_AUDIT-0001.md` | All areas Pass; logged LEDGER-002 (a11y automation) + noted LEDGER-001 |
 | MC-0003 | STEP-0006 complete (feature #6) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0003.md` | Rebrand + roadmap reorder synced; no drift |
 | DISC-0002 | STEP-0006 complete (feature #6) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0002.md` | Rebrand review; fixed stale About meta (DISC-0002-F1) |
+| ENH-0001 | STEP-0007 complete (feature #7) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0001.md` | Accepted E1 (image pipeline) + E2 (a11y CI) to backlog; parked E3–E6 |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

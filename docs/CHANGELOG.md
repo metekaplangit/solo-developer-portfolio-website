@@ -14,7 +14,26 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing yet. Next: roll the dark-premium theme across the remaining pages (STEP-0007)._
+_Nothing yet. UI/Design phase complete through v0.7.0; next packet undecided (see ROADMAP backlog)._
+
+## [0.7.0] — 2026-07-02
+
+Dark-premium theme rolled across the remaining pages (STEP-0007).
+
+### Changed
+
+- New shared **`PageHeader`** component; consistent headers/spacing on catalog,
+  support, and about.
+- **Product detail** page polished: elevated header panel, gradient screenshot
+  frames, store links as primary/secondary **buttons**, refined metadata.
+- **Privacy** policy pages: data-facts now in a subtle bordered panel.
+- **Support** page: email is a primary button; two-column guidance.
+- The whole site now matches the home page's dark-premium quality.
+
+### Notes
+
+- UI-only — no product/data/logic changes. Enhancement checkpoint ENH-0001
+  accepted a real-image pipeline and a11y/Lighthouse CI to the backlog.
 
 ## [0.6.0] — 2026-07-02
 

@@ -82,13 +82,19 @@ const { policy } = Astro.props;
     margin-block: var(--space-3);
   }
   .policy-facts {
-    margin: var(--space-8) 0 0;
-    border-top: 1px solid var(--border);
-    padding-top: var(--space-6);
+    margin: var(--space-10) 0 0;
+    padding: var(--space-6) var(--space-6) var(--space-8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
   }
   .policy-facts dt {
     font-weight: 600;
-    margin-top: var(--space-4);
+    color: var(--text-strong);
+    margin-top: var(--space-5);
+  }
+  .policy-facts dt:first-of-type {
+    margin-top: 0;
   }
   .policy-facts dd {
     margin: var(--space-1) 0 0;
