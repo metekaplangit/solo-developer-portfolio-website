@@ -26,3 +26,6 @@ Thumbs.db
 
 # Misc caches
 *.tsbuildinfo
+
+# Lighthouse CI reports (local artifacts)
+.lighthouseci/

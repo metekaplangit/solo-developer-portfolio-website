@@ -8,6 +8,7 @@ failure-transparent.
 
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
@@ -298,6 +299,12 @@ def check_git_and_status() -> list[Check]:
 
     branch_result = run(["git", "branch", "--show-current"])
     branch = branch_result.stdout.strip()
+    if not branch:
+        # CI (e.g. GitHub Actions) checks out in a detached HEAD, so
+        # `git branch --show-current` is empty. Recover the branch name from the
+        # CI environment — GITHUB_HEAD_REF on pull_request, GITHUB_REF_NAME on
+        # push — so governance checks run correctly in CI too.
+        branch = (os.environ.get("GITHUB_HEAD_REF") or os.environ.get("GITHUB_REF_NAME") or "").strip()
     checks.append(Check("git.branch_detected", bool(branch), branch or "detached or unknown branch"))
 
     default_branch = "main"

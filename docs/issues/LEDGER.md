@@ -37,7 +37,10 @@ first maintained release (see `ISSUE_TRACKING.md`).
   evidence: AUDIT-0001 (F1). impact: manual checks can miss regressions as the
   UI grows. step-or-commit: found at STEP-0005. acceptance: add a Lighthouse or
   axe/pa11y check (own packet) during the UI phase or launch-hardening.
-  status: open (advisory; not merge-blocking).
+  status: **RESOLVED at STEP-0017 (v0.17.0)** — Lighthouse CI accessibility gate
+  (`lighthouserc.json`; `accessibility` job in `ci.yml`; a11y gate in `deploy.yml`
+  before publish) asserts accessibility >=0.95 as an error and blocks regressions.
+  Verified green in real CI (PR #1). Visual-regression snapshots not included.
 
 ## Entry format
 

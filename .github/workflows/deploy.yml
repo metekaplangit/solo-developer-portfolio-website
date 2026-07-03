@@ -42,6 +42,11 @@ jobs:
         run: npm ci
       - name: Build (produces dist/, incl. CNAME from public/)
         run: npm run build
+      # Accessibility gate — block the live deploy if the built pages regress on
+      # accessibility (deterministic). Perf/SEO/best-practices are warn-only in
+      # lighthouserc.json, so runner variance never blocks a deploy.
+      - name: Lighthouse CI (accessibility gate)
+        run: npm run lhci
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

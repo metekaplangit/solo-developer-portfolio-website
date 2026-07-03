@@ -41,3 +41,28 @@ jobs:
 
       - name: Static build
         run: npm run build
+
+  accessibility:
+    # Automated accessibility + quality gate (Lighthouse CI) on the built pages.
+    # Accessibility is asserted as an error; performance / SEO / best-practices are
+    # warnings only — informational, so CI-runner variance never fails the build.
+    # ubuntu-latest ships google-chrome-stable, which Lighthouse launches.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Static build
+        run: npm run build
+
+      - name: Lighthouse CI (accessibility gate)
+        run: npm run lhci
