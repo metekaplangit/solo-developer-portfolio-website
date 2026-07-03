@@ -12,6 +12,11 @@ const { policy, icon = null } = Astro.props;
 
 const collectsData = policy.dataCollected.length > 0;
 const hasThirdParties = policy.thirdPartyServices.length > 0;
+const storesLocally = policy.storedLocally.length > 0;
+// Natural subject noun so shared sections read correctly for the site-wide
+// policy vs a per-product (app) policy.
+const isSite = policy.productId === 'global';
+const subject = isSite ? 'This website' : 'This app';
 
 // At-a-glance chips — the gist in one scan. Each: label + tone.
 const chips: { label: string; ok: boolean }[] = [
@@ -104,6 +109,19 @@ const chips: { label: string; ok: boolean }[] = [
       <p class="sec-plain">{policy.retention}</p>
     </section>
 
+    <section class="sec">
+      <h2>How your data is protected</h2>
+      <p class="sec-plain">
+        {
+          storesLocally
+            ? "Everything above stays on your device. Because nothing is uploaded to a server, there's no central copy to be breached, leaked, or handed over to anyone."
+            : collectsData
+              ? 'We protect the limited data we hold with commercially reasonable safeguards, and keep the amount we hold — and the risk — as small as possible. No method of transmission or storage is ever completely secure.'
+              : `${subject} keeps nothing about you on any server, so there's nothing to breach, leak, or hand over.`
+        }
+      </p>
+    </section>
+
     {
       policy.permissions.length > 0 && (
         <section class="sec">
@@ -126,10 +144,52 @@ const chips: { label: string; ok: boolean }[] = [
     }
 
     <section class="sec">
+      <h2>Children's privacy</h2>
+      <p class="sec-plain">
+        {
+          collectsData
+            ? `${subject} isn't directed at children under 13, and we don't knowingly collect their personal data. If you believe a child has given us data, contact us and we'll delete it.`
+            : `${subject} isn't directed at children, and because it collects no personal data, it holds nothing about children either.`
+        }
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Your rights</h2>
+      <p class="sec-plain">
+        {
+          collectsData ? (
+            <>
+              You can ask us to access, correct, delete, or export your personal
+              data, or object to how it's used — email{' '}
+              <a href={`mailto:${policy.contact}`}>{policy.contact}</a> and we'll respond.
+            </>
+          ) : (
+            <>
+              You have the right to access, correct, or delete any personal data we
+              hold. Because we hold none, there's nothing to retrieve or erase — but
+              if you'd like to confirm that, or make any request, email{' '}
+              <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+            </>
+          )
+        }
+      </p>
+    </section>
+
+    <section class="sec">
       <h2>Contact &amp; requests</h2>
       <p class="sec-plain">
         Questions, consent changes, or deletion requests —
         <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Changes to this policy</h2>
+      <p class="sec-plain">
+        We may update this policy as {subject.toLowerCase()} or the law changes. The
+        “Updated” date at the top always reflects the current version, and we'll note
+        anything significant here.
       </p>
     </section>
   </div>

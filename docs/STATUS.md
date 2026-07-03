@@ -9,18 +9,21 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0017 complete** — **automated accessibility gate** (Lighthouse
-  CI). CI + deploy run Lighthouse on the built pages and **fail on accessibility
-  regressions** (perf/SEO/best-practices are warnings). **Resolves LEDGER-002.**
-  Also fixed a pre-existing CI bug (validator failed in Actions' detached HEAD).
-  Accessibility job **verified green in real CI** (PR #1). Merged, tagged
-  **v0.17.0**. 34 tests green. No scheduled checkpoint at feature step #17.
+- **State:** **STEP-0018 complete** — **more complete privacy policies**. Added
+  Security / Children's privacy / Your rights / Changes sections to every policy
+  (derived, truthful to collects-nothing; "This website" vs "This app"). Meets/
+  exceeds Apple 5.1.1 content bar. Merged, tagged **v0.18.0**. 34 tests green.
+  **DISC-0006 + MC-0009** run.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
-- **Next action:** **deferred: hero/detail product screenshots + device mockups
-  (research item C)** — the biggest remaining visual lever, needs real Sole Focus
-  shots. Also: changelog/updates block, email-routing pre-launch, more products.
-  Freeze a Task Card before editing.
+- **Pre-launch (operational, NOT website) before submitting Sole Focus:** enable
+  **Cloudflare Email Routing** so `support@metkapstudio.com` receives mail
+  (fastest free path: route → forward to Gmail, reply from Gmail); set App Store
+  Connect App-Privacy labels to "Data Not Collected"; confirm the app's
+  `PrivacyInfo.xcprivacy` privacy manifest.
+- **Next action:** **deferred: hero/detail product screenshots (research item C)**
+  — biggest visual lever, needs assets. Also: Apple-submission checklist doc,
+  changelog block, optional Terms/disclaimer page. Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -37,22 +40,21 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0017 — Automated accessibility gate (Lighthouse CI)** — **DONE**, merged,
-  tagged **v0.17.0**. Task Card: `docs/tasks/STEP-0017.md`.
-- Delivered: `@lhci/cli` + `lighthouserc.json` (accessibility ≥0.95 as error;
-  perf/SEO/best-practices warn); `accessibility` job in `ci.yml`; a11y gate in
-  `deploy.yml` before publish. **Resolves LEDGER-002.** Fixed the validator's
-  detached-HEAD blindspot so the CI governance job passes. Verified green in
-  real CI (PR #1).
-- (Prior: STEP-0016 appeal & motion v0.16.0; STEP-0015 research polish + a11y
-  v0.15.0; … v0.1.0.)
+- **STEP-0018 — Privacy policy completeness** — **DONE**, merged, tagged
+  **v0.18.0**. Task Card: `docs/tasks/STEP-0018.md`.
+- Delivered: added **Security / Children's privacy / Your rights / Changes**
+  sections to `PolicyArticle` (derived from existing fields; "This website" vs
+  "This app"; truthful to collects-nothing). Meets/exceeds Apple 5.1.1 content
+  bar. Based on researching Flexibits' policy + Apple rejection criteria.
+- (Prior: STEP-0017 a11y gate v0.17.0; STEP-0016 appeal & motion v0.16.0; …
+  v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: **hero/detail product screenshots + device
-  mockups (research item C — deferred, needs assets)**, **changelog/updates
-  block**, **Cloudflare Email Routing (pre-launch)**, **more real products**. One
-  outcome only.
+- **Not yet chosen.** Candidates: **Apple-submission checklist doc** (email
+  routing / nutrition labels / privacy manifest), **hero/detail product
+  screenshots (research item C — needs assets)**, **changelog/updates block**,
+  **optional Terms/disclaimer page**, **more real products**. One outcome only.
 
 ## Machine-readable state
 
@@ -61,11 +63,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0017
-next_step: research item C (hero/detail screenshots + device mockups, deferred — needs assets); or changelog block, email routing, more products
+current_step: STEP-0018
+next_step: Apple-submission checklist doc; or research item C (screenshots, needs assets), changelog block, Terms/disclaimer page, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.17.0
+product_tag: v0.18.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -113,11 +115,12 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **17** (STEP-0001..0017). Checkpoints run through
+Completed **feature** steps: **18** (STEP-0001..0018). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
-**DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); steps 11, 13, 17 had no scheduled
-checkpoint. Plus on-demand MC-OD-0001..0005. Next: Discussion after 18; MC after
-18; Audit after 20; Enhancement after 21. Calibration: completed 2026-07-02.
+**DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
+steps 11, 13, 17 had no scheduled checkpoint. Plus on-demand MC-OD-0001..0005.
+Next: Audit + MC after 20; Discussion + Enhancement after 21. Calibration:
+completed 2026-07-02.
 
 ## Issues
 
@@ -140,8 +143,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.17.0** (STEP-0017 merge
-commit); prior v0.16.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.18.0** (STEP-0018 merge
+commit); prior v0.17.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
 
