@@ -170,6 +170,13 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   contrast fix; reading column tightened to 40rem; dropped stacked card borders.
   Research item **C (hero/detail product screenshots) deferred** — needs assets.
   **Discussion DISC-0005 + Audit AUDIT-0003** run at feature step #15.
+- **STEP-0016 — Appeal & motion (tasteful)** *(COMPLETE — merged, tagged
+  `v0.16.0`, 2026-07-03).* From a lean study of top App Store creator sites
+  (Things, Raycast): home **featured product spotlight**, app-page **feature
+  grid**, CSS-only **scroll-reveal** motion (reduced-motion + `@supports` guarded,
+  zero JS). Kept honest — no fabricated badges/press/testimonials/screenshots.
+  **Markdown Consistency MC-0008** run (feature step #16). Research item **C
+  (real screenshots + device mockups) still deferred** — needs assets.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 

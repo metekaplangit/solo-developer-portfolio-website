@@ -22,18 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **15** (STEP-0001..STEP-0015).
+- Completed **feature** Steps: **16** (STEP-0001..STEP-0016).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0016**.
-- Next-due: **Markdown Consistency** after feature step **16**; **Enhancement**
-  after **21**.
+- Next feature step: **STEP-0017**.
+- Next-due: **Discussion** after feature step **18**; **Audit** after **20**;
+  **Enhancement** after **21**; **Markdown Consistency** after **18**.
 
 ## Due now
 
-**None.** **DISC-0005 + AUDIT-0003** (both due at feature step **15**) are **done**
-alongside the STEP-0015 close. Prior: … **MC-0007 + ENH-0002(14)** done (+ on-demand
-MC-OD-0001..0005). Next scheduled: MC after step 16, Discussion after 18,
-Enhancement after 21, Audit after 20.
+**None.** **MC-0008** (due at feature step **16**) is **done** alongside the
+STEP-0016 close. Prior: **DISC-0005 + AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)**
+done (+ on-demand MC-OD-0001..0005).
 
 ## Ledger
 
@@ -64,6 +63,7 @@ Enhancement after 21, Audit after 20.
 | MC-OD-0005 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0005.md` | Repaired CHECKPOINTS ledger lag (MC-0007) + ran the due ENH-0002; owners in sync at v0.14.0. Does not reset cadence. |
 | DISC-0005 | STEP-0015 complete (feature #15) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0005.md` | Reviewed STEP-0013→0015; no blocking findings; LEDGER-001 resolved; research item C deferred. |
 | AUDIT-0003 | STEP-0015 complete (feature #15) | Audit | Done | `docs/audits/AUDIT_AUDIT-0003.md` | All areas Pass; F1 LEDGER-001 resolved; F2 promote a11y CI (LEDGER-002); F3 screenshots (C) noted. |
+| MC-0008 | STEP-0016 complete (feature #16) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0008.md` | Appeal/motion pass synced; no drift; scroll-reveal accessibility (reduced-motion + @supports) noted. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

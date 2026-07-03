@@ -25,7 +25,7 @@ const games = products.filter((p) => p.type === 'game');
         <h2 id="apps-h" class="group-title">Apps</h2>
         <ul class="grid" role="list">
           {apps.map((p) => (
-            <li>
+            <li class="reveal">
               <ProductCard product={p} />
             </li>
           ))}
@@ -40,7 +40,7 @@ const games = products.filter((p) => p.type === 'game');
         <h2 id="games-h" class="group-title">Games</h2>
         <ul class="grid" role="list">
           {games.map((p) => (
-            <li>
+            <li class="reveal">
               <ProductCard product={p} />
             </li>
           ))}
