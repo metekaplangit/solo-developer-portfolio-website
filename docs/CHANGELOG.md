@@ -16,6 +16,28 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.18.0] — 2026-07-03
+
+More complete privacy policies (STEP-0018), informed by researching a rival
+policy (Flexibits) and Apple's Guideline 5.1.1 rejection criteria.
+
+### Added
+
+- Every privacy policy now includes four standard sections it was missing:
+  **How your data is protected** (frames local-first as the strength it is),
+  **Children's privacy**, **Your rights**, and **Changes to this policy**.
+- Wording adapts automatically: "This website" for the site-wide policy vs "This
+  app" for a product policy, and local-storage vs no-storage phrasing.
+
+### Notes
+
+- All text stays truthful to the collects-nothing reality (e.g. "Your rights"
+  states there's nothing to retrieve because nothing is held).
+- **Before submitting Sole Focus** (operational, not website): enable Cloudflare
+  Email Routing so `support@metkapstudio.com` receives mail; set App Store
+  Connect App-Privacy labels to "Data Not Collected"; confirm the app's
+  `PrivacyInfo.xcprivacy` privacy manifest.
+
 ## [0.17.0] — 2026-07-03
 
 Automated accessibility gate in CI (STEP-0017).

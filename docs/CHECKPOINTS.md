@@ -22,18 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **17** (STEP-0001..STEP-0017).
+- Completed **feature** Steps: **18** (STEP-0001..STEP-0018).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0018**.
-- Next-due: **Discussion** after feature step **18**; **Markdown Consistency**
-  after **18**; **Audit** after **20**; **Enhancement** after **21**.
+- Next feature step: **STEP-0019**.
+- Next-due: **Audit** after feature step **20**; **Markdown Consistency** after
+  **20**; **Discussion** after **21**; **Enhancement** after **21**.
 
 ## Due now
 
-**None.** Step 17 is off-cadence (no scheduled checkpoint). Prior: **MC-0008(16)**,
-**DISC-0005 + AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)** done (+ on-demand
-MC-OD-0001..0005). Both scheduled checkpoints (Discussion + MC) next fall due at
-step 18.
+**None.** **DISC-0006 + MC-0009** (both due at feature step **18**) are **done**
+alongside the STEP-0018 close. Prior: **MC-0008(16)**, **DISC-0005 +
+AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)** done (+ on-demand MC-OD-0001..0005).
 
 ## Ledger
 
@@ -65,6 +64,9 @@ step 18.
 | DISC-0005 | STEP-0015 complete (feature #15) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0005.md` | Reviewed STEP-0013→0015; no blocking findings; LEDGER-001 resolved; research item C deferred. |
 | AUDIT-0003 | STEP-0015 complete (feature #15) | Audit | Done | `docs/audits/AUDIT_AUDIT-0003.md` | All areas Pass; F1 LEDGER-001 resolved; F2 promote a11y CI (LEDGER-002); F3 screenshots (C) noted. |
 | MC-0008 | STEP-0016 complete (feature #16) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0008.md` | Appeal/motion pass synced; no drift; scroll-reveal accessibility (reduced-motion + @supports) noted. |
+| — | STEP-0017 complete (feature #17) | n/a | n/a | — | Off-cadence; no checkpoint due |
+| DISC-0006 | STEP-0018 complete (feature #18) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0006.md` | Privacy-completeness additions reviewed; truthful, meets Apple 5.1.1; flagged operational pre-launch follow-ups. |
+| MC-0009 | STEP-0018 complete (feature #18) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0009.md` | Privacy additions synced; no drift; no overclaiming. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

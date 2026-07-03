@@ -183,6 +183,14 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   job in CI + a11y gate in the deploy before publish. **Resolves LEDGER-002.**
   Also fixed the validator's detached-HEAD blindspot in CI. Verified green in
   real CI (PR #1). No scheduled checkpoint at feature step #17.
+- **STEP-0018 — Privacy policy completeness** *(COMPLETE — merged, tagged
+  `v0.18.0`, 2026-07-03).* Added **Security / Children's privacy / Your rights /
+  Changes** sections to every privacy policy (derived; "This website" vs "This
+  app"; truthful to collects-nothing). Meets/exceeds Apple 5.1.1 content bar.
+  From researching Flexibits' policy + Apple rejection criteria. **Discussion
+  DISC-0006 + Markdown Consistency MC-0009** run (feature step #18). Operational
+  pre-launch follow-ups (email routing, App-Privacy labels, privacy manifest)
+  tracked in STATUS.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 
