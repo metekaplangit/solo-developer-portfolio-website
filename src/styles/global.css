@@ -16,7 +16,8 @@
   --text: #f4f5f7;
   --text-strong: #ffffff;
   --muted: #9ea3ad;
-  --faint: #71757e;
+  /* WCAG AA: 4.5:1 on --bg even at small sizes (was #71757e = 3.9:1, a fail). */
+  --faint: #8b909a;
 
   /* Hairlines & depth */
   --border: rgba(255, 255, 255, 0.09);
@@ -68,7 +69,9 @@
      --maxw    = wide shell (showcase grids: home, catalog)
      --maxw-prose = reading column (about, support, privacy, detail, headers) */
   --maxw: 68rem;
-  --maxw-prose: 44rem;
+  /* Reading column ~72ch at 17px body — inside the 45–90 comfortable range
+     (Butterick), tighter than the old 44rem (~82ch) for better readability. */
+  --maxw-prose: 40rem;
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

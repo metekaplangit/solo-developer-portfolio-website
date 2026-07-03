@@ -16,6 +16,32 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.15.0] — 2026-07-03
+
+Research-driven UI polish + accessibility fix (STEP-0015).
+
+### Added
+
+- **`ProductAvatar` component** — one shared icon-or-monogram lockup used by the
+  home/catalog cards, the app detail header, and the privacy header, so the same
+  product looks identical everywhere.
+
+### Fixed
+
+- **Accessibility:** the `--faint` text colour failed WCAG AA (3.9:1 on the
+  background); darkened the background relationship so it now clears **4.5:1**
+  everywhere (footer, meta lines, captions).
+
+### Changed
+
+- **Readability:** tightened the shared reading column (`--maxw-prose` 44→40rem)
+  to sit inside the ~45–90-character comfortable range (Butterick).
+- **Cleaner cards:** elevated cards (home/catalog, app detail header) drop the
+  stacked border and rely on one separation cue — an elevated surface + shadow
+  (Refactoring UI).
+- Removed the duplicated monogram logic from ProductCard and the detail page
+  (now centralised in `ProductAvatar`) — resolves the LEDGER-001 tech-debt item.
+
 ## [0.14.0] — 2026-07-02
 
 UI polish pass + clearer website privacy scope (STEP-0014).

@@ -1,0 +1,70 @@
+---
+// One product identity lockup — the app icon, or a monogram fallback built from
+// the name. Shared by ProductCard, the app detail header, and the privacy header
+// so the same product looks identical everywhere (resolves LEDGER-001).
+import { withBase } from '../lib/url';
+
+interface Props {
+  /** The product's icon; when absent, a monogram is drawn from `name`. */
+  icon?: { path: string; altText?: string } | null;
+  name: string;
+  /** Rendered size in px. >=56 uses the larger radius + shadow (hero contexts). */
+  size?: number;
+  /** Alt text for the icon image. Defaults to decorative ('') — the name is adjacent. */
+  alt?: string;
+}
+const { icon = null, name, size = 48, alt } = Astro.props;
+const monogram = name
+  .split(/\s+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+const large = size >= 56;
+---
+
+{
+  icon ? (
+    <img
+      class:list={['avatar', large && 'avatar-lg']}
+      src={withBase(icon.path)}
+      alt={alt ?? ''}
+      width={size}
+      height={size}
+      style={`--sz:${size}px`}
+      loading="lazy"
+    />
+  ) : (
+    <span
+      class:list={['avatar', 'monogram', large && 'avatar-lg']}
+      style={`--sz:${size}px`}
+      aria-hidden="true"
+    >
+      {monogram}
+    </span>
+  )
+}
+
+<style>
+  .avatar {
+    width: var(--sz);
+    height: var(--sz);
+    flex: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .avatar-lg {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .monogram {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, var(--accent-hover), var(--accent));
+    color: var(--accent-contrast);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    font-size: calc(var(--sz) * 0.32);
+    box-shadow: 0 6px 16px -6px var(--accent-glow);
+  }
+</style>
