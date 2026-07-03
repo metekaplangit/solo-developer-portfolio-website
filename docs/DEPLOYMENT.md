@@ -55,11 +55,21 @@ Settings). WHOIS redaction is on by default for Cloudflare Registrar.
   domain) via the `_github-pages-challenge-metekaplangit` TXT record — prevents
   takeover.
 
-### Support email
+### Support email — LIVE (2026-07-03)
 
-`support@metkapstudio.com` needs **Cloudflare Email Routing** (free) to receive
-mail: Cloudflare → Email → Email Routing → forward it to a real inbox. Until then
-the address exists but won't deliver.
+`support@metkapstudio.com` **receives mail** via **Cloudflare Email Routing**
+(free): a catch-all rule forwards `*@metkapstudio.com` to a verified Gmail
+(`metekaplanwork@gmail.com`). Full email authentication is in place — **SPF +
+DKIM + DMARC** (DMARC via Cloudflare DMARC Management, `p=none` monitoring).
+Verified end-to-end: MX resolves to `route1/2/3.mx.cloudflare.net`; a test mail
+delivered to the inbox after a one-time Gmail "Not spam".
+
+> Setup gotcha (for future domains): Email Routing can get stuck "configured but
+> Status: Disabled / DNS Not configured" (MX never written to the zone). Fix =
+> Settings → **Delete & disable** (removes only mail records, not the site's
+> A/CNAME) → re-run the **Onboard Domain** enable wizard, which writes the MX/TXT
+> records cleanly. Reply-from support@ is not set up (replies go from the Gmail);
+> add Gmail "Send mail as" later if wanted.
 
 ### Propagation / verification
 

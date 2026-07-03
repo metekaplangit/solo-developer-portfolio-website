@@ -16,19 +16,20 @@
   **DISC-0006 + MC-0009** run.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
-- **Pre-launch (operational, NOT website) before submitting Sole Focus:** enable
-  **Cloudflare Email Routing** so `support@metkapstudio.com` receives mail
-  (fastest free path: route → forward to Gmail, reply from Gmail); set App Store
-  Connect App-Privacy labels to "Data Not Collected"; confirm the app's
-  `PrivacyInfo.xcprivacy` privacy manifest.
+- **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
+  via Cloudflare Email Routing (catch-all → verified Gmail); SPF + DKIM + DMARC
+  live; verified end-to-end (inbox delivery). See DEPLOYMENT.md.
+- **Pre-launch (operational, NOT website) still open before submitting Sole
+  Focus:** set App Store Connect App-Privacy labels to "Data Not Collected";
+  confirm the app's `PrivacyInfo.xcprivacy` privacy manifest.
 - **Next action:** **deferred: hero/detail product screenshots (research item C)**
   — biggest visual lever, needs assets. Also: Apple-submission checklist doc,
   changelog block, optional Terms/disclaimer page. Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
-- **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
-  so `support@metkapstudio.com` receives mail; add real screenshots + the Mac App
-  Store link once published; keep the policy truthful (see `SECURITY.md`).
+- **Blockers:** none. **Before Sole Focus ships:** (support email now LIVE ✓) add
+  real screenshots + the Mac App Store link once published; set App-Privacy labels
+  + privacy manifest (app side); keep the policy truthful (see `SECURITY.md`).
 
 ## Working with app codebases (convention)
 
