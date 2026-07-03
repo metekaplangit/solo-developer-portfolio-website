@@ -16,6 +16,30 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.17.0] — 2026-07-03
+
+Automated accessibility gate in CI (STEP-0017).
+
+### Added
+
+- **Lighthouse CI accessibility gate.** Every push, PR, and deploy now runs
+  Lighthouse against the built pages and **fails on accessibility regressions**
+  (contrast, alt text, labels, heading order, etc.). Performance / SEO /
+  best-practices are reported as warnings so normal CI-runner variance never
+  blocks a deploy. Free, static, no third-party service. Resolves the long-open
+  a11y-automation gap (LEDGER-002).
+
+### Fixed
+
+- The governance validator failed inside GitHub Actions' detached-HEAD checkout;
+  it now recovers the branch name from the CI environment, so the CI governance
+  check passes.
+
+### Internal
+
+- Dev-only `@lhci/cli` dependency; nothing new ships to the site (production
+  `npm audit --omit=dev` is clean).
+
 ## [0.16.0] — 2026-07-03
 
 More appealing, dynamic home + app pages (STEP-0016), informed by studying how

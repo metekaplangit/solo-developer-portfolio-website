@@ -9,19 +9,18 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0016 complete** — **more appealing / dynamic UI** (tasteful
-  register), informed by studying top App Store / Mac App Store creator sites.
-  Home **featured product spotlight**; app-page **feature grid**; CSS-only
-  **scroll-reveal** motion (reduced-motion + `@supports` guarded, zero JS). Kept
-  honest — no fabricated badges/press/testimonials/screenshots. Merged, tagged
-  **v0.16.0**. 34 tests green. **MC-0008** run.
+- **State:** **STEP-0017 complete** — **automated accessibility gate** (Lighthouse
+  CI). CI + deploy run Lighthouse on the built pages and **fail on accessibility
+  regressions** (perf/SEO/best-practices are warnings). **Resolves LEDGER-002.**
+  Also fixed a pre-existing CI bug (validator failed in Actions' detached HEAD).
+  Accessibility job **verified green in real CI** (PR #1). Merged, tagged
+  **v0.17.0**. 34 tests green. No scheduled checkpoint at feature step #17.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Next action:** **deferred: hero/detail product screenshots + device mockups
   (research item C)** — the biggest remaining visual lever, needs real Sole Focus
-  shots. Also: **a11y/Lighthouse CI** (LEDGER-002, audit-recommended, doubly
-  relevant now motion is in), changelog block, email-routing pre-launch. Freeze a
-  Task Card before editing.
+  shots. Also: changelog/updates block, email-routing pre-launch, more products.
+  Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -38,21 +37,22 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0016 — Appeal & motion (tasteful)** — **DONE**, merged, tagged
-  **v0.16.0**. Task Card: `docs/tasks/STEP-0016.md`.
-- Delivered: home **featured product spotlight**; app-page **feature grid**;
-  CSS-only **scroll-reveal** motion (`animation-timeline: view()`, reduced-motion +
-  `@supports` guarded, zero JS). Based on a lean study of Things + Raycast; kept
-  honest (no fabricated social proof). MC-0008 run.
-- (Prior: STEP-0015 research polish + a11y v0.15.0; STEP-0014 UI polish + privacy
-  scope v0.14.0; … v0.1.0.)
+- **STEP-0017 — Automated accessibility gate (Lighthouse CI)** — **DONE**, merged,
+  tagged **v0.17.0**. Task Card: `docs/tasks/STEP-0017.md`.
+- Delivered: `@lhci/cli` + `lighthouserc.json` (accessibility ≥0.95 as error;
+  perf/SEO/best-practices warn); `accessibility` job in `ci.yml`; a11y gate in
+  `deploy.yml` before publish. **Resolves LEDGER-002.** Fixed the validator's
+  detached-HEAD blindspot so the CI governance job passes. Verified green in
+  real CI (PR #1).
+- (Prior: STEP-0016 appeal & motion v0.16.0; STEP-0015 research polish + a11y
+  v0.15.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
 - **Not yet chosen.** Candidates: **hero/detail product screenshots + device
-  mockups (research item C — deferred, needs assets)**, **a11y/Lighthouse CI**
-  (LEDGER-002, audit-recommended), **changelog/updates block**, **more real
-  products**. One outcome only.
+  mockups (research item C — deferred, needs assets)**, **changelog/updates
+  block**, **Cloudflare Email Routing (pre-launch)**, **more real products**. One
+  outcome only.
 
 ## Machine-readable state
 
@@ -61,11 +61,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0016
-next_step: research item C (hero/detail screenshots + device mockups, deferred — needs assets); or a11y CI (LEDGER-002), changelog block, more products
+current_step: STEP-0017
+next_step: research item C (hero/detail screenshots + device mockups, deferred — needs assets); or changelog block, email routing, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.16.0
+product_tag: v0.17.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -104,7 +104,8 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 | Static build (`npm run build`) | Pass | Merge-critical | 8 routes (1 real product) + sitemap/robots/404/favicon, `output: "static"` |
 | Type + content check (`npm run check`) | Pass | Merge-critical | 0 errors / 0 warnings / 0 hints |
 | Unit tests (`npm test`) | Pass | Merge-critical | 34 passed (incl. required-retention negative test); run in CI |
-| Dependency audit (`npm audit`) | Pass | Merge-critical | `found 0 vulnerabilities` |
+| Dependency audit (`npm audit --omit=dev`) | Pass | Merge-critical | production/shipped deps: `found 0 vulnerabilities`. Dev-only CI tooling (`@lhci/cli`) has transitive advisories that never ship. |
+| Accessibility gate (Lighthouse CI) | Pass | Merge-critical (a11y) | `accessibility ≥ 0.95` asserted as error on all built pages; verified green in CI (PR #1). Perf/SEO/best-practices are warnings. |
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
 | Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
 | Deployment code/config (domain) | Pass | Merge-critical | build at root; CNAME/canonical/robots on metkapstudio.com; Pages cname set |
@@ -112,19 +113,21 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **15** (STEP-0001..0015). Checkpoints run through
-step 10, then **DISC-0004 + MC-0006**(12); steps 11 and 13 had no scheduled
-checkpoint; **MC-0007 + ENH-0002**(14); **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16).
-Plus on-demand MC-OD-0001..0005. Next: Discussion after 18; Audit after 20;
-Enhancement after 21; MC after 18. Calibration: completed 2026-07-02.
+Completed **feature** steps: **17** (STEP-0001..0017). Checkpoints run through
+step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
+**DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); steps 11, 13, 17 had no scheduled
+checkpoint. Plus on-demand MC-OD-0001..0005. Next: Discussion after 18; MC after
+18; Audit after 20; Enhancement after 21. Calibration: completed 2026-07-02.
 
 ## Issues
 
 - **LEDGER-001** — **RESOLVED in STEP-0015 (v0.15.0):** the icon-or-monogram
   avatar was duplicated in ProductCard + detail; centralised in
   `src/components/ProductAvatar.astro`, now also used by the privacy header.
-- **LEDGER-002** (`type:accessibility`, `priority:low`) — no automated a11y /
-  visual-regression check; UI verified manually. From AUDIT-0001. Advisory.
+- **LEDGER-002** — **RESOLVED in STEP-0017 (v0.17.0):** added a Lighthouse CI
+  **accessibility gate** (`lighthouserc.json` + `ci.yml`/`deploy.yml`) that fails
+  on accessibility regressions; verified green in real CI. Visual-regression
+  snapshots remain out of scope (not required by the gate).
 
 Neither is release-blocking. Fallback ledger: `docs/issues/LEDGER.md`.
 
@@ -137,8 +140,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.16.0** (STEP-0016 merge
-commit); prior v0.15.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.17.0** (STEP-0017 merge
+commit); prior v0.16.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
 

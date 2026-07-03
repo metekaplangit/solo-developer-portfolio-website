@@ -22,17 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **16** (STEP-0001..STEP-0016).
+- Completed **feature** Steps: **17** (STEP-0001..STEP-0017).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0017**.
-- Next-due: **Discussion** after feature step **18**; **Audit** after **20**;
-  **Enhancement** after **21**; **Markdown Consistency** after **18**.
+- Next feature step: **STEP-0018**.
+- Next-due: **Discussion** after feature step **18**; **Markdown Consistency**
+  after **18**; **Audit** after **20**; **Enhancement** after **21**.
 
 ## Due now
 
-**None.** **MC-0008** (due at feature step **16**) is **done** alongside the
-STEP-0016 close. Prior: **DISC-0005 + AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)**
-done (+ on-demand MC-OD-0001..0005).
+**None.** Step 17 is off-cadence (no scheduled checkpoint). Prior: **MC-0008(16)**,
+**DISC-0005 + AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)** done (+ on-demand
+MC-OD-0001..0005). Both scheduled checkpoints (Discussion + MC) next fall due at
+step 18.
 
 ## Ledger
 

@@ -177,6 +177,12 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   zero JS). Kept honest — no fabricated badges/press/testimonials/screenshots.
   **Markdown Consistency MC-0008** run (feature step #16). Research item **C
   (real screenshots + device mockups) still deferred** — needs assets.
+- **STEP-0017 — Automated accessibility gate (Lighthouse CI)** *(COMPLETE —
+  merged, tagged `v0.17.0`, 2026-07-03).* `@lhci/cli` + `lighthouserc.json`
+  (accessibility ≥0.95 as error; perf/SEO/best-practices warn); `accessibility`
+  job in CI + a11y gate in the deploy before publish. **Resolves LEDGER-002.**
+  Also fixed the validator's detached-HEAD blindspot in CI. Verified green in
+  real CI (PR #1). No scheduled checkpoint at feature step #17.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 
