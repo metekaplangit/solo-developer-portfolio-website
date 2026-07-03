@@ -74,6 +74,7 @@ MC-OD-0001..0006).
 | MC-0010 | STEP-0020 complete (feature #20) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0010.md` | Clickable-icon affordance synced; component-reused; a11y preserved; no drift. |
 | DISC-0007 | STEP-0021 complete (feature #21) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0007.md` | Code-review remediation reviewed; redundant-link pattern a11y-safe (gate green); no regression. |
 | ENH-0003 | STEP-0021 complete (feature #21) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0003.md` | Re-triage: C (screenshots) top but asset-blocked; accepted N1 changelog + N5 Apple checklist; N2 reply-as pre-launch. |
+| MC-OD-0007 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0007.md` | v0.21.0 consistent; code-review remediation recorded + gate-verified; no drift. Does not reset cadence. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

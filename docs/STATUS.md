@@ -122,7 +122,7 @@ Completed **feature** steps: **21** (STEP-0001..0021). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); steps 11, 13, 17, 19
-had no scheduled checkpoint. Plus on-demand MC-OD-0001..0006. Next: MC after 22;
+had no scheduled checkpoint. Plus on-demand MC-OD-0001..0007. Next: MC after 22;
 Discussion after 24; Audit after 25; Enhancement after 28. Calibration: completed 2026-07-02.
 
 ## Issues
