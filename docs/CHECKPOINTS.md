@@ -22,11 +22,12 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **18** (STEP-0001..STEP-0018).
+- Completed **feature** Steps: **19** (STEP-0001..STEP-0019).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0019**.
+- Next feature step: **STEP-0020**.
 - Next-due: **Audit** after feature step **20**; **Markdown Consistency** after
-  **20**; **Discussion** after **21**; **Enhancement** after **21**.
+  **20**; **Discussion** after **21**; **Enhancement** after **21**. (Step 19
+  off-cadence — no scheduled checkpoint.)
 
 ## Due now
 

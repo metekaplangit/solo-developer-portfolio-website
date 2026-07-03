@@ -191,6 +191,13 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   DISC-0006 + Markdown Consistency MC-0009** run (feature step #18). Operational
   pre-launch follow-ups (email routing, App-Privacy labels, privacy manifest)
   tracked in STATUS.
+- **STEP-0019 — Premium craft polish** *(COMPLETE — merged, tagged `v0.19.0`,
+  2026-07-03).* Tactile buttons (press + top-edge highlight + hover glow),
+  animated content-link underlines, refined card-hover edge, `::selection` +
+  custom scrollbar + smooth scroll, `text-wrap: balance`/`pretty` + `tabular-nums`,
+  scroll-reveal on about/support/privacy. All CSS-only, zero-JS, reduced-motion-
+  safe. From a lean study of Linear + micro-interaction best practices. No
+  scheduled checkpoint at feature step #19.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 

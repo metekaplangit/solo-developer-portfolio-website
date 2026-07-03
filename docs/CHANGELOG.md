@@ -16,6 +16,34 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.19.0] — 2026-07-03
+
+Premium craft polish (STEP-0019) — the small details that make a site feel
+high-end, informed by studying Linear and micro-interaction best practices.
+
+### Added
+
+- **Tactile buttons** — a subtle press-down when clicked, a crafted top-edge
+  highlight, and a soft glow on hover.
+- **Animated link underlines** in reading areas — they slide in on hover instead
+  of snapping.
+- **Refined cards** — a faint edge that brightens as the card lifts on hover.
+- **Finishing touches** — accent-tinted text selection, a subtle on-theme
+  scrollbar, and smooth scrolling.
+- Scroll-reveal motion now applies consistently on the about, support, and
+  privacy pages too.
+
+### Changed
+
+- **Typographic precision** — headlines now balance their line breaks (no lonely
+  orphan words), body copy avoids short orphan lines, and dates use even
+  tabular figures.
+
+### Notes
+
+- All of it is CSS-only (no JavaScript), respects `prefers-reduced-motion`, and
+  stays within the static / zero-cost / accessible constraints.
+
 ## [0.18.0] — 2026-07-03
 
 More complete privacy policies (STEP-0018), informed by researching a rival
