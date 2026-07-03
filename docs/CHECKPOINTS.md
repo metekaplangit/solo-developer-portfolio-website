@@ -67,6 +67,7 @@ AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)** done (+ on-demand MC-OD-0001..0005)
 | — | STEP-0017 complete (feature #17) | n/a | n/a | — | Off-cadence; no checkpoint due |
 | DISC-0006 | STEP-0018 complete (feature #18) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0006.md` | Privacy-completeness additions reviewed; truthful, meets Apple 5.1.1; flagged operational pre-launch follow-ups. |
 | MC-0009 | STEP-0018 complete (feature #18) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0009.md` | Privacy additions synced; no drift; no overclaiming. |
+| MC-OD-0006 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0006.md` | v0.18.0 consistent; support-email LIVE recorded across owners; no drift. Does not reset cadence. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,
