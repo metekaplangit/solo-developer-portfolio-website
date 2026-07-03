@@ -2,14 +2,17 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
 
 interface Props {
   title: string;
   description?: string;
+  /** Schema.org JSON-LD for this page (one object or an array). Optional. */
+  schema?: object | object[];
 }
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, schema } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
@@ -38,6 +41,7 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
+    {schema && <JsonLd schema={schema} />}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>

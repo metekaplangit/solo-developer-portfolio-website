@@ -210,6 +210,14 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   `ProductAvatar` markup was de-duplicated (dynamic `<Wrapper>`). Verified
   a11y-safe via the Lighthouse CI gate (PR #2). **Discussion DISC-0007 +
   Enhancement ENH-0003** run (feature step #21).
+- **STEP-0022 — Structured data (SEO/AEO JSON-LD)** *(COMPLETE — merged, tagged
+  `v0.22.0`, 2026-07-03).* Closed the only FAIL from the SEO/AEO audit: added
+  Schema.org JSON-LD via new `src/lib/schema.ts` builders + an injection-safe
+  `JsonLd.astro`, wired through an optional `schema` prop on `BaseLayout`.
+  Home = `Organization`+`WebSite`; `/apps/` = `ItemList`+`BreadcrumbList`; each
+  product = `SoftwareApplication`|`VideoGame`+`BreadcrumbList`. Graphs kept
+  truthful (no offers/price/rating for the unreleased app); zero client JS.
+  **Markdown Consistency MC-0011** run (feature step #22).
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 

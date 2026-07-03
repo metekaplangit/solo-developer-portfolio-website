@@ -1,0 +1,12 @@
+---
+// Emits Schema.org JSON-LD into <head>. Accepts one schema object or an array
+// (Google accepts multiple schema graphs in a single script as a JSON array).
+interface Props {
+  schema: object | object[];
+}
+const { schema } = Astro.props;
+// Escape `<` so a `</script>` inside any string can't break out of the tag.
+const json = JSON.stringify(schema).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" set:html={json} is:inline />

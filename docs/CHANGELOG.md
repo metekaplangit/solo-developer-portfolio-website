@@ -16,6 +16,27 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.22.0] — 2026-07-03
+
+Structured data for search & answer engines (STEP-0022).
+
+### Added
+
+- **Search-engine structured data (JSON-LD).** Every page now carries Schema.org
+  metadata so Google, Bing, and AI answer engines can understand the site: the
+  home page describes the studio (`Organization`) and the site (`WebSite`), the
+  Apps & Games page lists the catalog (`ItemList`) with breadcrumbs, and each
+  product page describes the app or game (`SoftwareApplication` / `VideoGame`)
+  with its platform, features, and breadcrumbs. This can enable richer search
+  results without changing anything you see on the page.
+
+### Internal
+
+- New `src/lib/schema.ts` builders + an injection-safe `JsonLd.astro` component,
+  wired through an optional `schema` prop on `BaseLayout`. The graphs are kept
+  **truthful** — no prices, offers, or star ratings are asserted for an app that
+  hasn't shipped. Ships **zero client JavaScript** (JSON-LD is inert data).
+
 ## [0.21.0] — 2026-07-03
 
 Code-review remediation (STEP-0021).
