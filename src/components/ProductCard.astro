@@ -73,13 +73,15 @@ const stores = visibleStoreLinks(product);
     flex-direction: column;
     gap: var(--space-3);
     height: 100%;
-    box-shadow: var(--shadow-sm);
+    /* Shadow for lift + a barely-there inset hairline for a crafted edge. */
+    box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
     transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
   }
   .card:hover,
   .card:focus-within {
     transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+    /* Edge brightens on hover — feels like the card lifts toward the light. */
+    box-shadow: var(--shadow-md), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
   .card-head {
     display: flex;
