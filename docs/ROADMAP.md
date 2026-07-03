@@ -203,8 +203,15 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   to that product (home spotlight, cards, privacy page); hover-lift + press +
   `Open <product>` a11y label; detail-page icon left unlinked (self page).
   **Audit AUDIT-0004 + Markdown Consistency MC-0010** run (feature step #20).
+- **STEP-0021 — Code-review remediation** *(COMPLETE — merged, tagged `v0.21.0`,
+  2026-07-03).* Resolved the two `/code-review` findings: the redundant icon link
+  is made presentational (`tabindex=-1`+`aria-hidden`) where it duplicates an
+  adjacent link (mouse-clickable preserved; privacy icon stays primary); the
+  `ProductAvatar` markup was de-duplicated (dynamic `<Wrapper>`). Verified
+  a11y-safe via the Lighthouse CI gate (PR #2). **Discussion DISC-0007 +
+  Enhancement ENH-0003** run (feature step #21).
 
-## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
+## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 
 Not scheduled yet; promote to a Step Packet when triggered.
 

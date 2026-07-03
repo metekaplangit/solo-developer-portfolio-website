@@ -22,17 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **20** (STEP-0001..STEP-0020).
+- Completed **feature** Steps: **21** (STEP-0001..STEP-0021).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0021**.
-- Next-due: **Discussion** after feature step **21**; **Enhancement** after **21**;
-  **Markdown Consistency** after **22**; **Audit** after **25**.
+- Next feature step: **STEP-0022**.
+- Next-due: **Markdown Consistency** after feature step **22**; **Discussion**
+  after **24**; **Audit** after **25**; **Enhancement** after **28**.
 
 ## Due now
 
-**None.** **AUDIT-0004 + MC-0010** (both due at feature step **20**) are **done**
-alongside the STEP-0020 close. Steps 17, 19 off-cadence. Prior: **DISC-0006 +
-MC-0009(18)**, **MC-0008(16)**, **DISC-0005 + AUDIT-0003(15)** done (+ on-demand
+**None.** **DISC-0007 + ENH-0003** (both due at feature step **21**) are **done**
+alongside the STEP-0021 close. **AUDIT-0004 + MC-0010**(20). Steps 17, 19
+off-cadence. Prior: **DISC-0006 + MC-0009(18)**, **MC-0008(16)** done (+ on-demand
 MC-OD-0001..0006).
 
 ## Ledger
@@ -72,6 +72,8 @@ MC-OD-0001..0006).
 | — | STEP-0019 complete (feature #19) | n/a | n/a | — | Off-cadence; no checkpoint due |
 | AUDIT-0004 | STEP-0020 complete (feature #20) | Audit | Done | `docs/audits/AUDIT_AUDIT-0004.md` | All areas Pass; findings info-only (screenshots C, reply-from email, app-side submission items). |
 | MC-0010 | STEP-0020 complete (feature #20) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0010.md` | Clickable-icon affordance synced; component-reused; a11y preserved; no drift. |
+| DISC-0007 | STEP-0021 complete (feature #21) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0007.md` | Code-review remediation reviewed; redundant-link pattern a11y-safe (gate green); no regression. |
+| ENH-0003 | STEP-0021 complete (feature #21) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0003.md` | Re-triage: C (screenshots) top but asset-blocked; accepted N1 changelog + N5 Apple checklist; N2 reply-as pre-launch. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

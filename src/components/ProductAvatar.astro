@@ -15,8 +15,14 @@ interface Props {
   alt?: string;
   /** When set, the avatar becomes a link to this (site-relative) path. */
   href?: string;
+  /**
+   * Set when this icon link duplicates an adjacent link (e.g. a card's title link
+   * to the same product). It stays mouse-clickable but is removed from the tab
+   * order and the accessibility tree, so it isn't a redundant keyboard/AT stop.
+   */
+  redundant?: boolean;
 }
-const { icon = null, name, size = 48, alt, href } = Astro.props;
+const { icon = null, name, size = 48, alt, href, redundant = false } = Astro.props;
 const monogram = name
   .split(/\s+/)
   .map((w) => w[0])
@@ -25,45 +31,37 @@ const monogram = name
   .toUpperCase();
 const large = size >= 56;
 const sizeStyle = `--sz:${size}px`;
-// Inside a link the image is decorative — the link's aria-label names the target.
+// Inside a link the image is decorative — the link (or its sibling) names the target.
 const imgAlt = href ? '' : (alt ?? '');
+
+// Optionally wrap the avatar in a link without duplicating the inner markup.
+const Wrapper = href ? 'a' : Fragment;
+const wrapperProps = href
+  ? redundant
+    ? { class: 'avatar-link', href: withBase(href), tabindex: '-1', 'aria-hidden': 'true' }
+    : { class: 'avatar-link', href: withBase(href), 'aria-label': `Open ${name}` }
+  : {};
 ---
 
-{
-  href ? (
-    <a class="avatar-link" href={withBase(href)} aria-label={`Open ${name}`}>
-      {icon ? (
-        <img
-          class:list={['avatar', large && 'avatar-lg']}
-          src={withBase(icon.path)}
-          alt={imgAlt}
-          width={size}
-          height={size}
-          style={sizeStyle}
-          loading="lazy"
-        />
-      ) : (
-        <span class:list={['avatar', 'monogram', large && 'avatar-lg']} style={sizeStyle} aria-hidden="true">
-          {monogram}
-        </span>
-      )}
-    </a>
-  ) : icon ? (
-    <img
-      class:list={['avatar', large && 'avatar-lg']}
-      src={withBase(icon.path)}
-      alt={imgAlt}
-      width={size}
-      height={size}
-      style={sizeStyle}
-      loading="lazy"
-    />
-  ) : (
-    <span class:list={['avatar', 'monogram', large && 'avatar-lg']} style={sizeStyle} aria-hidden="true">
-      {monogram}
-    </span>
-  )
-}
+<Wrapper {...wrapperProps}>
+  {
+    icon ? (
+      <img
+        class:list={['avatar', large && 'avatar-lg']}
+        src={withBase(icon.path)}
+        alt={imgAlt}
+        width={size}
+        height={size}
+        style={sizeStyle}
+        loading="lazy"
+      />
+    ) : (
+      <span class:list={['avatar', 'monogram', large && 'avatar-lg']} style={sizeStyle} aria-hidden="true">
+        {monogram}
+      </span>
+    )
+  }
+</Wrapper>
 
 <style>
   .avatar {
