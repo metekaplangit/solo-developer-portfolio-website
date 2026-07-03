@@ -20,7 +20,7 @@ const stores = visibleStoreLinks(product);
 
 <article class="card">
   <div class="card-head">
-    <ProductAvatar icon={product.icon} name={product.name} size={48} />
+    <ProductAvatar icon={product.icon} name={product.name} size={48} href={`/apps/${product.slug}/`} />
     <div class="card-titles">
       <h3 class="card-name">
         <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>

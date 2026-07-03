@@ -186,7 +186,7 @@ img {
 
 /* Animated underline for in-content links — slides in on hover. Applied to
    reading/content areas only; nav, buttons, and cards keep their own states. */
-.policy a,
+.policy a:not(.avatar-link),
 .prose a,
 .about a,
 .support a,
@@ -202,7 +202,7 @@ img {
   padding-bottom: 1px;
   transition: background-size var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.policy a:hover,
+.policy a:not(.avatar-link):hover,
 .prose a:hover,
 .about a:hover,
 .support a:hover,

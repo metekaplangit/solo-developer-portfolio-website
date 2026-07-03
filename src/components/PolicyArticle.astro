@@ -7,8 +7,12 @@ interface Props {
   policy: PrivacyPolicyEntry;
   /** The product's app icon, shown beside the title. Omitted for the site-wide policy. */
   icon?: MediaAsset | null;
+  /** When set, the icon links to the product (e.g. its app detail page). */
+  iconHref?: string;
+  /** Product name — used for the linked icon's accessible label. */
+  iconName?: string;
 }
-const { policy, icon = null } = Astro.props;
+const { policy, icon = null, iconHref, iconName } = Astro.props;
 
 const collectsData = policy.dataCollected.length > 0;
 const hasThirdParties = policy.thirdPartyServices.length > 0;
@@ -28,7 +32,7 @@ const chips: { label: string; ok: boolean }[] = [
 
 <article class="policy">
   <header class="policy-head">
-    {icon && <ProductAvatar icon={icon} name={policy.title} size={72} alt={icon.altText} />}
+    {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={72} alt={icon.altText} href={iconHref} />}
     <div class="policy-head-text">
       <h1>{policy.title}</h1>
       <p class="policy-meta">

@@ -9,12 +9,11 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0019 complete** — **premium craft polish**. Tactile buttons
-  (press + edge highlight + hover glow), animated link underlines, refined card
-  hover, `::selection` + custom scrollbar + smooth scroll, `text-wrap: balance`/
-  `pretty` + `tabular-nums`, consistent scroll-reveal. All CSS-only, reduced-
-  motion-safe. Merged, tagged **v0.19.0**. 34 tests green. No scheduled
-  checkpoint at feature step #19.
+- **State:** **STEP-0020 complete** — **clickable product icons**. A product's
+  icon now links to that product (home spotlight, cards, privacy page) via an
+  optional `href` on the shared `ProductAvatar` (hover-lift + press + `Open
+  <product>` label); the detail-page icon stays unlinked (self page). Merged,
+  tagged **v0.20.0**. 34 tests green. **AUDIT-0004 + MC-0010** run.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
@@ -42,15 +41,14 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0019 — Premium craft polish** — **DONE**, merged, tagged **v0.19.0**.
-  Task Card: `docs/tasks/STEP-0019.md`.
-- Delivered: tactile button states (press + top-edge highlight + hover glow),
-  animated content-link underlines, refined card hover edge, `::selection` +
-  custom scrollbar + smooth scroll, `text-wrap: balance`/`pretty` + `tabular-nums`,
-  scroll-reveal on about/support/privacy. CSS-only, zero-JS, reduced-motion-safe.
-  From a lean study of Linear + micro-interaction best practices.
-- (Prior: STEP-0018 privacy completeness v0.18.0; STEP-0017 a11y gate v0.17.0; …
-  v0.1.0.)
+- **STEP-0020 — Clickable product icons** — **DONE**, merged, tagged **v0.20.0**.
+  Task Card: `docs/tasks/STEP-0020.md`.
+- Delivered: optional `href` on `ProductAvatar` makes the icon a link to the
+  product (card/spotlight/privacy); hover-lift + press + `Open <product>` a11y
+  label; detail-page icon unlinked; excluded from content-link underline. **Audit
+  AUDIT-0004 + MC-0010** run.
+- (Prior: STEP-0019 premium craft v0.19.0; STEP-0018 privacy completeness v0.18.0;
+  … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
@@ -66,11 +64,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0019
+current_step: STEP-0020
 next_step: research item C (hero/detail screenshots, needs assets); or changelog block, Apple-submission checklist doc, Terms/disclaimer page, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.19.0
+product_tag: v0.20.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -118,12 +116,12 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **19** (STEP-0001..0019). Checkpoints run through
+Completed **feature** steps: **20** (STEP-0001..0020). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
-steps 11, 13, 17 had no scheduled checkpoint. Plus on-demand MC-OD-0001..0006.
-Next: Audit + MC after 20; Discussion + Enhancement after 21. Calibration:
-completed 2026-07-02.
+**AUDIT-0004 + MC-0010**(20); steps 11, 13, 17, 19 had no scheduled checkpoint.
+Plus on-demand MC-OD-0001..0006. Next: Discussion + Enhancement after 21; MC
+after 22; Audit after 25. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -146,8 +144,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.19.0** (STEP-0019 merge
-commit); prior v0.18.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.20.0** (STEP-0020 merge
+commit); prior v0.19.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
 
