@@ -9,19 +9,19 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0014 complete** — **UI polish + clearer website privacy
-  scope**. Shared `--maxw-prose` column so every content page lines up; product
-  icon unified across detail + privacy; `·Support` separator fixed; main privacy
-  page retitled **"MetKap Studio Website Privacy Policy"** with an explicit
-  website-vs-apps opening. Merged, tagged **v0.14.0**. 34 tests green.
-  **MC-0007 + ENH-0002** run (feature step #14); on-demand **MC-OD-0005** wrap-up.
-- **Live:** **metkapstudio.com** over HTTPS, served through the **Cloudflare
-  proxy** (edge CDN; instant visitor freshness); gem logo; Sole Focus product +
-  scannable privacy pages with the current app icon.
-- **Next action:** pick the next packet — continue **UI polish** (detail/privacy
-  header unification, vertical rhythm, home hero), **changelog/updates block**,
-  **a11y/Lighthouse CI** (LEDGER-002), or **more real products**. Freeze a Task
-  Card before editing.
+- **State:** **STEP-0015 complete** — **research-driven UI polish + a11y fix**.
+  New shared **`ProductAvatar`** (identical product identity on cards/detail/
+  privacy; **resolves LEDGER-001**); fixed a WCAG-AA contrast fail (`--faint` now
+  ≥4.5:1); tightened the reading column (`--maxw-prose` 40rem); dropped stacked
+  card borders. Merged, tagged **v0.15.0**. 34 tests green.
+- **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
+  logo; Sole Focus product + scannable, website-scoped privacy pages.
+- **Checkpoints:** **DISC-0005 + AUDIT-0003 done** at step 15 — no blockers;
+  Audit recommends promoting the a11y/Lighthouse CI packet (LEDGER-002), which
+  would have caught the `--faint` fail.
+- **Next action:** pick a packet — **deferred: hero/detail product screenshots
+  (research item C)** once Sole Focus shots exist; **a11y CI (LEDGER-002)**;
+  changelog block; email routing pre-launch. Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -38,22 +38,21 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0014 — UI polish + website privacy scope** — **DONE**, merged, tagged
-  **v0.14.0**. Task Card: `docs/tasks/STEP-0014.md`.
-- Delivered: shared `--maxw-prose` column across all content pages (consistent
-  alignment; no overflow at desktop/mobile); product icon unified across detail +
-  privacy; `·Support` separator fixed; main privacy page retitled "MetKap Studio
-  Website Privacy Policy" with an explicit website-vs-apps opening + "App & game
-  privacy policies" section. **MC-0007 + ENH-0002** run; wrap-up **MC-OD-0005**.
-- (Prior: STEP-0013 privacy icon v0.13.0; STEP-0012 privacy readability v0.12.0;
-  … v0.1.0.)
+- **STEP-0015 — Research-driven UI polish + a11y fix** — **DONE**, merged, tagged
+  **v0.15.0**. Task Card: `docs/tasks/STEP-0015.md`.
+- Delivered: shared **`ProductAvatar`** (icon-or-monogram, used by card/detail/
+  privacy — resolves LEDGER-001); `--faint` contrast fixed to WCAG AA; reading
+  column tightened to 40rem; stacked card borders dropped (surface+shadow only).
+  Grounded in the salvaged deep-research findings + a local contrast audit.
+- (Prior: STEP-0014 UI polish + privacy scope v0.14.0; STEP-0013 privacy icon
+  v0.13.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: continue **UI polish** (detail/privacy header
-  unification, vertical rhythm, home hero treatment), **changelog/updates block**,
-  **a11y/Lighthouse CI** (LEDGER-002), **more real products** (user supplies each
-  codebase). One outcome only.
+- **Not yet chosen** (DISC-0005 + AUDIT-0003 already run at step 15). Candidates:
+  **hero/detail product screenshots (research item C — deferred, needs assets)**,
+  **a11y/Lighthouse CI** (LEDGER-002, now audit-recommended), **changelog/updates
+  block**, **more real products**. One outcome only.
 
 ## Machine-readable state
 
@@ -62,11 +61,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0014
-next_step: not yet chosen — continue UI polish (header unification, vertical rhythm, home hero), changelog block, a11y CI, or more products
+current_step: STEP-0015
+next_step: run due DISC-0005 + AUDIT-0003 (step 15); then research item C (hero screenshots, deferred), changelog block, a11y CI, or more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.14.0
+product_tag: v0.15.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -78,7 +77,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-07-02
+updated_at: 2026-07-03
 ```
 
 > The live Git block above is validator/observed-owned. Regenerate with
@@ -113,17 +112,17 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **14** (STEP-0001..0014). Checkpoints run through
+Completed **feature** steps: **15** (STEP-0001..0015). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); steps 11 and 13 had no scheduled
-checkpoint; **MC-0007 + ENH-0002**(14). Plus on-demand MC-OD-0001..0005. Next:
-**Discussion + Audit after step 15**; MC after 16; Enhancement after 21.
-Calibration: completed 2026-07-02.
+checkpoint; **MC-0007 + ENH-0002**(14); **DISC-0005 + AUDIT-0003**(15). Plus
+on-demand MC-OD-0001..0005. Next: MC after 16; Discussion after 18; Audit after
+20; Enhancement after 21. Calibration: completed 2026-07-02.
 
 ## Issues
 
-- **LEDGER-001** (`type:technical-debt`, `priority:low`) — product avatar
-  (icon-or-monogram) duplicated in ProductCard + detail. Ripe; extract a
-  `ProductAvatar` next refactor pass. From DISC-0001 / AUDIT-0002.
+- **LEDGER-001** — **RESOLVED in STEP-0015 (v0.15.0):** the icon-or-monogram
+  avatar was duplicated in ProductCard + detail; centralised in
+  `src/components/ProductAvatar.astro`, now also used by the privacy header.
 - **LEDGER-002** (`type:accessibility`, `priority:low`) — no automated a11y /
   visual-regression check; UI verified manually. From AUDIT-0001. Advisory.
 
@@ -138,8 +137,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.14.0** (STEP-0014 merge
-commit); prior v0.13.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.15.0** (STEP-0015 merge
+commit); prior v0.14.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
 

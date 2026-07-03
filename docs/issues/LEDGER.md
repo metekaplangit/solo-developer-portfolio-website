@@ -24,7 +24,10 @@ first maintained release (see `ISSUE_TRACKING.md`).
   step-or-commit: found STEP-0003, grew at STEP-0010 (icon rendering added to
   both). acceptance: extract a `ProductAvatar.astro` (icon when present, else
   monogram) in a dedicated refactor pass per `REFACTORING.md`.
-  status: open (ripe — extract next refactor pass; 2 sites, low urgency).
+  status: **RESOLVED at STEP-0015 (v0.15.0)** — `src/components/ProductAvatar.astro`
+  now owns the icon-or-monogram lockup; ProductCard, `apps/[slug]`, and the
+  privacy header all use it (3 sites unified). Monogram logic removed from the
+  call sites.
 
 - LEDGER-002 | type:accessibility | priority:low | No automated a11y / visual
   regression check

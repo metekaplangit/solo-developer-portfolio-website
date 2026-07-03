@@ -1,7 +1,7 @@
 ---
 import type { PrivacyPolicyEntry, MediaAsset } from '../content/schema';
 import { formatDate } from '../lib/format';
-import { withBase } from '../lib/url';
+import ProductAvatar from './ProductAvatar.astro';
 
 interface Props {
   policy: PrivacyPolicyEntry;
@@ -23,15 +23,7 @@ const chips: { label: string; ok: boolean }[] = [
 
 <article class="policy">
   <header class="policy-head">
-    {icon && (
-      <img
-        class="policy-icon"
-        src={withBase(icon.path)}
-        alt={icon.altText}
-        width="72"
-        height="72"
-      />
-    )}
+    {icon && <ProductAvatar icon={icon} name={policy.title} size={72} alt={icon.altText} />}
     <div class="policy-head-text">
       <h1>{policy.title}</h1>
       <p class="policy-meta">
@@ -154,14 +146,6 @@ const chips: { label: string; ok: boolean }[] = [
     display: flex;
     align-items: center;
     gap: var(--space-4);
-  }
-  .policy-icon {
-    flex: none;
-    width: 4.5rem;
-    height: 4.5rem;
-    /* Full-bleed square artwork — round it into an app tile, like the cards. */
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
   }
   .policy-head-text {
     min-width: 0;

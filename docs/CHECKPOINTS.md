@@ -22,18 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **14** (STEP-0001..STEP-0014).
+- Completed **feature** Steps: **15** (STEP-0001..STEP-0015).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0015**.
-- Next-due: **Discussion + Audit** after feature step **15**; **Markdown
-  Consistency** after **16**; **Enhancement** after **21**.
+- Next feature step: **STEP-0016**.
+- Next-due: **Markdown Consistency** after feature step **16**; **Enhancement**
+  after **21**.
 
 ## Due now
 
-**None.** Through step 14: … AUDIT-0002+MC-0005(10), step 11 none, **DISC-0004 +
-MC-0006(12)**, step 13 none, **MC-0007 + ENH-0002(14)** done (+ on-demand
-MC-OD-0001..0005). Next scheduled is **Discussion + Audit after step 15**. No
-checkpoint blocks the next packet.
+**None.** **DISC-0005 + AUDIT-0003** (both due at feature step **15**) are **done**
+alongside the STEP-0015 close. Prior: … **MC-0007 + ENH-0002(14)** done (+ on-demand
+MC-OD-0001..0005). Next scheduled: MC after step 16, Discussion after 18,
+Enhancement after 21, Audit after 20.
 
 ## Ledger
 
@@ -62,6 +62,8 @@ checkpoint blocks the next packet.
 | MC-0007 | STEP-0014 complete (feature #14) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0007.md` | UI polish + website privacy scope synced; no drift |
 | ENH-0002 | STEP-0014 complete (feature #14) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0002.md` | Accepted N1/N2/E7 (unify product header + ProductAvatar) as next UI packet; O1 email routing pre-launch; carried E1–E3 |
 | MC-OD-0005 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0005.md` | Repaired CHECKPOINTS ledger lag (MC-0007) + ran the due ENH-0002; owners in sync at v0.14.0. Does not reset cadence. |
+| DISC-0005 | STEP-0015 complete (feature #15) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0005.md` | Reviewed STEP-0013→0015; no blocking findings; LEDGER-001 resolved; research item C deferred. |
+| AUDIT-0003 | STEP-0015 complete (feature #15) | Audit | Done | `docs/audits/AUDIT_AUDIT-0003.md` | All areas Pass; F1 LEDGER-001 resolved; F2 promote a11y CI (LEDGER-002); F3 screenshots (C) noted. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

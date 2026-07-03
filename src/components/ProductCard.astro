@@ -1,5 +1,6 @@
 ---
 import Badge from './Badge.astro';
+import ProductAvatar from './ProductAvatar.astro';
 import type { Product } from '../content/schema';
 import {
   visibleStoreLinks,
@@ -14,24 +15,12 @@ interface Props {
   product: Product;
 }
 const { product } = Astro.props;
-const monogram = product.name
-  .split(/\s+/)
-  .map((w) => w[0])
-  .join('')
-  .slice(0, 2)
-  .toUpperCase();
 const stores = visibleStoreLinks(product);
 ---
 
 <article class="card">
   <div class="card-head">
-    {
-      product.icon ? (
-        <img class="app-icon" src={withBase(product.icon.path)} alt="" width="48" height="48" loading="lazy" />
-      ) : (
-        <span class="monogram" aria-hidden="true">{monogram}</span>
-      )
-    }
+    <ProductAvatar icon={product.icon} name={product.name} size={48} />
     <div class="card-titles">
       <h3 class="card-name">
         <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
@@ -75,7 +64,8 @@ const stores = visibleStoreLinks(product);
 <style>
   .card {
     position: relative;
-    border: 1px solid var(--border);
+    /* One separation cue: a contrasting elevated surface + shadow, not a
+       stacked border (Refactoring UI — prefer fewer borders). */
     border-radius: var(--radius-lg);
     background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
     padding: var(--space-6);
@@ -84,39 +74,17 @@ const stores = visibleStoreLinks(product);
     gap: var(--space-3);
     height: 100%;
     box-shadow: var(--shadow-sm);
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
-      border-color var(--dur) var(--ease);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
   }
   .card:hover,
   .card:focus-within {
     transform: translateY(-3px);
-    border-color: var(--border-strong);
     box-shadow: var(--shadow-md);
   }
   .card-head {
     display: flex;
     align-items: center;
     gap: var(--space-4);
-  }
-  .monogram {
-    display: grid;
-    place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: var(--radius);
-    background: linear-gradient(145deg, var(--accent-hover), var(--accent));
-    color: var(--accent-contrast);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    flex: none;
-    box-shadow: 0 6px 16px -6px var(--accent-glow);
-  }
-  .app-icon {
-    width: 3rem;
-    height: 3rem;
-    border-radius: var(--radius);
-    flex: none;
-    box-shadow: var(--shadow-sm);
   }
   .card-name {
     margin: 0;

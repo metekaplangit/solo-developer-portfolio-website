@@ -164,6 +164,12 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   across detail + privacy; fixed the `·Support` separator; retitled the main
   privacy page "MetKap Studio Website Privacy Policy" with an explicit
   website-vs-apps opening. **Markdown Consistency MC-0007** run (feature step #14).
+- **STEP-0015 — Research-driven UI polish + a11y fix** *(COMPLETE — merged, tagged
+  `v0.15.0`, 2026-07-03).* Applied salvaged deep-research findings: new shared
+  `ProductAvatar` (card/detail/privacy — resolves LEDGER-001); WCAG-AA `--faint`
+  contrast fix; reading column tightened to 40rem; dropped stacked card borders.
+  Research item **C (hero/detail product screenshots) deferred** — needs assets.
+  **Discussion DISC-0005 + Audit AUDIT-0003** run at feature step #15.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 
