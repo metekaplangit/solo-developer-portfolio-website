@@ -198,6 +198,11 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   scroll-reveal on about/support/privacy. All CSS-only, zero-JS, reduced-motion-
   safe. From a lean study of Linear + micro-interaction best practices. No
   scheduled checkpoint at feature step #19.
+- **STEP-0020 — Clickable product icons** *(COMPLETE — merged, tagged `v0.20.0`,
+  2026-07-03).* Optional `href` on `ProductAvatar` makes a product's icon a link
+  to that product (home spotlight, cards, privacy page); hover-lift + press +
+  `Open <product>` a11y label; detail-page icon left unlinked (self page).
+  **Audit AUDIT-0004 + Markdown Consistency MC-0010** run (feature step #20).
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002)
 

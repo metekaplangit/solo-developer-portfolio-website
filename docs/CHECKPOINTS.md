@@ -22,18 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **19** (STEP-0001..STEP-0019).
+- Completed **feature** Steps: **20** (STEP-0001..STEP-0020).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0020**.
-- Next-due: **Audit** after feature step **20**; **Markdown Consistency** after
-  **20**; **Discussion** after **21**; **Enhancement** after **21**. (Step 19
-  off-cadence — no scheduled checkpoint.)
+- Next feature step: **STEP-0021**.
+- Next-due: **Discussion** after feature step **21**; **Enhancement** after **21**;
+  **Markdown Consistency** after **22**; **Audit** after **25**.
 
 ## Due now
 
-**None.** **DISC-0006 + MC-0009** (both due at feature step **18**) are **done**
-alongside the STEP-0018 close. Prior: **MC-0008(16)**, **DISC-0005 +
-AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)** done (+ on-demand MC-OD-0001..0005).
+**None.** **AUDIT-0004 + MC-0010** (both due at feature step **20**) are **done**
+alongside the STEP-0020 close. Steps 17, 19 off-cadence. Prior: **DISC-0006 +
+MC-0009(18)**, **MC-0008(16)**, **DISC-0005 + AUDIT-0003(15)** done (+ on-demand
+MC-OD-0001..0006).
 
 ## Ledger
 
@@ -69,6 +69,9 @@ AUDIT-0003(15)**, **MC-0007 + ENH-0002(14)** done (+ on-demand MC-OD-0001..0005)
 | DISC-0006 | STEP-0018 complete (feature #18) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0006.md` | Privacy-completeness additions reviewed; truthful, meets Apple 5.1.1; flagged operational pre-launch follow-ups. |
 | MC-0009 | STEP-0018 complete (feature #18) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0009.md` | Privacy additions synced; no drift; no overclaiming. |
 | MC-OD-0006 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0006.md` | v0.18.0 consistent; support-email LIVE recorded across owners; no drift. Does not reset cadence. |
+| — | STEP-0019 complete (feature #19) | n/a | n/a | — | Off-cadence; no checkpoint due |
+| AUDIT-0004 | STEP-0020 complete (feature #20) | Audit | Done | `docs/audits/AUDIT_AUDIT-0004.md` | All areas Pass; findings info-only (screenshots C, reply-from email, app-side submission items). |
+| MC-0010 | STEP-0020 complete (feature #20) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0010.md` | Clickable-icon affordance synced; component-reused; a11y preserved; no drift. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

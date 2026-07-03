@@ -16,6 +16,22 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.20.0] — 2026-07-03
+
+Clickable product icons (STEP-0020).
+
+### Added
+
+- A product's **icon is now a link to that product** everywhere it appears — the
+  home spotlight, the app cards, and the per-product privacy page — so clicking
+  the icon opens the item, just like the title does. The icon gets a subtle
+  hover-lift and press, and an accessible "Open <product>" label.
+
+### Notes
+
+- On a product's own detail page the icon is intentionally not a link (you're
+  already there).
+
 ## [0.19.0] — 2026-07-03
 
 Premium craft polish (STEP-0019) — the small details that make a site feel

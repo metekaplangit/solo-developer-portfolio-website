@@ -2,6 +2,7 @@
 // One product identity lockup — the app icon, or a monogram fallback built from
 // the name. Shared by ProductCard, the app detail header, and the privacy header
 // so the same product looks identical everywhere (resolves LEDGER-001).
+// When `href` is set, the whole avatar becomes a link to the product.
 import { withBase } from '../lib/url';
 
 interface Props {
@@ -12,8 +13,10 @@ interface Props {
   size?: number;
   /** Alt text for the icon image. Defaults to decorative ('') — the name is adjacent. */
   alt?: string;
+  /** When set, the avatar becomes a link to this (site-relative) path. */
+  href?: string;
 }
-const { icon = null, name, size = 48, alt } = Astro.props;
+const { icon = null, name, size = 48, alt, href } = Astro.props;
 const monogram = name
   .split(/\s+/)
   .map((w) => w[0])
@@ -21,25 +24,42 @@ const monogram = name
   .slice(0, 2)
   .toUpperCase();
 const large = size >= 56;
+const sizeStyle = `--sz:${size}px`;
+// Inside a link the image is decorative — the link's aria-label names the target.
+const imgAlt = href ? '' : (alt ?? '');
 ---
 
 {
-  icon ? (
+  href ? (
+    <a class="avatar-link" href={withBase(href)} aria-label={`Open ${name}`}>
+      {icon ? (
+        <img
+          class:list={['avatar', large && 'avatar-lg']}
+          src={withBase(icon.path)}
+          alt={imgAlt}
+          width={size}
+          height={size}
+          style={sizeStyle}
+          loading="lazy"
+        />
+      ) : (
+        <span class:list={['avatar', 'monogram', large && 'avatar-lg']} style={sizeStyle} aria-hidden="true">
+          {monogram}
+        </span>
+      )}
+    </a>
+  ) : icon ? (
     <img
       class:list={['avatar', large && 'avatar-lg']}
       src={withBase(icon.path)}
-      alt={alt ?? ''}
+      alt={imgAlt}
       width={size}
       height={size}
-      style={`--sz:${size}px`}
+      style={sizeStyle}
       loading="lazy"
     />
   ) : (
-    <span
-      class:list={['avatar', 'monogram', large && 'avatar-lg']}
-      style={`--sz:${size}px`}
-      aria-hidden="true"
-    >
+    <span class:list={['avatar', 'monogram', large && 'avatar-lg']} style={sizeStyle} aria-hidden="true">
       {monogram}
     </span>
   )
@@ -52,6 +72,7 @@ const large = size >= 56;
     flex: none;
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
+    display: block;
   }
   .avatar-lg {
     border-radius: var(--radius-lg);
@@ -66,5 +87,22 @@ const large = size >= 56;
     letter-spacing: 0.01em;
     font-size: calc(var(--sz) * 0.32);
     box-shadow: 0 6px 16px -6px var(--accent-glow);
+  }
+
+  /* Clickable icon — a subtle lift + press signals it opens the product. */
+  .avatar-link {
+    display: inline-flex;
+    flex: none;
+    border-radius: var(--radius-lg);
+    line-height: 0;
+    transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease);
+  }
+  .avatar-link:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
+  .avatar-link:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 90ms;
   }
 </style>
