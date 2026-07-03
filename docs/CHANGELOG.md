@@ -16,6 +16,23 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.21.0] — 2026-07-03
+
+Code-review remediation (STEP-0021).
+
+### Changed
+
+- **Cleaner clickable icons.** The product icon stays clickable, but where its
+  link duplicates an adjacent one (a card's title, the spotlight's name/button),
+  it no longer adds a redundant tab stop or repeated screen-reader link — better
+  for keyboard and assistive-tech users. The privacy page's icon (the only link
+  to the app there) stays fully labelled.
+
+### Internal
+
+- De-duplicated the `ProductAvatar` markup (the icon is authored once and wrapped
+  in a link only when needed), so the linked and unlinked forms can't drift.
+
 ## [0.20.0] — 2026-07-03
 
 Clickable product icons (STEP-0020).
