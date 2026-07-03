@@ -8,6 +8,7 @@ import { site } from '../lib/site';
 import { withBase } from '../lib/url';
 import { getFeatured, sortProducts, statusLabel } from '../lib/products';
 import { canonicalPrivacyUrl } from '../lib/privacy';
+import { organizationSchema, websiteSchema } from '../lib/schema';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
@@ -20,7 +21,7 @@ const spotlight = showcase[0];
 const rest = showcase.slice(1);
 ---
 
-<BaseLayout title={site.name} description={site.description}>
+<BaseLayout title={site.name} description={site.description} schema={[organizationSchema(), websiteSchema()]}>
   <section class="hero">
     <p class="eyebrow">{site.tagline}</p>
     <h1 class="hero-title">{site.name}</h1>

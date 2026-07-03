@@ -13,6 +13,7 @@ import {
 import { canonicalPrivacyUrl } from '../../lib/privacy';
 import { formatDate } from '../../lib/format';
 import { withBase } from '../../lib/url';
+import { softwareApplicationSchema, breadcrumbSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -35,9 +36,18 @@ const stores = visibleStoreLinks(product);
 
 const seoTitle = product.seo?.title ?? product.name;
 const seoDescription = product.seo?.description ?? product.summary;
+
+const schema = [
+  softwareApplicationSchema(product, seoDescription),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Apps & Games', path: '/apps/' },
+    { name: product.name, path: `/apps/${product.slug}/` },
+  ]),
+];
 ---
 
-<BaseLayout title={seoTitle} description={seoDescription}>
+<BaseLayout title={seoTitle} description={seoDescription} schema={schema}>
   <p class="back"><a href={withBase('/apps/')}>← All apps &amp; games</a></p>
 
   <article class="detail">

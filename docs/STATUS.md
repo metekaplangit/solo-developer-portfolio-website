@@ -9,12 +9,14 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0021 complete** — **code-review remediation**. Fixed the two
-  `/code-review` findings: redundant icon/title link (icon stays mouse-clickable
-  but `tabindex=-1`+`aria-hidden` where it duplicates an adjacent link; privacy
-  icon stays primary) and de-duplicated `ProductAvatar` markup (single inner +
-  dynamic `<Wrapper>`). **A11y-safe — Lighthouse gate green in CI (PR #2).**
-  Merged, tagged **v0.21.0**. 34 tests green. **DISC-0007 + ENH-0003** run.
+- **State:** **STEP-0022 complete** — **SEO/AEO structured data (JSON-LD)**.
+  Closed the only FAIL from the SEO audit: added Schema.org JSON-LD via new
+  `src/lib/schema.ts` builders + injection-safe `JsonLd.astro`, wired through an
+  optional `schema` prop on `BaseLayout`. Home = `Organization`+`WebSite`;
+  `/apps/` = `ItemList`+`BreadcrumbList`; each product =
+  `SoftwareApplication`|`VideoGame`+`BreadcrumbList`. Graphs kept **truthful**
+  (no offers/price/rating for the unreleased app); **zero client JS** shipped.
+  Merged, tagged **v0.22.0**. 34 tests green. **MC-0011** run.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
@@ -42,15 +44,16 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0021 — Code-review remediation** — **DONE**, merged, tagged **v0.21.0**.
-  Task Card: `docs/tasks/STEP-0021.md`.
-- Delivered: redundant icon link made presentational where it duplicates an
-  adjacent link (`tabindex=-1`+`aria-hidden`; mouse-clickable preserved; privacy
-  icon stays primary); `ProductAvatar` markup de-duplicated (dynamic `<Wrapper>`).
-  Verified a11y-safe via the Lighthouse CI gate (PR #2). **DISC-0007 + ENH-0003**
-  run.
-- (Prior: STEP-0020 clickable icons v0.20.0; STEP-0019 premium craft v0.19.0; …
-  v0.1.0.)
+- **STEP-0022 — Structured data (SEO/AEO JSON-LD)** — **DONE**, merged, tagged
+  **v0.22.0**. Task Card: `docs/tasks/STEP-0022.md`.
+- Delivered: Schema.org JSON-LD across the site — new `src/lib/schema.ts`
+  builders + injection-safe `JsonLd.astro`, wired through an optional `schema`
+  prop on `BaseLayout`. Home = `Organization`+`WebSite`; `/apps/` =
+  `ItemList`+`BreadcrumbList`; each product =
+  `SoftwareApplication`|`VideoGame`+`BreadcrumbList`. Truthful graphs (no
+  offers/price/rating for the unreleased app); **zero client JS**. **MC-0011** run.
+- (Prior: STEP-0021 code-review remediation v0.21.0; STEP-0020 clickable icons
+  v0.20.0; STEP-0019 premium craft v0.19.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
@@ -66,11 +69,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0021
+current_step: STEP-0022
 next_step: research item C (hero/detail screenshots, needs assets); or changelog block, Apple-submission checklist doc, Terms/disclaimer page, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.21.0
+product_tag: v0.22.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -118,12 +121,12 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **21** (STEP-0001..0021). Checkpoints run through
+Completed **feature** steps: **22** (STEP-0001..0022). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
-**AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); steps 11, 13, 17, 19
-had no scheduled checkpoint. Plus on-demand MC-OD-0001..0007. Next: MC after 22;
-Discussion after 24; Audit after 25; Enhancement after 28. Calibration: completed 2026-07-02.
+**AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
+steps 11, 13, 17, 19 had no scheduled checkpoint. Plus on-demand MC-OD-0001..0007.
+Next: Discussion after 24; Audit after 25; Enhancement after 28. Calibration: completed 2026-07-02.
 
 ## Issues
 

@@ -4,16 +4,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import { sortProducts } from '../../lib/products';
+import { breadcrumbSchema, itemListSchema } from '../../lib/schema';
 
 const entries = await getCollection('products');
 const products = sortProducts(entries.map((e) => e.data));
 const apps = products.filter((p) => p.type === 'app');
 const games = products.filter((p) => p.type === 'game');
+
+const schema = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Apps & Games', path: '/apps/' },
+  ]),
+  itemListSchema(products),
+];
 ---
 
 <BaseLayout
   title="Apps & Games"
   description="Every app and game — released, in beta, and planned — each with privacy and support links."
+  schema={schema}
 >
   <PageHeader title="Apps & Games">
     <p>Everything here links to its own privacy and support information.</p>
