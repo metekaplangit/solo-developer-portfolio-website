@@ -81,16 +81,30 @@ const seoDescription = product.seo?.description ?? product.summary;
 
     {
       product.features.length > 0 && (
-        <section aria-labelledby="features-h">
+        <section class="reveal" aria-labelledby="features-h">
           <h2 id="features-h">Features</h2>
-          <ul>
-            {product.features.map((f) => <li>{f}</li>)}
+          <ul class="feature-grid" role="list">
+            {product.features.map((f) => (
+              <li class="feature">
+                <svg class="feature-mark" viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M13 4.5 6.5 11 3.2 7.7"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span>{f}</span>
+              </li>
+            ))}
           </ul>
         </section>
       )
     }
 
-    <section aria-labelledby="get-h">
+    <section class="reveal" aria-labelledby="get-h">
       <h2 id="get-h">Get it</h2>
       {
         hasStoreLinks(product) ? (
@@ -232,6 +246,32 @@ const seoDescription = product.seo?.description ?? product.summary;
   }
   .unreleased {
     color: var(--muted);
+  }
+  /* Scannable feature grid — a check-marked card per feature. */
+  .feature-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--space-3);
+  }
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .feature-mark {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.15em;
+    color: var(--accent);
   }
   .meta {
     margin-top: var(--space-8);

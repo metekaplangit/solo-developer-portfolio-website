@@ -16,6 +16,29 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.16.0] — 2026-07-03
+
+More appealing, dynamic home + app pages (STEP-0016), informed by studying how
+top App Store / Mac App Store creators build their sites.
+
+### Added
+
+- **Featured product spotlight** on the home page — the lead app now gets a rich
+  panel (large icon, status, an emotional one-line pitch, real feature highlights,
+  and View / Privacy actions) instead of a small card.
+- **Feature grid** on the app page — the feature list is now a scannable grid of
+  check-marked cards.
+- **Tasteful scroll-reveal motion** — sections and cards gently fade + rise into
+  view as you scroll. Pure CSS (`animation-timeline`), no JavaScript; disabled for
+  `prefers-reduced-motion` and gracefully absent where unsupported (content always
+  visible).
+
+### Notes
+
+- Kept honest: no fabricated App Store badges, press logos, testimonials, user
+  counts, or screenshots (Sole Focus is unreleased). Device mockups / real
+  screenshots remain queued until the app ships.
+
 ## [0.15.0] — 2026-07-03
 
 Research-driven UI polish + accessibility fix (STEP-0015).

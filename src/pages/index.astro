@@ -2,15 +2,22 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
+import ProductAvatar from '../components/ProductAvatar.astro';
+import Badge from '../components/Badge.astro';
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
-import { getFeatured, sortProducts } from '../lib/products';
+import { getFeatured, sortProducts, statusLabel } from '../lib/products';
+import { canonicalPrivacyUrl } from '../lib/privacy';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
 const featured = getFeatured(products);
 const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
 const shippedCount = products.filter((p) => p.status === 'released').length;
+
+// The lead product gets a spotlight panel; any others fall to the card grid.
+const spotlight = showcase[0];
+const rest = showcase.slice(1);
 ---
 
 <BaseLayout title={site.name} description={site.description}>
@@ -33,9 +40,53 @@ const shippedCount = products.filter((p) => p.status === 'released').length;
       <h2 id="featured-h">Featured</h2>
       <a class="section-link" href={withBase('/apps/')}>All apps &amp; games →</a>
     </div>
-    <ul class="grid" role="list">
-      {showcase.map((p) => <li><ProductCard product={p} /></li>)}
-    </ul>
+
+    {
+      spotlight && (
+        <article class="spotlight reveal">
+          <div class="spotlight-media">
+            <ProductAvatar icon={spotlight.icon} name={spotlight.name} size={112} />
+          </div>
+          <div class="spotlight-body">
+            <div class="spotlight-tags">
+              <Badge label={spotlight.type === 'game' ? 'Game' : 'App'} tone="accent" />
+              <Badge label={statusLabel(spotlight.status)} />
+            </div>
+            <h3 class="spotlight-name">
+              <a href={withBase(`/apps/${spotlight.slug}/`)}>{spotlight.name}</a>
+            </h3>
+            <p class="spotlight-lede">{spotlight.summary}</p>
+            {spotlight.features.length > 0 && (
+              <ul class="spotlight-highlights" role="list">
+                {spotlight.features.slice(0, 3).map((f) => (
+                  <li>{f}</li>
+                ))}
+              </ul>
+            )}
+            <div class="spotlight-cta">
+              <a class="btn btn-primary" href={withBase(`/apps/${spotlight.slug}/`)}>
+                View {spotlight.name}
+              </a>
+              <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(spotlight))}>
+                Privacy
+              </a>
+            </div>
+          </div>
+        </article>
+      )
+    }
+
+    {
+      rest.length > 0 && (
+        <ul class="grid" role="list">
+          {rest.map((p) => (
+            <li class="reveal">
+              <ProductCard product={p} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
   </section>
 </BaseLayout>
 
@@ -90,11 +141,93 @@ const shippedCount = products.filter((p) => p.status === 'released').length;
   }
   .grid {
     list-style: none;
-    margin: 0;
+    margin: var(--space-6) 0 0;
     padding: 0;
     display: grid;
     gap: var(--space-5);
     grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  }
+
+  /* Featured spotlight — a richer, product-led panel for the lead app. */
+  .spotlight {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-8);
+    align-items: center;
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(130% 150% at 0% 0%, var(--accent-soft), transparent 58%),
+      linear-gradient(180deg, var(--surface), var(--surface-2));
+    box-shadow: var(--shadow-md);
+  }
+  .spotlight-media {
+    display: grid;
+    place-items: center;
+  }
+  .spotlight-tags {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+  .spotlight-name {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+  .spotlight-name a {
+    color: var(--text-strong);
+    text-decoration: none;
+  }
+  .spotlight-name a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+  .spotlight-lede {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    max-width: 34rem;
+  }
+  .spotlight-highlights {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+  .spotlight-highlights li {
+    position: relative;
+    padding-left: var(--space-5);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .spotlight-highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .spotlight-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  @media (max-width: 40rem) {
+    .spotlight {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      padding: var(--space-6);
+    }
+    .spotlight-media {
+      justify-items: start;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {

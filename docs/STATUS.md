@@ -9,19 +9,19 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0015 complete** — **research-driven UI polish + a11y fix**.
-  New shared **`ProductAvatar`** (identical product identity on cards/detail/
-  privacy; **resolves LEDGER-001**); fixed a WCAG-AA contrast fail (`--faint` now
-  ≥4.5:1); tightened the reading column (`--maxw-prose` 40rem); dropped stacked
-  card borders. Merged, tagged **v0.15.0**. 34 tests green.
+- **State:** **STEP-0016 complete** — **more appealing / dynamic UI** (tasteful
+  register), informed by studying top App Store / Mac App Store creator sites.
+  Home **featured product spotlight**; app-page **feature grid**; CSS-only
+  **scroll-reveal** motion (reduced-motion + `@supports` guarded, zero JS). Kept
+  honest — no fabricated badges/press/testimonials/screenshots. Merged, tagged
+  **v0.16.0**. 34 tests green. **MC-0008** run.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
-- **Checkpoints:** **DISC-0005 + AUDIT-0003 done** at step 15 — no blockers;
-  Audit recommends promoting the a11y/Lighthouse CI packet (LEDGER-002), which
-  would have caught the `--faint` fail.
-- **Next action:** pick a packet — **deferred: hero/detail product screenshots
-  (research item C)** once Sole Focus shots exist; **a11y CI (LEDGER-002)**;
-  changelog block; email routing pre-launch. Freeze a Task Card before editing.
+- **Next action:** **deferred: hero/detail product screenshots + device mockups
+  (research item C)** — the biggest remaining visual lever, needs real Sole Focus
+  shots. Also: **a11y/Lighthouse CI** (LEDGER-002, audit-recommended, doubly
+  relevant now motion is in), changelog block, email-routing pre-launch. Freeze a
+  Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** enable Cloudflare Email Routing
@@ -38,21 +38,21 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0015 — Research-driven UI polish + a11y fix** — **DONE**, merged, tagged
-  **v0.15.0**. Task Card: `docs/tasks/STEP-0015.md`.
-- Delivered: shared **`ProductAvatar`** (icon-or-monogram, used by card/detail/
-  privacy — resolves LEDGER-001); `--faint` contrast fixed to WCAG AA; reading
-  column tightened to 40rem; stacked card borders dropped (surface+shadow only).
-  Grounded in the salvaged deep-research findings + a local contrast audit.
-- (Prior: STEP-0014 UI polish + privacy scope v0.14.0; STEP-0013 privacy icon
-  v0.13.0; … v0.1.0.)
+- **STEP-0016 — Appeal & motion (tasteful)** — **DONE**, merged, tagged
+  **v0.16.0**. Task Card: `docs/tasks/STEP-0016.md`.
+- Delivered: home **featured product spotlight**; app-page **feature grid**;
+  CSS-only **scroll-reveal** motion (`animation-timeline: view()`, reduced-motion +
+  `@supports` guarded, zero JS). Based on a lean study of Things + Raycast; kept
+  honest (no fabricated social proof). MC-0008 run.
+- (Prior: STEP-0015 research polish + a11y v0.15.0; STEP-0014 UI polish + privacy
+  scope v0.14.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen** (DISC-0005 + AUDIT-0003 already run at step 15). Candidates:
-  **hero/detail product screenshots (research item C — deferred, needs assets)**,
-  **a11y/Lighthouse CI** (LEDGER-002, now audit-recommended), **changelog/updates
-  block**, **more real products**. One outcome only.
+- **Not yet chosen.** Candidates: **hero/detail product screenshots + device
+  mockups (research item C — deferred, needs assets)**, **a11y/Lighthouse CI**
+  (LEDGER-002, audit-recommended), **changelog/updates block**, **more real
+  products**. One outcome only.
 
 ## Machine-readable state
 
@@ -61,11 +61,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0015
-next_step: run due DISC-0005 + AUDIT-0003 (step 15); then research item C (hero screenshots, deferred), changelog block, a11y CI, or more products
+current_step: STEP-0016
+next_step: research item C (hero/detail screenshots + device mockups, deferred — needs assets); or a11y CI (LEDGER-002), changelog block, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.15.0
+product_tag: v0.16.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -114,9 +114,9 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 Completed **feature** steps: **15** (STEP-0001..0015). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); steps 11 and 13 had no scheduled
-checkpoint; **MC-0007 + ENH-0002**(14); **DISC-0005 + AUDIT-0003**(15). Plus
-on-demand MC-OD-0001..0005. Next: MC after 16; Discussion after 18; Audit after
-20; Enhancement after 21. Calibration: completed 2026-07-02.
+checkpoint; **MC-0007 + ENH-0002**(14); **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16).
+Plus on-demand MC-OD-0001..0005. Next: Discussion after 18; Audit after 20;
+Enhancement after 21; MC after 18. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -137,8 +137,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.15.0** (STEP-0015 merge
-commit); prior v0.14.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.16.0** (STEP-0016 merge
+commit); prior v0.15.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
 
