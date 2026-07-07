@@ -104,6 +104,12 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Always reserve the vertical scrollbar's gutter so the centered layout keeps a
+     constant width. Without this, navigating between a page that scrolls and one
+     that doesn't changes the viewport width by the scrollbar (~11px), shifting the
+     centered header (logo/title) and all content sideways. Harmless where
+     scrollbars are overlaid (e.g. default macOS). */
+  scrollbar-gutter: stable;
 }
 
 body {
