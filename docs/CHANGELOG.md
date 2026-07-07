@@ -14,7 +14,22 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. Next packet undecided — see ROADMAP._
+### Changed
+
+- **App screenshots are now a swipeable gallery instead of a long stack.** On each
+  app page (e.g. Sole Focus) the screenshots no longer stack vertically — you see
+  one large screenshot at a time and move between them with left/right arrows, a
+  row of dots, swipe, or the keyboard. The image size is unchanged; the section
+  stays compact no matter how many screenshots a product has, so the description
+  and highlights below it are reachable without a long scroll. Larger, higher-
+  contrast arrow buttons and dots, styled with the site's accent color.
+
+### Internal
+
+- `ScreenshotShowcase.astro` rebuilt on a CSS scroll-snap track (native swipe /
+  trackpad works with zero JS); a small progressive-enhancement script wires the
+  arrows, dots, keyboard, live counter, and end-state disabling. Honors
+  `prefers-reduced-motion`. Still CSS-first, no third-party libraries.
 
 ## [0.25.0] — 2026-07-07
 
