@@ -67,7 +67,9 @@
 
   /* Layout measures — one shared reading column so every content page lines up.
      --maxw    = wide shell (showcase grids: home, catalog)
-     --maxw-prose = reading column (about, support, privacy, detail, headers) */
+     --maxw-prose = reading column (about, support, privacy, detail, headers)
+     Convention: reading columns are CENTERED within the shell
+     (`margin-inline: auto`), so content sits balanced, not pushed left. */
   --maxw: 68rem;
   /* Reading column ~72ch at 17px body — inside the 45–90 comfortable range
      (Butterick), tighter than the old 44rem (~82ch) for better readability. */

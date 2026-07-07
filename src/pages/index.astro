@@ -116,6 +116,7 @@ const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
   .hero {
     padding-block: var(--space-24) var(--space-16);
     max-width: 46rem;
+    margin-inline: auto;
   }
   .hero-title {
     margin: var(--space-3) 0 var(--space-5);
@@ -167,7 +168,8 @@ const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
     padding: 0;
     display: grid;
     gap: var(--space-5);
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 20rem));
+    justify-content: center;
   }
 
   /* Featured spotlight — a richer, product-led panel for the lead app. */

@@ -234,6 +234,14 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   offline, yours) plus a short FAQ. Truthful throughout — no blocking claim;
   privacy stated exactly. One content file feeds every surface + JSON-LD.
   **Markdown Consistency MC-0012 + Discussion DISC-0008** run (feature step #24).
+- **STEP-0025 — Centered layout (system-wide alignment)** *(COMPLETE — merged,
+  tagged `v0.25.0`, 2026-07-07).* Fixed the site-wide "pushed to the left"
+  imbalance. Presented three mockup directions (A centered column · B tighter
+  shell · C centered-symmetric); user chose **A**. Centered every reading column
+  (`margin-inline: auto`) and made card grids center under their centered headers
+  (`auto-fit` + capped width + centered tracks). CSS-only, zero JS, no overflow;
+  convention documented at the `--maxw-prose` token. **Audit AUDIT-0005** run
+  (feature step #25) as the full-system integrity pass — all areas pass.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 

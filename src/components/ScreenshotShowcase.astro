@@ -42,8 +42,9 @@ const { shots, label = 'Screenshots' } = Astro.props;
 
 <style>
   .showcase {
-    /* Breaks out wider than the 40rem prose column, sharing its left edge. */
+    /* Breaks out wider than the 40rem prose column, centered on the same axis. */
     max-width: 64rem;
+    margin-inline: auto;
     padding-block: var(--space-6);
   }
   .showcase ul {
