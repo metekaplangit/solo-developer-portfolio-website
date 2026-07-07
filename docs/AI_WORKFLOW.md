@@ -32,6 +32,15 @@ never a passing documentation check. Also recorded in `STATUS.md` and CI
 
 ## Working rules
 
+- **Autonomous shipping (user directive, 2026-07-07, standing):** own the full
+  pipeline end-to-end — commit, merge (`--no-ff`), push, deploy, **and cut the
+  version/tag** — without asking the user to do those things or to decide the
+  release. Do not park work "pending a decision"; make the call and execute.
+  Reverts are the correction mechanism (non-destructive Git). This does **not**
+  lower any gate: every merge-critical check must stay green with real evidence,
+  and genuine safety confirmations for destructive/irreversible actions still
+  apply. User's words: "You never ask me to do anything. You commit, merge, push,
+  and deploy. If I don't like something, I will tell you to revert back."
 - Follow the one **Standard Workflow** in `ROADMAP.md`. One frozen Step Packet at
   a time; never combine independent outcomes; never skip acceptance.
 - Inspect every file before changing it. Read `EXTERNAL_EDITOR.md` before touching

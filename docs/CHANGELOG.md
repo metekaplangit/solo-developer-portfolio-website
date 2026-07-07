@@ -14,6 +14,12 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+_Nothing pending. Next packet undecided — see ROADMAP._
+
+## [0.26.0] — 2026-07-07
+
+Swipeable product screenshot gallery (STEP-0026).
+
 ### Changed
 
 - **App screenshots are now a swipeable gallery instead of a long stack.** On each

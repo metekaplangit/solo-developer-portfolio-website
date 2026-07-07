@@ -9,20 +9,17 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0025 complete** — **centered, balanced layout site-wide**.
-  Fixed the "pushed to the left" imbalance: presented three mockup directions,
-  user chose **A (centered column)**. Every reading column now centers
-  (`margin-inline: auto`) and card grids center under their centered headers
-  (`auto-fit` + capped width + centered tracks). CSS-only, zero JS, no overflow
-  at 1440 or 375. Merged, tagged **v0.25.0**. **36 tests** green. **AUDIT-0005**
-  (full-system integrity pass) run — all areas pass.
-- **Since v0.25.0 (post-tag, untagged):** the Sole Focus screenshot section was
-  rebuilt as a swipeable **gallery/carousel** (one large image at a time; left/
-  right arrows, dots, swipe, keyboard; compact regardless of screenshot count),
-  plus accessibility fixes so the Lighthouse a11y gate stays ≥0.95. **Shipped to
-  production** and logged under CHANGELOG `[Unreleased]`. `main` is **6 commits
-  ahead of `v0.25.0`** and **not yet tagged** — pending a version decision (see
-  "Next Step Packet"). All merge gates green; repo clean, merged, and pushed.
+- **State:** **STEP-0026 complete** — **swipeable product screenshot gallery**,
+  released **v0.26.0**. The Sole Focus screenshot section is now a
+  gallery/carousel: one large image at a time (size unchanged), left/right
+  arrows + dots + swipe + keyboard, a live counter, compact regardless of
+  screenshot count. Accent-styled, bigger arrows/dots per follow-up. Shipped to
+  production; three initial deploys correctly blocked at Lighthouse a11y 0.91
+  until three carousel axe violations were fixed → re-audited **axe-clean** and
+  the a11y gate passed. **36 tests** green; **MC-0013** (due at feature step 26)
+  run — no drift. `main` == **v0.26.0**.
+- **Prior: STEP-0025** — centered, balanced layout site-wide (v0.25.0);
+  **AUDIT-0005** full-system integrity pass — all areas pass.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
@@ -31,11 +28,11 @@
 - **Pre-launch (operational, NOT website) still open before submitting Sole
   Focus:** set App Store Connect App-Privacy labels to "Data Not Collected";
   confirm the app's `PrivacyInfo.xcprivacy` privacy manifest.
-- **Next action:** screenshots (v0.23.0), listing copy (v0.24.0), and centered
-  layout (v0.25.0) are **DONE**. Remaining candidates: `FAQPage` JSON-LD, on-site
-  **changelog/updates block**, more products (fills the now-centered grids),
-  Apple-submission checklist doc, optional Terms/disclaimer page. Freeze a Task
-  Card before editing.
+- **Next action:** screenshots (v0.23.0), listing copy (v0.24.0), centered
+  layout (v0.25.0), and the screenshot **gallery (v0.26.0)** are **DONE**.
+  Remaining candidates: `FAQPage` JSON-LD, on-site **changelog/updates block**,
+  more products (fills the now-centered grids), Apple-submission checklist doc,
+  optional Terms/disclaimer page. Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** (support email now LIVE ✓) add
@@ -52,28 +49,25 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0025 — Centered layout (system-wide alignment)** — **DONE**, merged,
-  tagged **v0.25.0**. Task Card: `docs/tasks/STEP-0025.md`.
-- Delivered: fixed the "pushed to the left" imbalance site-wide. Showed three
-  mockup directions; user chose **A (centered column)**. Centered every reading
-  column (`margin-inline: auto`) and made card grids center under their centered
-  headers (`auto-fit` + capped width + centered tracks). CSS-only, zero JS, no
-  overflow; convention documented at `--maxw-prose`. **AUDIT-0005** (full-system
-  integrity pass) run — all areas pass.
-- (Prior: STEP-0024 v2 listing copy v0.24.0; STEP-0023 real screenshots v0.23.0;
-  STEP-0022 structured-data JSON-LD v0.22.0; … v0.1.0.)
+- **STEP-0026 — Swipeable product screenshot gallery** — **DONE**, merged,
+  tagged **v0.26.0**. Task Card: `docs/tasks/STEP-0026.md`.
+- Delivered: rebuilt `ScreenshotShowcase.astro` from a vertical stack into a
+  single-image gallery (CSS scroll-snap track + progressive-enhancement script):
+  one large screenshot at a time (size unchanged), left/right arrows, dots, live
+  counter, native swipe, keyboard ←/→; compact regardless of shot count; honors
+  `prefers-reduced-motion`. Bigger accent-styled arrows/dots per follow-up. Fixed
+  three carousel a11y violations to keep the Lighthouse gate ≥0.95; verified
+  axe-clean. **MC-0013** (due at feature step 26) run — no drift.
+- (Prior: STEP-0025 centered layout v0.25.0 + AUDIT-0005; STEP-0024 v2 listing
+  copy v0.24.0; STEP-0023 real screenshots v0.23.0; STEP-0022 JSON-LD v0.22.0;
+  … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **First, decide the version for the shipped gallery** (post-v0.25.0, currently
-  under CHANGELOG `[Unreleased]`, `main` ahead of tag): either **cut v0.26.0** now
-  (finalize the `[Unreleased]` block → `[0.26.0]`, add a retroactive Task Card,
-  tag the existing merge) **or** fold it into the next packet's release. This is
-  the only open governance item; the code is live and gate-green either way.
-- **Then choose the next outcome.** Candidates: **changelog/updates block**,
-  **`FAQPage` JSON-LD** (the new FAQ is a natural fit), **Apple-submission
-  checklist doc**, **optional Terms/disclaimer page**, **more real products**.
-  (Screenshots → v0.23.0; listing copy → v0.24.0.) One outcome only.
+- **Not yet chosen.** Candidates: **changelog/updates block**, **`FAQPage`
+  JSON-LD** (the new FAQ is a natural fit), **Apple-submission checklist doc**,
+  **optional Terms/disclaimer page**, **more real products**. (Screenshots →
+  v0.23.0; listing copy → v0.24.0; gallery → v0.26.0.) One outcome only.
 
 ## Machine-readable state
 
@@ -82,11 +76,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0025
+current_step: STEP-0026
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: 5d837af (6 commits ahead of v0.25.0; HEAD untagged — post-tag gallery under CHANGELOG [Unreleased])
-product_tag: v0.25.0 (latest tag; main is ahead — pending version decision for the shipped gallery)
+head: regenerate-live (git rev-parse HEAD) — STEP-0026 release, tagged v0.26.0 (main == tag)
+product_tag: v0.26.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -134,14 +128,14 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **24** (STEP-0001..0024). Checkpoints run through
+Completed **feature** steps: **26** (STEP-0001..0026). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
-**MC-0012 + DISC-0008**(24); **AUDIT-0005**(25); steps 11, 13, 17, 19, 23 had no
-scheduled checkpoint. Plus on-demand MC-OD-0001..**0009** (0009 = this wrap-up).
-Next: Markdown Consistency after 26; Discussion after 27; Enhancement after 28;
-Audit after 30. On-demand runs do not reset cadence. Calibration: completed 2026-07-02.
+**MC-0012 + DISC-0008**(24); **AUDIT-0005**(25); **MC-0013**(26); steps 11, 13,
+17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..**0009**.
+Next: Discussion after 27; Markdown Consistency + Enhancement after 28; Audit
+after 30. On-demand runs do not reset cadence. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -164,17 +158,16 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.25.0** (STEP-0025 merge
-commit); prior v0.24.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
-in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
-(HTTPS enforced).
+`solo-dev-portfolio-website`). Latest product tag: **v0.26.0** (STEP-0026 release
+merge commit); prior v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
+`origin`, in sync (`main` == `v0.26.0`). **Live channel:** GitHub Pages + custom
+domain **metkapstudio.com** (HTTPS enforced).
 
-**`main` is currently 6 commits ahead of `v0.25.0` (untagged).** The post-v0.25.0
-screenshot-gallery UI enhancement + its accessibility fixes shipped to production
-and are logged under CHANGELOG `[Unreleased]`. This is a deliberate pending state,
-not drift: it was **not** run as a frozen Step Packet and awaits a version
-decision (fold into the next packet, or cut **v0.26.0** with a retroactive Task
-Card). See the Handoff and "Next Step Packet" below.
+**Note on STEP-0026 structure:** the gallery shipped across three merges (feature
++ two a11y fixes) under a "deploy if you can" instruction rather than one clean
+packet→branch→merge. STEP-0026 formalizes the packet retroactively and tags the
+release merge; the code was already live and gate-green. Standing rule going
+forward: ship autonomously (commit/merge/push/deploy/tag) — see AI_WORKFLOW.md.
 
 **Deploy reliability note:** GitHub Pages' publish step (`actions/deploy-pages`)
 intermittently sits in `deployment_queued` and times out (GitHub-side congestion;

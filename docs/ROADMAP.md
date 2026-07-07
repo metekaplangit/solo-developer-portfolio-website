@@ -242,6 +242,19 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   (`auto-fit` + capped width + centered tracks). CSS-only, zero JS, no overflow;
   convention documented at the `--maxw-prose` token. **Audit AUDIT-0005** run
   (feature step #25) as the full-system integrity pass — all areas pass.
+- **STEP-0026 — Swipeable product screenshot gallery** *(COMPLETE — merged,
+  tagged `v0.26.0`, 2026-07-07).* Rebuilt `ScreenshotShowcase.astro` from a
+  vertical stack into a single-image gallery (CSS scroll-snap track + a small
+  progressive-enhancement script): one large screenshot at a time (size
+  unchanged), left/right arrows + dots + native swipe + keyboard ←/→ + live
+  counter; compact regardless of shot count; honors `prefers-reduced-motion`.
+  Bigger accent-styled arrows/dots per user follow-up. Fixed three carousel a11y
+  violations (`aria-hidden-focus`, `aria-required-children`,
+  `scrollable-region-focusable`) so the Lighthouse a11y gate (≥0.95) stays green;
+  verified axe-clean. Shipped across three merges (feature + two a11y fixes),
+  formalized as this packet. **Markdown Consistency MC-0013** run (feature step
+  #26). *(Structure note: shipped under a "deploy if you can" instruction, not a
+  pre-frozen packet; STEP-0026 formalizes it retroactively.)*
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 
