@@ -34,7 +34,7 @@ counter.
 / v0.26.0 release. Prior: **AUDIT-0005**(25), **MC-0012 + DISC-0008**(24),
 **MC-0011**(22), **DISC-0007 + ENH-0003**(21), **AUDIT-0004 + MC-0010**(20). Step
 23 had none. Steps 17, 19 off-cadence. **DISC-0006 + MC-0009(18)**, **MC-0008(16)**
-done (+ on-demand MC-OD-0001..0010; MC-OD-0011 = this wrap-up).
+done (+ on-demand MC-OD-0001..0011; MC-OD-0012 = this wrap-up).
 
 ## Ledger
 
@@ -85,6 +85,7 @@ done (+ on-demand MC-OD-0001..0010; MC-OD-0011 = this wrap-up).
 | MC-0013 | STEP-0026 complete (feature #26) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0013.md` | Scheduled cadence checkpoint for the resolved release. Cut **v0.26.0** for the gallery: formalized STEP-0026 (retroactive Task Card), finalized CHANGELOG `[Unreleased]`→`[0.26.0]`, tagged the release merge, synced STATUS/ROADMAP/CHECKPOINTS. Fixed stale "feature steps: 24" → 26. Confirmed `main` == `v0.26.0` (tag on HEAD), owners agree, no drift. Gates green (build 8 / check 0-0-0 / 36 tests / validator 40-40). |
 | MC-OD-0010 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0010.md` | Post-v0.26.0 wrap-up. Repaired lagging CHECKPOINTS "Counters"/"Due now" (feature Steps **25→26**, next step **0026→0027**, next-due recomputed, on-demand range **..0008→..0009**) that the STEP-0026/MC-0013 pass left un-synced; STATUS on-demand range → ..0010. All owners now agree at v0.26.0; gates green (build 8 / check 0-0-0 / 36 tests / validator 40-40); repo clean, merged, pushed. Does not reset cadence. |
 | MC-OD-0011 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0011.md` | Post-v0.26.1 wrap-up. All owners agree at **v0.26.1** (scrollbar-gutter fix) — no drift. The attempted "Format B" description redesign was **reverted while uncommitted** (never touched `main`/docs), so nothing to clean. Synced on-demand range → ..0011 and tightened STATUS "main == v0.26.1" → "product v0.26.1; HEAD carries post-release checkpoint docs". Gates green (build 8 / check 0-0-0 / 36 tests / validator 40-40); repo clean, merged, pushed. Does not reset cadence. |
+| MC-OD-0012 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0012.md` | Post-v0.26.1 wrap-up. **No drift** — the intervening turn was advisory only (a performance/efficiency health check; no code or doc changes), so all owners still agree at v0.26.1. Confirmed gates green (build 8 / check 0-0-0 / 36 tests / validator 40-40) and repo clean/in-sync; bumped on-demand range → ..0012 and genericized the STATUS `head:` note. Logged health-check findings as non-governance follow-ups (asset cache TTL, security headers, CI Node-20, FAQPage JSON-LD). Does not reset cadence. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,
