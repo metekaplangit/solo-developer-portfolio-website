@@ -16,6 +16,13 @@
   (`auto-fit` + capped width + centered tracks). CSS-only, zero JS, no overflow
   at 1440 or 375. Merged, tagged **v0.25.0**. **36 tests** green. **AUDIT-0005**
   (full-system integrity pass) run — all areas pass.
+- **Since v0.25.0 (post-tag, untagged):** the Sole Focus screenshot section was
+  rebuilt as a swipeable **gallery/carousel** (one large image at a time; left/
+  right arrows, dots, swipe, keyboard; compact regardless of screenshot count),
+  plus accessibility fixes so the Lighthouse a11y gate stays ≥0.95. **Shipped to
+  production** and logged under CHANGELOG `[Unreleased]`. `main` is **6 commits
+  ahead of `v0.25.0`** and **not yet tagged** — pending a version decision (see
+  "Next Step Packet"). All merge gates green; repo clean, merged, and pushed.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
@@ -58,10 +65,15 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: **changelog/updates block**, **`FAQPage`
-  JSON-LD** (the new FAQ is a natural fit), **Apple-submission checklist doc**,
-  **optional Terms/disclaimer page**, **more real products**. (Screenshots →
-  v0.23.0; listing copy → v0.24.0.) One outcome only.
+- **First, decide the version for the shipped gallery** (post-v0.25.0, currently
+  under CHANGELOG `[Unreleased]`, `main` ahead of tag): either **cut v0.26.0** now
+  (finalize the `[Unreleased]` block → `[0.26.0]`, add a retroactive Task Card,
+  tag the existing merge) **or** fold it into the next packet's release. This is
+  the only open governance item; the code is live and gate-green either way.
+- **Then choose the next outcome.** Candidates: **changelog/updates block**,
+  **`FAQPage` JSON-LD** (the new FAQ is a natural fit), **Apple-submission
+  checklist doc**, **optional Terms/disclaimer page**, **more real products**.
+  (Screenshots → v0.23.0; listing copy → v0.24.0.) One outcome only.
 
 ## Machine-readable state
 
@@ -73,8 +85,8 @@ active_step: none
 current_step: STEP-0025
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.25.0
+head: 5d837af (6 commits ahead of v0.25.0; HEAD untagged — post-tag gallery under CHANGELOG [Unreleased])
+product_tag: v0.25.0 (latest tag; main is ahead — pending version decision for the shipped gallery)
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -127,8 +139,9 @@ step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
 **MC-0012 + DISC-0008**(24); **AUDIT-0005**(25); steps 11, 13, 17, 19, 23 had no
-scheduled checkpoint. Plus on-demand MC-OD-0001..0008. Next: Markdown Consistency
-after 26; Discussion after 27; Enhancement after 28; Audit after 30. Calibration: completed 2026-07-02.
+scheduled checkpoint. Plus on-demand MC-OD-0001..**0009** (0009 = this wrap-up).
+Next: Markdown Consistency after 26; Discussion after 27; Enhancement after 28;
+Audit after 30. On-demand runs do not reset cadence. Calibration: completed 2026-07-02.
 
 ## Issues
 
@@ -151,10 +164,17 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.21.0** (STEP-0021 merge
-commit); prior v0.20.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
+`solo-dev-portfolio-website`). Latest product tag: **v0.25.0** (STEP-0025 merge
+commit); prior v0.24.0..v0.1.0. Baseline (M0) internal-only. Remote: `origin`,
 in sync. **Live channel:** GitHub Pages + custom domain **metkapstudio.com**
 (HTTPS enforced).
+
+**`main` is currently 6 commits ahead of `v0.25.0` (untagged).** The post-v0.25.0
+screenshot-gallery UI enhancement + its accessibility fixes shipped to production
+and are logged under CHANGELOG `[Unreleased]`. This is a deliberate pending state,
+not drift: it was **not** run as a frozen Step Packet and awaits a version
+decision (fold into the next packet, or cut **v0.26.0** with a retroactive Task
+Card). See the Handoff and "Next Step Packet" below.
 
 **Deploy reliability note:** GitHub Pages' publish step (`actions/deploy-pages`)
 intermittently sits in `deployment_queued` and times out (GitHub-side congestion;
