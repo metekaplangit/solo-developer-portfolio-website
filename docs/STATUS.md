@@ -17,7 +17,8 @@
   production; three initial deploys correctly blocked at Lighthouse a11y 0.91
   until three carousel axe violations were fixed → re-audited **axe-clean** and
   the a11y gate passed. **36 tests** green; **MC-0013** (due at feature step 26)
-  run — no drift. `main` == **v0.26.0**.
+  run — no drift. Released **v0.26.0** (product state of `main`); HEAD carries the
+  post-release MC-0013 checkpoint docs.
 - **Prior: STEP-0025** — centered, balanced layout site-wide (v0.25.0);
   **AUDIT-0005** full-system integrity pass — all areas pass.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
@@ -79,7 +80,7 @@ active_step: none
 current_step: STEP-0026
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0026 release, tagged v0.26.0 (main == tag)
+head: regenerate-live (git rev-parse HEAD) — STEP-0026 released as v0.26.0; HEAD is the post-release MC-0013 checkpoint merge (docs-only; product == v0.26.0)
 product_tag: v0.26.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
@@ -160,7 +161,8 @@ commit + tag), docs synchronized, validator passing. No deviations.
 Repo slug `solo-developer-portfolio-website` (local folder
 `solo-dev-portfolio-website`). Latest product tag: **v0.26.0** (STEP-0026 release
 merge commit); prior v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (`main` == `v0.26.0`). **Live channel:** GitHub Pages + custom
+`origin`, in sync (product tag `v0.26.0`; HEAD carries post-release checkpoint
+docs). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 
 **Note on STEP-0026 structure:** the gallery shipped across three merges (feature
