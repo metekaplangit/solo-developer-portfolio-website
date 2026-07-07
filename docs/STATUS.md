@@ -9,14 +9,13 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0022 complete** — **SEO/AEO structured data (JSON-LD)**.
-  Closed the only FAIL from the SEO audit: added Schema.org JSON-LD via new
-  `src/lib/schema.ts` builders + injection-safe `JsonLd.astro`, wired through an
-  optional `schema` prop on `BaseLayout`. Home = `Organization`+`WebSite`;
-  `/apps/` = `ItemList`+`BreadcrumbList`; each product =
-  `SoftwareApplication`|`VideoGame`+`BreadcrumbList`. Graphs kept **truthful**
-  (no offers/price/rating for the unreleased app); **zero client JS** shipped.
-  Merged, tagged **v0.22.0**. 34 tests green. **MC-0011** run.
+- **State:** **STEP-0023 complete** — **real Sole Focus screenshots**. Closed
+  research item C (the biggest visual lever). Five 2880×1800 marketing shots now
+  lead the site: a full-width `ScreenshotShowcase` gallery on the detail page and
+  the lead shot in the homepage spotlight. Optimized at build via `astro:assets`
+  (14 MB PNG → ~900 KB responsive WebP; **no PNG ships**), driven from product
+  content via `resolveScreenshot`; **zero client JS**. Merged, tagged
+  **v0.23.0**. **36 tests** green (+2 content tests). No checkpoint due at step 23.
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
@@ -25,9 +24,10 @@
 - **Pre-launch (operational, NOT website) still open before submitting Sole
   Focus:** set App Store Connect App-Privacy labels to "Data Not Collected";
   confirm the app's `PrivacyInfo.xcprivacy` privacy manifest.
-- **Next action:** **deferred: hero/detail product screenshots (research item C)**
-  — biggest visual lever, needs assets. Also: Apple-submission checklist doc,
-  changelog block, optional Terms/disclaimer page. Freeze a Task Card before editing.
+- **Next action:** research item C (product screenshots) is **DONE** (v0.23.0).
+  Remaining candidates: on-site **changelog/updates block**, Apple-submission
+  checklist doc, optional Terms/disclaimer page, more products. Freeze a Task Card
+  before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** (support email now LIVE ✓) add
@@ -44,23 +44,23 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0022 — Structured data (SEO/AEO JSON-LD)** — **DONE**, merged, tagged
-  **v0.22.0**. Task Card: `docs/tasks/STEP-0022.md`.
-- Delivered: Schema.org JSON-LD across the site — new `src/lib/schema.ts`
-  builders + injection-safe `JsonLd.astro`, wired through an optional `schema`
-  prop on `BaseLayout`. Home = `Organization`+`WebSite`; `/apps/` =
-  `ItemList`+`BreadcrumbList`; each product =
-  `SoftwareApplication`|`VideoGame`+`BreadcrumbList`. Truthful graphs (no
-  offers/price/rating for the unreleased app); **zero client JS**. **MC-0011** run.
-- (Prior: STEP-0021 code-review remediation v0.21.0; STEP-0020 clickable icons
-  v0.20.0; STEP-0019 premium craft v0.19.0; … v0.1.0.)
+- **STEP-0023 — Real Sole Focus screenshots** — **DONE**, merged, tagged
+  **v0.23.0**. Task Card: `docs/tasks/STEP-0023.md`.
+- Delivered: five real 2880×1800 marketing screenshots across the site — a
+  full-width `ScreenshotShowcase` gallery on the detail page and the lead shot in
+  the homepage spotlight. Build-time optimized via `astro:assets` (14 MB PNG →
+  ~900 KB responsive WebP; no PNG shipped), driven from product content via a new
+  `resolveScreenshot` helper; zero client JS. +2 content tests (alt text + asset
+  exists). Closes research item C.
+- (Prior: STEP-0022 structured-data JSON-LD v0.22.0; STEP-0021 code-review
+  remediation v0.21.0; STEP-0020 clickable icons v0.20.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: **hero/detail product screenshots (research
-  item C — needs assets)**, **changelog/updates block**, **Apple-submission
-  checklist doc**, **optional Terms/disclaimer page**, **more real products**.
-  One outcome only.
+- **Not yet chosen.** Candidates: **changelog/updates block**,
+  **Apple-submission checklist doc**, **optional Terms/disclaimer page**, **more
+  real products**. (Research item C — screenshots — shipped in v0.23.0.) One
+  outcome only.
 
 ## Machine-readable state
 
@@ -69,11 +69,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0022
-next_step: research item C (hero/detail screenshots, needs assets); or changelog block, Apple-submission checklist doc, Terms/disclaimer page, more products
+current_step: STEP-0023
+next_step: changelog/updates block; or Apple-submission checklist doc, Terms/disclaimer page, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.22.0
+product_tag: v0.23.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -85,7 +85,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-07-03
+updated_at: 2026-07-07
 ```
 
 > The live Git block above is validator/observed-owned. Regenerate with
@@ -111,7 +111,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 |---|---|---|---|
 | Static build (`npm run build`) | Pass | Merge-critical | 8 routes (1 real product) + sitemap/robots/404/favicon, `output: "static"` |
 | Type + content check (`npm run check`) | Pass | Merge-critical | 0 errors / 0 warnings / 0 hints |
-| Unit tests (`npm test`) | Pass | Merge-critical | 34 passed (incl. required-retention negative test); run in CI |
+| Unit tests (`npm test`) | Pass | Merge-critical | 36 passed (incl. required-retention negative test + screenshot content tests); run in CI |
 | Dependency audit (`npm audit --omit=dev`) | Pass | Merge-critical | production/shipped deps: `found 0 vulnerabilities`. Dev-only CI tooling (`@lhci/cli`) has transitive advisories that never ship. |
 | Accessibility gate (Lighthouse CI) | Pass | Merge-critical (a11y) | `accessibility ≥ 0.95` asserted as error on all built pages; verified green in CI (PR #1). Perf/SEO/best-practices are warnings. |
 | Governance validator | Pass | Merge-critical | 40/40, exit 0 |
@@ -121,12 +121,12 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **22** (STEP-0001..0022). Checkpoints run through
+Completed **feature** steps: **23** (STEP-0001..0023). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
-steps 11, 13, 17, 19 had no scheduled checkpoint. Plus on-demand MC-OD-0001..0008.
-Next: Discussion after 24; Audit after 25; Enhancement after 28. Calibration: completed 2026-07-02.
+steps 11, 13, 17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..0008.
+Next: Markdown Consistency + Discussion after 24; Audit after 25; Enhancement after 28. Calibration: completed 2026-07-02.
 
 ## Issues
 

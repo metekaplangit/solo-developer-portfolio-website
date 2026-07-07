@@ -16,6 +16,26 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.23.0] — 2026-07-07
+
+Real Sole Focus screenshots (STEP-0023).
+
+### Added
+
+- **The real app, front and centre.** Five finished product screenshots now lead
+  the site: a full-width showcase gallery on the Sole Focus page, and the lead
+  shot featured big in the homepage spotlight. Each is shown as its complete,
+  designed scene.
+
+### Internal
+
+- Screenshots are optimized at **build time** via `astro:assets` — the five
+  2880×1800 source images (14 MB) become ~900 KB of responsive WebP, and no
+  original PNG ships. A new `ScreenshotShowcase` component + a `resolveScreenshot`
+  helper drive it from the product's content, so the content stays the source of
+  truth. Still **zero client JavaScript**. Two content tests guard that every
+  screenshot has alt text and a real asset file.
+
 ## [0.22.0] — 2026-07-03
 
 Structured data for search & answer engines (STEP-0022).

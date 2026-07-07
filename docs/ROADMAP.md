@@ -218,6 +218,14 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   product = `SoftwareApplication`|`VideoGame`+`BreadcrumbList`. Graphs kept
   truthful (no offers/price/rating for the unreleased app); zero client JS.
   **Markdown Consistency MC-0011** run (feature step #22).
+- **STEP-0023 — Real Sole Focus screenshots** *(COMPLETE — merged, tagged
+  `v0.23.0`, 2026-07-07).* Closed **research item C** (the biggest visual lever,
+  blocked on assets until the user supplied them). Five 2880×1800 marketing
+  screenshots now lead the site: a full-width `ScreenshotShowcase` gallery on the
+  detail page and the lead shot in the homepage spotlight. Optimized at build via
+  `astro:assets` (14 MB PNG → ~900 KB responsive WebP; no PNG shipped); driven
+  from product content via `resolveScreenshot`; zero client JS. No scheduled
+  checkpoint at feature step #23.
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 
