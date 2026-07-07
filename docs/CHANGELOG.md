@@ -16,6 +16,29 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.24.0] — 2026-07-07
+
+Refreshed Sole Focus copy from the v2 store-listing pack (STEP-0024).
+
+### Changed
+
+- **Clearer, more appealing Sole Focus page.** New summary, sharper feature
+  highlights, and a description now split into scannable sections — Two ways to
+  work, Calm and always in reach, See your progress, Private offline yours — plus
+  a short FAQ. The page reads as tidy, divided blocks instead of one block of text.
+- **Better search wording.** The page's title and description now lead with the
+  terms people actually search (Pomodoro, stopwatch, private, offline, menu-bar),
+  grounded in real competitor/keyword research. Every claim stays truthful — no
+  account, no subscription, no tracking, and it is not an app blocker.
+
+### Internal
+
+- Copy applied from the reviewed v2 copy pack to the single Sole Focus content
+  file, so it flows consistently to the home spotlight, the product card, and the
+  `SoftwareApplication` structured data. Detail-page prose gained section-heading
+  styling. Owner-only pre-submit actions (trademark, live counters, marketing URL)
+  remain open in the pack's submission sheet.
+
 ## [0.23.0] — 2026-07-07
 
 Real Sole Focus screenshots (STEP-0023).

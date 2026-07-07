@@ -9,13 +9,14 @@
 
 ## Handoff (5 bullets)
 
-- **State:** **STEP-0023 complete** — **real Sole Focus screenshots**. Closed
-  research item C (the biggest visual lever). Five 2880×1800 marketing shots now
-  lead the site: a full-width `ScreenshotShowcase` gallery on the detail page and
-  the lead shot in the homepage spotlight. Optimized at build via `astro:assets`
-  (14 MB PNG → ~900 KB responsive WebP; **no PNG ships**), driven from product
-  content via `resolveScreenshot`; **zero client JS**. Merged, tagged
-  **v0.23.0**. **36 tests** green (+2 content tests). No checkpoint due at step 23.
+- **State:** **STEP-0024 complete** — **v2 store-listing copy applied**. Refreshed
+  the Sole Focus page from the reviewed, competitor/ASO-grounded copy pack: new
+  summary, sharper feature highlights, refreshed SEO title/description, and a
+  description split into scannable sections + a short FAQ. **Truthful** — no
+  blocking claim; privacy stated exactly. One content file feeds every surface +
+  JSON-LD. Merged, tagged **v0.24.0**. **36 tests** green. **MC-0012 + DISC-0008**
+  run. (Owner-only pre-submit actions — trademark, live ASC counters, marketing
+  URL — remain open in the copy pack's submission sheet.)
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
@@ -24,10 +25,10 @@
 - **Pre-launch (operational, NOT website) still open before submitting Sole
   Focus:** set App Store Connect App-Privacy labels to "Data Not Collected";
   confirm the app's `PrivacyInfo.xcprivacy` privacy manifest.
-- **Next action:** research item C (product screenshots) is **DONE** (v0.23.0).
-  Remaining candidates: on-site **changelog/updates block**, Apple-submission
-  checklist doc, optional Terms/disclaimer page, more products. Freeze a Task Card
-  before editing.
+- **Next action:** screenshots (v0.23.0) and listing copy (v0.24.0) are **DONE**.
+  Remaining candidates: on-site **changelog/updates block**, `FAQPage` JSON-LD,
+  Apple-submission checklist doc, optional Terms/disclaimer page, more products.
+  Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. **Before Sole Focus ships:** (support email now LIVE ✓) add
@@ -44,23 +45,23 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0023 — Real Sole Focus screenshots** — **DONE**, merged, tagged
-  **v0.23.0**. Task Card: `docs/tasks/STEP-0023.md`.
-- Delivered: five real 2880×1800 marketing screenshots across the site — a
-  full-width `ScreenshotShowcase` gallery on the detail page and the lead shot in
-  the homepage spotlight. Build-time optimized via `astro:assets` (14 MB PNG →
-  ~900 KB responsive WebP; no PNG shipped), driven from product content via a new
-  `resolveScreenshot` helper; zero client JS. +2 content tests (alt text + asset
-  exists). Closes research item C.
-- (Prior: STEP-0022 structured-data JSON-LD v0.22.0; STEP-0021 code-review
-  remediation v0.21.0; STEP-0020 clickable icons v0.20.0; … v0.1.0.)
+- **STEP-0024 — Store-listing copy (v2 pack)** — **DONE**, merged, tagged
+  **v0.24.0**. Task Card: `docs/tasks/STEP-0024.md`.
+- Delivered: applied the reviewed v2 copy pack to the Sole Focus page — new
+  `summary`, sharper `features`, refreshed `seo.title/description`, and a body
+  split into scannable sections (Two ways to work · Calm, and always in reach ·
+  See your progress · Private, offline, yours) plus a short FAQ; detail prose
+  gained section-heading styling. Truthful (no blocking claim); one content file
+  feeds home spotlight + card + JSON-LD. **MC-0012 + DISC-0008** run.
+- (Prior: STEP-0023 real screenshots v0.23.0; STEP-0022 structured-data JSON-LD
+  v0.22.0; STEP-0021 code-review remediation v0.21.0; … v0.1.0.)
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: **changelog/updates block**,
-  **Apple-submission checklist doc**, **optional Terms/disclaimer page**, **more
-  real products**. (Research item C — screenshots — shipped in v0.23.0.) One
-  outcome only.
+- **Not yet chosen.** Candidates: **changelog/updates block**, **`FAQPage`
+  JSON-LD** (the new FAQ is a natural fit), **Apple-submission checklist doc**,
+  **optional Terms/disclaimer page**, **more real products**. (Screenshots →
+  v0.23.0; listing copy → v0.24.0.) One outcome only.
 
 ## Machine-readable state
 
@@ -69,11 +70,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0023
-next_step: changelog/updates block; or Apple-submission checklist doc, Terms/disclaimer page, more products
+current_step: STEP-0024
+next_step: changelog/updates block; or FAQPage JSON-LD, Apple-submission checklist doc, Terms/disclaimer page, more products
 branch: main
 head: regenerate-live (git rev-parse HEAD)
-product_tag: v0.23.0
+product_tag: v0.24.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -121,12 +122,13 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **23** (STEP-0001..0023). Checkpoints run through
+Completed **feature** steps: **24** (STEP-0001..0024). Checkpoints run through
 step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
-steps 11, 13, 17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..0008.
-Next: Markdown Consistency + Discussion after 24; Audit after 25; Enhancement after 28. Calibration: completed 2026-07-02.
+**MC-0012 + DISC-0008**(24); steps 11, 13, 17, 19, 23 had no scheduled checkpoint.
+Plus on-demand MC-OD-0001..0008. Next: Audit after 25; Markdown Consistency after 26;
+Discussion after 27; Enhancement after 28. Calibration: completed 2026-07-02.
 
 ## Issues
 

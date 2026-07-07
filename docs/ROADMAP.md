@@ -226,6 +226,14 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   `astro:assets` (14 MB PNG → ~900 KB responsive WebP; no PNG shipped); driven
   from product content via `resolveScreenshot`; zero client JS. No scheduled
   checkpoint at feature step #23.
+- **STEP-0024 — Store-listing copy (v2 pack)** *(COMPLETE — merged, tagged
+  `v0.24.0`, 2026-07-07).* Applied the reviewed, competitor/ASO-grounded v2 copy
+  pack to the Sole Focus page: new summary, sharper feature highlights, refreshed
+  SEO title/description, and a description split into scannable sections
+  (Two ways to work · Calm, and always in reach · See your progress · Private,
+  offline, yours) plus a short FAQ. Truthful throughout — no blocking claim;
+  privacy stated exactly. One content file feeds every surface + JSON-LD.
+  **Markdown Consistency MC-0012 + Discussion DISC-0008** run (feature step #24).
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 

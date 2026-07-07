@@ -78,12 +78,10 @@ const schema = [
   <ScreenshotShowcase shots={shots} label={`${product.name} screenshots`} />
 
   <div class="detail-body">
-    <div class="prose"><Content /></div>
-
     {
       product.features.length > 0 && (
         <section class="reveal" aria-labelledby="features-h">
-          <h2 id="features-h">Features</h2>
+          <h2 id="features-h">Highlights</h2>
           <ul class="feature-grid" role="list">
             {product.features.map((f) => (
               <li class="feature">
@@ -104,6 +102,8 @@ const schema = [
         </section>
       )
     }
+
+    <div class="prose"><Content /></div>
 
     <section class="reveal" aria-labelledby="get-h">
       <h2 id="get-h">Get it</h2>
@@ -223,6 +223,23 @@ const schema = [
   }
   .prose :global(p) {
     margin-block: var(--space-3);
+    color: var(--muted);
+  }
+  /* Section headings divide the description into scannable blocks. */
+  .prose :global(h2) {
+    font-size: var(--text-xl);
+    margin: var(--space-8) 0 var(--space-3);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .prose :global(strong) {
+    color: var(--text-strong);
+    font-weight: 600;
   }
   .unreleased {
     color: var(--muted);
