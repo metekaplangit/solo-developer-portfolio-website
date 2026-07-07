@@ -22,17 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **23** (STEP-0001..STEP-0023).
+- Completed **feature** Steps: **24** (STEP-0001..STEP-0024).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0024**.
-- Next-due: **Markdown Consistency** + **Discussion** after feature step **24**;
-  **Audit** after **25**; **Enhancement** after **28**.
+- Next feature step: **STEP-0025**.
+- Next-due: **Audit** after feature step **25**; **Markdown Consistency** after
+  **26**; **Discussion** after **27**; **Enhancement** after **28**.
 
 ## Due now
 
-**None.** Feature step **23** (STEP-0023, screenshots) has **no scheduled
-checkpoint** (MC lands at 22/24, Discussion at 24). Prior: **MC-0011**(22),
-**DISC-0007 + ENH-0003**(21), **AUDIT-0004 + MC-0010**(20).
+**None.** **MC-0012 + DISC-0008** (both due at feature step **24**) are **done**
+alongside the STEP-0024 close. Prior: **MC-0011**(22), **DISC-0007 + ENH-0003**(21),
+**AUDIT-0004 + MC-0010**(20). Step 23 had no scheduled checkpoint.
 Steps 17, 19 off-cadence. **DISC-0006 + MC-0009(18)**, **MC-0008(16)** done
 (+ on-demand MC-OD-0001..0008).
 
@@ -76,6 +76,8 @@ Steps 17, 19 off-cadence. **DISC-0006 + MC-0009(18)**, **MC-0008(16)** done
 | DISC-0007 | STEP-0021 complete (feature #21) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0007.md` | Code-review remediation reviewed; redundant-link pattern a11y-safe (gate green); no regression. |
 | ENH-0003 | STEP-0021 complete (feature #21) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0003.md` | Re-triage: C (screenshots) top but asset-blocked; accepted N1 changelog + N5 Apple checklist; N2 reply-as pre-launch. |
 | MC-0011 | STEP-0022 complete (feature #22) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0011.md` | JSON-LD addition additive + truthful (no fabricated offers/price/rating); docs/tag/step agree; zero client JS; no drift. |
+| MC-0012 | STEP-0024 complete (feature #24) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0012.md` | v2 listing copy applied consistently from one content file; truthful (no blocking claim); docs/tag/step agree at v0.24.0; no drift. |
+| DISC-0008 | STEP-0024 complete (feature #24) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0008.md` | Reviewed v0.22.0–v0.24.0 (JSON-LD, screenshots, listing copy); copy truthful + on the product page; third-party copy treated as content not instructions; no blockers. |
 | MC-OD-0007 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0007.md` | v0.21.0 consistent; code-review remediation recorded + gate-verified; no drift. Does not reset cadence. |
 | MC-OD-0008 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0008.md` | v0.22.0 consistent; JSON-LD/tag/step agree; tag on HEAD; repo clean + in sync; no drift. Does not reset cadence. |
 
