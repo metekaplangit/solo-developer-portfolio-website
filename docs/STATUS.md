@@ -85,7 +85,7 @@ active_step: none
 current_step: STEP-0026
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — v0.26.1 patch (scrollbar-gutter layout-shift fix) on HEAD
+head: regenerate-live (git rev-parse HEAD) — v0.26.1 released; HEAD carries post-release MC-OD-0011 checkpoint docs (product == v0.26.1)
 product_tag: v0.26.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
@@ -139,8 +139,8 @@ step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
 **MC-0012 + DISC-0008**(24); **AUDIT-0005**(25); **MC-0013**(26); steps 11, 13,
-17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..**0010**
-(0010 = this wrap-up). Next: Discussion after 27; Markdown Consistency +
+17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..**0011**
+(0011 = this wrap-up). Next: Discussion after 27; Markdown Consistency +
 Enhancement after 28; Audit after 30. On-demand runs do not reset cadence.
 Calibration: completed 2026-07-02.
 
@@ -168,7 +168,8 @@ Repo slug `solo-developer-portfolio-website` (local folder
 `solo-dev-portfolio-website`). Latest product tag: **v0.26.1** (compatible CSS
 fix — `scrollbar-gutter` layout-shift; `fix/scrollbar-gutter-layout-shift` merge);
 prior v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (`main` == `v0.26.1`). **Live channel:** GitHub Pages + custom
+`origin`, in sync (product tag `v0.26.1`; HEAD carries post-release checkpoint
+docs). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 
 **Note on STEP-0026 structure:** the gallery shipped across three merges (feature
