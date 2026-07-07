@@ -30,6 +30,9 @@ commits and does **not** consume a product version.
   trackpad works with zero JS); a small progressive-enhancement script wires the
   arrows, dots, keyboard, live counter, and end-state disabling. Honors
   `prefers-reduced-motion`. Still CSS-first, no third-party libraries.
+- Accessibility: the scroll track is a focusable region with clean list
+  semantics and arrow-key navigation; verified axe-clean in-browser so the
+  Lighthouse a11y gate (≥0.95) stays green.
 
 ## [0.25.0] — 2026-07-07
 
