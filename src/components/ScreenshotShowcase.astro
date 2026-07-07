@@ -1,0 +1,70 @@
+---
+// Full-width product screenshot showcase. Each shot is a complete, self-contained
+// marketing scene (headline + background baked in), so we frame it large with air
+// and a soft shadow and let it carry the section — no extra chrome. Images are
+// optimized at build time via astro:assets; zero client JS.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Shot {
+  img: ImageMetadata;
+  alt: string;
+}
+interface Props {
+  shots: Shot[];
+  label?: string;
+}
+const { shots, label = 'Screenshots' } = Astro.props;
+---
+
+{
+  shots.length > 0 && (
+    <section class="showcase" aria-label={label}>
+      <ul role="list">
+        {shots.map((shot, i) => (
+          <li class="shot reveal">
+            <Image
+              src={shot.img}
+              alt={shot.alt}
+              widths={[720, 1080, 1440, 1920]}
+              sizes="(min-width: 66rem) 64rem, calc(100vw - 3rem)"
+              format="webp"
+              quality={78}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              class="shot-img"
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .showcase {
+    /* Breaks out wider than the 40rem prose column, sharing its left edge. */
+    max-width: 64rem;
+    padding-block: var(--space-6);
+  }
+  .showcase ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-8);
+  }
+  .shot {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    /* Hairline ring + soft lift so light-backed scenes still read on the dark page. */
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+  }
+  .shot-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2880 / 1800;
+  }
+</style>

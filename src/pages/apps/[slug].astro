@@ -14,6 +14,8 @@ import { canonicalPrivacyUrl } from '../../lib/privacy';
 import { formatDate } from '../../lib/format';
 import { withBase } from '../../lib/url';
 import { softwareApplicationSchema, breadcrumbSchema } from '../../lib/schema';
+import { resolveScreenshot } from '../../lib/screenshots';
+import ScreenshotShowcase from '../../components/ScreenshotShowcase.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -33,6 +35,11 @@ const product = entry.data;
 const { Content } = await render(entry);
 
 const stores = visibleStoreLinks(product);
+
+// Resolve content screenshots to build-time-optimized image assets (astro:assets).
+const shots = product.screenshots
+  .map((s) => ({ img: resolveScreenshot(s.path), alt: s.altText }))
+  .filter((s): s is { img: NonNullable<typeof s.img>; alt: string } => Boolean(s.img));
 
 const seoTitle = product.seo?.title ?? product.name;
 const seoDescription = product.seo?.description ?? product.summary;
@@ -66,27 +73,11 @@ const schema = [
     <ul class="platforms" aria-label="Platforms">
       {product.platforms.map((p) => <li><Badge label={p} tone="muted" /></li>)}
     </ul>
+  </article>
 
-    {
-      product.screenshots.length > 0 && (
-        <section aria-labelledby="shots-h">
-          <h2 id="shots-h" class="visually-hidden">Screenshots</h2>
-          <ul class="shots" role="list">
-            {product.screenshots.map((shot) => (
-              <li>
-                <figure class="shot">
-                  <div class="shot-frame" aria-hidden="true">
-                    Preview
-                  </div>
-                  <figcaption>{shot.altText}</figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+  <ScreenshotShowcase shots={shots} label={`${product.name} screenshots`} />
 
+  <div class="detail-body">
     <div class="prose"><Content /></div>
 
     {
@@ -161,7 +152,7 @@ const schema = [
         <a href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>{' · '}<a href={withBase(product.supportUrl)}>Support</a>
       </dd>
     </dl>
-  </article>
+  </div>
 
   {
     related.length > 0 && (
@@ -186,8 +177,13 @@ const schema = [
     padding-top: var(--space-8);
   }
   .detail {
+    /* Intro block (header + platforms); the showcase breaks out wider below it. */
     max-width: var(--maxw-prose);
-    padding-block: var(--space-6) var(--space-8);
+    padding-top: var(--space-6);
+  }
+  .detail-body {
+    max-width: var(--maxw-prose);
+    padding-bottom: var(--space-8);
   }
   .detail-head {
     display: flex;
@@ -221,32 +217,6 @@ const schema = [
     list-style: none;
     margin: var(--space-6) 0 0;
     padding: 0;
-  }
-  .shots {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-    gap: var(--space-4);
-    list-style: none;
-    margin: var(--space-8) 0 0;
-    padding: 0;
-  }
-  .shot {
-    margin: 0;
-  }
-  .shot-frame {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 16 / 10;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--faint);
-    font-size: var(--text-sm);
-    background: radial-gradient(120% 120% at 50% 0%, var(--surface-2), var(--surface));
-  }
-  .shot figcaption {
-    margin-top: var(--space-2);
-    color: var(--muted);
-    font-size: 0.8125rem;
   }
   .prose {
     margin-top: var(--space-8);

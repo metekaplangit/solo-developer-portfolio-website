@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import ProductAvatar from '../components/ProductAvatar.astro';
@@ -9,6 +10,7 @@ import { withBase } from '../lib/url';
 import { getFeatured, sortProducts, statusLabel } from '../lib/products';
 import { canonicalPrivacyUrl } from '../lib/privacy';
 import { organizationSchema, websiteSchema } from '../lib/schema';
+import { resolveScreenshot } from '../lib/screenshots';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
@@ -19,6 +21,11 @@ const shippedCount = products.filter((p) => p.status === 'released').length;
 // The lead product gets a spotlight panel; any others fall to the card grid.
 const spotlight = showcase[0];
 const rest = showcase.slice(1);
+
+// The spotlight leads with the product's first real screenshot when one exists,
+// falling back to the icon avatar otherwise.
+const leadShot = spotlight?.screenshots?.[0];
+const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
 ---
 
 <BaseLayout title={site.name} description={site.description} schema={[organizationSchema(), websiteSchema()]}>
@@ -44,9 +51,23 @@ const rest = showcase.slice(1);
 
     {
       spotlight && (
-        <article class="spotlight reveal">
+        <article class={`spotlight reveal${leadImg ? ' has-shot' : ''}`}>
           <div class="spotlight-media">
-            <ProductAvatar icon={spotlight.icon} name={spotlight.name} size={112} href={`/apps/${spotlight.slug}/`} redundant />
+            {leadImg ? (
+              <a class="spotlight-shot" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
+                <Image
+                  src={leadImg}
+                  alt={leadShot.altText}
+                  widths={[480, 720, 960, 1280]}
+                  sizes="(min-width: 52rem) 32rem, calc(100vw - 3rem)"
+                  format="webp"
+                  quality={78}
+                  loading="eager"
+                />
+              </a>
+            ) : (
+              <ProductAvatar icon={spotlight.icon} name={spotlight.name} size={112} href={`/apps/${spotlight.slug}/`} redundant />
+            )}
           </div>
           <div class="spotlight-body">
             <div class="spotlight-tags">
@@ -152,7 +173,7 @@ const rest = showcase.slice(1);
   /* Featured spotlight — a richer, product-led panel for the lead app. */
   .spotlight {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr; /* mobile: stacked, media on top */
     gap: var(--space-8);
     align-items: center;
     padding: var(--space-8);
@@ -165,6 +186,35 @@ const rest = showcase.slice(1);
   .spotlight-media {
     display: grid;
     place-items: center;
+  }
+  /* Lead screenshot: framed, clickable, with a soft hover lift. */
+  .spotlight-shot {
+    display: block;
+    width: 100%;
+    line-height: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+  }
+  .spotlight-shot :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2880 / 1800;
+  }
+  .spotlight-shot:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .spotlight-shot {
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    }
+    .spotlight-shot:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg, 0 18px 40px -12px rgb(0 0 0 / 0.55));
+    }
   }
   .spotlight-tags {
     display: flex;
@@ -222,12 +272,29 @@ const rest = showcase.slice(1);
   }
   @media (max-width: 40rem) {
     .spotlight {
-      grid-template-columns: 1fr;
       gap: var(--space-6);
       padding: var(--space-6);
     }
     .spotlight-media {
       justify-items: start;
+    }
+  }
+  @media (min-width: 52rem) {
+    /* Icon fallback: icon | body. */
+    .spotlight {
+      grid-template-columns: auto 1fr;
+    }
+    /* Screenshot lead: body | shot (DOM order is media-first, so place explicitly). */
+    .spotlight.has-shot {
+      grid-template-columns: 1.05fr 1.2fr;
+    }
+    .spotlight.has-shot .spotlight-body {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .spotlight.has-shot .spotlight-media {
+      grid-column: 2;
+      grid-row: 1;
     }
   }
 
