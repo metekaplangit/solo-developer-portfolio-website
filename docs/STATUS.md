@@ -9,6 +9,11 @@
 
 ## Handoff (5 bullets)
 
+- **Latest (v0.26.1, patch):** fixed a **layout-shift** where the header logo/title
+  (and all centered content) jumped ~5px sideways when navigating between a page
+  that scrolls and one that doesn't (vertical-scrollbar width change). Reserved the
+  scrollbar gutter globally (`html { scrollbar-gutter: stable }`); measured shift
+  **5px → 0**, no horizontal overflow at 1440/375. CSS-only compatible fix.
 - **State:** **STEP-0026 complete** — **swipeable product screenshot gallery**,
   released **v0.26.0**. The Sole Focus screenshot section is now a
   gallery/carousel: one large image at a time (size unchanged), left/right
@@ -80,8 +85,8 @@ active_step: none
 current_step: STEP-0026
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0026 released as v0.26.0; HEAD is the post-release MC-0013 checkpoint merge (docs-only; product == v0.26.0)
-product_tag: v0.26.0
+head: regenerate-live (git rev-parse HEAD) — v0.26.1 patch (scrollbar-gutter layout-shift fix) on HEAD
+product_tag: v0.26.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -160,10 +165,10 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.26.0** (STEP-0026 release
-merge commit); prior v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (product tag `v0.26.0`; HEAD carries post-release checkpoint
-docs). **Live channel:** GitHub Pages + custom
+`solo-dev-portfolio-website`). Latest product tag: **v0.26.1** (compatible CSS
+fix — `scrollbar-gutter` layout-shift; `fix/scrollbar-gutter-layout-shift` merge);
+prior v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
+`origin`, in sync (`main` == `v0.26.1`). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 
 **Note on STEP-0026 structure:** the gallery shipped across three merges (feature

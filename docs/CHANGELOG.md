@@ -16,6 +16,18 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.26.1] — 2026-07-07
+
+### Fixed
+
+- **No more sideways jump when moving between pages.** The logo and site title (and
+  all centered content) used to shift a few pixels left/right when you navigated
+  from a page that scrolls to one that doesn't, because the vertical scrollbar
+  appearing/disappearing changed the usable width. The scrollbar's space is now
+  always reserved (`scrollbar-gutter: stable`), so the layout holds a constant
+  width and the header stays put. CSS-only; invisible where scrollbars overlay
+  (default macOS).
+
 ## [0.26.0] — 2026-07-07
 
 Swipeable product screenshot gallery (STEP-0026).
