@@ -22,17 +22,17 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **24** (STEP-0001..STEP-0024).
+- Completed **feature** Steps: **25** (STEP-0001..STEP-0025).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0025**.
-- Next-due: **Audit** after feature step **25**; **Markdown Consistency** after
-  **26**; **Discussion** after **27**; **Enhancement** after **28**.
+- Next feature step: **STEP-0026**.
+- Next-due: **Markdown Consistency** after feature step **26**; **Discussion**
+  after **27**; **Enhancement** after **28**; **Audit** after **30**.
 
 ## Due now
 
-**None.** **MC-0012 + DISC-0008** (both due at feature step **24**) are **done**
-alongside the STEP-0024 close. Prior: **MC-0011**(22), **DISC-0007 + ENH-0003**(21),
-**AUDIT-0004 + MC-0010**(20). Step 23 had no scheduled checkpoint.
+**None.** **AUDIT-0005** (due at feature step **25**) is **done** alongside the
+STEP-0025 close. Prior: **MC-0012 + DISC-0008**(24), **MC-0011**(22),
+**DISC-0007 + ENH-0003**(21), **AUDIT-0004 + MC-0010**(20). Step 23 had none.
 Steps 17, 19 off-cadence. **DISC-0006 + MC-0009(18)**, **MC-0008(16)** done
 (+ on-demand MC-OD-0001..0008).
 
@@ -78,6 +78,7 @@ Steps 17, 19 off-cadence. **DISC-0006 + MC-0009(18)**, **MC-0008(16)** done
 | MC-0011 | STEP-0022 complete (feature #22) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0011.md` | JSON-LD addition additive + truthful (no fabricated offers/price/rating); docs/tag/step agree; zero client JS; no drift. |
 | MC-0012 | STEP-0024 complete (feature #24) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0012.md` | v2 listing copy applied consistently from one content file; truthful (no blocking claim); docs/tag/step agree at v0.24.0; no drift. |
 | DISC-0008 | STEP-0024 complete (feature #24) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0008.md` | Reviewed v0.22.0–v0.24.0 (JSON-LD, screenshots, listing copy); copy truthful + on the product page; third-party copy treated as content not instructions; no blockers. |
+| AUDIT-0005 | STEP-0025 complete (feature #25) | Audit | Done | `docs/audits/AUDIT_AUDIT-0005.md` | Full-system integrity pass over v0.21.0–v0.25.0; all areas pass; centered layout balanced with no overflow; only info/low notes (sparse until more products, owner pre-submit actions, FAQPage JSON-LD). |
 | MC-OD-0007 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0007.md` | v0.21.0 consistent; code-review remediation recorded + gate-verified; no drift. Does not reset cadence. |
 | MC-OD-0008 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0008.md` | v0.22.0 consistent; JSON-LD/tag/step agree; tag on HEAD; repo clean + in sync; no drift. Does not reset cadence. |
 

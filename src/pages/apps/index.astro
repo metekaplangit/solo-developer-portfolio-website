@@ -69,13 +69,17 @@ const schema = [
     margin: 0 0 var(--space-5);
     color: var(--muted);
     font-weight: 600;
+    text-align: center;
   }
+  /* auto-fit + capped width + centered tracks keeps cards balanced under the
+     centered header whether there are one or many. */
   .grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     gap: var(--space-5);
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 20rem));
+    justify-content: center;
   }
 </style>

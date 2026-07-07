@@ -16,6 +16,27 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.25.0] — 2026-07-07
+
+Centered, balanced layout across the whole site (STEP-0025).
+
+### Changed
+
+- **Content is now centered, not pushed to the left.** Every page's reading
+  column — the home hero, page headers, about, support, privacy, and the app
+  pages — now sits centered in the window with even margins on both sides,
+  instead of hugging the left edge with empty space on the right. Card grids
+  center their cards under the centered heading, so one product or many always
+  looks balanced. Long paragraphs stay left-aligned for comfortable reading.
+
+### Internal
+
+- One shared convention (`margin-inline: auto` on reading columns, documented at
+  the `--maxw-prose` token) applied system-wide; grids use `auto-fit` + a capped
+  column width + centered tracks. CSS-only; zero client JS. Verified centered
+  with no horizontal overflow at desktop and mobile. Full-system integrity audit
+  (AUDIT-0005) run alongside — all areas pass.
+
 ## [0.24.0] — 2026-07-07
 
 Refreshed Sole Focus copy from the v2 store-listing pack (STEP-0024).
