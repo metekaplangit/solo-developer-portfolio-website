@@ -470,6 +470,81 @@ def check_zero_cost_guardrails() -> list[Check]:
     return checks
 
 
+VERSION_RE = re.compile(r"v(\d+\.\d+\.\d+)")
+
+
+def check_cross_doc_consistency() -> list[Check]:
+    """Cross-document agreement checks (AUDIT-OD-0001 / workflow optimization).
+
+    These machine-check the exact drift classes that recurred across manual
+    checkpoints: a stale "latest tag" in STATUS (found at MC-OD-0009), lagging
+    feature-step counters between STATUS and CHECKPOINTS (MC-0013, MC-OD-0010),
+    and CHANGELOG top release disagreeing with the recorded product tag.
+    """
+    checks: list[Check] = []
+    status = read_text(DOCS / "STATUS.md")
+    checkpoints = read_text(DOCS / "CHECKPOINTS.md")
+    changelog = read_text(DOCS / "CHANGELOG.md")
+
+    # 1) STATUS product_tag matches the latest git tag reachable from HEAD.
+    #    Shallow CI checkouts may not fetch tags; skip (pass) when none visible.
+    status_tag_match = VERSION_RE.search(status_field(status, "product_tag"))
+    status_tag = f"v{status_tag_match.group(1)}" if status_tag_match else ""
+    described = run(["git", "describe", "--tags", "--abbrev=0"])
+    git_tag = described.stdout.strip() if described.returncode == 0 else ""
+    if not git_tag:
+        checks.append(
+            Check(
+                "sync.product_tag_matches_git",
+                True,
+                "no tags visible (shallow checkout?); skipped",
+            )
+        )
+    else:
+        checks.append(
+            Check(
+                "sync.product_tag_matches_git",
+                status_tag == git_tag,
+                f"STATUS product_tag {status_tag or '(none)'} == git {git_tag}"
+                if status_tag == git_tag
+                else f"STATUS product_tag {status_tag or '(none)'} != latest git tag {git_tag}",
+            )
+        )
+
+    # 2) Feature-step counters agree between STATUS and CHECKPOINTS.
+    count_re = re.compile(r"Completed \*\*feature\*\* [Ss]teps?:? \*\*(\d+)\*\*")
+    status_count = count_re.search(status)
+    checkpoints_count = count_re.search(checkpoints)
+    both = bool(status_count and checkpoints_count)
+    agree = both and status_count.group(1) == checkpoints_count.group(1)
+    checks.append(
+        Check(
+            "sync.feature_step_count_agrees",
+            agree,
+            f"feature steps: {status_count.group(1)} in both"
+            if agree
+            else (
+                f"STATUS says {status_count.group(1) if status_count else '(missing)'}, "
+                f"CHECKPOINTS says {checkpoints_count.group(1) if checkpoints_count else '(missing)'}"
+            ),
+        )
+    )
+
+    # 3) CHANGELOG's top release equals the recorded product tag.
+    top_release = re.search(r"^## \[(\d+\.\d+\.\d+)\]", changelog, re.MULTILINE)
+    changelog_tag = f"v{top_release.group(1)}" if top_release else ""
+    checks.append(
+        Check(
+            "sync.changelog_top_release_matches_tag",
+            bool(status_tag) and changelog_tag == status_tag,
+            f"CHANGELOG top release {changelog_tag} == product_tag"
+            if changelog_tag == status_tag and status_tag
+            else f"CHANGELOG top release {changelog_tag or '(none)'} != product_tag {status_tag or '(none)'}",
+        )
+    )
+    return checks
+
+
 def main() -> int:
     checks: list[Check] = []
     checks.extend(check_required_docs())
@@ -478,6 +553,7 @@ def main() -> int:
     checks.extend(check_git_and_status())
     checks.extend(check_ci_and_handoff())
     checks.extend(check_zero_cost_guardrails())
+    checks.extend(check_cross_doc_consistency())
 
     failures = [check for check in checks if not check.passed and check.severity == "fail"]
     for check in checks:
