@@ -32,9 +32,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -48,15 +48,16 @@ jobs:
       - name: Lighthouse CI (accessibility gate)
         run: npm run lhci
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
         with:
-          # Ride out transient GitHub Pages queue congestion (deployment_queued)
-          # instead of failing at the default 10-minute timeout.
-          timeout: 1200000
+          # Ride out transient GitHub Pages queue congestion (deployment_queued).
+          # 600000 ms (10 min) is the action's enforced maximum — higher values
+          # are clamped with a warning.
+          timeout: 600000
