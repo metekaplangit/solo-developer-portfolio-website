@@ -127,24 +127,20 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 | Unit tests (`npm test`) | Pass | Merge-critical | 36 passed (incl. required-retention negative test + screenshot content tests); run in CI |
 | Dependency audit (`npm audit --omit=dev`) | Pass | Merge-critical | production/shipped deps: `found 0 vulnerabilities`. Dev-only CI tooling (`@lhci/cli`) has transitive advisories that never ship. |
 | Accessibility gate (Lighthouse CI) | Pass | Merge-critical (a11y) | `accessibility ≥ 0.95` asserted as error on all built pages; verified green in CI (PR #1). Perf/SEO/best-practices are warnings. |
-| Governance validator | Pass | Merge-critical | 40/40, exit 0 |
+| Governance validator | Pass | Merge-critical | 43/43, exit 0 (now incl. 3 cross-doc sync checks: product_tag↔git tag, STATUS↔CHECKPOINTS feature count, CHANGELOG↔tag) |
 | Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
 | Deployment code/config (domain) | Pass | Merge-critical | build at root; CNAME/canonical/robots on metkapstudio.com; Pages cname set |
 | Live domain HTTPS | Pass | Release-critical (channel) | cert approved; https 200 + valid TLS; http→https 301; enforce_https on; www→apex |
 
 ## Checkpoints
 
-Completed **feature** steps: **26** (STEP-0001..0026). Checkpoints run through
-step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
-**DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
-**AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
-**MC-0012 + DISC-0008**(24); **AUDIT-0005**(25); **MC-0013**(26); steps 11, 13,
-17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..**0012** and
-**AUDIT-OD-0001** (full-system audit: all areas Pass, zero drift; CI actions
-modernized; Cloudflare cache/header items = owner actions). Next: Discussion
-after 27; Markdown Consistency + Enhancement after 28; Audit after 30. On-demand
-runs do not reset cadence.
-Calibration: completed 2026-07-02.
+Completed **feature** steps: **26** (STEP-0001..0026) — this counter is
+machine-cross-checked against CHECKPOINTS by the validator. Next-due: Discussion
+after 27; Markdown Consistency + Enhancement after 28; Audit after 30. The full
+checkpoint history — scheduled and on-demand (MC-OD-*, AUDIT-OD-*) — lives only
+in the **CHECKPOINTS ledger** (single owner; deliberately not duplicated here —
+duplicated history caused recurring drift, repaired at MC-OD-0009/0010).
+On-demand runs do not reset cadence. Calibration: completed 2026-07-02.
 
 ## Issues
 

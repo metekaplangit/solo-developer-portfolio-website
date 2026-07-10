@@ -31,10 +31,11 @@ counter.
 ## Due now
 
 **None.** **MC-0013** (due at feature step **26**) is **done** with the STEP-0026
-/ v0.26.0 release. Prior: **AUDIT-0005**(25), **MC-0012 + DISC-0008**(24),
-**MC-0011**(22), **DISC-0007 + ENH-0003**(21), **AUDIT-0004 + MC-0010**(20). Step
-23 had none. Steps 17, 19 off-cadence. **DISC-0006 + MC-0009(18)**, **MC-0008(16)**
-done (+ on-demand MC-OD-0001..0011; MC-OD-0012 = this wrap-up).
+/ v0.26.0 release. All prior scheduled checkpoints and every on-demand run
+(MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
+block names only what is currently due and the most recent scheduled checkpoint,
+so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
+MC-OD-0010/0011).
 
 ## Ledger
 

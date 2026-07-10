@@ -31,3 +31,14 @@ registry, test commands, tags, issues, and Git state. Verify:
 Directly repair clear drift and synchronize affected owners. Add new Markdown only
 for workflow/integration/report traceability; otherwise update the owner. Never
 rewrite completed reports or releases.
+
+## Machine-checked invariants (since AUDIT-OD-0001)
+
+The validator (`scripts/validate-governance.py`) now cross-checks the drift
+classes this checkpoint repeatedly hand-repaired: STATUS `product_tag` ↔ latest
+git tag, STATUS ↔ CHECKPOINTS feature-step counters, and CHANGELOG top release ↔
+product tag. Checkpoint **history** (scheduled + on-demand) is owned solely by
+the CHECKPOINTS ledger — STATUS and the "Due now" block intentionally do not
+repeat it, so wrap-ups add only a ledger row + report (no range/counter prose to
+bump). A wrap-up run is therefore: verify gates + validator, reconcile anything
+the validator can't see, ledger row, report, branch → merge → push.
