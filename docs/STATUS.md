@@ -139,9 +139,11 @@ step 10, then **DISC-0004 + MC-0006**(12); **MC-0007 + ENH-0002**(14);
 **DISC-0005 + AUDIT-0003**(15); **MC-0008**(16); **DISC-0006 + MC-0009**(18);
 **AUDIT-0004 + MC-0010**(20); **DISC-0007 + ENH-0003**(21); **MC-0011**(22);
 **MC-0012 + DISC-0008**(24); **AUDIT-0005**(25); **MC-0013**(26); steps 11, 13,
-17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..**0012**
-(0012 = this wrap-up). Next: Discussion after 27; Markdown Consistency +
-Enhancement after 28; Audit after 30. On-demand runs do not reset cadence.
+17, 19, 23 had no scheduled checkpoint. Plus on-demand MC-OD-0001..**0012** and
+**AUDIT-OD-0001** (full-system audit: all areas Pass, zero drift; CI actions
+modernized; Cloudflare cache/header items = owner actions). Next: Discussion
+after 27; Markdown Consistency + Enhancement after 28; Audit after 30. On-demand
+runs do not reset cadence.
 Calibration: completed 2026-07-02.
 
 ## Issues
@@ -182,7 +184,8 @@ forward: ship autonomously (commit/merge/push/deploy/tag) — see AI_WORKFLOW.md
 intermittently sits in `deployment_queued` and times out (GitHub-side congestion;
 our build is fast and always succeeds). `deploy.yml` is a **single job** (Node
 from `.nvmrc`, npm cache, no build→deploy artifact handoff) with `paths-ignore:
-docs/**`, `cancel-in-progress: true`, and a 20-min deploy timeout. Also note
+docs/**`, `cancel-in-progress: true`, and the deploy timeout at the action's
+10-min maximum (600000 ms; higher values are clamped). Also note
 GitHub Pages hard-caps responses at `cache-control: max-age=600` — after a green
 deploy your **browser** may show the old page for ≤10 min; verify with
 `curl -sI` or a hard-refresh/incognito, not a normal reload. If a deploy fails,
