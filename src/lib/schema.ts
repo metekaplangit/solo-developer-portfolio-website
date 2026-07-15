@@ -1,9 +1,9 @@
 // Schema.org (JSON-LD) builders for SEO + AI-answer-engine discoverability.
-// Deliberately truthful: no `offers`/price or `aggregateRating` are emitted for
-// products that aren't released — fabricating them would violate both Google's
-// structured-data guidelines and this project's honesty rules. Those fields get
-// added in the release pass, at which point the app page becomes eligible for
-// the SoftwareApplication rich result.
+// Deliberately truthful: `offers` is emitted only for released products with a
+// declared price and an actionable store link (added in the STEP-0027 release
+// pass); `aggregateRating` is still never emitted — we have no rating data, and
+// fabricating either would violate both Google's structured-data guidelines and
+// this project's honesty rules.
 import { site } from './site';
 import type { Product } from '../content/schema';
 
@@ -55,10 +55,25 @@ export function websiteSchema() {
 
 /**
  * SoftwareApplication (or VideoGame) for a single product. Truthful subset only —
- * see file header re: omitted offers/rating.
+ * see file header re: omitted rating. `offers` is emitted only for a released
+ * product with a declared price and a store link a visitor can act on now (the
+ * "release pass" the header defers to): anything less would fabricate data.
  */
 export function softwareApplicationSchema(product: Product, description?: string) {
   const isGame = product.type === 'game';
+  const store = product.storeLinks.find((l) => l.status === 'available');
+  const offers =
+    product.status === 'released' && product.price != null && store
+      ? {
+          offers: {
+            '@type': 'Offer',
+            price: product.price,
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            url: store.url,
+          },
+        }
+      : {};
   return {
     '@context': 'https://schema.org',
     '@type': isGame ? 'VideoGame' : 'SoftwareApplication',
@@ -69,6 +84,7 @@ export function softwareApplicationSchema(product: Product, description?: string
     url: abs(`/apps/${product.slug}/`),
     ...(product.icon ? { image: abs(product.icon.path) } : {}),
     ...(product.features.length ? { featureList: product.features } : {}),
+    ...offers,
     publisher,
   };
 }

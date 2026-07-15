@@ -9,41 +9,38 @@
 
 ## Handoff (5 bullets)
 
-- **Latest (v0.26.1, patch):** fixed a **layout-shift** where the header logo/title
-  (and all centered content) jumped ~5px sideways when navigating between a page
-  that scrolls and one that doesn't (vertical-scrollbar width change). Reserved the
-  scrollbar gutter globally (`html { scrollbar-gutter: stable }`); measured shift
-  **5px → 0**, no horizontal overflow at 1440/375. CSS-only compatible fix.
-- **State:** **STEP-0026 complete** — **swipeable product screenshot gallery**,
-  released **v0.26.0**. The Sole Focus screenshot section is now a
-  gallery/carousel: one large image at a time (size unchanged), left/right
-  arrows + dots + swipe + keyboard, a live counter, compact regardless of
-  screenshot count. Accent-styled, bigger arrows/dots per follow-up. Shipped to
-  production; three initial deploys correctly blocked at Lighthouse a11y 0.91
-  until three carousel axe violations were fixed → re-audited **axe-clean** and
-  the a11y gate passed. **36 tests** green; **MC-0013** (due at feature step 26)
-  run — no drift. Released **v0.26.0** (product state of `main`); HEAD carries the
-  post-release MC-0013 checkpoint docs.
-- **Prior: STEP-0025** — centered, balanced layout site-wide (v0.25.0);
-  **AUDIT-0005** full-system integrity pass — all areas pass.
+- **State: 🎉 SOLE FOCUS IS LIVE ON THE MAC APP STORE — STEP-0027 complete,
+  released v0.27.0.** Verified listing: "Sole Focus: Pomodoro Timer", seller Mete
+  Kaplan, Mac, **Free** (https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12).
+  The site now renders a primary **Mac App Store** download button in "Get it"
+  (plus the catalog card link), "Released" badges everywhere, a truthful `offers`
+  JSON-LD block (price 0 USD, InStock, store URL — the deferred release pass),
+  release date 2026-07-15, and no "coming soon" copy. **38 tests** green (2 new
+  release-state assertions). **DISC-0009** (Discussion due at feature step 27)
+  run alongside.
+- **Prior: v0.26.x** — swipeable screenshot gallery (STEP-0026, v0.26.0) +
+  scrollbar-gutter layout-shift fix (v0.26.1); **AUDIT-OD-0001** full-system
+  audit (all areas pass; CI modernized) and governance drift machine-checks
+  (validator 43/43).
 - **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
   logo; Sole Focus product + scannable, website-scoped privacy pages.
 - **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
   via Cloudflare Email Routing (catch-all → verified Gmail); SPF + DKIM + DMARC
   live; verified end-to-end (inbox delivery). See DEPLOYMENT.md.
-- **Pre-launch (operational, NOT website) still open before submitting Sole
-  Focus:** set App Store Connect App-Privacy labels to "Data Not Collected";
-  confirm the app's `PrivacyInfo.xcprivacy` privacy manifest.
-- **Next action:** screenshots (v0.23.0), listing copy (v0.24.0), centered
-  layout (v0.25.0), and the screenshot **gallery (v0.26.0)** are **DONE**.
-  Remaining candidates: `FAQPage` JSON-LD, on-site **changelog/updates block**,
-  more products (fills the now-centered grids), Apple-submission checklist doc,
-  optional Terms/disclaimer page. Freeze a Task Card before editing.
+- **Pre-launch items — CLOSED by the live release (2026-07-15):** the app passed
+  App Review and is live, which required the App-Privacy labels and privacy
+  manifest (app-side, owner-completed). The long-standing "add the Mac App Store
+  link once published" website blocker is **done** (STEP-0027).
+- **Next action:** the ship-blockers are cleared. Candidates: **`FAQPage`
+  JSON-LD** (natural follow-on to the release-pass structured data), on-site
+  **changelog/updates block**, more products (fills the now-centered grids),
+  optional Terms/disclaimer page, lighter-touch description refresh
+  (prose-preserving — Format B rejected). Freeze a Task Card before editing.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
-- **Blockers:** none. **Before Sole Focus ships:** (support email now LIVE ✓) add
-  real screenshots + the Mac App Store link once published; set App-Privacy labels
-  + privacy manifest (app side); keep the policy truthful (see `SECURITY.md`).
+- **Blockers:** none. Keep the policy and structured data truthful as the listing
+  evolves (ratings JSON-LD stays out until real rating data exists — see
+  `lib/schema.ts` header and `SECURITY.md`).
 
 ## Working with app codebases (convention)
 
@@ -55,7 +52,15 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0026 — Swipeable product screenshot gallery** — **DONE**, merged,
+- **STEP-0027 — Release pass: Sole Focus live on the Mac App Store** — **DONE**,
+  merged, tagged **v0.27.0**. Task Card: `docs/tasks/STEP-0027.md`.
+- Delivered: verified store URL wired as the primary "Get it" download button
+  (+ catalog card link); status flipped to Released site-wide from the one
+  content file; truthful `offers` JSON-LD (price 0 USD, InStock, store URL) via
+  a new optional `price` content field; release date recorded; "coming soon"
+  copy removed; 2 new release-state tests (38 total). **DISC-0009** run
+  (Discussion due at feature step 27).
+- Prior packet: **STEP-0026 — Swipeable product screenshot gallery** — merged,
   tagged **v0.26.0**. Task Card: `docs/tasks/STEP-0026.md`.
 - Delivered: rebuilt `ScreenshotShowcase.astro` from a vertical stack into a
   single-image gallery (CSS scroll-snap track + progressive-enhancement script):
@@ -70,10 +75,11 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Next Step Packet (to freeze)
 
-- **Not yet chosen.** Candidates: **changelog/updates block**, **`FAQPage`
-  JSON-LD** (the new FAQ is a natural fit), **Apple-submission checklist doc**,
-  **optional Terms/disclaimer page**, **more real products**. (Screenshots →
-  v0.23.0; listing copy → v0.24.0; gallery → v0.26.0.) One outcome only.
+- **Not yet chosen.** Candidates: **`FAQPage` JSON-LD** (natural follow-on to
+  the release-pass structured data), **changelog/updates block**, **more real
+  products**, **optional Terms/disclaimer page**, lighter-touch description
+  refresh (prose-preserving). (Screenshots → v0.23.0; copy → v0.24.0; gallery →
+  v0.26.0; release pass → v0.27.0.) One outcome only.
 
 ## Machine-readable state
 
@@ -82,11 +88,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0026
+current_step: STEP-0027
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — v0.26.1 released; HEAD carries post-release checkpoint docs (product == v0.26.1)
-product_tag: v0.26.1
+head: regenerate-live (git rev-parse HEAD) — STEP-0027 release merge, tagged v0.27.0 (HEAD may carry post-release checkpoint docs)
+product_tag: v0.27.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -98,7 +104,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-07-07
+updated_at: 2026-07-15
 ```
 
 > The live Git block above is validator/observed-owned. Regenerate with
@@ -124,7 +130,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 |---|---|---|---|
 | Static build (`npm run build`) | Pass | Merge-critical | 8 routes (1 real product) + sitemap/robots/404/favicon, `output: "static"` |
 | Type + content check (`npm run check`) | Pass | Merge-critical | 0 errors / 0 warnings / 0 hints |
-| Unit tests (`npm test`) | Pass | Merge-critical | 36 passed (incl. required-retention negative test + screenshot content tests); run in CI |
+| Unit tests (`npm test`) | Pass | Merge-critical | 38 passed (incl. release-state + screenshot content tests); run in CI |
 | Dependency audit (`npm audit --omit=dev`) | Pass | Merge-critical | production/shipped deps: `found 0 vulnerabilities`. Dev-only CI tooling (`@lhci/cli`) has transitive advisories that never ship. |
 | Accessibility gate (Lighthouse CI) | Pass | Merge-critical (a11y) | `accessibility ≥ 0.95` asserted as error on all built pages; verified green in CI (PR #1). Perf/SEO/best-practices are warnings. |
 | Governance validator | Pass | Merge-critical | 43/43, exit 0 (now incl. 3 cross-doc sync checks: product_tag↔git tag, STATUS↔CHECKPOINTS feature count, CHANGELOG↔tag) |
@@ -134,9 +140,9 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **26** (STEP-0001..0026) — this counter is
-machine-cross-checked against CHECKPOINTS by the validator. Next-due: Discussion
-after 27; Markdown Consistency + Enhancement after 28; Audit after 30. The full
+Completed **feature** steps: **27** (STEP-0001..0027) — this counter is
+machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
+Consistency + Enhancement after 28; Audit after 30 (Discussion DISC-0009 done at 27). The full
 checkpoint history — scheduled and on-demand (MC-OD-*, AUDIT-OD-*) — lives only
 in the **CHECKPOINTS ledger** (single owner; deliberately not duplicated here —
 duplicated history caused recurring drift, repaired at MC-OD-0009/0010).
@@ -163,10 +169,10 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.26.1** (compatible CSS
-fix — `scrollbar-gutter` layout-shift; `fix/scrollbar-gutter-layout-shift` merge);
-prior v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (product tag `v0.26.1`; HEAD carries post-release checkpoint
+`solo-dev-portfolio-website`). Latest product tag: **v0.27.0** (STEP-0027 release
+pass — Mac App Store link + Released status + offers JSON-LD); prior v0.26.1,
+v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
+`origin`, in sync (product tag `v0.27.0`; HEAD may carry post-release checkpoint
 docs). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 

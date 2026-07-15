@@ -81,6 +81,13 @@ export const productSchema = z.object({
   screenshots: z.array(mediaAssetSchema).default([]),
   icon: mediaAssetSchema.optional(),
   features: z.array(z.string()).default([]),
+  // Store price as a plain decimal string (e.g. "0", "4.99"), USD. Only set once
+  // the product is actually purchasable/downloadable — it drives the truthful
+  // `offers` JSON-LD emitted for released products (see lib/schema.ts).
+  price: z
+    .string()
+    .regex(/^\d+(\.\d{2})?$/, 'price must be a plain decimal string like "0" or "4.99"')
+    .optional(),
   releaseDate: z.coerce.date().optional(),
   lastUpdated: z.coerce.date().optional(),
   seo: z

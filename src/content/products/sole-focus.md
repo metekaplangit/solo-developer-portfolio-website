@@ -3,11 +3,15 @@ id: sole-focus
 name: Sole Focus
 slug: sole-focus
 type: app
-status: in-development
+status: released
 featured: true
 summary: A calm, private focus timer for Mac — a Pomodoro timer and a real count-up stopwatch, with nothing tracked and no subscription.
 platforms: [macos]
-storeLinks: []
+storeLinks:
+  - store: mac-app-store
+    url: https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12
+    status: available
+price: "0"
 supportUrl: /support/
 privacyPolicyUrl: /privacy/sole-focus/
 features:
@@ -61,7 +65,8 @@ screenshots:
     altText: Three Sole Focus timer windows fanned out in sepia, dark, and light themes with orange, green, and blue accents, each showing the same 15:00 Focus timer.
     dimensions: { width: 2880, height: 1800 }
     licenseOrOwnership: owned
-lastUpdated: 2026-07-02
+releaseDate: 2026-07-15
+lastUpdated: 2026-07-15
 seo:
   title: Sole Focus — Pomodoro & Stopwatch Timer for Mac
   description: A calm, private Pomodoro and stopwatch timer for macOS. Menu-bar focus sessions, tasks, and stats — no account, no subscription, works fully offline.
@@ -113,4 +118,4 @@ stays on your Mac.
 **Does it block apps or websites?** No. Sole Focus is a calm timer, not a
 blocker; it keeps you focused with gentle cues, not lockouts.
 
-_Currently in development — coming soon to the Mac App Store._
+_Free on the Mac App Store — no in-app purchases, no subscription._

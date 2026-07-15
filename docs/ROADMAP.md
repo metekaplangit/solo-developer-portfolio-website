@@ -255,6 +255,18 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   formalized as this packet. **Markdown Consistency MC-0013** run (feature step
   #26). *(Structure note: shipped under a "deploy if you can" instruction, not a
   pre-frozen packet; STEP-0026 formalizes it retroactively.)*
+- **STEP-0027 — Release pass: Sole Focus LIVE on the Mac App Store** *(COMPLETE —
+  merged, tagged `v0.27.0`, 2026-07-15).* The app shipped:
+  https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12
+  (listing verified: "Sole Focus: Pomodoro Timer", seller Mete Kaplan, Mac,
+  Free). Wired the verified URL as the primary **Mac App Store** download button
+  in "Get it" (+ catalog card link); flipped `status: released` site-wide from
+  the single content file (badges, home "shipped" counter); added a truthful
+  `offers` JSON-LD block (price 0 USD, InStock, store URL) gated on
+  released+price+available-link via a new optional `price` content field — the
+  release pass deferred in `lib/schema.ts`; removed "coming soon" copy; recorded
+  `releaseDate` 2026-07-15; added 2 release-state content tests (38 total).
+  **Discussion DISC-0009** run (feature step #27).
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 
