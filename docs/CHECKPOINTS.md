@@ -22,16 +22,16 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **26** (STEP-0001..STEP-0026).
+- Completed **feature** Steps: **27** (STEP-0001..STEP-0027).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0027**.
-- Next-due: **Discussion** after feature step **27**; **Markdown Consistency +
-  Enhancement** after **28**; **Audit** after **30**.
+- Next feature step: **STEP-0028**.
+- Next-due: **Markdown Consistency + Enhancement** after feature step **28**;
+  **Audit** after **30**. (Discussion **DISC-0009** done at 27.)
 
 ## Due now
 
-**None.** **MC-0013** (due at feature step **26**) is **done** with the STEP-0026
-/ v0.26.0 release. All prior scheduled checkpoints and every on-demand run
+**None.** **DISC-0009** (Discussion due at feature step **27**) is **done** with
+the STEP-0027 / v0.27.0 release pass; prior scheduled: MC-0013(26). All prior scheduled checkpoints and every on-demand run
 (MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
 block names only what is currently due and the most recent scheduled checkpoint,
 so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
@@ -89,6 +89,7 @@ MC-OD-0010/0011).
 | MC-OD-0012 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0012.md` | Post-v0.26.1 wrap-up. **No drift** — the intervening turn was advisory only (a performance/efficiency health check; no code or doc changes), so all owners still agree at v0.26.1. Confirmed gates green (build 8 / check 0-0-0 / 36 tests / validator 40-40) and repo clean/in-sync; bumped on-demand range → ..0012 and genericized the STATUS `head:` note. Logged health-check findings as non-governance follow-ups (asset cache TTL, security headers, CI Node-20, FAQPage JSON-LD). Does not reset cadence. |
 | AUDIT-OD-0001 | On-demand (user request: full-scale system audit) | Audit (on-demand) | Done | `docs/audits/AUDIT_AUDIT-OD-0001.md` | All 12 areas **Pass**; zero drift. Fixed F1 (all six GitHub Actions bumped off deprecated-Node-20 majors — checkout v7, setup-node v6, setup-python v6, configure-pages v6, upload-pages-artifact v5, deploy-pages v5; latest majors verified live) and F2 (deploy timeout 1200000→600000 = action max; STATUS note corrected). F3/F4 (asset cache TTL, security headers) are **owner Cloudflare-dashboard actions**; F5 FAQPage JSON-LD carried as next-packet candidate. Perf measured excellent (1.3 MB dist, zero JS bundles, 2–5 KB HTML wire, ~0.25 s loads). Does not reset cadence. |
 | MC-OD-0013 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0013.md` | First wrap-up under the slimmer procedure. **No drift**: new `sync.*` validator checks green (tag v0.26.1 / count 26 / CHANGELOG agree); manual pass clean (due none, blockers none, internal-only packets correctly untagged); CI+deploy green on upgraded actions with zero warnings. Gates: build 8 / check 0-0-0 / 36 tests / validator 43/43. Only additions this run: this row + report. Does not reset cadence. |
+| DISC-0009 | STEP-0027 complete (feature #27) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0009.md` | Release-pass review (v0.25.0→v0.27.0): store URL verified against the live App Store listing before wiring; offers JSON-LD truthful (price 0 verified, no fabricated ratings); status/date/copy flipped from the single content file; 2 release-state tests added (38 total). No blocking findings. Follow-up: FAQPage JSON-LD is the natural next packet; watch the listing for changes (price/name) that must stay in sync. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

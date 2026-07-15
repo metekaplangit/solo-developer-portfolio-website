@@ -33,4 +33,22 @@ describe('Sole Focus product content', () => {
       expect(existsSync(assetPath), `missing asset for "${shot.path}"`).toBe(true);
     }
   });
+
+  // Release state (STEP-0027): the app is live on the Mac App Store, so the
+  // content must carry the released status and the verified store link — this
+  // is what renders the download button and the truthful offers JSON-LD.
+  it('is released with an available Mac App Store link', () => {
+    expect(product.status).toBe('released');
+    const mas = product.storeLinks.find((l) => l.store === 'mac-app-store');
+    expect(mas).toBeDefined();
+    expect(mas?.status).toBe('available');
+    expect(mas?.url).toBe(
+      'https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12',
+    );
+  });
+
+  it('declares a price so released offers JSON-LD can be emitted truthfully', () => {
+    expect(product.price).toBe('0');
+    expect(product.releaseDate).toBeDefined();
+  });
 });

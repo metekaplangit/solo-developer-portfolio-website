@@ -16,6 +16,29 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.27.0] — 2026-07-15
+
+Sole Focus is live on the Mac App Store (STEP-0027).
+
+### Added
+
+- **Download button.** The Sole Focus page's "Get it" section now links to the
+  real Mac App Store listing (verified against the live store page: "Sole Focus:
+  Pomodoro Timer", seller Mete Kaplan, free). The catalog card shows the store
+  link too.
+- **`offers` structured data.** Released products with a declared price and an
+  actionable store link now emit a truthful `offers` block (price 0 USD, InStock,
+  store URL) in the SoftwareApplication JSON-LD — the deferred "release pass",
+  making the page eligible for richer search results. Ratings remain deliberately
+  un-emitted (no data).
+
+### Changed
+
+- **Status flipped to Released** across the site (detail badge, catalog, home
+  "shipped" counter) — all driven from the one product content file. The
+  "currently in development — coming soon" line is gone; release date recorded
+  (2026-07-15).
+
 ## [0.26.1] — 2026-07-07
 
 ### Fixed
