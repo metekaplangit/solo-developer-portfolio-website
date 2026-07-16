@@ -9,8 +9,14 @@
 
 ## Handoff (5 bullets)
 
-- **State: 🎉 SOLE FOCUS IS LIVE ON THE MAC APP STORE — STEP-0027 complete,
-  released v0.27.0.** Verified listing: "Sole Focus: Pomodoro Timer", seller Mete
+- **State: STEP-0028 complete — top-of-page download buttons, released
+  v0.28.0.** A reusable `DownloadButton.astro` (Apple mark + "Download on the
+  Mac App Store", accent primary, product-aware aria-label) now leads the home
+  hero, the home spotlight, the product detail header, and the catalog card —
+  the download is findable at the top of every relevant page; the bottom "Get
+  it" section remains. Verified on all surfaces in preview + live. **MC-0014 +
+  ENH-0004** (due at feature step 28) run alongside.
+- **Prior: 🎉 SOLE FOCUS LIVE ON THE MAC APP STORE — STEP-0027, v0.27.0.** Verified listing: "Sole Focus: Pomodoro Timer", seller Mete
   Kaplan, Mac, **Free** (https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12).
   The site now renders a primary **Mac App Store** download button in "Get it"
   (plus the catalog card link), "Released" badges everywhere, a truthful `offers`
@@ -52,7 +58,12 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0027 — Release pass: Sole Focus live on the Mac App Store** — **DONE**,
+- **STEP-0028 — Top-of-page download buttons** — **DONE**, merged, tagged
+  **v0.28.0**. Task Card: `docs/tasks/STEP-0028.md`. Delivered: reusable
+  `DownloadButton.astro` placed on home hero (leading), spotlight, detail
+  header, catalog card; graceful fallbacks for unreleased products; bottom
+  "Get it" retained. **MC-0014 + ENH-0004** run (feature step 28).
+- Prior: **STEP-0027 — Release pass: Sole Focus live on the Mac App Store** —
   merged, tagged **v0.27.0**. Task Card: `docs/tasks/STEP-0027.md`.
 - Delivered: verified store URL wired as the primary "Get it" download button
   (+ catalog card link); status flipped to Released site-wide from the one
@@ -88,11 +99,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0027
+current_step: STEP-0028
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0027 release merge, tagged v0.27.0 (HEAD may carry post-release checkpoint docs)
-product_tag: v0.27.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0028 merge, tagged v0.28.0 (HEAD may carry post-release checkpoint docs)
+product_tag: v0.28.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -140,9 +151,9 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **27** (STEP-0001..0027) — this counter is
-machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
-Consistency + Enhancement after 28; Audit after 30 (Discussion DISC-0009 done at 27). The full
+Completed **feature** steps: **28** (STEP-0001..0028) — this counter is
+machine-cross-checked against CHECKPOINTS by the validator. Next-due: Discussion
+after 30; Audit after 30; Markdown Consistency after 30 (MC-0014 + ENH-0004 done at 28). The full
 checkpoint history — scheduled and on-demand (MC-OD-*, AUDIT-OD-*) — lives only
 in the **CHECKPOINTS ledger** (single owner; deliberately not duplicated here —
 duplicated history caused recurring drift, repaired at MC-OD-0009/0010).
@@ -169,10 +180,10 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.27.0** (STEP-0027 release
-pass — Mac App Store link + Released status + offers JSON-LD); prior v0.26.1,
+`solo-dev-portfolio-website`). Latest product tag: **v0.28.0** (STEP-0028 top-of-page
+download buttons); prior v0.27.0 (release pass), v0.26.1,
 v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (product tag `v0.27.0`; HEAD may carry post-release checkpoint
+`origin`, in sync (product tag `v0.28.0`; HEAD may carry post-release checkpoint
 docs). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 

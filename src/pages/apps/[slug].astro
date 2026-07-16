@@ -16,6 +16,7 @@ import { withBase } from '../../lib/url';
 import { softwareApplicationSchema, breadcrumbSchema } from '../../lib/schema';
 import { resolveScreenshot } from '../../lib/screenshots';
 import ScreenshotShowcase from '../../components/ScreenshotShowcase.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -67,6 +68,9 @@ const schema = [
           <Badge label={statusLabel(product.status)} />
         </div>
         <p class="summary">{product.summary}</p>
+        <div class="head-cta">
+          <DownloadButton product={product} />
+        </div>
       </div>
     </header>
 
@@ -210,6 +214,9 @@ const schema = [
     margin: 0;
     color: var(--muted);
     font-size: 1.125rem;
+  }
+  .head-cta {
+    margin-top: var(--space-5);
   }
   .platforms,
   .store-links {

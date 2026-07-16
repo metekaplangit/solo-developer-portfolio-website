@@ -5,9 +5,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import ProductAvatar from '../components/ProductAvatar.astro';
 import Badge from '../components/Badge.astro';
+import DownloadButton from '../components/DownloadButton.astro';
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
-import { getFeatured, sortProducts, statusLabel } from '../lib/products';
+import { getFeatured, sortProducts, statusLabel, visibleStoreLinks } from '../lib/products';
 import { canonicalPrivacyUrl } from '../lib/privacy';
 import { organizationSchema, websiteSchema } from '../lib/schema';
 import { resolveScreenshot } from '../lib/screenshots';
@@ -26,6 +27,11 @@ const rest = showcase.slice(1);
 // falling back to the icon avatar otherwise.
 const leadShot = spotlight?.screenshots?.[0];
 const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
+
+// Hero leads with the flagship's download button when it has one; otherwise
+// "See apps & games" stays the primary action.
+const heroHasDownload =
+  spotlight != null && visibleStoreLinks(spotlight).some((l) => l.status === 'available');
 ---
 
 <BaseLayout title={site.name} description={site.description} schema={[organizationSchema(), websiteSchema()]}>
@@ -34,7 +40,8 @@ const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
     <h1 class="hero-title">{site.name}</h1>
     <p class="lede">{site.description}</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href={withBase('/apps/')}>See apps &amp; games</a>
+      {heroHasDownload && <DownloadButton product={spotlight} />}
+      <a class={`btn ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href={withBase('/apps/')}>See apps &amp; games</a>
       <a class="btn btn-secondary" href={withBase('/support/')}>Get support</a>
     </div>
     <p class="hero-meta">
@@ -86,7 +93,8 @@ const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
               </ul>
             )}
             <div class="spotlight-cta">
-              <a class="btn btn-primary" href={withBase(`/apps/${spotlight.slug}/`)}>
+              <DownloadButton product={spotlight} />
+              <a class="btn btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
                 View {spotlight.name}
               </a>
               <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(spotlight))}>
