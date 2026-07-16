@@ -16,6 +16,24 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.28.0] — 2026-07-15
+
+Top-of-page download buttons (STEP-0028).
+
+### Added
+
+- **The download button is now impossible to miss.** A polished "Download on the
+  Mac App Store" button (Apple mark, accent style) now sits at the top of every
+  relevant page: the home hero (leading action), the home spotlight, the product
+  page header, and the catalog card. Previously the only download link sat at
+  the bottom of the product page; that "Get it" section remains too.
+
+### Internal
+
+- One reusable `DownloadButton.astro` renders a product's first available store
+  link (md/sm sizes); data-driven from the content file, renders nothing for
+  unreleased products, accessible name includes the product.
+
 ## [0.27.0] — 2026-07-15
 
 Sole Focus is live on the Mac App Store (STEP-0027).

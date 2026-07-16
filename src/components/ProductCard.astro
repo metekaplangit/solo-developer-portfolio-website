@@ -1,6 +1,7 @@
 ---
 import Badge from './Badge.astro';
 import ProductAvatar from './ProductAvatar.astro';
+import DownloadButton from './DownloadButton.astro';
 import type { Product } from '../content/schema';
 import {
   visibleStoreLinks,
@@ -41,16 +42,20 @@ const stores = visibleStoreLinks(product);
   <div class="card-links">
     {
       hasStoreLinks(product) ? (
-        <ul class="store-links">
-          {stores.map((link) => (
-            <li>
-              <a href={link.url} rel="noopener" target="_blank">
-                {storeLabel(link.store)}
-                {link.status === 'coming-soon' ? ' (soon)' : ''}
-              </a>
-            </li>
-          ))}
-        </ul>
+        stores.some((l) => l.status === 'available') ? (
+          <DownloadButton product={product} size="sm" />
+        ) : (
+          <ul class="store-links">
+            {stores.map((link) => (
+              <li>
+                <a href={link.url} rel="noopener" target="_blank">
+                  {storeLabel(link.store)}
+                  {link.status === 'coming-soon' ? ' (soon)' : ''}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
       ) : (
         <p class="unreleased">Not yet available</p>
       )

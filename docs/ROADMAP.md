@@ -267,6 +267,16 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   release pass deferred in `lib/schema.ts`; removed "coming soon" copy; recorded
   `releaseDate` 2026-07-15; added 2 release-state content tests (38 total).
   **Discussion DISC-0009** run (feature step #27).
+- **STEP-0028 — Top-of-page download buttons** *(COMPLETE — merged, tagged
+  `v0.28.0`, 2026-07-15).* User request: the sole download CTA sat at the bottom
+  of the product page. Added a reusable `DownloadButton.astro` (Apple mark +
+  "Download on the Mac App Store", accent primary, aria-label includes product;
+  md/sm sizes; renders nothing without an available link) and placed it
+  top-of-page everywhere relevant: home hero (leading action, with
+  "See apps & games" falling back to primary when no download exists), home
+  spotlight, product detail header, catalog card. Bottom "Get it" retained.
+  Verified on all three surfaces in preview + live. **MC-0014 + ENH-0004** run
+  (feature step #28).
 
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 

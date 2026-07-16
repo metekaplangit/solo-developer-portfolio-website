@@ -22,16 +22,16 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **27** (STEP-0001..STEP-0027).
+- Completed **feature** Steps: **28** (STEP-0001..STEP-0028).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0028**.
-- Next-due: **Markdown Consistency + Enhancement** after feature step **28**;
-  **Audit** after **30**. (Discussion **DISC-0009** done at 27.)
+- Next feature step: **STEP-0029**.
+- Next-due: **Audit + Discussion + Markdown Consistency** after feature step
+  **30**. (MC-0014 + ENH-0004 done at 28; DISC-0009 at 27.)
 
 ## Due now
 
-**None.** **DISC-0009** (Discussion due at feature step **27**) is **done** with
-the STEP-0027 / v0.27.0 release pass; prior scheduled: MC-0013(26). All prior scheduled checkpoints and every on-demand run
+**None.** **MC-0014 + ENH-0004** (due at feature step **28**) are **done** with
+the STEP-0028 / v0.28.0 packet; prior scheduled: DISC-0009(27), MC-0013(26). All prior scheduled checkpoints and every on-demand run
 (MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
 block names only what is currently due and the most recent scheduled checkpoint,
 so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
@@ -91,6 +91,8 @@ MC-OD-0010/0011).
 | MC-OD-0013 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0013.md` | First wrap-up under the slimmer procedure. **No drift**: new `sync.*` validator checks green (tag v0.26.1 / count 26 / CHANGELOG agree); manual pass clean (due none, blockers none, internal-only packets correctly untagged); CI+deploy green on upgraded actions with zero warnings. Gates: build 8 / check 0-0-0 / 36 tests / validator 43/43. Only additions this run: this row + report. Does not reset cadence. |
 | DISC-0009 | STEP-0027 complete (feature #27) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0009.md` | Release-pass review (v0.25.0→v0.27.0): store URL verified against the live App Store listing before wiring; offers JSON-LD truthful (price 0 verified, no fabricated ratings); status/date/copy flipped from the single content file; 2 release-state tests added (38 total). No blocking findings. Follow-up: FAQPage JSON-LD is the natural next packet; watch the listing for changes (price/name) that must stay in sync. |
 | MC-OD-0014 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0014.md` | Post-v0.27.0 wrap-up. **No drift**: sync checks green (tag v0.27.0 / count 27 / CHANGELOG agree); release state verified live (button, badges, offers JSON-LD, "1 shipped"); due none, blockers none. Gates: build 8 / check 0-0-0 / 38 tests / validator 43/43. Only additions: this row + report. Does not reset cadence. |
+| MC-0014 | STEP-0028 complete (feature #28) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0014.md` | v0.27.0→v0.28.0 synced; sync checks green post-tag; download CTA single-sourced (one component, one content URL); no drift. |
+| ENH-0004 | STEP-0028 complete (feature #28) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0004.md` | Re-triage: **accepted FAQPage JSON-LD as recommended STEP-0029**; carried changelog block, more products, description refresh, Terms page, Cloudflare owner-actions; header-rhythm item partially superseded by STEP-0028. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,
