@@ -8,6 +8,7 @@ import {
   hasStoreLinks,
   storeLabel,
   statusLabel,
+  platformLabel,
   relatedProducts,
 } from '../../lib/products';
 import { canonicalPrivacyUrl } from '../../lib/privacy';
@@ -70,12 +71,17 @@ const schema = [
         <p class="summary">{product.summary}</p>
         <div class="head-cta">
           <DownloadButton product={product} />
+          {product.requirements && <p class="requirements">Requires {product.requirements}</p>}
+          <p class="trust-line">
+            Made by <a href={withBase('/about/')}>Mete Kaplan</a> ·
+            <a href={withBase('/support/')}>direct support</a>, usually replies in 2–3 business days
+          </p>
         </div>
       </div>
     </header>
 
     <ul class="platforms" aria-label="Platforms">
-      {product.platforms.map((p) => <li><Badge label={p} tone="muted" /></li>)}
+      {product.platforms.map((p) => <li><Badge label={platformLabel(p)} tone="muted" /></li>)}
     </ul>
   </article>
 
@@ -217,6 +223,25 @@ const schema = [
   }
   .head-cta {
     margin-top: var(--space-5);
+  }
+  /* Purchase-decision info (review-0001 OPP-04/07): quiet, subordinate to the
+     download button; claims sourced from the About/Support pages they link. */
+  .requirements {
+    margin: var(--space-3) 0 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .trust-line {
+    margin: var(--space-1) 0 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .trust-line a {
+    color: var(--muted);
+    text-underline-offset: 2px;
+  }
+  .trust-line a:hover {
+    color: var(--text-strong);
   }
   .platforms,
   .store-links {

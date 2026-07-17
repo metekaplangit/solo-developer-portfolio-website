@@ -6,6 +6,7 @@ import {
   hasStoreLinks,
   storeLabel,
   statusLabel,
+  platformLabel,
   relatedProducts,
 } from './products';
 import type { Product } from '../content/schema';
@@ -107,5 +108,12 @@ describe('labels', () => {
   it('maps store and status enums to display labels', () => {
     expect(storeLabel('mac-app-store')).toBe('Mac App Store');
     expect(statusLabel('in-development')).toBe('In development');
+  });
+
+  it('renders human platform labels, passing unknown tokens through', () => {
+    // review-0001 OPP-04: badges must never show raw schema tokens like 'macos'.
+    expect(platformLabel('macos')).toBe('macOS');
+    expect(platformLabel('ios')).toBe('iOS');
+    expect(platformLabel('somefuture')).toBe('somefuture');
   });
 });

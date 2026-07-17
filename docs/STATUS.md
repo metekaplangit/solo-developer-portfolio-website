@@ -9,7 +9,13 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0029 complete — small-screen usability, released v0.29.0**
+- **State: STEP-0030 complete — purchase-decision info, released v0.30.0**
+  (review-0001 OPP-04/07: human "macOS" platform badges from one shared map
+  also feeding JSON-LD; verified "Requires macOS 10.15 or later" beside the
+  header download button; truthful maker/support trust line linking
+  About/Support; 40 tests). **AUDIT-0006 + DISC-0010 + MC-0015** (the step-30
+  checkpoint trio) run alongside.
+- **Prior: STEP-0029 — small-screen usability, v0.29.0**
   (external review-0001 remediation: compact scrollable mobile header, 146→94px
   at 390px; ≥44px touch targets for nav + gallery dots; zero-JS). Review
   dispositions: OPP-02 declined (deliberate CTA repetition), OPP-03/05/06
@@ -104,11 +110,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0029
+current_step: STEP-0030
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0029 merge, tagged v0.29.0
-product_tag: v0.29.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0030 merge, tagged v0.30.0 (HEAD may carry post-release checkpoint docs)
+product_tag: v0.30.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -120,7 +126,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-07-15
+updated_at: 2026-07-17
 ```
 
 > The live Git block above is validator/observed-owned. Regenerate with
@@ -156,9 +162,10 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **29** (STEP-0001..0029) — this counter is
-machine-cross-checked against CHECKPOINTS by the validator. Next-due: Discussion
-after 30; Audit after 30; Markdown Consistency after 30 (MC-0014 + ENH-0004 done at 28). The full
+Completed **feature** steps: **30** (STEP-0001..0030) — this counter is
+machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
+Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
+(AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full
 checkpoint history — scheduled and on-demand (MC-OD-*, AUDIT-OD-*) — lives only
 in the **CHECKPOINTS ledger** (single owner; deliberately not duplicated here —
 duplicated history caused recurring drift, repaired at MC-OD-0009/0010).
@@ -185,10 +192,10 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.29.0** (STEP-0029 small-screen
-usability); prior v0.28.0, v0.27.0, v0.26.1,
+`solo-dev-portfolio-website`). Latest product tag: **v0.30.0** (STEP-0030 purchase-decision
+info); prior v0.29.0, v0.28.0, v0.27.0, v0.26.1,
 v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (product tag `v0.29.0`; HEAD may carry post-release checkpoint
+`origin`, in sync (product tag `v0.30.0`; HEAD may carry post-release checkpoint
 docs). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 

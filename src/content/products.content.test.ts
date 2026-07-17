@@ -51,4 +51,10 @@ describe('Sole Focus product content', () => {
     expect(product.price).toBe('0');
     expect(product.releaseDate).toBeDefined();
   });
+
+  it('pins the verified system requirement shown beside the download button', () => {
+    // Verified against the live Mac App Store listing (macOS 10.15+). Update
+    // deliberately if the app's requirement changes.
+    expect(product.requirements).toBe('macOS 10.15 or later');
+  });
 });

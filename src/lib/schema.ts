@@ -5,6 +5,7 @@
 // fabricating either would violate both Google's structured-data guidelines and
 // this project's honesty rules.
 import { site } from './site';
+import { PLATFORM_LABELS } from './products';
 import type { Product } from '../content/schema';
 
 const ORIGIN = 'https://metkapstudio.com';
@@ -16,17 +17,6 @@ function abs(path: string): string {
 
 const publisher = { '@type': 'Organization', name: site.name, url: `${ORIGIN}/` } as const;
 
-/** Map our internal platform ids to human OS names for `operatingSystem`. */
-const OS_NAMES: Record<string, string> = {
-  macos: 'macOS',
-  ios: 'iOS',
-  ipados: 'iPadOS',
-  windows: 'Windows',
-  android: 'Android',
-  linux: 'Linux',
-  web: 'Web',
-  steam: 'Steam',
-};
 
 export function organizationSchema() {
   return {
@@ -80,7 +70,7 @@ export function softwareApplicationSchema(product: Product, description?: string
     name: product.name,
     description: description ?? product.summary,
     applicationCategory: isGame ? 'GameApplication' : 'ProductivityApplication',
-    operatingSystem: product.platforms.map((p) => OS_NAMES[p] ?? p).join(', '),
+    operatingSystem: product.platforms.map((p) => PLATFORM_LABELS[p] ?? p).join(', '),
     url: abs(`/apps/${product.slug}/`),
     ...(product.icon ? { image: abs(product.icon.path) } : {}),
     ...(product.features.length ? { featureList: product.features } : {}),

@@ -12,6 +12,7 @@ storeLinks:
     url: https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12
     status: available
 price: "0"
+requirements: macOS 10.15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/sole-focus/
 features:

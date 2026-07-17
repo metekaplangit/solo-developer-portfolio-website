@@ -278,6 +278,23 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   Verified on all three surfaces in preview + live. **MC-0014 + ENH-0004** run
   (feature step #28).
 
+- **STEP-0029 — Small-screen usability (review-0001 remediation)** *(COMPLETE —
+  merged, tagged `v0.29.0`, 2026-07-17).* Adopted external design review
+  findings OPP-01 + OPP-08 (`project-designer` review-0001): narrow-screen
+  header = brand row + single horizontally scrollable nav row with right-edge
+  fade (zero-JS; measured 146px → 94px at 390px; no overflow at 390/320); nav
+  links + gallery dots get ≥44px hit areas on coarse pointers with visual size
+  unchanged. Declined OPP-02 (CTA repetition is deliberate user intent);
+  deferred OPP-03/05/06 (taste-sensitive; preview-first).
+- **STEP-0030 — Purchase-decision info (review-0001 remediation)** *(COMPLETE —
+  merged, tagged `v0.30.0`, 2026-07-17).* Adopted OPP-04 + OPP-07: human
+  platform labels from one shared map (badges + JSON-LD `operatingSystem`);
+  verified "Requires macOS 10.15 or later" line beside the header download
+  button (new optional `requirements` content field); truthful maker/support
+  trust line ("Made by Mete Kaplan · direct support, usually replies in 2–3
+  business days") linking About/Support. 2 new tests (40 total).
+  **AUDIT-0006 + DISC-0010 + MC-0015** run (feature step #30).
+
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 
 Not scheduled yet; promote to a Step Packet when triggered.

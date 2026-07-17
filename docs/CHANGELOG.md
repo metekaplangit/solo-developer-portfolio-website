@@ -16,6 +16,25 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.30.0] — 2026-07-17
+
+Purchase-decision information beside the download button (STEP-0030).
+
+### Added
+
+- **"Requires macOS 10.15 or later"** now sits right under the download button —
+  verified against the live App Store listing, so buyers know compatibility
+  before they leave.
+- **A quiet trust line:** "Made by Mete Kaplan · direct support, usually replies
+  in 2–3 business days", linking the About and Support pages. Every claim is
+  sourced from those pages.
+
+### Fixed
+
+- **Platform badges now say "macOS"** instead of the internal token "macos", on
+  the product page and catalog — labels come from one shared map also used by
+  the structured data, so they can never drift apart.
+
 ## [0.29.0] — 2026-07-17
 
 Small-screen usability (STEP-0029, adopting external design review findings).
