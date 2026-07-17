@@ -16,6 +16,21 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.29.0] — 2026-07-17
+
+Small-screen usability (STEP-0029, adopting external design review findings).
+
+### Changed
+
+- **The phone header no longer eats a third of the screen.** On narrow screens
+  the five navigation links used to wrap into extra rows (~146px of header
+  before any content). The brand now stays on one row and the links sit in a
+  single swipeable row with a soft fade hinting there's more — measured 146px →
+  94px at 390px wide. No JavaScript involved.
+- **Easier tapping.** Navigation links and the screenshot-gallery dots now have
+  comfortable touch areas (≥44px on touch screens) while keeping their exact
+  visual size.
+
 ## [0.28.0] — 2026-07-15
 
 Top-of-page download buttons (STEP-0028).

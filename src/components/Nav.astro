@@ -97,4 +97,44 @@ function isCurrent(href: string): boolean {
     background: var(--accent-soft);
     font-weight: 600;
   }
+
+  /* Narrow screens (review-0001 OPP-01): the five links used to wrap into two
+     extra rows, pushing the header to ~146px before content. Keep the brand on
+     row one and the destinations in a single horizontally scrollable row —
+     zero-JS by design (no disclosure menu). A right-edge fade signals overflow;
+     trailing padding keeps the last link clear of the fade. */
+  @media (max-width: 40rem) {
+    .header-inner {
+      padding-block: var(--space-3);
+      row-gap: var(--space-2);
+    }
+    .site-header nav {
+      width: 100%;
+    }
+    .nav-list {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-inline-end: 24px;
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+      mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+    }
+    .nav-list::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-list a {
+      white-space: nowrap;
+    }
+  }
+
+  /* Touch ergonomics (review-0001 OPP-08): comfortable ≥44px hit height on
+     coarse pointers without changing the visual pill design on desktop. */
+  @media (pointer: coarse) {
+    .nav-list a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+    }
+  }
 </style>
