@@ -88,6 +88,10 @@ export const productSchema = z.object({
     .string()
     .regex(/^\d+(\.\d{2})?$/, 'price must be a plain decimal string like "0" or "4.99"')
     .optional(),
+  // Verified system requirement shown beside the download CTA (e.g. "macOS
+  // 10.15 or later"). Only set from a confirmed source (the live store
+  // listing); optional so unreleased products degrade gracefully.
+  requirements: z.string().min(1).optional(),
   releaseDate: z.coerce.date().optional(),
   lastUpdated: z.coerce.date().optional(),
   seo: z

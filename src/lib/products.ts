@@ -71,3 +71,23 @@ const STATUS_LABELS: Record<Product['status'], string> = {
 export function statusLabel(status: Product['status']): string {
   return STATUS_LABELS[status];
 }
+
+/**
+ * Human platform labels (review-0001 OPP-04): the schema stores lowercase
+ * tokens ('macos'); every user-facing surface and the JSON-LD builder render
+ * through this one map so labels can never drift apart.
+ */
+export const PLATFORM_LABELS: Record<string, string> = {
+  macos: 'macOS',
+  ios: 'iOS',
+  ipados: 'iPadOS',
+  android: 'Android',
+  windows: 'Windows',
+  linux: 'Linux',
+  web: 'Web',
+  steam: 'Steam',
+};
+
+export function platformLabel(platform: string): string {
+  return PLATFORM_LABELS[platform] ?? platform;
+}

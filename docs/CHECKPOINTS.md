@@ -22,16 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **29** (STEP-0001..STEP-0029).
+- Completed **feature** Steps: **30** (STEP-0001..STEP-0030).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0030**.
-- Next-due: **Audit + Discussion + Markdown Consistency** after feature step
-  **30**. (MC-0014 + ENH-0004 done at 28; DISC-0009 at 27.)
+- Next feature step: **STEP-0031**.
+- Next-due: **Markdown Consistency** after feature step **32**; **Discussion**
+  after **33**; **Enhancement + Audit** after **35**. (AUDIT-0006 + DISC-0010 +
+  MC-0015 done at 30.)
 
 ## Due now
 
-**None.** **MC-0014 + ENH-0004** (due at feature step **28**) are **done** with
-the STEP-0028 / v0.28.0 packet; prior scheduled: DISC-0009(27), MC-0013(26). All prior scheduled checkpoints and every on-demand run
+**None.** **AUDIT-0006 + DISC-0010 + MC-0015** (all due at feature step **30**)
+are **done** with the STEP-0030 / v0.30.0 packet; prior scheduled: MC-0014 +
+ENH-0004(28), DISC-0009(27). All prior scheduled checkpoints and every on-demand run
 (MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
 block names only what is currently due and the most recent scheduled checkpoint,
 so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
@@ -93,6 +95,9 @@ MC-OD-0010/0011).
 | MC-OD-0014 | On-demand (user wrap-up) | Markdown Consistency (on-demand) | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-OD-0014.md` | Post-v0.27.0 wrap-up. **No drift**: sync checks green (tag v0.27.0 / count 27 / CHANGELOG agree); release state verified live (button, badges, offers JSON-LD, "1 shipped"); due none, blockers none. Gates: build 8 / check 0-0-0 / 38 tests / validator 43/43. Only additions: this row + report. Does not reset cadence. |
 | MC-0014 | STEP-0028 complete (feature #28) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0014.md` | v0.27.0→v0.28.0 synced; sync checks green post-tag; download CTA single-sourced (one component, one content URL); no drift. |
 | ENH-0004 | STEP-0028 complete (feature #28) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0004.md` | Re-triage: **accepted FAQPage JSON-LD as recommended STEP-0029**; carried changelog block, more products, description refresh, Terms page, Cloudflare owner-actions; header-rhythm item partially superseded by STEP-0028. |
+| AUDIT-0006 | STEP-0030 complete (feature #30) | Audit | Done | `docs/audits/AUDIT_AUDIT-0006.md` | All areas Pass over v0.26.0→v0.30.0. F1 (low, repaired): v0.29.0 pushed over a real validator failure (missing ROADMAP entry; chained push) — fixed in the STEP-0030 merge; practice corrected to gate push on validator. F2/F3 info (deferred taste items; Cloudflare owner-actions). |
+| DISC-0010 | STEP-0030 complete (feature #30) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0010.md` | First external-review adoption reviewed: evidence-not-authority handling with per-finding dispositions (4 adopted / 1 declined on user intent / 3 deferred preview-first); truthfulness sourced; push-gating practice adopted. |
+| MC-0015 | STEP-0030 complete (feature #30) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0015.md` | v0.29.0→v0.30.0 synced; one transient drift (ROADMAP entry) caught by validator at push, repaired same session; post-merge sync checks green at v0.30.0 / count 30. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,
