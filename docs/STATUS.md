@@ -9,8 +9,13 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0028 complete — top-of-page download buttons, released
-  v0.28.0.** A reusable `DownloadButton.astro` (Apple mark + "Download on the
+- **State: STEP-0029 complete — small-screen usability, released v0.29.0**
+  (external review-0001 remediation: compact scrollable mobile header, 146→94px
+  at 390px; ≥44px touch targets for nav + gallery dots; zero-JS). Review
+  dispositions: OPP-02 declined (deliberate CTA repetition), OPP-03/05/06
+  deferred (taste-sensitive, preview-first). STEP-0030 (purchase-decision info)
+  ships next with the step-30 checkpoint trio.
+- **Prior: STEP-0028 — top-of-page download buttons, v0.28.0.** A reusable `DownloadButton.astro` (Apple mark + "Download on the
   Mac App Store", accent primary, product-aware aria-label) now leads the home
   hero, the home spotlight, the product detail header, and the catalog card —
   the download is findable at the top of every relevant page; the bottom "Get
@@ -99,11 +104,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0028
+current_step: STEP-0029
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0028 merge, tagged v0.28.0 (HEAD may carry post-release checkpoint docs)
-product_tag: v0.28.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0029 merge, tagged v0.29.0
+product_tag: v0.29.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -151,7 +156,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **28** (STEP-0001..0028) — this counter is
+Completed **feature** steps: **29** (STEP-0001..0029) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Discussion
 after 30; Audit after 30; Markdown Consistency after 30 (MC-0014 + ENH-0004 done at 28). The full
 checkpoint history — scheduled and on-demand (MC-OD-*, AUDIT-OD-*) — lives only
@@ -180,10 +185,10 @@ commit + tag), docs synchronized, validator passing. No deviations.
 ## Version control
 
 Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.28.0** (STEP-0028 top-of-page
-download buttons); prior v0.27.0 (release pass), v0.26.1,
+`solo-dev-portfolio-website`). Latest product tag: **v0.29.0** (STEP-0029 small-screen
+usability); prior v0.28.0, v0.27.0, v0.26.1,
 v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (product tag `v0.28.0`; HEAD may carry post-release checkpoint
+`origin`, in sync (product tag `v0.29.0`; HEAD may carry post-release checkpoint
 docs). **Live channel:** GitHub Pages + custom
 domain **metkapstudio.com** (HTTPS enforced).
 
