@@ -338,6 +338,22 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   only between facts. Overflow-swept all 7 routes at 390/1280. **MC-0018 +
   DISC-0012** run (feature #36).
 
+- **STEP-0038 — Full-site "Graphite Refined" restructure** *(COMPLETE —
+  merged, tagged `v0.36.0`, 2026-07-18).* User-directed, adopting an external
+  design handoff they approved ("much simpler, much more effective, much more
+  visually appealing"), against the standing complaint that text is "cramped up
+  into spaces". All four primary pages rebuilt on one shared band system — one
+  idea per band, `--gutter`/`--band-y` rhythm, prose capped by `--measure`,
+  imagery leading. Bands own vertical rhythm only; the horizontal rail comes
+  from `main.container`, giving one left edge from nav brand to footer (hero was
+  ~150px inboard; Support/Privacy titles up to 232px at 1440). Home hero CTA
+  names the product; home closes on the real `makerNote`. `MakerNote`
+  side-stripe removed; hero entrance no longer gates content on opacity.
+  **Declined from the handoff:** its two invented placeholder products + "3
+  total" count, and its invented first-person maker quote. 0 overflow across 56
+  page/width checks; 0 axe violations across 7 routes. No checkpoint due
+  (feature #37).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

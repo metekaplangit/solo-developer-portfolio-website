@@ -16,6 +16,51 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.36.0] — 2026-07-18
+
+Full-site redesign — "Graphite Refined" (STEP-0038).
+
+### Changed
+
+- **The whole site breathes now.** Every page is rebuilt as a stack of bands —
+  one idea per band, with real space between them — instead of dense text
+  packed into a narrow column. This was the long-standing "too much text
+  cramped up into spaces" complaint, fixed at the system level so it applies
+  everywhere rather than page by page.
+- **Everything lines up.** The studio name in the header, every page heading,
+  every panel edge and the footer now share one left edge from top to bottom.
+  Previously the home hero sat ~150px inboard of everything below it, and the
+  Support and Privacy titles up to 232px inboard on a wide screen.
+- **The product page is no longer a single squeezed column.** Sole Focus now
+  gets an open header, a full-width gallery, a "What it does" grid, its
+  description at a comfortable reading width, and a closing download panel.
+- **The home page ends on a human note.** The maker's own words (the same ones
+  already on the product page) now close the page, where it used to end on a
+  copyright line.
+- **The home download button says what it downloads** — "Download Sole Focus —
+  free" instead of an unlabelled store button, with the price, system
+  requirement and privacy facts directly beneath it.
+- **About is a real page**, with four commitments laid out two-by-two and a
+  contact panel, rather than a bulleted list in a narrow column.
+
+### Fixed
+
+- The maker's note no longer uses a coloured left stripe (a banned treatment
+  that the project's own design rules prohibit).
+- The home hero's entrance animation could leave the download button invisible
+  in any context where animations don't run — a headless renderer, a
+  background tab, a print preview. It now animates movement only, so the
+  content is always visible.
+
+### Internal
+
+- Band rhythm tokens + `.band` / `.panel` / `.shot-frame` primitives in
+  `global.css`; bands own vertical rhythm only, the horizontal rail comes from
+  `main.container`. Verified: 0 horizontal overflow across 56 page/width
+  combinations (390–1440px), 0 axe-core violations across all 7 routes, gates
+  green. Two elements of the source mockup were deliberately not adopted — see
+  `docs/tasks/STEP-0038.md`.
+
 ## [0.35.1] — 2026-07-18
 
 ### Fixed
