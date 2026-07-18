@@ -9,8 +9,14 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0034 + STEP-0035 complete — taste-round T2 + T5 shipped,
-  released together as v0.33.0** (user-approved copy: For/Not-for fit cells at
+- **State: STEP-0036 complete — wider, image-forward redesign, released
+  v0.34.0.** Fixed the "too narrow / cramped / text stacking vertically"
+  complaint: shell 68→78rem + reading columns 40→43rem; home featured panel
+  rebuilt image-dominant (screenshot leads, bullet stack removed, more air);
+  product gallery widened to 72rem. Presentation-only, zero JS, no overflow at
+  1440/960/390; before/after screenshots verified. **AUDIT-0007 + ENH-0005**
+  (due at feature step 35) run. Standing rule reaffirmed: real screenshots only.
+- **Prior: STEP-0034 + STEP-0035 — taste-round T2 + T5, v0.33.0** (user-approved copy: For/Not-for fit cells at
   the top of the details; maker's note opening the description; FactsLine
   overflow fix; 45 tests; DISC-0011 + MC-0017 run). Taste round closed: T1/T3
   declined, T4 closed unless reopened. New standing rule: no fabricated
@@ -136,11 +142,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0035
+current_step: STEP-0036
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0035 merge, tagged v0.33.0 (covers STEP-0034+0035; HEAD may carry post-release checkpoint docs)
-product_tag: v0.33.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0036 merge, tagged v0.34.0 (HEAD may carry post-release checkpoint docs)
+product_tag: v0.34.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -188,7 +194,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **34** (STEP-0001..0030) — this counter is
+Completed **feature** steps: **35** (STEP-0001..0030) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

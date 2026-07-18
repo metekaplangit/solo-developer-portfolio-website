@@ -319,6 +319,16 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   outcome: T2/T5 shipped; **T1 (workflow strip) + T3 (captions) declined** this
   round; **T4 (shorter reading path) closed unless the user reopens it**.
 
+- **STEP-0036 — Wider, image-forward redesign** *(COMPLETE — merged, tagged
+  `v0.34.0`, 2026-07-17).* User-directed: the site read too narrow/cramped with
+  text stacking vertically. Widened the shell (`--maxw` 68→78rem) and reading
+  columns (`--maxw-prose` 40→43rem); rebuilt the home featured panel to be
+  image-dominant (screenshot column 1.45fr vs 0.85fr text) with the bullet-
+  highlight stack removed and more padding; widened the product gallery to
+  72rem (matched `sizes`). Presentation-only, zero JS; no overflow at
+  1440/960/390. Rival benchmark: Panic/Rogue Amoeba/Things/Raycast (wide,
+  big-imagery, minimal-text). **AUDIT-0007 + ENH-0005** run (feature #35).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

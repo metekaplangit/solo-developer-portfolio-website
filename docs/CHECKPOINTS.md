@@ -22,18 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **34** (STEP-0001..STEP-0035; 0033 deferred/unstarted does not count).
+- Completed **feature** Steps: **35** (STEP-0001..STEP-0036; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0036** (or STEP-0033 when its trigger fires).
-- Next-due: **Enhancement + Audit** after feature step **35**; **Markdown
-  Consistency** after **36**; **Discussion** after **36**. (DISC-0011 done at
-  33; MC-0017 at 34; MC-0016 at 32.)
+- Next feature step: **STEP-0037** (or STEP-0033 when its trigger fires).
+- Next-due: **Markdown Consistency + Discussion** after feature step **36**;
+  **Audit** after **40**; **Enhancement** after **42**. (AUDIT-0007 + ENH-0005
+  done at 35; MC-0017 at 34; DISC-0011 at 33.)
 
 ## Due now
 
-**None.** **DISC-0011**(33) and **MC-0017**(34) are **done** with the
-STEP-0034/0035 / v0.33.0 release; prior scheduled: MC-0016(32), AUDIT-0006 +
-DISC-0010 + MC-0015(30). All prior scheduled checkpoints and every on-demand run
+**None.** **AUDIT-0007 + ENH-0005** (due at feature step **35**) are **done**
+with the STEP-0036 / v0.34.0 redesign; prior scheduled: MC-0017(34),
+DISC-0011(33), MC-0016(32). All prior scheduled checkpoints and every on-demand run
 (MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
 block names only what is currently due and the most recent scheduled checkpoint,
 so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
@@ -101,6 +101,8 @@ MC-OD-0010/0011).
 | MC-0016 | STEP-0032 complete (feature #32) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0016.md` | v0.31.0→v0.32.0 synced; review-0002's 30 ideas dispositioned once in ROADMAP; STEP-0033 recorded trigger-armed; facts/transcript claims single-sourced from structured content; sync checks green at v0.32.0 / count 32; no drift. |
 | DISC-0011 | STEP-0034 complete (feature #33) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0011.md` | Review-0002 adoption arc reviewed; preview-first + approved-copy pinning worked; FactsLine nowrap overflow regression caught by runtime check and fixed in-packet; header density note. No blockers. |
 | MC-0017 | STEP-0035 complete (feature #34) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0017.md` | v0.33.0 covers STEP-0034+0035 (shared tag; unpushed intermediate tag re-placed pre-push so every published tag builds). Approved copy pinned; dispositions updated; sync checks green at v0.33.0 / count 34. |
+| AUDIT-0007 | STEP-0036 complete (feature #35) | Audit | Done | `docs/audits/AUDIT_AUDIT-0007.md` | Redesign + since-AUDIT-0006 arc: all areas Pass. Presentation-only widen (68→78rem) / image-forward home / 72rem gallery; zero JS; no overflow 1440/960/390. Findings info/low: sparse one-product catalog (F1), tall featured text column at ~833px (F2), overflow not machine-gated (F3). No blockers. |
+| ENH-0005 | STEP-0036 complete (feature #35) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0005.md` | Re-triage: **more products = highest-value next** (fills the wider catalog + exercises multi-product paths). Carried: STEP-0033 (armed), FAQPage JSON-LD, Cloudflare owner-actions; parked mid-width polish; T4 closed unless reopened. Width tokens are now the system-wide spacing lever. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

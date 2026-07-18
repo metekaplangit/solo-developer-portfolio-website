@@ -38,7 +38,7 @@ const many = shots.length > 1;
                 src={shot.img}
                 alt={shot.alt}
                 widths={[720, 1080, 1440, 1920]}
-                sizes="(min-width: 66rem) 64rem, calc(100vw - 3rem)"
+                sizes="(min-width: 74rem) 72rem, calc(100vw - 3rem)"
                 format="webp"
                 quality={78}
                 loading={i === 0 ? 'eager' : 'lazy'}
@@ -112,8 +112,9 @@ const many = shots.length > 1;
 
 <style>
   .gallery {
-    /* Breaks out wider than the 40rem prose column, centered on the same axis. */
-    max-width: 64rem;
+    /* Breaks out well past the prose column — the screenshots are the most
+       prominent element on the page (STEP-0036). Centered on the same axis. */
+    max-width: 72rem;
     margin-inline: auto;
     padding-block: var(--space-6);
   }
