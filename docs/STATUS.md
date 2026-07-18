@@ -9,7 +9,21 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0040 complete — critique follow-ups, released v0.37.1.**
+- **State: STEP-0041 complete — layout rhythm & composition, released v0.38.0.**
+  `/impeccable layout` with two isolated assessments. The layout-scoped
+  detector returned **0 findings** — the documented blind spot (uniform spacing
+  passes every rule). Fixed: a **latent horizontal overflow** on the product
+  page (a single-token product name produced 87px of document overflow at
+  320px; "Sole Focus" hides it by breaking into two words); the footer was not
+  pinned (1273px of bare background under the 404 footer); **monotone rhythm** —
+  the site had two macro spacing decisions total and every band gap measured
+  identical, now three tokens applied per relationship (`/apps/sole-focus/`
+  went `70,70,70,70,70` → `24,115,38,38,115,115`); the hero's accidental 141px
+  double-pad; and the prose band's ~400×1464px dead region, now a two-column
+  composition with the maker's note alongside. **Deferred as deliberate
+  exceptions:** card-grid consolidation across four pages, and the
+  near-identical `/` vs `/apps/` skeletons at one product.
+- **Prior: STEP-0040 — critique follow-ups, released v0.37.1.**
   Second `/impeccable critique` of the home page scored **25/40 (trend 24 →
   25)**: the restructure solved layout, and the remaining problems were
   underneath it. Fixed: mobile nav hid **About** entirely (135px off-screen) —
@@ -202,8 +216,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0040 merge, tagged v0.37.1
-product_tag: v0.37.1
+head: regenerate-live (git rev-parse HEAD) — STEP-0041 merge, tagged v0.38.0
+product_tag: v0.38.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -251,7 +265,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **39** (STEP-0001..0040) — this counter is
+Completed **feature** steps: **40** (STEP-0001..0041) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

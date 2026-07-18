@@ -379,6 +379,20 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   (WCAG 1.1.1). 64 geometry checks 0 overflow; 0 axe violations. No checkpoint
   due (feature #39).
 
+- **STEP-0041 — Layout rhythm & composition** *(COMPLETE — merged, tagged
+  `v0.38.0`, 2026-07-18).* `/impeccable layout`, dual isolated assessments; the
+  layout-scoped detector returned 0 findings (uniform spacing passes every
+  rule — the documented blind spot). Closed a **latent horizontal overflow**
+  (single-token product name → 87px document overflow at 320px), pinned the
+  footer (1273px of bare background under /404), replaced one band-gap value
+  with three applied per relationship, removed the hero's accidental 141px
+  double-pad, and composed the prose band's ~400×1464px dead region into a
+  two-column layout with the maker's note alongside. Also: `<dl>` pairs,
+  single-item grid stretch, a third left edge, and four divergent pill
+  paddings. 72 geometry checks 0 overflow; 0 axe violations. **Deferred:**
+  card-grid consolidation, `/` vs `/apps/` differentiation. No checkpoint due
+  (feature #40).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

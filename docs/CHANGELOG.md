@@ -16,6 +16,47 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.38.0] — 2026-07-18
+
+Layout rhythm and composition (STEP-0041).
+
+### Changed
+
+- **The spacing now means something.** Every gap between sections used to be
+  the same size on every page, so the layout couldn't tell you what belonged
+  with what. Related sections now sit closer together and new ideas get real
+  room — the product page's rhythm went from five identical gaps to a varied
+  one.
+- **The long description no longer has an empty half.** On wide screens the
+  maker's note now runs alongside the description instead of in front of it,
+  filling roughly 400px of column that sat permanently empty beside the longest
+  block of text on the site. On narrower screens it reads first, as before.
+- **The "Released / Last updated" details line up properly.** Each label now
+  sits above its own value instead of alternating across four columns.
+- **Small alignment and spacing corrections** — the screenshot transcript now
+  starts on the same left edge as everything else; the privacy policy list no
+  longer stretches one entry across the full width with its date stranded far
+  away; the About headline uses more of its line.
+
+### Fixed
+
+- **A page-width bug that hadn't happened yet.** The product page could scroll
+  sideways on a small phone if a product's name were one long word. Sole
+  Focus's name happens to break into two short words, which hid it — the next
+  product would have triggered it. Verified fixed by testing with a longer name.
+- **No more empty space below the footer** on short pages like the 404 page,
+  where a tall window left over a thousand pixels of blank background beneath it.
+
+### Internal
+
+- Three band-rhythm tokens (`--band-y-tight` / `--band-y` / `--band-y-loose`)
+  applied per relationship, not uniformly. Run via `/impeccable layout` with two
+  isolated assessments; the layout-scoped detector returned **0 findings**,
+  which is the documented blind spot — uniform spacing passes every rule.
+  Verified: 72 geometry checks (8 routes × 320–1440px) with 0 overflow, 0
+  axe-core violations across 8 routes. Two findings deferred as deliberate
+  exceptions — see `docs/tasks/STEP-0041.md`.
+
 ## [0.37.1] — 2026-07-18
 
 Design-critique follow-ups (STEP-0040).
