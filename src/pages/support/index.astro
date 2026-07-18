@@ -102,13 +102,23 @@ const include = [
     min-width: 0;
   }
   /* The address is the heading here — it is the one thing the page exists to
-     give you. Mono so a long address wraps predictably and reads as data. */
+     give you. Mono so a long address wraps predictably and reads as data.
+
+     Sized fluidly rather than at a fixed `--text-lg`, because at that size the
+     address does not fit its own panel on a phone: measured at 320px the box is
+     224px and the string needs ~288px, so `overflow-wrap` broke it between
+     `.co` and `m` — an address split mid-domain reads as a typo on the one page
+     whose entire job is handing over a working address. The lower bound keeps
+     all 24 characters on one line from 320px up; the upper bound is the
+     original `--text-lg`, so nothing changes from ~476px on. */
   .contact-title {
     margin: 0 0 var(--space-2);
     font-family: var(--font-mono);
-    font-size: var(--text-lg);
+    font-size: clamp(0.95rem, 4.2vw, var(--text-lg));
     font-weight: 600;
     letter-spacing: -0.01em;
+    /* Retained as a safety valve for a future longer address, not as the
+       mechanism for this one — the clamp above is what keeps it intact. */
     overflow-wrap: anywhere;
   }
   .contact-copy p {

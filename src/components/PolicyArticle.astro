@@ -242,9 +242,15 @@ const chips: { label: string; ok: boolean }[] = [
   .policy-head-text {
     min-width: 0;
   }
+  /* Fluid rather than a flat `--text-3xl`. Policy titles are the longest
+     headings on the site — "MetKap Studio Website Privacy Policy" is 36
+     characters — and at a fixed 44px that measured three lines and 139px of
+     header on a 390px phone, pushing the at-a-glance chips and the lede down
+     the first screen. The cap is the original `--text-3xl`, so desktop is
+     unchanged from ~628px up; only phones scale down. */
   .policy-head h1 {
     margin: 0 0 var(--space-3);
-    font-size: var(--text-3xl);
+    font-size: clamp(1.75rem, 7vw, var(--text-3xl));
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.05;
