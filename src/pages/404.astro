@@ -8,10 +8,10 @@ import { withBase } from '../lib/url';
   title="Page not found"
   description="That page doesn't exist. Here are the main sections of the site."
 >
-  <section class="notfound">
+  <section class="band band-lead band-tail notfound">
     <p class="code">404</p>
-    <h1>Page not found</h1>
-    <p class="lede">
+    <h1 class="notfound-title">Page not found</h1>
+    <p class="lede measure">
       The page you were looking for doesn't exist or may have moved.
     </p>
     <nav aria-label="Site sections">
@@ -23,34 +23,42 @@ import { withBase } from '../lib/url';
 </BaseLayout>
 
 <style>
-  .notfound {
-    max-width: var(--maxw-prose);
-    margin-inline: auto;
-    padding-block: var(--space-16) var(--space-12);
-    text-align: center;
-  }
+  /* On the shared left rail like every other page (STEP-0039). This was the
+     last surface still centring itself in a narrower column. */
   .code {
     margin: 0;
-    font-size: clamp(3rem, 12vw, 5rem);
-    font-weight: 700;
-    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--faint);
     line-height: 1;
   }
-  .notfound h1 {
-    margin: var(--space-2) 0 var(--space-3);
+  .notfound-title {
+    margin: var(--space-4) 0 var(--space-6);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
   .lede {
     margin: 0 0 var(--space-8);
     color: var(--muted);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
+    line-height: 1.6;
   }
   .links {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-4);
+    gap: var(--space-2) var(--space-6);
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .links a {
+    color: var(--text);
+  }
+  .links a:hover {
+    color: var(--accent-hover);
   }
 </style>

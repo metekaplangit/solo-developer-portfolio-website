@@ -202,25 +202,34 @@ const chips: { label: string; ok: boolean }[] = [
 </article>
 
 <style>
+  /* Brought onto the site's band system (STEP-0039). This used to be one
+     narrow hairline-divided column with a different rhythm from every other
+     page; it now shares the shell width, the band spacing, and the panel
+     treatment the rest of the site uses. Prose still gets a real measure —
+     the BAND is wide, the TEXT is capped. */
   .policy {
-    max-width: var(--measure-mid);
-    padding-block: var(--space-12) var(--space-8);
+    padding-block: var(--band-y-lg) var(--band-y);
   }
   .policy-head {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: clamp(var(--space-4), 2.5vw, var(--space-6));
   }
   .policy-head-text {
     min-width: 0;
   }
   .policy-head h1 {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
   .policy-meta {
     margin: 0;
-    color: var(--muted);
-    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    color: var(--faint);
+    font-size: var(--text-xs);
   }
 
   /* At a glance */
@@ -229,63 +238,72 @@ const chips: { label: string; ok: boolean }[] = [
     flex-wrap: wrap;
     gap: var(--space-2);
     list-style: none;
-    margin: var(--space-6) 0 0;
+    margin: var(--space-8) 0 0;
     padding: 0;
   }
+  /* Single cue per chip: a fill, never a fill AND a border. */
   .chip {
     font-size: var(--text-sm);
     font-weight: 600;
-    padding: 0.3rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     border-radius: var(--radius-pill);
-    border: 1px solid var(--border);
     background: var(--surface-2);
     color: var(--muted);
   }
   .chip-ok {
-    border-color: transparent;
     background: var(--accent-soft);
     color: var(--accent-hover);
   }
 
   .policy-lead {
-    margin-top: var(--space-6);
+    margin-top: var(--space-8);
+    max-width: var(--measure-mid);
     font-size: var(--text-lg);
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--text);
   }
   .policy-lead :global(p) {
     margin: 0;
   }
 
-  /* Strictly separated sections */
+  /* Sections as panels in a grid — the same treatment as the About values and
+     the product feature grid, so a policy page reads as part of the same site
+     instead of a legal document bolted onto it. Each section is short and
+     factual, which is what makes the grid legible; the long-form lead above
+     keeps its own single-column measure. */
   .sections {
-    margin-top: var(--space-10);
+    margin-top: var(--band-y);
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+    align-items: start;
   }
   .sec {
-    padding-top: var(--space-6);
-    margin-top: var(--space-6);
-    border-top: 1px solid var(--border);
-  }
-  .sec:first-child {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: 0;
+    padding: clamp(var(--space-5), 2.5vw, var(--space-6));
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
   }
   .sec h2 {
     margin: 0 0 var(--space-3);
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
+    font-weight: 650;
+    letter-spacing: -0.01em;
     color: var(--text-strong);
   }
   .sec ul {
     margin: 0;
-    padding-left: var(--space-6);
+    padding-left: var(--space-5);
     display: grid;
     gap: var(--space-2);
     color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
   }
   .sec-plain {
     margin: 0;
     color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
   }
   .sec ul + .sec-plain {
     margin-top: var(--space-3);
@@ -305,7 +323,8 @@ const chips: { label: string; ok: boolean }[] = [
   }
 
   .policy-note {
-    margin-top: var(--space-10);
+    margin-top: var(--band-y);
+    max-width: var(--measure);
     color: var(--faint);
     font-size: var(--text-sm);
   }
