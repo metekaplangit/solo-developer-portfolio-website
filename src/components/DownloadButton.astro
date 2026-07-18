@@ -11,8 +11,17 @@ interface Props {
   product: Product;
   /** 'md' (default) for page headers/heroes, 'sm' for compact cards. */
   size?: 'md' | 'sm';
+  /**
+   * Override the visible label. Use where the button is far from the product's
+   * name — the home hero sits ~600px above the only place "Sole Focus" appears,
+   * so an unqualified "Download on the Mac App Store" left sighted visitors
+   * with strictly less information than the aria-label already gave screen
+   * readers. The accessible name below is unaffected and always names the
+   * product and the store.
+   */
+  label?: string;
 }
-const { product, size = 'md' } = Astro.props;
+const { product, size = 'md', label } = Astro.props;
 
 const link = visibleStoreLinks(product).find((l) => l.status === 'available');
 const isApple = link && (link.store === 'mac-app-store' || link.store === 'app-store');
@@ -33,7 +42,7 @@ const isApple = link && (link.store === 'mac-app-store' || link.store === 'app-s
         </svg>
       )}
       <span class="download-label">
-        {size === 'sm' ? storeLabel(link.store) : `Download on the ${storeLabel(link.store)}`}
+        {label ?? (size === 'sm' ? storeLabel(link.store) : `Download on the ${storeLabel(link.store)}`)}
       </span>
     </a>
   )

@@ -9,7 +9,19 @@
 
 ## Handoff (5 bullets)
 
-- **State: v0.35.1 patch — fixed a P0 regression from v0.35.0** found by
+- **State: STEP-0038 complete — full-site "Graphite Refined" restructure,
+  released v0.36.0.** User-directed, from an external design handoff they
+  approved: all four primary pages rebuilt on one shared band system (one idea
+  per band, real vertical air, prose capped at a measure, imagery leading),
+  answering the standing "too much text cramped up into spaces" complaint at
+  the system level. One left rail from nav brand to footer (hero was ~150px
+  inboard; Support/Privacy titles up to 232px). Home hero CTA names the
+  product; home closes on the real maker note. `MakerNote` side-stripe removed.
+  Hero entrance no longer gates content on opacity. **Two handoff elements
+  deliberately declined:** the invented placeholder products + "3 total" count
+  (fabricated proof) and its invented first-person maker quote. Verified: 0
+  overflow across 56 page/width checks, 0 axe violations across 7 routes.
+- **Prior: v0.35.1 patch — fixed a P0 regression from v0.35.0** found by
   `/impeccable critique`: the facts line's `white-space: nowrap` became an
   unbreakable 828px run that starved the featured screenshot (13px at 1024,
   234px at 1280) and overflowed the page at 430/447/744/820px. Now a flex-wrap
@@ -158,8 +170,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — v0.35.1 patch (facts-line regression fix) on HEAD
-product_tag: v0.35.1
+head: regenerate-live (git rev-parse HEAD) — STEP-0038 merge, tagged v0.36.0
+product_tag: v0.36.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -207,7 +219,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **36** (STEP-0001..0030) — this counter is
+Completed **feature** steps: **37** (STEP-0001..0038) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

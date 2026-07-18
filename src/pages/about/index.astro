@@ -1,13 +1,33 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHeader from '../../components/PageHeader.astro';
 import { site } from '../../lib/site';
 import { withBase } from '../../lib/url';
 
+/* Values — a presentational rewrap of the three commitments this page has
+   always carried, plus the support promise that already ships site-wide in the
+   trust line. Every claim below is restated from somewhere it is already
+   published (privacy pages, support page, product content); none is new. */
 const values = [
-  'Privacy first — collect as little as possible, and say so plainly.',
-  'Offline-friendly and fast wherever it makes sense.',
-  'No dark patterns, ads, or tracking.',
+  {
+    title: 'Privacy first',
+    body:
+      'Collect as little as possible, and say so plainly. Every product has its own privacy page in language you can actually read.',
+  },
+  {
+    title: 'Offline and fast',
+    body:
+      'Offline-friendly and quick wherever it makes sense. Software should not need a network round-trip to show you a timer.',
+  },
+  {
+    title: 'No dark patterns',
+    body:
+      'No ads, no tracking, no engagement traps. Nothing on screen is trying to talk you into anything.',
+  },
+  {
+    title: 'A real person answers',
+    body:
+      'Support goes straight to me. If something breaks you hear back — usually within 2–3 business days.',
+  },
 ];
 ---
 
@@ -15,91 +35,141 @@ const values = [
   title="About"
   description="About MetKap Studio and the developer behind these apps and games."
 >
-  <PageHeader title="About">
-    <p>{site.tagline}</p>
-  </PageHeader>
-
-  <div class="about">
-    <p class="intro">
+  <section class="band band-lead about-hero" aria-labelledby="about-h">
+    <p class="eyebrow">About the studio</p>
+    <h1 id="about-h" class="about-title">One person, making software that behaves.</h1>
+    <p class="lede measure">
       MetKap Studio is the one-person studio of {site.person}. I build small,
       focused apps and games and try to keep them calm, fast, and respectful of
       your attention and your data.
     </p>
+  </section>
 
-    <section class="reveal" aria-labelledby="values-h">
-      <h2 id="values-h">How I build</h2>
-      <ul class="values" role="list">
-        {values.map((v) => <li>{v}</li>)}
-      </ul>
-    </section>
+  <section class="band values-band" aria-labelledby="values-h">
+    <h2 id="values-h" class="band-title">How I build</h2>
+    <ul class="values" role="list">
+      {
+        values.map((v) => (
+          <li class="value reveal">
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 
-    <section class="reveal" aria-labelledby="links-h">
-      <h2 id="links-h">Elsewhere</h2>
-      <ul class="links" role="list">
-        <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
-        <li><a href={withBase('/support/')}>Support</a> ({site.supportEmail})</li>
+  <section class="band band-tail contact-band" aria-labelledby="contact-h">
+    <div class="panel panel-accent contact reveal">
+      <div class="contact-copy">
+        <h2 id="contact-h" class="contact-title">Get in touch</h2>
+        <p>Questions, bugs, or ideas — the door&rsquo;s open.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href={withBase('/support/')}>Contact support</a>
         {
           site.social.map((s) => (
-            <li>
-              <a href={s.url} rel="me noopener" target="_blank">
-                {s.label}
-              </a>
-            </li>
+            <a class="btn btn-secondary" href={s.url} rel="me noopener" target="_blank">
+              {s.label}
+            </a>
           ))
         }
-      </ul>
-    </section>
-  </div>
+      </div>
+    </div>
+
+    <ul class="elsewhere" role="list">
+      <li><a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></li>
+      <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
+      <li><a href={withBase('/privacy/')}>Privacy</a></li>
+    </ul>
+  </section>
 </BaseLayout>
 
 <style>
-  .about {
-    max-width: var(--maxw-prose);
-    margin-inline: auto;
+  .about-title {
+    margin: var(--space-4) 0 var(--space-6);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    max-width: 16ch;
   }
-  .intro {
+  .lede {
+    margin: 0;
+    color: var(--muted);
     font-size: var(--text-lg);
-    color: var(--text);
-    margin: 0 0 var(--space-12);
     line-height: 1.6;
   }
-  .about h2 {
-    font-size: var(--text-xl);
-    margin: 0 0 var(--space-4);
-  }
-  .about section {
-    margin-bottom: var(--space-10);
-  }
+
+  /* Two-up on desktop, stacked on phones. Each value is a small panel, not a
+     bulleted line — the point is that they read as four separate commitments,
+     with air between them, rather than a dense list.
+     The 26rem floor is deliberate: a smaller one fits three tracks at 1152px
+     and leaves the fourth value orphaned on its own row. Four items want 2×2. */
   .values {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-3);
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
   }
-  .values li {
-    position: relative;
-    padding: var(--space-4) var(--space-5) var(--space-4) var(--space-8);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
+  .value {
+    padding: clamp(var(--space-5), 2.5vw, var(--space-8));
+    border-radius: var(--radius-lg);
+    /* Single separation cue: an elevated surface, no border on top of it. */
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  }
+  .value h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-lg);
+    font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+  .value p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+  .contact-title {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+  }
+  .contact-copy p {
+    margin: 0;
     color: var(--muted);
   }
-  .values li::before {
-    content: '';
-    position: absolute;
-    left: var(--space-4);
-    top: 1.35em;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
-  .links {
+
+  .elsewhere {
     list-style: none;
-    margin: 0;
+    margin: var(--space-8) 0 0;
     padding: 0;
-    display: grid;
-    gap: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--faint);
+  }
+  .elsewhere a {
+    color: var(--muted);
+  }
+  .elsewhere a:hover {
+    color: var(--text-strong);
   }
 </style>
