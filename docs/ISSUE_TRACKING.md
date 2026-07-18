@@ -9,17 +9,16 @@
 
 ## Owner of record
 
-**GitHub Issues** (once the remote exists) are the durable owner for actionable
+**GitHub Issues** is the durable owner for actionable
 bugs, regressions, security/accessibility/performance/dependency problems,
 failed/blocked checks, debt, and docs defects. `STATUS.md` keeps only a compact
-view. Until the remote is live, the fallback is `docs/issues/LEDGER.md`.
+view. `docs/issues/LEDGER.md` is read-only history from before the remote.
 
 ## Remote status
 
-**Remote push planned immediately after baseline (user-authorized).** The
-`docs/issues/LEDGER.md` fallback carries any pre-remote findings with an expiry
-milestone; once GitHub Issues exist, ledger items are backfilled with issue IDs.
-This project must not carry the fallback past its first maintained release.
+**Remote active:** `metekaplangit/solo-developer-portfolio-website`. GitHub
+Issues owns all new findings. The pre-remote ledger is retired; its two entries
+are resolved and preserved only for lineage.
 
 ## Forms
 

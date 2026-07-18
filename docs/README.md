@@ -60,8 +60,11 @@ ownership map is in `AI_WORKFLOW.md` / this file's siblings — one owner per ru
 
 | Milestone | Focus | Status |
 |---|---|---|
-| M0 | Starter initialization + baseline | In progress (this init) |
-| M1 | Content model + static shell | Planned (STEP-0001) |
-| M2 | Premium minimal product showcase | Planned |
-| M3 | Store-support pages (privacy/support/about) | Planned |
-| M4 | GitHub Pages deployment proof | Planned |
+| M0 | Starter initialization + baseline | Complete |
+| M1 | Content model + static shell | Complete (STEP-0001) |
+| M2 | Premium minimal product showcase | Complete; continuing polish shipped through STEP-0043 |
+| M3 | Store-support pages (privacy/support/about) | Complete and live |
+| M4 | GitHub Pages deployment proof | Complete; custom domain live behind Cloudflare |
+| M5 | Custom domain | Complete; metkapstudio.com live |
+| M6 | App Store review readiness | Complete |
+| M7 | Real product growth | Active; Sole Focus released, next product owner-driven |

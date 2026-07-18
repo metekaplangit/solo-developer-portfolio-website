@@ -36,7 +36,8 @@
 |---|---|
 | `astro.config.mjs` | Static config (`output: 'static'`) + site/base |
 | `package.json` | Deps, scripts, `yaml` override |
-| `src/content.config.ts` | Zod content schemas (added STEP-0001) |
+| `src/content.config.ts` | Astro collection loaders/wiring |
+| `src/content/schema.ts` | Zod product + policy contracts |
 | `src/content/**` | Product + policy content (data layer) |
 | `src/lib/**` | Pure domain helpers (tested) |
 | `src/layouts/**` `src/components/**` `src/pages/**` | Presentation + routes |

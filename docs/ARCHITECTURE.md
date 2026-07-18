@@ -11,9 +11,9 @@
 
 ```
 src/
-  content/        # Typed content collections (products, policies) — data layer
-  content.config.ts  # Zod schemas = the content contracts (added in STEP-0001)
-  layouts/        # Page shells (base, product, policy) — presentation
+  content/        # Typed content + schema.ts contracts (products, policies)
+  content.config.ts  # Astro collection loaders/wiring
+  layouts/        # Page shells — presentation
   components/     # Reusable UI units (cards, badges, nav, footer)
   pages/          # Route files → generated static routes
   lib/            # Pure helpers (formatting, link resolution) — domain logic
