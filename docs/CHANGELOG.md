@@ -16,6 +16,36 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.39.0] — 2026-07-18
+
+Consistency pass (STEP-0042).
+
+### Changed
+
+- **The privacy policies read as documents again.** Each section is now one
+  full-width row with its heading on the left and the details on the right,
+  using bullet points — instead of a grid of boxes in three columns with
+  visibly different heights. Applied to the site policy and every per-product
+  policy.
+- **All the boxes are the same now.** Cards on About, Support, the product page
+  and the policies were four separate implementations of the same thing, with
+  four different paddings, two corner radii and two heading sizes. They are one
+  component now, and cards in a row are always the same height.
+- **The privacy page's opening paragraph matches the rest of the site.** It was
+  brighter than the equivalent paragraph on every other page.
+- **The home page reads more connected.** The gap between the hero and the
+  Sole Focus panel was too large for two things that belong together, and the
+  maker's note now fills its box instead of leaving half of it empty.
+
+### Internal
+
+- Shared `.card` / `.card-grid` / `.row-stack` in `global.css`; page files now
+  override only the grid track floor. `align-items: start` — the cause of the
+  ragged heights — is removed and documented as never-again. Verified: 64
+  geometry checks (8 routes × 320–1440px) with 0 overflow, **0 ragged rows**,
+  and 0 axe-core violations across 8 routes. Lands the card-grid consolidation
+  deferred in STEP-0041.
+
 ## [0.38.0] — 2026-07-18
 
 Layout rhythm and composition (STEP-0041).
