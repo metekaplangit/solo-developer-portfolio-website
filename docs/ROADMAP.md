@@ -365,6 +365,20 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   surface still centring itself. 56 geometry checks — 0 overflow, 0 misaligned
   headings; 0 axe violations across 8 routes. No checkpoint due (feature #38).
 
+- **STEP-0040 — Critique follow-ups** *(COMPLETE — merged, tagged `v0.37.1`,
+  2026-07-18).* From the second `/impeccable critique` of the home page (25/40,
+  trend 24 → 25). Mobile nav restored to full visibility ("Home" hidden ≤40rem
+  since the brand lockup links home; 135px was previously hidden with About
+  entirely off-screen); FactsLine separator moved to `::before` so wrapped rows
+  never end on a middot; `MakerNote` consolidated to one component with `lead` /
+  `inline` tones; one accent primary per page; hero `sizes` matched to the
+  measured slot + 1600w step; dead `.875rem` CSS and ~192px footer void removed.
+  Owner kept the headline and the App Store lead image (recorded in
+  `.impeccable/critique/ignore.md`); the hero-names-the-product P0 was flagged,
+  not actioned. **Open:** lead image alt text omits its baked-in marketing copy
+  (WCAG 1.1.1). 64 geometry checks 0 overflow; 0 axe violations. No checkpoint
+  due (feature #39).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so
