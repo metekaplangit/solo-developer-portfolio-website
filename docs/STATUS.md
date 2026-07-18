@@ -9,7 +9,16 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0038 complete — full-site "Graphite Refined" restructure,
+- **State: STEP-0039 complete — copy + last-pages pass, released v0.37.0.**
+  User-directed: download buttons shortened to "Download" (home hero reads
+  "Mac App Store"), with accessible names deliberately left full; headline
+  changed to **"Brilliant Products for All"** and all studio-level copy made
+  platform-neutral (PRODUCT.md positioning updated to match — per-product
+  platform requirements untouched); Support, Privacy overview, per-product
+  policy and 404 rebuilt on the band system. 404 was the last off-rail surface.
+  Verified: 56 geometry checks, **0 overflow + 0 misaligned headings**, 0 axe
+  violations across 8 routes.
+- **Prior: STEP-0038 — full-site "Graphite Refined" restructure,
   released v0.36.0.** User-directed, from an external design handoff they
   approved: all four primary pages rebuilt on one shared band system (one idea
   per band, real vertical air, prose capped at a measure, imagery leading),
@@ -170,8 +179,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0038 merge, tagged v0.36.0
-product_tag: v0.36.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0039 merge, tagged v0.37.0
+product_tag: v0.37.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -219,7 +228,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **37** (STEP-0001..0038) — this counter is
+Completed **feature** steps: **38** (STEP-0001..0039) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

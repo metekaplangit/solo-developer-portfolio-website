@@ -354,6 +354,17 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   page/width checks; 0 axe violations across 7 routes. No checkpoint due
   (feature #37).
 
+- **STEP-0039 — Short labels, platform-neutral name, last pages on the system**
+  *(COMPLETE — merged, tagged `v0.37.0`, 2026-07-18).* User-directed follow-on
+  to STEP-0038: download buttons cut to "Download" (home hero "Mac App Store")
+  with accessible names kept full so WCAG 2.5.3 still holds; headline changed
+  to "Brilliant Products for All" and studio-level copy made platform neutral
+  (`PRODUCT.md` positioning updated to agree; per-product platform requirements
+  untouched); Support, Privacy overview, per-product policy and 404 rebuilt on
+  the band system with the site's panel/card treatment. 404 was the last
+  surface still centring itself. 56 geometry checks — 0 overflow, 0 misaligned
+  headings; 0 axe violations across 8 routes. No checkpoint due (feature #38).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

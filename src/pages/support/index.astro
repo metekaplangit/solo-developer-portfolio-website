@@ -1,94 +1,178 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHeader from '../../components/PageHeader.astro';
 import { site } from '../../lib/site';
 import { sortProducts } from '../../lib/products';
 import { withBase } from '../../lib/url';
 
 const products = sortProducts((await getCollection('products')).map((e) => e.data));
 const subject = encodeURIComponent('Support request');
+
+// What to include in a report — kept as data so the band renders like every
+// other card grid on the site rather than as a bulleted list.
+const include = [
+  { title: 'Which product', body: 'The app or game name, and the platform you’re on.' },
+  { title: 'Which version', body: 'The version number, if you can find it. Not essential.' },
+  { title: 'What happened', body: 'What you did, what happened, and what you expected instead.' },
+];
 ---
 
 <BaseLayout
   title="Support"
   description="How to get support for any app or game — a direct email, no forms."
 >
-  <PageHeader title="Support">
-    <p>
-      Need help with an app or game? Email me directly — there's no form, and
-      nothing is tracked.
+  <section class="band band-lead support-hero" aria-labelledby="support-h">
+    <p class="eyebrow">Support</p>
+    <h1 id="support-h" class="support-title">A real person answers.</h1>
+    <p class="lede measure">
+      Need help with an app or game? Email me directly — there&rsquo;s no form,
+      no ticket number, and nothing is tracked.
     </p>
-  </PageHeader>
+  </section>
 
-  <div class="support">
-    <a
-      class="btn btn-primary email"
-      href={`mailto:${site.supportEmail}?subject=${subject}`}
-    >
-      {site.supportEmail}
-    </a>
-    <p class="response">
-      This inbox is monitored — I usually reply within 2–3 business days.
-    </p>
-
-    <div class="cols reveal">
-      <section aria-labelledby="include-h">
-        <h2 id="include-h">What to include</h2>
-        <ul>
-          <li>The product name and the platform you're using.</li>
-          <li>The app or game version, if you know it.</li>
-          <li>What happened, and what you expected instead.</li>
-        </ul>
-      </section>
-
-      <section aria-labelledby="products-h">
-        <h2 id="products-h">Supported products</h2>
-        <ul>
-          {products.map((p) => <li>{p.name}</li>)}
-        </ul>
-      </section>
+  <section class="band contact-band" aria-labelledby="contact-h">
+    <div class="panel panel-accent contact reveal">
+      <div class="contact-copy">
+        <h2 id="contact-h" class="contact-title">{site.supportEmail}</h2>
+        <p>I usually reply within 2–3 business days.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href={`mailto:${site.supportEmail}?subject=${subject}`}>
+          Email support
+        </a>
+      </div>
     </div>
+  </section>
 
+  <section class="band include-band" aria-labelledby="include-h">
+    <h2 id="include-h" class="band-title">What to include</h2>
+    <ul class="cards" role="list">
+      {
+        include.map((i) => (
+          <li class="card reveal">
+            <h3>{i.title}</h3>
+            <p>{i.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="band band-tail products-band" aria-labelledby="products-h">
+    <h2 id="products-h" class="band-title">Supported products</h2>
+    <ul class="products" role="list">
+      {
+        products.map((p) => (
+          <li>
+            <a href={withBase(`/apps/${p.slug}/`)}>{p.name}</a>
+          </li>
+        ))
+      }
+    </ul>
     <p class="privacy-ref">
-      See the <a href={withBase('/privacy/')}>privacy overview</a> for how data is
-      handled.
+      See the <a href={withBase('/privacy/')}>privacy overview</a> for how data
+      is handled.
     </p>
-  </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .support {
-    max-width: var(--measure-mid);
+  .support-title {
+    margin: var(--space-4) 0 var(--space-6);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
-  .email {
+  .lede {
+    margin: 0;
+    color: var(--muted);
     font-size: var(--text-lg);
-    padding: 0.85rem 1.5rem;
+    line-height: 1.6;
   }
-  .response {
-    margin: var(--space-3) 0 0;
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+  .contact-copy {
+    min-width: 0;
+  }
+  /* The address is the heading here — it is the one thing the page exists to
+     give you. Mono so a long address wraps predictably and reads as data. */
+  .contact-title {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+  }
+  .contact-copy p {
+    margin: 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
-  .cols {
-    display: grid;
-    gap: var(--space-8);
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    margin-top: var(--space-12);
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
-  .support h2 {
-    font-size: var(--text-lg);
-    margin: 0 0 var(--space-3);
-  }
-  .support ul {
+
+  .cards {
+    list-style: none;
     margin: 0;
-    padding-left: var(--space-5);
-    color: var(--muted);
+    padding: 0;
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  }
+  .card {
+    padding: clamp(var(--space-5), 2.5vw, var(--space-6));
+    border-radius: var(--radius);
+    /* Single separation cue — elevated surface, no border stacked on top. */
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  }
+  .card h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-base);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .products {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+  }
+  .products a {
+    color: var(--text);
+  }
+  .products a:hover {
+    color: var(--accent-hover);
   }
   .privacy-ref {
-    margin-top: var(--space-12);
+    margin: var(--space-8) 0 0;
+    max-width: var(--measure);
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .privacy-ref a {
     color: var(--muted);
+  }
+  .privacy-ref a:hover {
+    color: var(--text-strong);
   }
 </style>

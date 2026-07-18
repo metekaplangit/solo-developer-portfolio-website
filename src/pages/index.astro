@@ -53,7 +53,9 @@ const makerLines = spotlight?.makerNote ?? [];
     <h1 id="hero-h" class="hero-title">{site.headline}</h1>
     <p class="lede measure">{site.lede}</p>
     <div class="hero-cta">
-      {heroHasDownload && <DownloadButton product={spotlight} label={`Download ${spotlight.name} — free`} />}
+      {/* The hero button names the store rather than the action; every other
+          download button on the site just says "Download". */}
+      {heroHasDownload && <DownloadButton product={spotlight} label="Mac App Store" />}
       <a class={`btn ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href={withBase('/apps/')}>
         See apps &amp; games
       </a>

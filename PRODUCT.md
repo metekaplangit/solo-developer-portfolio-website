@@ -21,7 +21,7 @@ No secondary audience is claimed; this is deliberately a single-audience site.
 
 ## Product Purpose
 
-The public home of MetKap Studio: it presents the studio's shipped Mac software —
+The public home of MetKap Studio: it presents the studio's shipped software —
 currently Sole Focus, a free Pomodoro and count-up focus timer — together with
 per-product privacy information and a direct support route.
 
@@ -31,7 +31,12 @@ matter, but trust is the goal the site is optimized for.
 
 ## Positioning
 
-A one-person studio shipping quietly excellent Mac software.
+A one-person studio shipping quietly excellent software.
+
+Owner-directed (2026-07-18): the positioning is deliberately **platform
+neutral**. The first shipped product is Mac-only, but the studio is not, and
+the site must not imply otherwise. Per-product pages still state their own
+platform requirements (e.g. "macOS 10.15 or later").
 
 ## Conversion & proof
 
