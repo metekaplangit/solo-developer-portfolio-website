@@ -19,6 +19,8 @@ import { resolveScreenshot, screenshotTitle } from '../../lib/screenshots';
 import ScreenshotShowcase from '../../components/ScreenshotShowcase.astro';
 import DownloadButton from '../../components/DownloadButton.astro';
 import FactsLine from '../../components/FactsLine.astro';
+import FitStatement from '../../components/FitStatement.astro';
+import MakerNote from '../../components/MakerNote.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -90,6 +92,8 @@ const schema = [
   <ScreenshotShowcase shots={shots} label={`${product.name} screenshots`} />
 
   <div class="detail-body">
+    <FitStatement product={product} />
+
     {
       product.features.length > 0 && (
         <section class="reveal" aria-labelledby="features-h">
@@ -115,7 +119,10 @@ const schema = [
       )
     }
 
-    <div class="prose"><Content /></div>
+    <div class="prose">
+      <MakerNote product={product} />
+      <Content />
+    </div>
 
     <section class="reveal" aria-labelledby="get-h">
       <h2 id="get-h">Get it</h2>

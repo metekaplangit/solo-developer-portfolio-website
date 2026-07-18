@@ -40,17 +40,10 @@ if (product.privacyFacts) facts.push(product.privacyFacts);
     font-size: var(--text-sm);
     line-height: 1.55;
   }
-  .fact {
-    white-space: nowrap;
-  }
-  /* Long facts may wrap on narrow screens; separators keep breathing room. */
+  /* Facts wrap naturally at every width — nowrap here caused horizontal
+     overflow whenever the combined line outgrew the reading column. */
   .sep {
     margin-inline: 0.45em;
     color: var(--faint);
-  }
-  @media (max-width: 30rem) {
-    .fact {
-      white-space: normal;
-    }
   }
 </style>

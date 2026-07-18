@@ -13,6 +13,11 @@ storeLinks:
     status: available
 price: "0"
 privacyFacts: "Works offline — no account, no cloud, no tracking"
+fitFor: "You want a calm, native Mac timer that lives in your menu bar, works offline, and never asks for an account."
+fitNotFor: "You need a website blocker, team tracking, or cross-device sync — Sole Focus deliberately does none of those."
+makerNote:
+  - "I built Sole Focus because every timer I tried wanted to be more than a timer — accounts, subscriptions, streaks that punish you for resting."
+  - "So this one stays small on purpose: a quiet window, your minutes, nothing tracked. It will never become a blocker or a productivity dashboard."
 requirements: macOS 10.15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/sole-focus/

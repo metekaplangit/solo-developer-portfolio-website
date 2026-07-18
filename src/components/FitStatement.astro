@@ -1,0 +1,72 @@
+---
+// "For you if / Not for you if" pair (STEP-0034, taste-round T2 — user-approved
+// copy). Helps visitors self-select honestly: the "not for" cell restates the
+// product's deliberate boundaries (already claimed elsewhere on the page), so a
+// mismatched buyer leaves informed rather than disappointed. Renders only when
+// the content declares both sides; meaning carried by text, not color.
+import type { Product } from '../content/schema';
+
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+const show = Boolean(product.fitFor && product.fitNotFor);
+---
+
+{
+  show && (
+    <section class="fit reveal" aria-labelledby="fit-h">
+      <h2 id="fit-h" class="visually-hidden">Who it's for</h2>
+      <div class="cells">
+        <div class="cell">
+          <h3 class="for">For you if</h3>
+          <p>{product.fitFor}</p>
+        </div>
+        <div class="cell">
+          <h3 class="notfor">Not for you if</h3>
+          <p>{product.fitNotFor}</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .fit {
+    margin-bottom: var(--space-8);
+  }
+  .cells {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  @media (min-width: 40rem) {
+    .cells {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .cell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4) var(--space-5);
+  }
+  .cell h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  h3.for {
+    color: var(--accent-hover);
+  }
+  h3.notfor {
+    color: var(--faint);
+  }
+  .cell p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+</style>
