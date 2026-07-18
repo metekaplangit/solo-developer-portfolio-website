@@ -16,6 +16,25 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.33.0] — 2026-07-17
+
+Taste-round picks T2 + T5 (STEP-0034 + STEP-0035, user-approved copy).
+
+### Added
+
+- **"For you if / Not for you if."** Two honest cells at the top of the product
+  details help visitors self-select: who the app serves, and what it
+  deliberately doesn't do (no blocking, no team tracking, no sync).
+- **A maker's note.** The description now opens with two short first-person
+  paragraphs on why Sole Focus exists and what it refuses to become — signed
+  by the maker.
+
+### Fixed
+
+- The facts line under the download button could push the page sideways at some
+  window widths (it refused to wrap). Facts now wrap naturally; no horizontal
+  overflow at any tested width.
+
 ## [0.32.0] — 2026-07-17
 
 Screenshot transcript (STEP-0032, design-review adoption).
