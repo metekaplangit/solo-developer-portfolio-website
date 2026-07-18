@@ -9,7 +9,18 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0041 complete — layout rhythm & composition, released v0.38.0.**
+- **State: STEP-0042 complete — consistency pass, released v0.39.0.**
+  Owner-annotated screenshots of the live site drove this: ragged box sizes on
+  both policy pages, a mismatched lede colour, a too-large home hero gap, and
+  the maker note leaving half its container empty. Root cause was **four
+  separate card definitions** (four paddings, two radii, two title sizes, four
+  grid floors) for what is visually one component, plus `align-items: start`
+  disabling stretch on the policy grid. Now ONE shared
+  `.card`/`.card-grid`/`.row-stack` system; policies render one full-width row
+  per section with a heading rail and bullets, per the owner's explicit
+  direction. **0 ragged rows, 0 overflow, 0 axe violations.** Also lands the
+  card-grid consolidation deferred as an exception in STEP-0041.
+- **Prior: STEP-0041 — layout rhythm & composition, released v0.38.0.**
   `/impeccable layout` with two isolated assessments. The layout-scoped
   detector returned **0 findings** — the documented blind spot (uniform spacing
   passes every rule). Fixed: a **latent horizontal overflow** on the product
@@ -216,8 +227,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0041 merge, tagged v0.38.0
-product_tag: v0.38.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0042 merge, tagged v0.39.0
+product_tag: v0.39.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -265,7 +276,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **40** (STEP-0001..0041) — this counter is
+Completed **feature** steps: **41** (STEP-0001..0042) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

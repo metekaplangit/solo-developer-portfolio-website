@@ -393,6 +393,18 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   card-grid consolidation, `/` vs `/apps/` differentiation. No checkpoint due
   (feature #40).
 
+- **STEP-0042 — Consistency pass** *(COMPLETE — merged, tagged `v0.39.0`,
+  2026-07-18).* Owner-annotated screenshots: ragged box sizes on both policy
+  pages, a mismatched lede colour, an over-large home hero gap, a maker note
+  leaving half its container empty. Root cause: four separate card definitions
+  (four paddings, two radii, two title sizes, four grid floors) plus
+  `align-items: start` disabling stretch. Replaced with one shared
+  `.card`/`.card-grid`/`.row-stack` system; privacy sections rebuilt as one
+  full-width row per line with a heading rail and bullets (owner's explicit
+  direction), applied to site and per-product policies. 64 geometry checks
+  0 overflow; **0 ragged rows**; 0 axe violations. Lands STEP-0041's deferred
+  card-grid consolidation. No checkpoint due (feature #41).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

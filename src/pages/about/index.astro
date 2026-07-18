@@ -47,11 +47,11 @@ const values = [
 
   <section class="band band-loose values-band" aria-labelledby="values-h">
     <h2 id="values-h" class="band-title">How I build</h2>
-    <ul class="values" role="list">
+    <ul class="values card-grid" role="list">
       {
         values.map((v) => (
-          <li class="value reveal">
-            <h3>{v.title}</h3>
+          <li class="card reveal">
+            <h3 class="card-title">{v.title}</h3>
             <p>{v.body}</p>
           </li>
         ))
@@ -103,36 +103,13 @@ const values = [
     line-height: 1.6;
   }
 
-  /* Two-up on desktop, stacked on phones. Each value is a small panel, not a
-     bulleted line — the point is that they read as four separate commitments,
-     with air between them, rather than a dense list.
-     The 26rem floor is deliberate: a smaller one fits three tracks at 1152px
-     and leaves the fourth value orphaned on its own row. Four items want 2×2. */
+  /* Four values, two-up. Only the track floor is local — padding, radius,
+     title and body all come from the shared `.card` system so this grid can
+     never drift from the ones on Support, the product page and the policies
+     again. */
   .values {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-5);
     grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
-  }
-  .value {
-    padding: clamp(var(--space-5), 2.5vw, var(--space-8));
-    border-radius: var(--radius-lg);
-    /* Single separation cue: an elevated surface, no border on top of it. */
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
-  }
-  .value h3 {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-lg);
-    font-weight: 650;
-    letter-spacing: -0.015em;
-  }
-  .value p {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--text-sm);
-    line-height: 1.6;
+    gap: var(--space-5);
   }
 
   .contact {
