@@ -5,7 +5,7 @@
 > **Update when:** Tools, commands, coverage, fixtures, or gates change.
 > **Synchronize with:** ARCHITECTURE.md, DATA_STORAGE.md, DEPLOYMENT.md, SECURITY.md.
 > **Status:** Active.
-> **Activation:** Standard profile. Test runner is added in STEP-0001 (see gate below).
+> **Activation:** Standard profile. Vitest and Lighthouse CI are active.
 
 ## Commands (repeatable local + CI gates)
 
@@ -15,13 +15,12 @@
 | Type + content schema check | `npm run check` (`astro check`) | Merge-critical |
 | Governance validator | `python3 scripts/validate-governance.py` | Merge-critical |
 | Unit tests (`lib/` + schema) | `npm test` (Vitest — **added in STEP-0001**) | Merge-critical |
-| Link check | build-time / CI link check (STEP-0003+) | Merge-critical for release |
-| Accessibility check | axe/pa11y on built pages (STEP-0002+) | Merge-critical for user pages |
+| Route/link generation | `npm run build` (sitemap + required static routes) | Merge-critical for release |
+| Accessibility check | `npm run lhci` on built pages; threshold enforced in CI/deploy | Merge-critical for user pages |
 
-**Baseline status:** `npm test` is **Blocked** until STEP-0001 adds Vitest and
-the first `lib/`/schema units. This is recorded in `STATUS.md`. A merge-critical
-verifier blocked for a second consecutive packet forces a dedicated
-verification packet before more versionable work.
+**Current baseline:** Vitest is active (45 tests at the 2026-07-18 wrap-up) and
+Lighthouse CI requires accessibility ≥0.95 on built routes. An unavailable,
+crashed, or skipped merge-critical verifier is `Blocked`, never `Pass`.
 
 ## Portfolio (risk-based)
 

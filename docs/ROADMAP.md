@@ -363,7 +363,8 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   untouched); Support, Privacy overview, per-product policy and 404 rebuilt on
   the band system with the site's panel/card treatment. 404 was the last
   surface still centring itself. 56 geometry checks — 0 overflow, 0 misaligned
-  headings; 0 axe violations across 8 routes. No checkpoint due (feature #38).
+  headings; 0 axe violations across 8 routes. **MC became due at feature #38**
+  and was cleared in the feature-42 catch-up (MC-0019).
 
 - **STEP-0040 — Critique follow-ups** *(COMPLETE — merged, tagged `v0.37.1`,
   2026-07-18).* From the second `/impeccable critique` of the home page (25/40,
@@ -376,8 +377,9 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   Owner kept the headline and the App Store lead image (recorded in
   `.impeccable/critique/ignore.md`); the hero-names-the-product P0 was flagged,
   not actioned. **Open:** lead image alt text omits its baked-in marketing copy
-  (WCAG 1.1.1). 64 geometry checks 0 overflow; 0 axe violations. No checkpoint
-  due (feature #39).
+  (WCAG 1.1.1; now GitHub #3). 64 geometry checks 0 overflow; 0 axe violations.
+  **Discussion became due at feature #39** and was cleared in the feature-42
+  catch-up (DISC-0013).
 
 - **STEP-0041 — Layout rhythm & composition** *(COMPLETE — merged, tagged
   `v0.38.0`, 2026-07-18).* `/impeccable layout`, dual isolated assessments; the
@@ -390,8 +392,9 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   two-column layout with the maker's note alongside. Also: `<dl>` pairs,
   single-item grid stretch, a third left edge, and four divergent pill
   paddings. 72 geometry checks 0 overflow; 0 axe violations. **Deferred:**
-  card-grid consolidation, `/` vs `/apps/` differentiation. No checkpoint due
-  (feature #40).
+  card-grid consolidation, `/` vs `/apps/` differentiation. **MC + Audit became
+  due at feature #40** and were cleared in the feature-42 catch-up (MC-0019 +
+  AUDIT-0008).
 
 - **STEP-0042 — Consistency pass** *(COMPLETE — merged, tagged `v0.39.0`,
   2026-07-18).* Owner-annotated screenshots: ragged box sizes on both policy
@@ -412,8 +415,9 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   32px → 15px faint. Subtlety via flatness rather than size, because the
   spotlight is an elevated gradient panel. Identical width and height verified
   at ten widths; fixed an orphan cell that stretched to double width at
-  744–820px and stacked cells that sized to their own copy. No checkpoint due
-  (feature #42).
+  744–820px and stacked cells that sized to their own copy. **MC + Discussion +
+  Enhancement became due at feature #42** and were cleared in the feature-42
+  governance catch-up (MC-0019 + DISC-0013 + ENH-0006).
 
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
@@ -439,24 +443,23 @@ future reviews and sessions do not re-litigate:
   mobile hero screenshot (LCP/duplication tradeoff on a perf-lean site),
   USER-10 gallery chrome relabel (gallery is a liked, working surface).
 
-## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
+## Backlog — current only
 
-Not scheduled yet; promote to a Step Packet when triggered.
+Not scheduled yet; promote one outcome to a frozen packet when selected.
 
-- **Unify the product header + `ProductAvatar`** (ENH-0002 N1/N2/E7): one lockup
-  (icon-or-monogram + name/title) shared by the card, detail, and privacy pages;
-  standardize page-top vertical rhythm. Resolves LEDGER-001 (now ripe). Strong
-  next UI packet.
-- **Home hero treatment** (ENH-0002 N3) + on-site **changelog/updates block**
-  (C1) — polish follow-ups.
-- **Real image-optimization pipeline** (`astro:assets` `<Image>`) consuming the
-  existing `MediaAsset` schema — do when real screenshots/icons exist (E1).
-- **Automated accessibility / Lighthouse CI** on built pages — ties off
-  LEDGER-002 (E2).
-- **Pre-launch (user-run):** Cloudflare **Email Routing** so
-  `support@metkapstudio.com` receives mail — before Sole Focus ships (ENH-0002 O1).
-- Later/parked: per-page OG images (E3), View Transitions (E4), light theme +
-  toggle (E5), press-kit/devlog (E6). See `ENHANCEMENT_ENH-0001.md` / `ENH-0002.md`.
+- **Recommended small fix:** GitHub #3 — give the home lead marketing image a
+  complete text alternative without duplicating the gallery transcript.
+- **Highest product value:** add another real owner-supplied product. This is
+  blocked on the product existing; never publish placeholder proof.
+- **Trigger-armed:** STEP-0033 updates/release-notes block, only after the first
+  app update or second product.
+- **Optional:** Terms/disclaimer page; per-page OG images; dependency refresh
+  (Astro 7.1.1 and Vitest 4.1.10 were available on 2026-07-18).
+- **Retired:** FAQ rich-result work. Google stopped showing FAQ rich results in
+  May 2026, so `FAQPage` JSON-LD no longer justifies a dedicated SEO packet for
+  this portfolio. Keep the visible product FAQ because it helps readers.
+- **Parked until evidence:** View Transitions, light theme, press kit/devlog,
+  catalog facets/labels, and Cloudflare dashboard tuning.
 
 ## Planning rules
 

@@ -1,19 +1,18 @@
 # Issue Ledger (pre-remote fallback)
 
-> **Purpose:** Temporary durable issue record until GitHub Issues is the owner of record.
-> **Read when:** Filing/triaging an issue before the remote is live, or backfilling IDs after.
-> **Update when:** Any finding is discovered, triaged, or closed pre-remote.
+> **Purpose:** Read-only history of issues recorded before GitHub Issues became the owner.
+> **Read when:** Tracing LEDGER-001/002 lineage.
+> **Update when:** Never; file new findings in GitHub Issues.
 > **Synchronize with:** ISSUE_TRACKING.md, STATUS.md.
-> **Status:** Active (fallback).
+> **Status:** Retired (read-only history).
 
 ## Remote status
 
-**GitHub remote push planned immediately after baseline (user-authorized).** Once
-GitHub Issues exist, entries here are backfilled with issue IDs/links and this
-ledger becomes read-only history. This fallback must not be carried past the
-first maintained release (see `ISSUE_TRACKING.md`).
+GitHub Issues is active at
+`metekaplangit/solo-developer-portfolio-website`. Both historical entries below
+are resolved. New findings must be filed in GitHub, not appended here.
 
-## Open entries
+## Historical entries
 
 - LEDGER-001 | type:technical-debt | priority:low | Product "avatar"
   (icon-or-monogram) block duplicated

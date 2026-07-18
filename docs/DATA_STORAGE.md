@@ -18,15 +18,16 @@ satisfies the zero-cost / no-third-party constraint.
   separate; no user data).
 - No cookies, local storage, or client persistence in the MVP.
 
-## Content model (schemas defined in `src/content.config.ts` — STEP-0001)
+## Content model (schemas defined in `src/content/schema.ts`)
 
 Contracts from `project-idea/02-pages-and-content-model.md`. Zod enforces them at
 build; invalid content **fails the build loudly**.
 
 - **Product:** `id, name, slug, type(app|game), status(planned|in-development|
-  beta|released|archived), summary, longDescription, platforms[], storeLinks[],
-  supportUrl, privacyPolicyUrl, screenshots[], icon, features[], releaseDate,
-  lastUpdated, seo`.
+  beta|released|archived), summary, platforms[], storeLinks[], supportUrl,
+  privacyPolicyUrl, screenshots[], icon, features[], price?, requirements?,
+  fitFor?, fitNotFor?, makerNote[], privacyFacts?, releaseDate?, lastUpdated?,
+  seo?, featured`. The Markdown body supplies the long description.
 - **StoreLink:** `store, url, status, countryOrRegionLimit?, notes?`.
 - **PrivacyPolicyEntry:** `productId, title, lastUpdated, dataCollected[],
   dataUse[], dataNotCollected[], thirdPartyServices[], storedLocally[],
@@ -34,8 +35,8 @@ build; invalid content **fails the build loudly**.
   reviewStatus`. Supports one global policy + per-product entries. `retention` is
   required (Apple 5.1.1(i)); `dataUse`/`hasAccounts` map to Apple's "uses of data"
   and in-app account-deletion (5.1.1(v)). `storedLocally[]`/`permissions[]` render
-  as bullet sections. `PolicyArticle` presents these as an at-a-glance chip strip
-  + separated headlined sections. See `SECURITY.md` and `UI_DESIGN.md`.
+  as bullet sections. `PolicyArticle` presents these as an at-a-glance fact row
+  plus full-width document rows. See `SECURITY.md` and `UI_DESIGN.md`.
 - **MediaAsset:** `id, productId, type(icon|screenshot|hero|logo|press), path,
   altText, dimensions, source, licenseOrOwnership`.
 

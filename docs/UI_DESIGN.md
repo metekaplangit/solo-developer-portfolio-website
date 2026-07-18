@@ -24,8 +24,8 @@ behind a vague marketing hero.
 
 - **Product card:** icon/screenshot, name, type, platform badges, short summary,
   status, store/detail links, privacy/support links where appropriate.
-- **Product detail:** identity → visual preview → value summary → features →
-  platforms/store links → privacy/support links → status notes → related.
+- **Product detail:** identity/download/facts → visual preview + transcript →
+  fit → features → description + maker note → store/support/privacy close.
 - **Privacy/support pages:** obvious title, product selector or per-product
   route, last-updated date, direct contact path, no clutter, no hidden legal
   text, no marketing copy.
@@ -60,7 +60,9 @@ values. Extract a component when a second cross-cutting concern appears
   animation, all gated by `prefers-reduced-motion`.
 - **Buttons:** `.btn` / `.btn-primary` (filled accent) / `.btn-secondary` (ghost).
 - Applied to tokens + shell (Nav/Footer/Badge/BaseLayout) + home in STEP-0005;
-  other pages inherit the tokens and get bespoke polish in later UI-phase packets.
+  STEP-0038 moved every primary page onto the shared band rhythm, and STEP-0042
+  consolidated cards and policy rows onto shared primitives. Page files should
+  override composition, not re-declare card geometry.
 
 ## Brand logo (STEP-0011)
 

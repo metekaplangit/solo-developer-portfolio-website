@@ -25,31 +25,16 @@ counter.
 - Completed **feature** Steps: **42** (STEP-0001..STEP-0043; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
 - Next feature step: **STEP-0044** (or STEP-0033 when its trigger fires).
-- Next-due (recomputed 2026-07-18 at count **42**): all four cadences have
-  come due and none has been run. Last completed: MC-0018 + DISC-0012 at 36;
-  AUDIT-0007 + ENH-0005 at 35.
-  - **Markdown Consistency** (every 2) — due at **38, 40, 42**
-  - **Discussion** (every 3) — due at **39, 42**
-  - **Audit** (every 5) — due at **40**
-  - **Enhancement** (every 7) — due at **42**
-  Once cleared, the next are MC **44**, DISC **45**, AUDIT **45**, ENH **49**.
+- Next-due (after the feature-42 catch-up): MC **44**, Discussion **45**, Audit
+  **45**, Enhancement **49**. MC-0019 covers missed MC milestones 38/40/42;
+  DISC-0013 covers 39/42; AUDIT-0008 covers 40; ENH-0006 covers 42.
 
 ## Due now
 
-**Four scheduled checkpoints are overdue** — see the recomputed Next-due block
-above. Six feature steps shipped on 2026-07-18 (STEP-0038..0043, v0.36.0 →
-v0.39.1) and the counter advanced 36 → 42 without the cadence being re-evaluated;
-this block still read "None" against step 36. The *arithmetic* was corrected in
-this wrap-up; the checkpoints themselves have **not** been run and are the next
-governance work. Most recent completed scheduled: MC-0018 + DISC-0012(36),
-AUDIT-0007 + ENH-0005(35), MC-0017(34).
-
-Note: `scripts/validate-governance.py` passes 43/43 with this drift present —
-it checks that the two counters agree, not that the cadence has been honoured. All prior scheduled checkpoints and every on-demand run
-(MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
-block names only what is currently due and the most recent scheduled checkpoint,
-so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
-MC-OD-0010/0011).
+**None.** The 2026-07-18 wrap-up cleared the four checkpoint types that had
+accumulated while feature count advanced 36 → 42. The validator now checks that
+this section agrees with STATUS `due_checkpoints`, closing the false-green gap
+that allowed the backlog to coexist with `due_checkpoints: none`.
 
 ## Ledger
 
@@ -117,6 +102,10 @@ MC-OD-0010/0011).
 | ENH-0005 | STEP-0036 complete (feature #35) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0005.md` | Re-triage: **more products = highest-value next** (fills the wider catalog + exercises multi-product paths). Carried: STEP-0033 (armed), FAQPage JSON-LD, Cloudflare owner-actions; parked mid-width polish; T4 closed unless reopened. Width tokens are now the system-wide spacing lever. |
 | MC-0018 | STEP-0037 complete (feature #36) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0018.md` | v0.34.0→v0.35.0 synced; button height is now the shared system lever; sync checks green at v0.35.0 / count 36; no drift. |
 | DISC-0012 | STEP-0037 complete (feature #36) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0012.md` | Polish reviewed: alignment debt from the redesign fixed at the system level (shared button height); heights + facts wrapping measured, overflow swept 7 routes × 2 widths. F1 mobile long-button wrap (accept); F2 focused pass (home art-directed, others inherit+swept). No blockers. |
+| MC-0019 | Catch-up through STEP-0043 (feature #42; due at 38/40/42) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0019.md` | Repaired live-state, milestone, schema, testing, issue-owner, roadmap/backlog, and cadence drift; validator now checks STATUS ↔ Due-now agreement. |
+| DISC-0013 | Catch-up through STEP-0043 (feature #42; due at 39/42) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0013.md` | Six-step design arc reviewed by five personas; shared band/card systems are cohesive; #3 filed for the remaining lead-image alt gap. |
+| AUDIT-0008 | Catch-up through STEP-0043 (feature #42; due at 40) | Audit | Done | `docs/audits/AUDIT_AUDIT-0008.md` | All release-critical areas Pass; governance followability repaired; 8-route build, 45 tests, dependency/security/Git checks green. |
+| ENH-0006 | Catch-up through STEP-0043 (feature #42) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0006.md` | Retired FAQ rich-result packet after Google's May-2026 removal; #3 recommended next small fix; real product remains highest product-value work. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

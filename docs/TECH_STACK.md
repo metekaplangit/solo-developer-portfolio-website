@@ -12,17 +12,17 @@
 1. **Build:** premium minimal solo-developer portfolio + store-support website.
 2. **Platforms:** static responsive web via GitHub Pages + Cloudflare domain.
 
-## Selected stack (verified 2026-07-02)
+## Selected stack (installed state verified 2026-07-18)
 
 | Component | Choice | Version | Source | License |
 |---|---|---|---|---|
-| Framework | Astro (static output) | **7.0.5** (stable, Jun 2026) | docs.astro.build/upgrade-astro | MIT |
+| Framework | Astro (static output) | **7.0.5 locked**; 7.1.1 available | docs.astro.build/upgrade-astro | MIT |
 | Language | TypeScript | ^5.6 | typescriptlang.org | Apache-2.0 |
 | Content validation | Zod via `astro/zod` (content collections) | bundled with Astro 7 | docs.astro.build | MIT |
 | Runtime (build) | Node.js | 24.16 LTS (Astro 7 needs ≥22.12) | nodejs.org | MIT-like |
 | Type/content check | `@astrojs/check` | ^0.9 (dev only) | npm | MIT |
 | Sitemap | `@astrojs/sitemap` | 3.7.3 (build-time integration, emits static XML) | docs.astro.build | MIT |
-| Unit tests | `vitest` | ^4.1 (dev only) | npm | MIT |
+| Unit tests | `vitest` | 4.1.9 locked; 4.1.10 available | npm | MIT |
 | Hosting | GitHub Pages (static) | n/a | docs.github.com/pages | — |
 | Domain / DNS | Cloudflare Registrar + DNS | n/a | developers.cloudflare.com/registrar | — |
 
@@ -34,8 +34,9 @@ dev-only YAML language server. Verified: `npm audit` → 0 vulnerabilities.
 - `node -p "require('./node_modules/astro/package.json').version"` → `7.0.5`.
 - `npm run build` → `output: "static"`, `dist/index.html` generated, exit 0.
 - `npm audit` → `found 0 vulnerabilities`.
-- Astro 7 version confirmed against docs.astro.build/en/upgrade-astro
-  (latest release v7.0.5), accessed 2026-07-02.
+- `npm outdated` (2026-07-18) reports Astro 7.1.1 and Vitest 4.1.10 as
+  compatible updates. They are deferred to a dependency packet so this
+  governance-only wrap-up does not mix toolchain changes with documentation.
 
 ## Why Astro 7
 
@@ -61,14 +62,15 @@ services. Only recurring cost is the domain (Cloudflare at-cost).
 
 | Option | Version | Schema fit | GH Pages fit | AI fit | Verdict |
 |---|---|---|---|---|---|
-| **Astro 7** | 7.0.5 | Excellent (Zod) | Excellent | Excellent+ | **Selected** |
+| **Astro 7** | 7.0.5 locked | Excellent (Zod) | Excellent | Excellent+ | **Selected** |
 | Eleventy | 3.1.6 | Manual | Excellent | Good | Rejected — no typed schema layer |
 | Next.js | 16.2.7 | Manual (React+Zod) | OK (export) | Good | Rejected — heaviest toolchain |
 | SvelteKit | 2.57 + adapter-static 3.0.10 | Manual | Good | Good | Rejected — more moving parts |
 | Hugo | 0.158.0 | Front-matter only | Excellent | Lower (Go) | Rejected — least AI-idiomatic |
 
-Rejected: prerelease Astro/Eleventy v4 alphas (not stable). No older-version
-exception is in use — all pins are current stable.
+Rejected: prerelease alternatives at selection time. The selected major remains
+supported; routine patch/minor updates follow the normal dependency packet and
+gate process.
 
 ## Public compatibility contract (pre-1.0)
 

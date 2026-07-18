@@ -45,4 +45,13 @@ are unchanged.
 ## Recurring search
 
 Run at scheduled audits (see `CHECKPOINTS.md`). Record query, source, result,
-adoption/rejection, and follow-up. None run yet beyond initialization + calibration.
+adoption/rejection, and follow-up.
+
+### 2026-07-18 — AUDIT-0008
+
+- Rechecked the available local AI surfaces against this static-site workflow.
+  Existing shell, GitHub CLI, browser research, and project-local design tooling
+  cover the work; no additional MCP, connector, or paid service is justified.
+- The recommended-but-uninstalled mail/calendar/document plugins are unrelated
+  to the repository's current tasks and were not installed.
+- No product dependency, runtime integration, or new instruction layer adopted.

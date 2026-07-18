@@ -7,230 +7,43 @@
 > **Status:** Active.
 > **Activation:** Standard profile + commercial/compliance overlay armed (privacy/store pages).
 
-## Handoff (5 bullets)
+## Handoff
 
-- **State: STEP-0043 complete — quiet home maker note, released v0.39.1.**
-  Owner-directed: "multiple small boxes… perfectly aligned and the same shape
-  and size… very, very subtle so the user's focus must be on the featured
-  application." Built as a new `quiet` tone on `MakerNote`: three identical
-  cells, transparent fill + one hairline, no shadow or accent, heading 32px →
-  15px faint. Subtlety comes from **flatness**, not size — the spotlight is an
-  elevated gradient panel, so merely smaller cells would still have competed.
-  Verified identical width AND height at all ten tested widths; two bugs caught
-  en route (an orphan cell stretched to double width at 744–820px, and stacked
-  cells sizing to their own copy). Contrast 5.59:1, clears AA.
-- **Prior: STEP-0042 — consistency pass, released v0.39.0.**
-  Owner-annotated screenshots of the live site drove this: ragged box sizes on
-  both policy pages, a mismatched lede colour, a too-large home hero gap, and
-  the maker note leaving half its container empty. Root cause was **four
-  separate card definitions** (four paddings, two radii, two title sizes, four
-  grid floors) for what is visually one component, plus `align-items: start`
-  disabling stretch on the policy grid. Now ONE shared
-  `.card`/`.card-grid`/`.row-stack` system; policies render one full-width row
-  per section with a heading rail and bullets, per the owner's explicit
-  direction. **0 ragged rows, 0 overflow, 0 axe violations.** Also lands the
-  card-grid consolidation deferred as an exception in STEP-0041.
-- **Prior: STEP-0041 — layout rhythm & composition, released v0.38.0.**
-  `/impeccable layout` with two isolated assessments. The layout-scoped
-  detector returned **0 findings** — the documented blind spot (uniform spacing
-  passes every rule). Fixed: a **latent horizontal overflow** on the product
-  page (a single-token product name produced 87px of document overflow at
-  320px; "Sole Focus" hides it by breaking into two words); the footer was not
-  pinned (1273px of bare background under the 404 footer); **monotone rhythm** —
-  the site had two macro spacing decisions total and every band gap measured
-  identical, now three tokens applied per relationship (`/apps/sole-focus/`
-  went `70,70,70,70,70` → `24,115,38,38,115,115`); the hero's accidental 141px
-  double-pad; and the prose band's ~400×1464px dead region, now a two-column
-  composition with the maker's note alongside. **Deferred as deliberate
-  exceptions:** card-grid consolidation across four pages, and the
-  near-identical `/` vs `/apps/` skeletons at one product.
-- **Prior: STEP-0040 — critique follow-ups, released v0.37.1.**
-  Second `/impeccable critique` of the home page scored **25/40 (trend 24 →
-  25)**: the restructure solved layout, and the remaining problems were
-  underneath it. Fixed: mobile nav hid **About** entirely (135px off-screen) —
-  "Home" now steps aside ≤40rem since the brand links home, four destinations
-  visible on one row, header steady at 94px, `overflow-x` kept only as a
-  safety valve below ~360px after a nowrap-only attempt overflowed the
-  document at 320px; FactsLine separator no longer dangles on wrap; MakerNote
-  consolidated to one component (home + product page were rendering identical
-  copy in two treatments); one accent primary per page; hero `sizes` matched to
-  the measured slot + 1600w. **Owner kept the headline and the App Store lead
-  image** (both in `.impeccable/critique/ignore.md`); the **[P0] hero does not
-  name the product** was deliberately not actioned — taste call on a
-  just-approved layout. **Open a11y item: the lead image's alt text omits the
-  marketing copy baked into it (WCAG 1.1.1).**
-- **Prior: STEP-0039 — copy + last-pages pass, released v0.37.0.**
-  User-directed: download buttons shortened to "Download" (home hero reads
-  "Mac App Store"), with accessible names deliberately left full; headline
-  changed to **"Brilliant Products for All"** and all studio-level copy made
-  platform-neutral (PRODUCT.md positioning updated to match — per-product
-  platform requirements untouched); Support, Privacy overview, per-product
-  policy and 404 rebuilt on the band system. 404 was the last off-rail surface.
-  Verified: 56 geometry checks, **0 overflow + 0 misaligned headings**, 0 axe
-  violations across 8 routes.
-- **Prior: STEP-0038 — full-site "Graphite Refined" restructure,
-  released v0.36.0.** User-directed, from an external design handoff they
-  approved: all four primary pages rebuilt on one shared band system (one idea
-  per band, real vertical air, prose capped at a measure, imagery leading),
-  answering the standing "too much text cramped up into spaces" complaint at
-  the system level. One left rail from nav brand to footer (hero was ~150px
-  inboard; Support/Privacy titles up to 232px). Home hero CTA names the
-  product; home closes on the real maker note. `MakerNote` side-stripe removed.
-  Hero entrance no longer gates content on opacity. **Two handoff elements
-  deliberately declined:** the invented placeholder products + "3 total" count
-  (fabricated proof) and its invented first-person maker quote. Verified: 0
-  overflow across 56 page/width checks, 0 axe violations across 7 routes.
-- **Prior: v0.35.1 patch — fixed a P0 regression from v0.35.0** found by
-  `/impeccable critique`: the facts line's `white-space: nowrap` became an
-  unbreakable 828px run that starved the featured screenshot (13px at 1024,
-  234px at 1280) and overflowed the page at 430/447/744/820px. Now a flex-wrap
-  row + `minmax(0,1fr)` grid; verified overflow-free at 9 widths, image back to
-  599px. **Impeccable installed** (global, no hooks) with `PRODUCT.md` +
-  `DESIGN.md` captured.
-- **Prior: STEP-0037 — alignment & polish pass, released v0.35.0.**
-  User-directed: buttons now share one height (featured CTA 56/49/49→48/48/48;
-  download leads via fill/glyph, not size), featured text column widened so the
-  lede/trust wrap cleanly, and the facts line breaks only between facts. Fixed
-  at the system level (shared `.btn` height) so it improves every page;
-  overflow-swept all 7 routes at 390/1280. **MC-0018 + DISC-0012** run. Focused
-  pass — home + shared rules art-directed, other pages inherit + swept.
-- **Prior: STEP-0036 — wider, image-forward redesign, v0.34.0.** Fixed the "too narrow / cramped / text stacking vertically"
-  complaint: shell 68→78rem + reading columns 40→43rem; home featured panel
-  rebuilt image-dominant (screenshot leads, bullet stack removed, more air);
-  product gallery widened to 72rem. Presentation-only, zero JS, no overflow at
-  1440/960/390; before/after screenshots verified. **AUDIT-0007 + ENH-0005**
-  (due at feature step 35) run. Standing rule reaffirmed: real screenshots only.
-- **Prior: STEP-0034 + STEP-0035 — taste-round T2 + T5, v0.33.0** (user-approved copy: For/Not-for fit cells at
-  the top of the details; maker's note opening the description; FactsLine
-  overflow fix; 45 tests; DISC-0011 + MC-0017 run). Taste round closed: T1/T3
-  declined, T4 closed unless reopened. New standing rule: no fabricated
-  product-UI imagery in mockups — real screenshots or abstract blocks only.
-- **Prior: STEP-0032 — screenshot transcript, v0.32.0**
-  (review-0002 AI-07: native-details text alternative for the gallery, five
-  humanized titles + alt-text descriptions, zero JS; 43 tests; **MC-0016** run
-  at feature step 32). Design round for the taste-tier review ideas published
-  as an artifact — user picks pending; STEP-0033 (updates/release-notes block)
-  is trigger-armed, do not start before the first app update.
-- **Prior: STEP-0031 — first-glance facts, v0.31.0.**
-  Adopted review-0002's consolidated top finding: one quiet `FactsLine` under
-  the download CTA on the product header + home spotlight ("Free — no in-app
-  purchases, no subscription · macOS 10.15 or later · Works offline — no
-  account, no cloud, no tracking"), plus the maker/support trust line on the
-  spotlight. New optional `privacyFacts` field; 41 tests. Review-0002's 30
-  ideas fully dispositioned in ROADMAP (adopted → 0031/0032; deferred →
-  STEP-0033 trigger-armed; taste-tier → design round; rest declined/parked).
-- **Prior: STEP-0030 — purchase-decision info, v0.30.0**
-  (review-0001 OPP-04/07: human "macOS" platform badges from one shared map
-  also feeding JSON-LD; verified "Requires macOS 10.15 or later" beside the
-  header download button; truthful maker/support trust line linking
-  About/Support; 40 tests). **AUDIT-0006 + DISC-0010 + MC-0015** (the step-30
-  checkpoint trio) run alongside.
-- **Prior: STEP-0029 — small-screen usability, v0.29.0**
-  (external review-0001 remediation: compact scrollable mobile header, 146→94px
-  at 390px; ≥44px touch targets for nav + gallery dots; zero-JS). Review
-  dispositions: OPP-02 declined (deliberate CTA repetition), OPP-03/05/06
-  deferred (taste-sensitive, preview-first). STEP-0030 (purchase-decision info)
-  ships next with the step-30 checkpoint trio.
-- **Prior: STEP-0028 — top-of-page download buttons, v0.28.0.** A reusable `DownloadButton.astro` (Apple mark + "Download on the
-  Mac App Store", accent primary, product-aware aria-label) now leads the home
-  hero, the home spotlight, the product detail header, and the catalog card —
-  the download is findable at the top of every relevant page; the bottom "Get
-  it" section remains. Verified on all surfaces in preview + live. **MC-0014 +
-  ENH-0004** (due at feature step 28) run alongside.
-- **Prior: 🎉 SOLE FOCUS LIVE ON THE MAC APP STORE — STEP-0027, v0.27.0.** Verified listing: "Sole Focus: Pomodoro Timer", seller Mete
-  Kaplan, Mac, **Free** (https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12).
-  The site now renders a primary **Mac App Store** download button in "Get it"
-  (plus the catalog card link), "Released" badges everywhere, a truthful `offers`
-  JSON-LD block (price 0 USD, InStock, store URL — the deferred release pass),
-  release date 2026-07-15, and no "coming soon" copy. **38 tests** green (2 new
-  release-state assertions). **DISC-0009** (Discussion due at feature step 27)
-  run alongside.
-- **Prior: v0.26.x** — swipeable screenshot gallery (STEP-0026, v0.26.0) +
-  scrollbar-gutter layout-shift fix (v0.26.1); **AUDIT-OD-0001** full-system
-  audit (all areas pass; CI modernized) and governance drift machine-checks
-  (validator 43/43).
-- **Live:** **metkapstudio.com** over HTTPS via the **Cloudflare proxy**; gem
-  logo; Sole Focus product + scannable, website-scoped privacy pages.
-- **Support email — DONE (2026-07-03):** `support@metkapstudio.com` receives mail
-  via Cloudflare Email Routing (catch-all → verified Gmail); SPF + DKIM + DMARC
-  live; verified end-to-end (inbox delivery). See DEPLOYMENT.md.
-- **Pre-launch items — CLOSED by the live release (2026-07-15):** the app passed
-  App Review and is live, which required the App-Privacy labels and privacy
-  manifest (app-side, owner-completed). The long-standing "add the Mac App Store
-  link once published" website blocker is **done** (STEP-0027).
-- **Next action:** the ship-blockers are cleared and the full-site redesign has
-  landed (v0.36.0 + v0.37.0). Candidates: **`FAQPage` JSON-LD** (natural
-  follow-on to the release-pass structured data), on-site **changelog/updates
-  block** (STEP-0033, trigger-armed on the first app update), **more products**
-  (the home catalog band, the "Featured" heading and the catalog link all
-  re-arm automatically when a second product exists — see the `hasCatalog`
-  branch in `src/pages/index.astro`), optional Terms/disclaimer page. Freeze a
-  Task Card before editing.
-- **Open question for the owner:** whether a game and/or an app are genuinely
-  in development. The external design handoff assumed both and shipped
-  placeholder cards; those were declined as fabricated proof (STEP-0038). If
-  they are real, add them as `in-development` entries in
-  `src/content/products/` and the catalog UI switches itself back on.
-- **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
-  `DATA_STORAGE.md`.
-- **Blockers:** none for shipping. **Governance debt:** four scheduled
-  checkpoints are overdue after today's six feature steps — Markdown
-  Consistency (38, 40, 42), Discussion (39, 42), Audit (40), Enhancement (42).
-  The cadence arithmetic was corrected 2026-07-18; the runs themselves are
-  outstanding. See `docs/CHECKPOINTS.md`.
-- **Blockers:** none. Keep the policy and structured data truthful as the listing
-  evolves (ratings JSON-LD stays out until real rating data exists — see
-  `lib/schema.ts` header and `SECURITY.md`).
+- **Product:** MetKap Studio portfolio and store-support site, live at
+  **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
+  GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
+  Store; the support mailbox and published privacy pages are operational.
+- **Latest product state:** **STEP-0043 complete, released as v0.39.1** on
+  2026-07-18. The home maker note is now three identical, deliberately quiet
+  cells so the featured product remains dominant. STEP-0042 immediately before
+  it consolidated the site onto one shared card/row system.
+- **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
+  AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
+  The catch-up repaired stale live-state, milestone, schema, testing, issue, and
+  checkpoint documentation and hardened the validator against another false
+  green when `STATUS` and `CHECKPOINTS` disagree about due work.
+- **Open issue:** [GitHub #3](https://github.com/metekaplangit/solo-developer-portfolio-website/issues/3)
+  tracks the known WCAG 1.1.1 gap: the home lead image alternative omits
+  meaningful marketing copy baked into that image. It is not release-blocking,
+  but is the recommended next small fix packet.
+- **Next action:** freeze one packet. Recommended: resolve **#3**. Product-growth
+  alternatives are another **real** product supplied by the owner, the
+  STEP-0033 updates block when its first-update/second-product trigger fires, or
+  an optional Terms/disclaimer page. Do not invent in-development products.
 
-## Working with app codebases (convention)
+## Current facts
 
-The user provides each app's full codebase folder (e.g. `../PromodoApp/` for Sole
-Focus) as **read-only** source of truth (product info, privacy, icon). **Never
-modify those folders.** Learn from them and build website content here. Key files
-to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
-`src-tauri/tauri.conf.json` (name/version/bundle id).
-
-## Last completed Step Packet
-
-- **STEP-0031 — First-glance facts** — **DONE**, merged, tagged **v0.31.0**.
-  Task Card: `docs/tasks/STEP-0031.md` (review-0002 adoption; FactsLine on
-  header + spotlight; spotlight trust line; privacyFacts field + test).
-- Prior: **STEP-0030 — purchase-decision info** (v0.30.0, with the step-30
-  checkpoint trio) and **STEP-0029 — small-screen usability** (v0.29.0), both
-  review-0001 remediation. Task Cards: `docs/tasks/STEP-0029.md`/`STEP-0030.md`.
-- Prior: **STEP-0028 — Top-of-page download buttons** — merged, tagged
-  **v0.28.0**. Task Card: `docs/tasks/STEP-0028.md`. Delivered: reusable
-  `DownloadButton.astro` placed on home hero (leading), spotlight, detail
-  header, catalog card; graceful fallbacks for unreleased products; bottom
-  "Get it" retained. **MC-0014 + ENH-0004** run (feature step 28).
-- Prior: **STEP-0027 — Release pass: Sole Focus live on the Mac App Store** —
-  merged, tagged **v0.27.0**. Task Card: `docs/tasks/STEP-0027.md`.
-- Delivered: verified store URL wired as the primary "Get it" download button
-  (+ catalog card link); status flipped to Released site-wide from the one
-  content file; truthful `offers` JSON-LD (price 0 USD, InStock, store URL) via
-  a new optional `price` content field; release date recorded; "coming soon"
-  copy removed; 2 new release-state tests (38 total). **DISC-0009** run
-  (Discussion due at feature step 27).
-- Prior packet: **STEP-0026 — Swipeable product screenshot gallery** — merged,
-  tagged **v0.26.0**. Task Card: `docs/tasks/STEP-0026.md`.
-- Delivered: rebuilt `ScreenshotShowcase.astro` from a vertical stack into a
-  single-image gallery (CSS scroll-snap track + progressive-enhancement script):
-  one large screenshot at a time (size unchanged), left/right arrows, dots, live
-  counter, native swipe, keyboard ←/→; compact regardless of shot count; honors
-  `prefers-reduced-motion`. Bigger accent-styled arrows/dots per follow-up. Fixed
-  three carousel a11y violations to keep the Lighthouse gate ≥0.95; verified
-  axe-clean. **MC-0013** (due at feature step 26) run — no drift.
-- (Prior: STEP-0025 centered layout v0.25.0 + AUDIT-0005; STEP-0024 v2 listing
-  copy v0.24.0; STEP-0023 real screenshots v0.23.0; STEP-0022 JSON-LD v0.22.0;
-  … v0.1.0.)
-
-## Next Step Packet (to freeze)
-
-- **Not yet chosen.** Candidates: **`FAQPage` JSON-LD** (natural follow-on to
-  the release-pass structured data), **changelog/updates block**, **more real
-  products**, **optional Terms/disclaimer page**, lighter-touch description
-  refresh (prose-preserving). (Screenshots → v0.23.0; copy → v0.24.0; gallery →
-  v0.26.0; release pass → v0.27.0.) One outcome only.
+- Completed **feature** steps: **42** (`STEP-0001`..`STEP-0043`; STEP-0033 is
+  trigger-armed and unstarted).
+- Current product tag: **v0.39.1**. `[Unreleased]` is empty.
+- Branch policy: `main`; non-destructive feature/checkpoint branches and
+  `--no-ff` merge commits; no history rewriting or force-push.
+- Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
+- Blockers: **none**. Due checkpoints: **none**.
+- Open GitHub issues: **#3 only** as of the 2026-07-18 wrap-up.
+- Dependency note: the lockfile remains on Astro 7.0.5 and Vitest 4.1.9; patch
+  updates 7.1.1/4.1.10 are available but were intentionally not mixed into this
+  governance-only wrap-up. `npm audit --omit=dev` is clean.
 
 ## Machine-readable state
 
@@ -239,112 +52,69 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0037
-next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
+current_step: STEP-0043
+next_step: fix GitHub issue #3; or owner-supplied real product; or trigger-armed STEP-0033
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0043 merge, tagged v0.39.1
+head: regenerate live with git rev-parse HEAD; product release is v0.39.1 and later commits are internal-only governance
 product_tag: v0.39.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
-domain: metkapstudio.com (live; cert approved; https_enforced: true)
+domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)
 dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
 blockers: none
-required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, UI_DESIGN.md, ARCHITECTURE.md]
+required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-07-17
+updated_at: 2026-07-18
 ```
 
-> The live Git block above is validator/observed-owned. Regenerate with
-> `git status --porcelain --branch` and `git rev-parse HEAD`; live results
-> override this prose.
+Live commands override this snapshot. At startup regenerate branch/HEAD/dirty
+state with `git status --porcelain --branch` and `git rev-parse HEAD`.
+
+## Verified wrap-up gates (2026-07-18)
+
+| Gate | Result | Evidence |
+|---|---|---|
+| Static build | Pass | `npm run build`: static output, 8 routes |
+| Type/content check | Pass | `npm run check`: 0 errors, 0 warnings, 0 hints |
+| Unit tests | Pass | `npm test`: 45/45 |
+| Production dependency audit | Pass | `npm audit --omit=dev`: 0 vulnerabilities |
+| Governance validator | Pass | 44/44 after cadence-agreement hardening |
+| Git integrity | Pass | `git fsck`, `git diff --check`, no tracked secret-pattern hits |
+| Remote automation | Pass | latest `main` CI run green; product-release deploy green |
+
+The Lighthouse accessibility threshold remains enforced in CI/deploy. The
+latest product packets also recorded zero axe violations and no overflow across
+their measured route/viewport matrices; this docs-only catch-up did not change
+rendered output.
+
+## Checkpoints and issues
+
+`docs/CHECKPOINTS.md` is the sole checkpoint-history owner. Next cadence after
+this catch-up: Markdown Consistency at feature **44**, Discussion and Audit at
+**45**, Enhancement at **49**. On-demand runs do not reset cadence.
+
+GitHub Issues is the active issue owner. `docs/issues/LEDGER.md` is read-only
+pre-remote history; LEDGER-001 and LEDGER-002 are resolved.
+
+## Operating boundaries
+
+- Keep Astro `output: 'static'`; no backend, database, serverless runtime,
+  analytics, forms, accounts, or third-party runtime services.
+- Product facts and privacy claims come from typed `src/content/` files. Keep
+  store price/status, policy text, and JSON-LD truthful as the listing evolves;
+  never fabricate ratings or products.
+- App codebases supplied beside this repo are read-only sources of truth. Never
+  modify them while working on the website.
+- Freeze one Task Card before product work and stop at its acceptance boundary.
 
 ## Governance validator
 
-```
+```sh
 python3 scripts/validate-governance.py
 ```
-Recorded here, in `AI_WORKFLOW.md`, and in `.github/workflows/ci.yml` (CI runs it).
 
-## Profile & overlays
-
-Standard profile. Commercial/compliance overlay **armed** (activates its controls
-when privacy/store-support pages with real product/policy text are built — M3).
-No escalation triggers observed. No maturity thresholds breached (baseline).
-
-## Gate table (baseline)
-
-| Gate | Result | Class | Evidence |
-|---|---|---|---|
-| Static build (`npm run build`) | Pass | Merge-critical | 8 routes (1 real product) + sitemap/robots/404/favicon, `output: "static"` |
-| Type + content check (`npm run check`) | Pass | Merge-critical | 0 errors / 0 warnings / 0 hints |
-| Unit tests (`npm test`) | Pass | Merge-critical | 38 passed (incl. release-state + screenshot content tests); run in CI |
-| Dependency audit (`npm audit --omit=dev`) | Pass | Merge-critical | production/shipped deps: `found 0 vulnerabilities`. Dev-only CI tooling (`@lhci/cli`) has transitive advisories that never ship. |
-| Accessibility gate (Lighthouse CI) | Pass | Merge-critical (a11y) | `accessibility ≥ 0.95` asserted as error on all built pages; verified green in CI (PR #1). Perf/SEO/best-practices are warnings. |
-| Governance validator | Pass | Merge-critical | 43/43, exit 0 (now incl. 3 cross-doc sync checks: product_tag↔git tag, STATUS↔CHECKPOINTS feature count, CHANGELOG↔tag) |
-| Runtime visual (home) | Pass | Manual-runtime | dark-premium theme; desktop + mobile screenshots; no console errors; no overflow |
-| Deployment code/config (domain) | Pass | Merge-critical | build at root; CNAME/canonical/robots on metkapstudio.com; Pages cname set |
-| Live domain HTTPS | Pass | Release-critical (channel) | cert approved; https 200 + valid TLS; http→https 301; enforce_https on; www→apex |
-
-## Checkpoints
-
-Completed **feature** steps: **42** (STEP-0001..0043) — this counter is
-machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
-Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
-(AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full
-checkpoint history — scheduled and on-demand (MC-OD-*, AUDIT-OD-*) — lives only
-in the **CHECKPOINTS ledger** (single owner; deliberately not duplicated here —
-duplicated history caused recurring drift, repaired at MC-OD-0009/0010).
-On-demand runs do not reset cadence. Calibration: completed 2026-07-02.
-
-## Issues
-
-- **LEDGER-001** — **RESOLVED in STEP-0015 (v0.15.0):** the icon-or-monogram
-  avatar was duplicated in ProductCard + detail; centralised in
-  `src/components/ProductAvatar.astro`, now also used by the privacy header.
-- **LEDGER-002** — **RESOLVED in STEP-0017 (v0.17.0):** added a Lighthouse CI
-  **accessibility gate** (`lighthouserc.json` + `ci.yml`/`deploy.yml`) that fails
-  on accessibility regressions; verified green in real CI. Visual-regression
-  snapshots remain out of scope (not required by the gate).
-
-Neither is release-blocking. Fallback ledger: `docs/issues/LEDGER.md`.
-
-## Compliance (Critical Operating Contract)
-
-Followed: one frozen Step Packet (STEP-0001), risk-based tests shipped with the
-code, all merge-critical gates Pass with evidence, non-destructive Git (merge
-commit + tag), docs synchronized, validator passing. No deviations.
-
-## Version control
-
-Repo slug `solo-developer-portfolio-website` (local folder
-`solo-dev-portfolio-website`). Latest product tag: **v0.30.0** (STEP-0030 purchase-decision
-info); prior v0.29.0, v0.28.0, v0.27.0, v0.26.1,
-v0.26.0 (STEP-0026), v0.25.0..v0.1.0. Baseline (M0) internal-only. Remote:
-`origin`, in sync (product tag `v0.30.0`; HEAD may carry post-release checkpoint
-docs). **Live channel:** GitHub Pages + custom
-domain **metkapstudio.com** (HTTPS enforced).
-
-**Note on STEP-0026 structure:** the gallery shipped across three merges (feature
-+ two a11y fixes) under a "deploy if you can" instruction rather than one clean
-packet→branch→merge. STEP-0026 formalizes the packet retroactively and tags the
-release merge; the code was already live and gate-green. Standing rule going
-forward: ship autonomously (commit/merge/push/deploy/tag) — see AI_WORKFLOW.md.
-
-**Deploy reliability note:** GitHub Pages' publish step (`actions/deploy-pages`)
-intermittently sits in `deployment_queued` and times out (GitHub-side congestion;
-our build is fast and always succeeds). `deploy.yml` is a **single job** (Node
-from `.nvmrc`, npm cache, no build→deploy artifact handoff) with `paths-ignore:
-docs/**`, `cancel-in-progress: true`, and the deploy timeout at the action's
-10-min maximum (600000 ms; higher values are clamped). Also note
-GitHub Pages hard-caps responses at `cache-control: max-age=600` — after a green
-deploy your **browser** may show the old page for ≤10 min; verify with
-`curl -sI` or a hard-refresh/incognito, not a normal reload. If a deploy fails,
-re-run it (transient). **Instant visitor freshness is now in place:** the
-**Cloudflare proxy is enabled** (orange-cloud apex `A` + `www` `CNAME`, SSL/TLS
-`Full (strict)`, Always-Use-HTTPS on) and verified 2026-07-02 — `server:
-cloudflare` on HTTP/2 200, clean `http→https` 301 (no loop), `cf-cache-status:
-DYNAMIC` (HTML served fresh; static assets edge-cached). See DEPLOYMENT.md.
+The command is also recorded in `AI_WORKFLOW.md` and run by CI.

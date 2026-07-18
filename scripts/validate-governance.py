@@ -132,6 +132,16 @@ def empty_state_value(value: str) -> bool:
     return value.strip().lower() in {"", "[]", "[ ]", "none", "n/a", "null", "false"}
 
 
+def markdown_section(text: str, heading: str) -> str:
+    """Return one level-2 Markdown section, excluding its heading."""
+    match = re.search(
+        rf"^## {re.escape(heading)}\s*$\n(.*?)(?=^## |\Z)",
+        text,
+        re.MULTILINE | re.DOTALL,
+    )
+    return match.group(1) if match else ""
+
+
 def task_card_candidates(step_id: str) -> list[Path]:
     return [
         DOCS / "tasks" / f"{step_id}.md",
@@ -255,14 +265,30 @@ def check_step_and_task_card() -> list[Check]:
         )
     )
     due_checkpoints = status_field(status, "due_checkpoints")
+    status_says_none = empty_state_value(due_checkpoints)
     checks.append(
         Check(
             "checkpoint.no_due_checkpoints",
-            empty_state_value(due_checkpoints),
+            status_says_none,
             (
                 "no due checkpoints"
-                if empty_state_value(due_checkpoints)
+                if status_says_none
                 else f"due_checkpoints={due_checkpoints}; run, repair, or mark the dependent action Blocked"
+            ),
+        )
+    )
+    due_now = markdown_section(checkpoints, "Due now")
+    ledger_says_none = bool(re.search(r"^\*\*None\.\*\*", due_now.strip()))
+    checks.append(
+        Check(
+            "checkpoint.status_agrees_with_ledger",
+            bool(due_now) and status_says_none == ledger_says_none,
+            (
+                "STATUS and CHECKPOINTS both say none due"
+                if status_says_none and ledger_says_none
+                else "STATUS and CHECKPOINTS both record due work"
+                if not status_says_none and not ledger_says_none
+                else "STATUS due_checkpoints disagrees with CHECKPOINTS 'Due now'"
             ),
         )
     )
@@ -479,7 +505,8 @@ def check_cross_doc_consistency() -> list[Check]:
     These machine-check the exact drift classes that recurred across manual
     checkpoints: a stale "latest tag" in STATUS (found at MC-OD-0009), lagging
     feature-step counters between STATUS and CHECKPOINTS (MC-0013, MC-OD-0010),
-    and CHANGELOG top release disagreeing with the recorded product tag.
+    and CHANGELOG top release disagreeing with the recorded product tag. Due
+    checkpoint agreement is checked with the checkpoint gate above.
     """
     checks: list[Check] = []
     status = read_text(DOCS / "STATUS.md")
