@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { canonicalPrivacyUrl, policyForProduct, productPolicies } from './privacy';
+import { canonicalPrivacyUrl, productPolicyEntries } from './privacy';
 import type { Product, PrivacyPolicyEntry } from '../content/schema';
 
 function product(overrides: Partial<Product>): Product {
@@ -53,16 +53,22 @@ describe('canonicalPrivacyUrl', () => {
   });
 });
 
-describe('policyForProduct / productPolicies', () => {
-  const policies = [policy('global'), policy('aurora-notes'), policy('pixel-drift')];
-
-  it('finds a per-product policy by id', () => {
-    expect(policyForProduct(policies, 'pixel-drift')?.productId).toBe('pixel-drift');
-    expect(policyForProduct(policies, 'missing')).toBeUndefined();
-  });
+describe('productPolicyEntries', () => {
+  // Shaped like the collection entries the privacy pages actually hold.
+  const entries = [policy('global'), policy('aurora-notes'), policy('pixel-drift')].map(
+    (data) => ({ data }),
+  );
 
   it('excludes the global entry from per-product policies', () => {
-    expect(productPolicies(policies).map((p) => p.productId)).toEqual([
+    expect(productPolicyEntries(entries).map((e) => e.data.productId)).toEqual([
+      'aurora-notes',
+      'pixel-drift',
+    ]);
+  });
+
+  it('preserves the whole entry, not just its data', () => {
+    const withExtras = entries.map((e) => ({ ...e, id: e.data.productId }));
+    expect(productPolicyEntries(withExtras).map((e) => e.id)).toEqual([
       'aurora-notes',
       'pixel-drift',
     ]);

@@ -1,16 +1,17 @@
 # Audit
 
 > **Purpose:** Quality audit procedure and report format.
-> **Read when:** An Audit checkpoint is due (every 5 feature steps) or on demand.
-> **Update when:** Audit scope, format, or cadence changes.
+> **Read when:** Running an Audit checkpoint.
+> **Update when:** Audit scope or format changes.
 > **Synchronize with:** CHECKPOINTS.md, ROADMAP.md, STATUS.md, ISSUE_TRACKING.md.
 > **Status:** Active.
-> **Activation:** Standard profile. First scheduled audit due after feature step 5.
+> **Activation:** Standard profile. Run on demand.
 
-## Cadence
+## When to run
 
-Every **5** completed feature Steps, plus on demand. Report:
-`docs/audits/AUDIT_<checkpoint-id>.md` (delta-based; names its evidence range).
+On demand — before a release you care about, or when quality feels uncertain.
+There is no step-count schedule (cadence retired 2026-07-18; see ROADMAP.md).
+Report: `docs/audits/AUDIT_<checkpoint-id>.md` (delta-based; names its evidence range).
 
 ## Scope
 

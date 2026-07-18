@@ -3,11 +3,11 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PolicyArticle from '../../components/PolicyArticle.astro';
 import { withBase } from '../../lib/url';
+import { productPolicyEntries } from '../../lib/privacy';
 
 export async function getStaticPaths() {
   const entries = await getCollection('policies');
-  return entries
-    .filter((e) => e.data.productId !== 'global')
+  return productPolicyEntries(entries)
     .map((entry) => ({
       params: { slug: entry.data.productId },
       props: { entry },

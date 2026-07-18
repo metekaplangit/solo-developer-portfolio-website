@@ -1,6 +1,7 @@
 ---
 import type { PrivacyPolicyEntry, MediaAsset } from '../content/schema';
 import { formatDate } from '../lib/format';
+import { GLOBAL_POLICY_ID } from '../lib/privacy';
 import ProductAvatar from './ProductAvatar.astro';
 
 interface Props {
@@ -19,7 +20,7 @@ const hasThirdParties = policy.thirdPartyServices.length > 0;
 const storesLocally = policy.storedLocally.length > 0;
 // Natural subject noun so shared sections read correctly for the site-wide
 // policy vs a per-product (app) policy.
-const isSite = policy.productId === 'global';
+const isSite = policy.productId === GLOBAL_POLICY_ID;
 const subject = isSite ? 'This website' : 'This app';
 
 // At-a-glance chips — the gist in one scan. Each: label + tone.

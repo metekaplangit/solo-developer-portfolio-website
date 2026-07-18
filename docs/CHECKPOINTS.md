@@ -7,27 +7,28 @@
 > **Status:** Active.
 > **Activation:** Standard profile.
 
-## Cadence (counts completed feature Steps)
+## Checkpoint types — on demand (cadence retired 2026-07-18)
 
-| Checkpoint | Every N feature steps | Branch | Report path |
-|---|---|---|---|
-| Markdown Consistency | 2 | `markdown-consistency/<id>` | `docs/markdown-consistency/` |
-| Discussion | 3 | `discussion/<id>` | `docs/discussions/` |
-| Audit | 5 | `audit/<id>` | `docs/audits/` |
-| Enhancement | 7 | `enhancement/<id>` | `docs/enhancements/` |
+There is no step-count schedule. Nothing is ever "due". Run a checkpoint when
+there is a reason to — after a run of related packets, before a release you care
+about, or when something feels drifted — and record it in the ledger below.
+See `ROADMAP.md` for the rationale.
 
-Event/on-demand runs do not reset cadence. Non-feature baselines/fixes/refactors/
-docs/checkpoints are classified separately and do **not** advance the feature
-counter.
+| Checkpoint | Branch | Report path |
+|---|---|---|
+| Markdown Consistency | `markdown-consistency/<id>` | `docs/markdown-consistency/` |
+| Discussion | `discussion/<id>` | `docs/discussions/` |
+| Audit | `audit/<id>` | `docs/audits/` |
+| Enhancement | `enhancement/<id>` | `docs/enhancements/` |
 
 ## Counters
 
 - Completed **feature** Steps: **42** (STEP-0001..STEP-0043; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
 - Next feature step: **STEP-0044** (or STEP-0033 when its trigger fires).
-- Next-due (after the feature-42 catch-up): MC **44**, Discussion **45**, Audit
-  **45**, Enhancement **49**. MC-0019 covers missed MC milestones 38/40/42;
-  DISC-0013 covers 39/42; AUDIT-0008 covers 40; ENH-0006 covers 42.
+- The 2026-07-18 catch-up (MC-0019, DISC-0013, AUDIT-0008, ENH-0006) cleared the
+  last scheduled backlog. Non-feature baselines/fixes/refactors/docs/checkpoints
+  do **not** advance the feature counter.
 
 ## Due now
 

@@ -6,16 +6,26 @@
 // this project's honesty rules.
 import { site } from './site';
 import { PLATFORM_LABELS } from './products';
+import { withBase } from './url';
 import type { Product } from '../content/schema';
 
-const ORIGIN = 'https://metkapstudio.com';
+// Single source of truth for the canonical origin: `site` in astro.config.mjs,
+// which Astro exposes as import.meta.env.SITE. Do NOT hardcode the domain here —
+// canonical/OG/sitemap URLs already derive from the same config, and a second
+// copy would silently keep emitting the old host after a domain change.
+const ORIGIN = (import.meta.env.SITE ?? 'https://metkapstudio.com').replace(/\/+$/, '');
 
-/** Absolute-URL helper (schema.org expects fully-qualified URLs). */
+/**
+ * Absolute-URL helper (schema.org expects fully-qualified URLs).
+ * Routes internal paths through `withBase()` so JSON-LD agrees with the hrefs
+ * actually rendered on the page when the site is served under a sub-path
+ * (the GitHub Pages project-site fallback documented in astro.config.mjs).
+ */
 function abs(path: string): string {
-  return path.startsWith('http') ? path : `${ORIGIN}${path.startsWith('/') ? '' : '/'}${path}`;
+  return path.startsWith('http') ? path : `${ORIGIN}${withBase(path)}`;
 }
 
-const publisher = { '@type': 'Organization', name: site.name, url: `${ORIGIN}/` } as const;
+const publisher = { '@type': 'Organization', name: site.name, url: abs('/') } as const;
 
 
 export function organizationSchema() {
@@ -23,7 +33,7 @@ export function organizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: site.name,
-    url: `${ORIGIN}/`,
+    url: abs('/'),
     logo: abs('/icon-512.png'),
     description: site.description,
     founder: { '@type': 'Person', name: site.person },
@@ -37,7 +47,7 @@ export function websiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: site.name,
-    url: `${ORIGIN}/`,
+    url: abs('/'),
     description: site.description,
     publisher,
   };
