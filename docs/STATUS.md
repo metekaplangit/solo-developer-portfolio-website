@@ -9,7 +9,13 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0032 complete — screenshot transcript, released v0.32.0**
+- **State: STEP-0034 + STEP-0035 complete — taste-round T2 + T5 shipped,
+  released together as v0.33.0** (user-approved copy: For/Not-for fit cells at
+  the top of the details; maker's note opening the description; FactsLine
+  overflow fix; 45 tests; DISC-0011 + MC-0017 run). Taste round closed: T1/T3
+  declined, T4 closed unless reopened. New standing rule: no fabricated
+  product-UI imagery in mockups — real screenshots or abstract blocks only.
+- **Prior: STEP-0032 — screenshot transcript, v0.32.0**
   (review-0002 AI-07: native-details text alternative for the gallery, five
   humanized titles + alt-text descriptions, zero JS; 43 tests; **MC-0016** run
   at feature step 32). Design round for the taste-tier review ideas published
@@ -130,11 +136,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0032
+current_step: STEP-0035
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0032 merge, tagged v0.32.0 (HEAD may carry post-release checkpoint docs)
-product_tag: v0.32.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0035 merge, tagged v0.33.0 (covers STEP-0034+0035; HEAD may carry post-release checkpoint docs)
+product_tag: v0.33.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -182,7 +188,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **32** (STEP-0001..0030) — this counter is
+Completed **feature** steps: **34** (STEP-0001..0030) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

@@ -310,6 +310,15 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   (`screenshotTitle()` from the filename, unit-tested) + its alt-text
   description; zero JS; gallery untouched. **MC-0016** run (feature step #32).
 
+- **STEP-0034 + STEP-0035 — Taste-round T2 + T5** *(COMPLETE — merged, released
+  together as `v0.33.0`, 2026-07-17).* User-approved from the rendered taste
+  round: `FitStatement.astro` ("For you if / Not for you if", detail body) and
+  `MakerNote.astro` (accent-bordered first-person note opening the description,
+  signed from `site.person`). Copy pinned by content tests. Includes the
+  FactsLine overflow fix. **DISC-0011**(33) + **MC-0017**(34) run. Taste-round
+  outcome: T2/T5 shipped; **T1 (workflow strip) + T3 (captions) declined** this
+  round; **T4 (shorter reading path) closed unless the user reopens it**.
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

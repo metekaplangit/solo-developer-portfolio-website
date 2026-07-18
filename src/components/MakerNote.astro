@@ -1,0 +1,47 @@
+---
+// Maker's note (STEP-0035, taste-round T5 — user-approved copy). A short
+// first-person rationale that opens the product description: why the app
+// exists and what it refuses to become. The voice is the maker's own; the
+// exact paragraphs were approved before publication. Renders nothing when the
+// content declares no note.
+import type { Product } from '../content/schema';
+import { site } from '../lib/site';
+
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+---
+
+{
+  product.makerNote.length > 0 && (
+    <aside class="maker-note reveal" aria-label="A note from the maker">
+      {product.makerNote.map((para, i) => (
+        <p class={i === 0 ? 'lead' : undefined}>{para}</p>
+      ))}
+      <p class="sig">— {site.person}, {site.name}</p>
+    </aside>
+  )
+}
+
+<style>
+  .maker-note {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-1) 0 var(--space-1) var(--space-5);
+    margin-bottom: var(--space-8);
+  }
+  .maker-note p {
+    margin: 0 0 var(--space-3);
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .maker-note p.lead {
+    color: var(--text);
+    font-size: 1.05rem;
+  }
+  .sig {
+    margin-bottom: 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+</style>
