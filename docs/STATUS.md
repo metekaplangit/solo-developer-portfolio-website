@@ -13,10 +13,12 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0043 complete, released as v0.39.1** on
-  2026-07-18. The home maker note is now three identical, deliberately quiet
-  cells so the featured product remains dominant. STEP-0042 immediately before
-  it consolidated the site onto one shared card/row system.
+- **Latest product state:** **Responsive touch-up packet complete, released as
+  v0.39.2** on 2026-07-18. The support address now holds one line on a phone
+  (it was breaking between `.co` and `m` at 320px) and policy titles scale down
+  on narrow screens (three lines and 139px of header became two lines and 59px
+  at 390px). Desktop rendering is unchanged. STEP-0043 before it quieted the
+  home maker note; STEP-0042 consolidated the shared card/row system.
 - **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
   AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
   The catch-up repaired stale live-state, milestone, schema, testing, issue, and
@@ -35,7 +37,7 @@
 
 - Completed **feature** steps: **42** (`STEP-0001`..`STEP-0043`; STEP-0033 is
   trigger-armed and unstarted).
-- Current product tag: **v0.39.1**. `[Unreleased]` is empty.
+- Current product tag: **v0.39.2**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -52,11 +54,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0043
+current_step: responsive-touchups (post STEP-0043)
 next_step: fix GitHub issue #3; or owner-supplied real product; or trigger-armed STEP-0033
 branch: main
-head: regenerate live with git rev-parse HEAD; product release is v0.39.1 and later commits are internal-only governance
-product_tag: v0.39.1
+head: regenerate live with git rev-parse HEAD; product release is v0.39.2 and later commits are internal-only governance
+product_tag: v0.39.2
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

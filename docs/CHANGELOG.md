@@ -14,6 +14,10 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+_Nothing pending. Next packet undecided — see ROADMAP._
+
+## [0.39.2] — 2026-07-18
+
 ### Fixed
 
 - **The support address stays in one piece on a phone.** At narrow widths
