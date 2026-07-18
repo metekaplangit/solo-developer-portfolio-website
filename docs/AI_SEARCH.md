@@ -15,9 +15,11 @@
 | `@astrojs/check` | Official | **Adopted** (dev) | Type + content-schema check for CI. `yaml` override applied for security. |
 | Astro MCP / third-party MCP servers | Community | **Deferred** | No approved, maintained, security-reviewed server required for a static site yet. Revisit if content volume grows. |
 | Cloudflare / GitHub MCP connectors | Vendor | **Deferred** | Not needed for MVP; `gh` CLI covers repo/remote operations. |
+| **Impeccable** design skill (`impeccable` v3.2.1 npm / skill 3.9.1, Apache-2.0, pbakaus, impeccable.style) | Reputable OSS (verified on npm + repo) | **Adopted** (dev, project-local, 2026-07-17) | User-requested frontend-design skill: `/impeccable <craft·audit·critique·polish·distill·bolder·quieter·layout·typeset·…>` to steer UI quality. Installed at `.claude/skills/impeccable/` (**gitignored** — 2.3 MB dev tool, not part of the static build). **Auto-hooks deliberately NOT installed** (`--no-hooks`) so nothing fires on every edit; on-demand commands only. It is instruction files + local scripts — it never edits the repo itself; all output still flows through the normal branch → gates → merge pipeline, filtered through this project's tokens/`UI_DESIGN.md`. Standing rule reminder: show rendered result before finalizing; real screenshots only. |
 
-No AI skill, MCP server, plugin, or connector is installed for this project yet.
-Claude Code runs against the repository directly.
+Impeccable (design skill) is installed locally for this project; otherwise
+Claude Code runs against the repository directly. No MCP server or connector is
+installed.
 
 ## Adopted-guidance propagation map
 
