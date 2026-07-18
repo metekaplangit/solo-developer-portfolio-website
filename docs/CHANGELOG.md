@@ -16,6 +16,18 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.32.0] — 2026-07-17
+
+Screenshot transcript (STEP-0032, design-review adoption).
+
+### Added
+
+- **Read the screenshots as text.** A "Screenshot transcript" disclosure below
+  the gallery lists all five screenshots as titled text descriptions — for
+  anyone who can't or won't operate the carousel. Built with the native browser
+  disclosure element (works without JavaScript) and sourced from the same
+  descriptions that power the images' alt text.
+
 ## [0.31.0] — 2026-07-17
 
 First-glance facts (STEP-0031, design-review adoption).

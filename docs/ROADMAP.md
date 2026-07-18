@@ -304,6 +304,12 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   fix in trust lines. New optional `privacyFacts` schema field; content test
   pins it (41 tests).
 
+- **STEP-0032 — Screenshot transcript** *(COMPLETE — merged, tagged `v0.32.0`,
+  2026-07-17).* Adopted review-0002 AI-07: native `<details>` "Screenshot
+  transcript" below the gallery listing every shot as a humanized title
+  (`screenshotTitle()` from the filename, unit-tested) + its alt-text
+  description; zero JS; gallery untouched. **MC-0016** run (feature step #32).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

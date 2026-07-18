@@ -9,7 +9,13 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0031 complete — first-glance facts, released v0.31.0.**
+- **State: STEP-0032 complete — screenshot transcript, released v0.32.0**
+  (review-0002 AI-07: native-details text alternative for the gallery, five
+  humanized titles + alt-text descriptions, zero JS; 43 tests; **MC-0016** run
+  at feature step 32). Design round for the taste-tier review ideas published
+  as an artifact — user picks pending; STEP-0033 (updates/release-notes block)
+  is trigger-armed, do not start before the first app update.
+- **Prior: STEP-0031 — first-glance facts, v0.31.0.**
   Adopted review-0002's consolidated top finding: one quiet `FactsLine` under
   the download CTA on the product header + home spotlight ("Free — no in-app
   purchases, no subscription · macOS 10.15 or later · Works offline — no
@@ -124,11 +130,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0031
+current_step: STEP-0032
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0031 merge, tagged v0.31.0 (HEAD may carry post-release checkpoint docs)
-product_tag: v0.31.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0032 merge, tagged v0.32.0 (HEAD may carry post-release checkpoint docs)
+product_tag: v0.32.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -176,7 +182,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **31** (STEP-0001..0030) — this counter is
+Completed **feature** steps: **32** (STEP-0001..0030) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full
