@@ -91,18 +91,18 @@ const schema = [
     </p>
   </section>
 
-  <div class="band gallery-band">
+  <div class="band band-loose gallery-band">
     <ScreenshotShowcase shots={shots} label={`${product.name} screenshots`} />
   </div>
 
   <!-- Who it's for, before the feature list. -->
-  <section class="band fit-band">
+  <section class="band band-tight fit-band">
     <FitStatement product={product} />
   </section>
 
   {
     product.features.length > 0 && (
-      <section class="band features-band" aria-labelledby="features-h">
+      <section class="band band-tight features-band" aria-labelledby="features-h">
         <h2 id="features-h" class="band-title">What it does</h2>
         <ul class="feature-grid" role="list">
           {product.features.map((f) => (
@@ -119,14 +119,26 @@ const schema = [
        a `region` landmark, and MakerNote's `<aside>` (a `complementary`
        landmark) nested inside one trips axe's
        `landmark-complementary-is-top-level`. -->
-  <div class="band prose-band">
-    <div class="prose measure-mid">
-      <MakerNote product={product} />
-      <Content />
+  <div class="band band-loose prose-band">
+    <div class="prose-grid">
+      <div class="prose measure-mid">
+        <Content />
+      </div>
+      {/* The maker's voice runs ALONGSIDE the description rather than in front
+          of it. This is also the page's one deliberate asymmetric moment: the
+          prose keeps its reading measure and the ~400px that used to sit empty
+          beside a 1464px-tall block now carries the one piece of content a
+          competitor couldn't reproduce. Sticky so it accompanies the read. */}
+      {/* A plain div, not an <aside>: MakerNote already renders an <aside>
+          (a complementary landmark), and nesting one inside another trips
+          axe's landmark-complementary-is-top-level. */}
+      <div class="prose-aside">
+        <MakerNote product={product} />
+      </div>
     </div>
   </div>
 
-  <section class="band band-tail get-band" aria-labelledby="get-h">
+  <section class="band band-loose band-tail get-band" aria-labelledby="get-h">
     <div class="panel panel-accent get reveal">
       <div class="get-copy">
         <h2 id="get-h" class="get-title">Get {product.name}</h2>
@@ -153,27 +165,33 @@ const schema = [
       }
     </div>
 
+    {/* Each dt/dd wrapped in a div: as bare grid items they became four equal
+        273px tracks with labels and values alternating HORIZONTALLY, so a
+        label never sat above its own value. The `dd { margin-top }` below
+        proves the intent was label-over-value; it could never fire. */}
     <dl class="meta">
       {
         product.releaseDate && (
-          <>
+          <div class="meta-pair">
             <dt>Released</dt>
             <dd>{formatDate(product.releaseDate)}</dd>
-          </>
+          </div>
         )
       }
       {
         product.lastUpdated && (
-          <>
+          <div class="meta-pair">
             <dt>Last updated</dt>
             <dd>{formatDate(product.lastUpdated)}</dd>
-          </>
+          </div>
         )
       }
-      <dt>Privacy &amp; support</dt>
-      <dd>
-        <a href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>{' · '}<a href={withBase(product.supportUrl)}>Support</a>
-      </dd>
+      <div class="meta-pair">
+        <dt>Privacy &amp; support</dt>
+        <dd>
+          <a href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>{' · '}<a href={withBase(product.supportUrl)}>Support</a>
+        </dd>
+      </div>
     </dl>
 
     {
@@ -217,6 +235,17 @@ const schema = [
     gap: clamp(var(--space-4), 2.5vw, var(--space-8));
     align-items: start;
   }
+  /* Below ~34rem the 96px avatar leaves too little for the name: a product
+     whose name is a single long token (e.g. "Chronoscope") pushed the DOCUMENT
+     87px wide at 320px — verified by substitution, and an absolute ban. Today's
+     "Sole Focus" happens to break into two short words and hides it. Stack
+     instead of squeezing. */
+  @media (max-width: 34rem) {
+    .head-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
   .head-body {
     min-width: 0;
   }
@@ -228,7 +257,10 @@ const schema = [
   }
   .product-name {
     margin: 0 0 var(--space-4);
-    font-size: var(--text-3xl);
+    /* Clamped, and allowed to break: `--text-3xl` is a flat 2.75rem, so an
+       unbreakable long name at 44px overflowed a 149px track. */
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    overflow-wrap: anywhere;
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.05;
@@ -258,9 +290,6 @@ const schema = [
     color: var(--text-strong);
   }
 
-  .gallery-band {
-    margin-top: var(--band-y);
-  }
 
   /* Feature grid — one claim per cell, three-up on wide screens. Plain cells,
      no check glyph: the list is already a list, and the accent belongs to the
@@ -280,6 +309,31 @@ const schema = [
     color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.6;
+  }
+
+  .prose-grid {
+    display: grid;
+    gap: var(--gutter);
+  }
+  /* 75rem, not less: the aside only earns a column when it has room to read.
+     At 68rem the second track computed to 205px (~25ch) — cramped, not
+     composed. At 75rem+ it is >=320px while the prose keeps its full measure. */
+  @media (min-width: 75rem) {
+    .prose-grid {
+      grid-template-columns: minmax(0, var(--measure-mid)) minmax(0, 1fr);
+      align-items: start;
+    }
+    .prose-aside {
+      position: sticky;
+      top: var(--space-20);
+    }
+  }
+  @media (max-width: 74.999rem) {
+    /* Stacked: the note reads first, as an introduction. */
+    .prose-grid {
+      display: flex;
+      flex-direction: column-reverse;
+    }
   }
 
   .prose :global(p) {
@@ -332,6 +386,9 @@ const schema = [
     grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
     gap: var(--space-5);
     font-size: var(--text-sm);
+  }
+  .meta-pair {
+    min-width: 0;
   }
   .meta dt {
     font-weight: 600;

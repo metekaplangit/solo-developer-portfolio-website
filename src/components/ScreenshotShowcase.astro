@@ -217,7 +217,7 @@ const many = shots.length > 1;
     right: var(--space-4);
     bottom: var(--space-4);
     margin: 0;
-    padding: 0.2rem 0.6rem;
+    padding: 0.25rem 0.6rem;
     font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
     color: var(--text-strong);
@@ -290,9 +290,11 @@ const many = shots.length > 1;
 
   /* Text alternative for the whole gallery (STEP-0032, review-0002 AI-07):
      native disclosure, zero JS, reuses each record's alt text. */
+  /* Left-aligned on the shared rail. Centring put this at x=291 on a page
+     where every other element starts at x=59 — a third left edge. */
   .transcript {
-    max-width: var(--maxw-prose);
-    margin: var(--space-4) auto 0;
+    max-width: var(--measure-mid);
+    margin: var(--space-4) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }

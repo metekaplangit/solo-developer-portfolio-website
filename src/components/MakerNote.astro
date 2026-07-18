@@ -76,8 +76,11 @@ const isLead = tone === 'lead';
   /* The closing note is the page's last and best beat; give it a real heading
      rather than a hidden one, so it reads as intended content and not as a
      stray pull-quote. */
+  /* --text-2xl, not --text-xl: at --text-xl this heading tied with
+     .spotlight-name, .band-title, .get-title and .contact-title, so the home
+     page's closing band had no distinct tier at squint distance. */
   .is-lead .maker-heading {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
     font-weight: 650;
     letter-spacing: -0.02em;
     color: var(--text-strong);

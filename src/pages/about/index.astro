@@ -45,7 +45,7 @@ const values = [
     </p>
   </section>
 
-  <section class="band values-band" aria-labelledby="values-h">
+  <section class="band band-loose values-band" aria-labelledby="values-h">
     <h2 id="values-h" class="band-title">How I build</h2>
     <ul class="values" role="list">
       {
@@ -59,7 +59,7 @@ const values = [
     </ul>
   </section>
 
-  <section class="band band-tail contact-band" aria-labelledby="contact-h">
+  <section class="band band-loose band-tail contact-band" aria-labelledby="contact-h">
     <div class="panel panel-accent contact reveal">
       <div class="contact-copy">
         <h2 id="contact-h" class="contact-title">Get in touch</h2>
@@ -92,7 +92,9 @@ const values = [
     font-weight: 700;
     line-height: 1.08;
     letter-spacing: -0.03em;
-    max-width: 16ch;
+    /* 16ch left 690px (60%) of the rail dead at 44px type. `text-wrap: balance`
+       is already global and does the line-breaking work. */
+    max-width: 22ch;
   }
   .lede {
     margin: 0;

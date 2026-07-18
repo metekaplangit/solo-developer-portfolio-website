@@ -25,7 +25,7 @@ const { Content } = await render(globalEntry);
     <Content />
   </PolicyArticle>
 
-  <section class="band band-tail per-product" aria-labelledby="per-product-h">
+  <section class="band band-loose band-tail per-product" aria-labelledby="per-product-h">
     <h2 id="per-product-h" class="band-title">App &amp; game privacy policies</h2>
     <p class="per-product-lead measure">
       These are separate from the website policy above. Some apps collect data
@@ -49,9 +49,6 @@ const { Content } = await render(globalEntry);
 </BaseLayout>
 
 <style>
-  .per-product {
-    margin-top: var(--band-y);
-  }
   .per-product-lead {
     margin: 0 0 var(--space-6);
     color: var(--muted);
@@ -64,7 +61,11 @@ const { Content } = await render(globalEntry);
     padding: 0;
     display: grid;
     gap: var(--space-4);
-    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    /* auto-FILL + a max track, not auto-fit + 1fr: with a single policy the
+       fit version stretched one card to the full 1152px rail and
+       `space-between` threw its title and date 774px apart. */
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 26rem));
+    justify-content: start;
   }
   .policy-link {
     display: flex;
