@@ -16,6 +16,29 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.35.0] — 2026-07-17
+
+Alignment & polish pass (STEP-0037).
+
+### Changed
+
+- **Buttons line up.** Every button now shares one height, so groups like the
+  featured panel's actions read as a considered set instead of mismatched sizes
+  (the download button leads through its colour and Apple mark, not a taller
+  box). Applies across the whole site.
+- **Cleaner featured text.** The featured product's text column is wider, so the
+  summary wraps in tidy lines and the "made by" line fits on one row.
+- **No more mid-phrase wraps.** The facts line under the download button now
+  breaks only between facts (e.g. "macOS 10.15 or later" stays together), never
+  in the middle of a phrase.
+
+### Internal
+
+- Shared `.btn` gains one `min-height`; `DownloadButton`/`FactsLine` aligned to
+  it; dead spotlight-highlights CSS removed. Verified no horizontal overflow on
+  all 7 routes at 390 + 1280. **MC-0018 + DISC-0012** (due at feature step 36)
+  run alongside.
+
 ## [0.34.0] — 2026-07-17
 
 Wider, image-forward redesign (STEP-0036).

@@ -22,18 +22,18 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **35** (STEP-0001..STEP-0036; 0033 deferred/unstarted does not count).
+- Completed **feature** Steps: **36** (STEP-0001..STEP-0037; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0037** (or STEP-0033 when its trigger fires).
-- Next-due: **Markdown Consistency + Discussion** after feature step **36**;
-  **Audit** after **40**; **Enhancement** after **42**. (AUDIT-0007 + ENH-0005
-  done at 35; MC-0017 at 34; DISC-0011 at 33.)
+- Next feature step: **STEP-0038** (or STEP-0033 when its trigger fires).
+- Next-due: **Markdown Consistency + Discussion** after feature step **39**;
+  **Audit** after **40**; **Enhancement** after **42**. (MC-0018 + DISC-0012
+  done at 36; AUDIT-0007 + ENH-0005 at 35.)
 
 ## Due now
 
-**None.** **AUDIT-0007 + ENH-0005** (due at feature step **35**) are **done**
-with the STEP-0036 / v0.34.0 redesign; prior scheduled: MC-0017(34),
-DISC-0011(33), MC-0016(32). All prior scheduled checkpoints and every on-demand run
+**None.** **MC-0018 + DISC-0012** (due at feature step **36**) are **done**
+with the STEP-0037 / v0.35.0 polish pass; prior scheduled: AUDIT-0007 +
+ENH-0005(35), MC-0017(34). All prior scheduled checkpoints and every on-demand run
 (MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
 block names only what is currently due and the most recent scheduled checkpoint,
 so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
@@ -103,6 +103,8 @@ MC-OD-0010/0011).
 | MC-0017 | STEP-0035 complete (feature #34) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0017.md` | v0.33.0 covers STEP-0034+0035 (shared tag; unpushed intermediate tag re-placed pre-push so every published tag builds). Approved copy pinned; dispositions updated; sync checks green at v0.33.0 / count 34. |
 | AUDIT-0007 | STEP-0036 complete (feature #35) | Audit | Done | `docs/audits/AUDIT_AUDIT-0007.md` | Redesign + since-AUDIT-0006 arc: all areas Pass. Presentation-only widen (68→78rem) / image-forward home / 72rem gallery; zero JS; no overflow 1440/960/390. Findings info/low: sparse one-product catalog (F1), tall featured text column at ~833px (F2), overflow not machine-gated (F3). No blockers. |
 | ENH-0005 | STEP-0036 complete (feature #35) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0005.md` | Re-triage: **more products = highest-value next** (fills the wider catalog + exercises multi-product paths). Carried: STEP-0033 (armed), FAQPage JSON-LD, Cloudflare owner-actions; parked mid-width polish; T4 closed unless reopened. Width tokens are now the system-wide spacing lever. |
+| MC-0018 | STEP-0037 complete (feature #36) | Markdown Consistency | Done | `docs/markdown-consistency/MARKDOWN_CONSISTENCY_MC-0018.md` | v0.34.0→v0.35.0 synced; button height is now the shared system lever; sync checks green at v0.35.0 / count 36; no drift. |
+| DISC-0012 | STEP-0037 complete (feature #36) | Discussion | Done | `docs/discussions/DISCUSSION_DISC-0012.md` | Polish reviewed: alignment debt from the redesign fixed at the system level (shared button height); heights + facts wrapping measured, overflow swept 7 routes × 2 widths. F1 mobile long-button wrap (accept); F2 focused pass (home art-directed, others inherit+swept). No blockers. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

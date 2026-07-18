@@ -329,6 +329,15 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   1440/960/390. Rival benchmark: Panic/Rogue Amoeba/Things/Raycast (wide,
   big-imagery, minimal-text). **AUDIT-0007 + ENH-0005** run (feature #35).
 
+- **STEP-0037 — Alignment & polish pass** *(COMPLETE — merged, tagged
+  `v0.35.0`, 2026-07-17).* User-directed follow-on to STEP-0036: mismatched
+  button sizes and ragged text. Fix at the system level — one shared `.btn`
+  height (48px; featured CTA 56/49/49 → 48/48/48), download leads via
+  fill/width/glyph; widened featured text column (0.85→1fr) so the lede wraps
+  3 not 4 lines and the trust line fits one row; `FactsLine` refactored to break
+  only between facts. Overflow-swept all 7 routes at 390/1280. **MC-0018 +
+  DISC-0012** run (feature #36).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

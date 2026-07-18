@@ -231,7 +231,7 @@ const heroHasDownload =
     margin-bottom: var(--space-3);
   }
   .spotlight-name {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--space-3);
     font-size: var(--text-2xl);
     letter-spacing: -0.02em;
   }
@@ -247,34 +247,11 @@ const heroHasDownload =
     margin: 0;
     color: var(--muted);
     font-size: var(--text-lg);
-    line-height: 1.5;
+    line-height: 1.55;
     max-width: 34rem;
   }
-  .spotlight-highlights {
-    list-style: none;
-    margin: var(--space-5) 0 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-2);
-  }
-  .spotlight-highlights li {
-    position: relative;
-    padding-left: var(--space-5);
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .spotlight-highlights li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.62em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
   .spotlight-trust {
-    margin: var(--space-3) 0 0;
+    margin: var(--space-4) 0 0;
     color: var(--faint);
     font-size: var(--text-xs);
   }
@@ -307,7 +284,7 @@ const heroHasDownload =
     /* Screenshot lead: a compact text column and a dominant image
        (body | shot; DOM order is media-first, so place explicitly). */
     .spotlight.has-shot {
-      grid-template-columns: 0.85fr 1.45fr;
+      grid-template-columns: 1fr 1.3fr;
     }
     .spotlight.has-shot .spotlight-body {
       grid-column: 1;
