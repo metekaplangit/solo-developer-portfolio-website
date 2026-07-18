@@ -46,11 +46,11 @@ const include = [
 
   <section class="band band-loose include-band" aria-labelledby="include-h">
     <h2 id="include-h" class="band-title">What to include</h2>
-    <ul class="cards" role="list">
+    <ul class="cards card-grid" role="list">
       {
         include.map((i) => (
           <li class="card reveal">
-            <h3>{i.title}</h3>
+            <h3 class="card-title">{i.title}</h3>
             <p>{i.body}</p>
           </li>
         ))
@@ -122,31 +122,9 @@ const include = [
     gap: var(--space-3);
   }
 
+  /* Track floor only; everything else is the shared `.card` system. */
   .cards {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-5);
     grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
-  }
-  .card {
-    padding: clamp(var(--space-5), 2.5vw, var(--space-6));
-    border-radius: var(--radius);
-    /* Single separation cue — elevated surface, no border stacked on top. */
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
-  }
-  .card h3 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-base);
-    font-weight: 650;
-    letter-spacing: -0.01em;
-  }
-  .card p {
-    margin: 0;
-    color: var(--muted);
-    font-size: var(--text-sm);
-    line-height: 1.6;
   }
 
   .products {

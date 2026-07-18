@@ -47,9 +47,10 @@ const chips: { label: string; ok: boolean }[] = [
 
   <div class="policy-lead"><slot /></div>
 
-  <div class="sections">
-    <section class="sec">
-      <h2>What we collect</h2>
+  <div class="sections row-stack">
+    <section class="card">
+      <h2 class="card-title">What we collect</h2>
+      <div class="sec-body">
       {
         collectsData ? (
           <ul>{policy.dataCollected.map((d) => <li>{d}</li>)}</ul>
@@ -57,32 +58,38 @@ const chips: { label: string; ok: boolean }[] = [
           <p class="sec-plain">Nothing. This product doesn't collect personal data.</p>
         )
       }
+      </div>
     </section>
 
     {
       collectsData && (
-        <section class="sec">
-          <h2>How we use it</h2>
+        <section class="card">
+          <h2 class="card-title">How we use it</h2>
+          <div class="sec-body">
           {policy.dataUse.length > 0 ? (
             <ul>{policy.dataUse.map((d) => <li>{d}</li>)}</ul>
           ) : (
             <p class="sec-plain">Only as described above — never for advertising, profiling, or tracking.</p>
           )}
+          </div>
         </section>
       )
     }
 
     {
       policy.dataNotCollected.length > 0 && (
-        <section class="sec">
-          <h2>What we never collect</h2>
+        <section class="card">
+          <h2 class="card-title">What we never collect</h2>
+          <div class="sec-body">
           <ul>{policy.dataNotCollected.map((d) => <li>{d}</li>)}</ul>
+          </div>
         </section>
       )
     }
 
-    <section class="sec">
-      <h2>Third-party sharing</h2>
+    <section class="card">
+      <h2 class="card-title">Third-party sharing</h2>
+      <div class="sec-body">
       {
         hasThirdParties ? (
           <>
@@ -98,10 +105,12 @@ const chips: { label: string; ok: boolean }[] = [
           </p>
         )
       }
+      </div>
     </section>
 
-    <section class="sec">
-      <h2>Keeping &amp; deleting your data</h2>
+    <section class="card">
+      <h2 class="card-title">Keeping &amp; deleting your data</h2>
+      <div class="sec-body">
       {
         policy.storedLocally.length > 0 && (
           <>
@@ -111,10 +120,12 @@ const chips: { label: string; ok: boolean }[] = [
         )
       }
       <p class="sec-plain">{policy.retention}</p>
+      </div>
     </section>
 
-    <section class="sec">
-      <h2>How your data is protected</h2>
+    <section class="card">
+      <h2 class="card-title">How your data is protected</h2>
+      <div class="sec-body">
       <p class="sec-plain">
         {
           storesLocally
@@ -124,31 +135,37 @@ const chips: { label: string; ok: boolean }[] = [
               : `${subject} keeps nothing about you on any server, so there's nothing to breach, leak, or hand over.`
         }
       </p>
+      </div>
     </section>
 
     {
       policy.permissions.length > 0 && (
-        <section class="sec">
-          <h2>Permissions</h2>
+        <section class="card">
+          <h2 class="card-title">Permissions</h2>
+          <div class="sec-body">
           <ul>{policy.permissions.map((d) => <li>{d}</li>)}</ul>
+          </div>
         </section>
       )
     }
 
     {
       policy.hasAccounts && (
-        <section class="sec">
-          <h2>Your account</h2>
+        <section class="card">
+          <h2 class="card-title">Your account</h2>
+          <div class="sec-body">
           <p class="sec-plain">
             Delete your account and its data from within the app, or email{' '}
             <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
           </p>
+          </div>
         </section>
       )
     }
 
-    <section class="sec">
-      <h2>Children's privacy</h2>
+    <section class="card">
+      <h2 class="card-title">Children's privacy</h2>
+      <div class="sec-body">
       <p class="sec-plain">
         {
           collectsData
@@ -156,10 +173,12 @@ const chips: { label: string; ok: boolean }[] = [
             : `${subject} isn't directed at children, and because it collects no personal data, it holds nothing about children either.`
         }
       </p>
+      </div>
     </section>
 
-    <section class="sec">
-      <h2>Your rights</h2>
+    <section class="card">
+      <h2 class="card-title">Your rights</h2>
+      <div class="sec-body">
       <p class="sec-plain">
         {
           collectsData ? (
@@ -178,23 +197,28 @@ const chips: { label: string; ok: boolean }[] = [
           )
         }
       </p>
+      </div>
     </section>
 
-    <section class="sec">
-      <h2>Contact &amp; requests</h2>
+    <section class="card">
+      <h2 class="card-title">Contact &amp; requests</h2>
+      <div class="sec-body">
       <p class="sec-plain">
         Questions, consent changes, or deletion requests —
         <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
       </p>
+      </div>
     </section>
 
-    <section class="sec">
-      <h2>Changes to this policy</h2>
+    <section class="card">
+      <h2 class="card-title">Changes to this policy</h2>
+      <div class="sec-body">
       <p class="sec-plain">
         We may update this policy as {subject.toLowerCase()} or the law changes. The
         “Updated” date at the top always reflects the current version, and we'll note
         anything significant here.
       </p>
+      </div>
     </section>
   </div>
 
@@ -255,49 +279,34 @@ const chips: { label: string; ok: boolean }[] = [
     color: var(--accent-hover);
   }
 
+  /* `--muted`, matching every other page's lede. It was `--text` (near-white)
+     at 20px, which made this one paragraph brighter than the body copy on
+     every other page — the "text colour not matching the rest of the pages"
+     inconsistency. */
   .policy-lead {
     margin-top: var(--space-8);
     max-width: var(--measure-mid);
     font-size: var(--text-lg);
     line-height: 1.6;
-    color: var(--text);
+    color: var(--muted);
   }
   .policy-lead :global(p) {
     margin: 0;
   }
 
-  /* Sections as panels in a grid — the same treatment as the About values and
-     the product feature grid, so a policy page reads as part of the same site
-     instead of a legal document bolted onto it. Each section is short and
-     factual, which is what makes the grid legible; the long-form lead above
-     keeps its own single-column measure. */
+  /* One block per line, full width, heading rail on the left (STEP-0042).
+     These were a 3-column card grid with `align-items: start`, which produced
+     visibly ragged heights (measured 127/199/127 in a single row) and made a
+     reference document read as a dashboard. A policy is scanned top-to-bottom,
+     not compared side-by-side. Cards, grid and type all come from the shared
+     `.card` system now. */
   .sections {
     margin-top: var(--band-y);
+  }
+  .sec-body {
+    min-width: 0;
     display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
-    align-items: start;
-  }
-  .sec {
-    padding: clamp(var(--space-5), 2.5vw, var(--space-6));
-    border-radius: var(--radius);
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
-  }
-  .sec h2 {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-base);
-    font-weight: 650;
-    letter-spacing: -0.01em;
-    color: var(--text-strong);
-  }
-  .sec ul {
-    margin: 0;
-    padding-left: var(--space-5);
-    display: grid;
-    gap: var(--space-2);
-    color: var(--muted);
-    font-size: var(--text-sm);
-    line-height: 1.6;
+    gap: var(--space-3);
   }
   .sec-plain {
     margin: 0;
@@ -305,21 +314,21 @@ const chips: { label: string; ok: boolean }[] = [
     font-size: var(--text-sm);
     line-height: 1.6;
   }
-  .sec ul + .sec-plain {
-    margin-top: var(--space-3);
-  }
   .sec-label {
-    margin: 0 0 var(--space-2);
+    margin: 0;
     color: var(--text);
     font-weight: 600;
+    font-size: var(--text-sm);
   }
   .sec-note {
-    margin: var(--space-3) 0 0;
+    margin: 0;
     font-size: var(--text-sm);
     color: var(--faint);
+    line-height: 1.6;
   }
-  .sec a {
-    margin-left: 0.25ch;
+  .sec-body :global(a),
+  .sections a {
+    color: var(--accent);
   }
 
   .policy-note {

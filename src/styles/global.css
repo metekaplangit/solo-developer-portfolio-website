@@ -342,6 +342,88 @@ img {
     linear-gradient(180deg, var(--surface), var(--surface-2));
 }
 
+/* Card system (STEP-0042) ---------------------------------------------------
+   ONE definition for every heading+body block on the site. Before this there
+   were four: About values, Support "what to include", the product feature grid
+   and the policy sections each had their own padding (4 variants), radius (2),
+   title size (2) and grid floor (17/20/22/26rem) — visually one component,
+   implemented four times, which is what read as "all boxes have different
+   size". Use `.card-grid` + `.card` and nothing else.
+
+   Cards STRETCH by default. Never set `align-items: start` on a card grid:
+   that is what left the policy sections ragged (measured heights 127/199/127
+   in one row). Equal heights per row is the point. */
+.card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  /* align-items defaults to `stretch` — do not override. */
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: clamp(var(--space-5), 2.5vw, var(--space-6));
+  border-radius: var(--radius);
+  /* Single separation cue: elevated surface, never also a border. */
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+}
+.card > :first-child {
+  margin-top: 0;
+}
+.card > :last-child {
+  margin-bottom: 0;
+}
+.card-title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+}
+.card-body,
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+.card ul {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+/* Full-width row variant — one block per line, heading rail on the left and
+   content on the right at wide widths. Used where the content is reference
+   material that should be scanned top-to-bottom rather than compared
+   side-by-side (privacy policies). */
+.row-stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+.row-stack .card {
+  gap: var(--space-4);
+}
+@media (min-width: 56rem) {
+  .row-stack .card {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: var(--gutter);
+    align-items: start;
+  }
+}
+
 /* Framed screenshot — one cue (shadow), matched corner rounding, no border. */
 .shot-frame {
   display: block;

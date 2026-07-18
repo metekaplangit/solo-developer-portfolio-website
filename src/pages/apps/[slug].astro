@@ -104,9 +104,9 @@ const schema = [
     product.features.length > 0 && (
       <section class="band band-tight features-band" aria-labelledby="features-h">
         <h2 id="features-h" class="band-title">What it does</h2>
-        <ul class="feature-grid" role="list">
+        <ul class="feature-grid card-grid" role="list">
           {product.features.map((f) => (
-            <li class="feature reveal">{f}</li>
+            <li class="card feature reveal">{f}</li>
           ))}
         </ul>
       </section>
@@ -291,24 +291,16 @@ const schema = [
   }
 
 
-  /* Feature grid — one claim per cell, three-up on wide screens. Plain cells,
-     no check glyph: the list is already a list, and the accent belongs to the
-     download button (One Voice). */
+  /* One claim per cell. Track floor only; padding/radius/type come from the
+     shared `.card` system. */
   .feature-grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
-    gap: var(--space-4);
   }
   .feature {
-    padding: clamp(var(--space-4), 2vw, var(--space-6));
-    border-radius: var(--radius);
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
     color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.6;
+    justify-content: center;
   }
 
   .prose-grid {

@@ -36,18 +36,20 @@ const isLead = tone === 'lead';
       ) : (
         <p class="maker-heading" aria-hidden="true">A note from the maker</p>
       )}
-      {product.makerNote.map((para, i) => (
-        <p class={i === 0 ? 'lead' : undefined}>{para}</p>
-      ))}
-      <p class="sig">
-        — {site.person}, {site.name}
-      </p>
-      {isLead && (
-        <p class="sig-support">
-          <a href={withBase('/support/')}>Support goes straight to me</a> — usually
-          answered in 2–3 business days.
+      <div class="maker-body">
+        {product.makerNote.map((para, i) => (
+          <p class={i === 0 ? 'lead' : undefined}>{para}</p>
+        ))}
+        <p class="sig">
+          — {site.person}, {site.name}
         </p>
-      )}
+        {isLead && (
+          <p class="sig-support">
+            <a href={withBase('/support/')}>Support goes straight to me</a> — usually
+            answered in 2–3 business days.
+          </p>
+        )}
+      </div>
     </aside>
   )
 }
@@ -59,6 +61,27 @@ const isLead = tone === 'lead';
      STEP-0038. One cue, no stripe. */
   .maker-note {
     max-width: var(--measure-mid);
+  }
+  .maker-body {
+    min-width: 0;
+  }
+  /* Lead tone uses the same heading-rail composition as the policy rows, so
+     the whole site shares one "label on the left, content on the right"
+     pattern. Left bare, a 752px text column sat inside a 1152px band with
+     ~400px empty beside it and read as unfinished. */
+  .is-lead {
+    max-width: none;
+  }
+  @media (min-width: 56rem) {
+    .is-lead {
+      display: grid;
+      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+      gap: var(--gutter);
+      align-items: start;
+    }
+    .is-lead .maker-heading {
+      margin-bottom: 0;
+    }
   }
   .is-inline {
     padding: 0 0 var(--space-6);
