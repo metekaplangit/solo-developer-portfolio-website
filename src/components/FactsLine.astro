@@ -45,7 +45,12 @@ if (product.privacyFacts) facts.push(product.privacyFacts);
     font-size: var(--text-sm);
     line-height: 1.65;
   }
-  .fact:not(:last-child)::after {
+  /* Separator on the FOLLOWING fact, not a trailing `::after` on the previous
+     one. With `::after` the middot travelled with the item before the break,
+     so on wrap it dangled at the end of a line with nothing after it — once at
+     770px, twice at 390px. As a `::before` it always leads the item it
+     separates, so a wrapped line never ends on a stray dot. */
+  .fact:not(:first-child)::before {
     content: '·';
     margin-inline: 0.55em;
     color: var(--faint);

@@ -29,7 +29,9 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     border-top: 1px solid var(--border);
-    margin-top: var(--space-24);
+    /* The last band already carries `--band-y-lg` of bottom air; a second
+       full --space-24 here stacked ~192px of emptiness before the footer. */
+    margin-top: var(--band-y);
     background: color-mix(in srgb, var(--surface) 60%, transparent);
   }
   .footer-inner {

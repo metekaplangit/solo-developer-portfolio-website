@@ -7,6 +7,7 @@ import ProductAvatar from '../components/ProductAvatar.astro';
 import Badge from '../components/Badge.astro';
 import DownloadButton from '../components/DownloadButton.astro';
 import FactsLine from '../components/FactsLine.astro';
+import MakerNote from '../components/MakerNote.astro';
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
 import { getFeatured, sortProducts, statusLabel, visibleStoreLinks } from '../lib/products';
@@ -79,11 +80,17 @@ const makerLines = spotlight?.makerNote ?? [];
           <div class="spotlight-media">
             {leadImg ? (
               <a class="shot-frame" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
+                {/* `sizes` measured against the real slot, not guessed: the
+                    image column is ~452px near 960vw, ~540px at 1156vw and
+                    594px at 1281vw. The old flat `38rem` (608px) over-fetched
+                    by ~35% through the mid range. The 1600w step exists
+                    because the slot needs ~1188 device px at DPR 2 on exactly
+                    the Retina Macs this audience uses — 1280w was the ceiling. */}
                 <Image
                   src={leadImg}
                   alt={leadShot.altText}
-                  widths={[480, 720, 960, 1280]}
-                  sizes="(min-width: 60rem) 38rem, calc(100vw - 6rem)"
+                  widths={[480, 720, 960, 1280, 1600]}
+                  sizes="(min-width: 80rem) 594px, (min-width: 60rem) 47vw, calc(100vw - 6rem)"
                   format="webp"
                   quality={78}
                   loading="eager"
@@ -103,7 +110,11 @@ const makerLines = spotlight?.makerNote ?? [];
             </h3>
             <p class="spotlight-lede">{spotlight.summary}</p>
             <div class="spotlight-cta">
-              <a class="btn btn-primary" href={withBase(`/apps/${spotlight.slug}/`)}>
+              {/* Secondary, not primary: the accent fill marks the ONE action
+                  the page wants (the download, in the hero). Two accent-filled
+                  buttons on one page is the One Voice Rule broken by the page
+                  that wrote it. */}
+              <a class="btn btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
                 View {spotlight.name}
               </a>
               <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(spotlight))}>
@@ -133,17 +144,8 @@ const makerLines = spotlight?.makerNote ?? [];
 
   {
     makerLines.length > 0 && (
-      <section class="band band-tail maker" aria-labelledby="maker-h">
-        <h2 id="maker-h" class="visually-hidden">A note from the maker</h2>
-        <blockquote class="maker-quote reveal">
-          {makerLines.map((line) => (
-            <p>{line}</p>
-          ))}
-          <footer class="maker-sig">
-            <a href={withBase('/about/')}>{site.person}</a>{' · '}maker of {site.name}{' · '}
-            <a href={withBase('/support/')}>direct support</a>, usually replies in 2–3 business days
-          </footer>
-        </blockquote>
+      <section class="band band-tail maker">
+        <MakerNote product={spotlight} tone="lead" headingId="maker-h" />
       </section>
     )
   }
@@ -270,40 +272,6 @@ const makerLines = spotlight?.makerNote ?? [];
     grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
   }
 
-  /* Maker note — the page's closing beat. A person's voice in the last
-     position, where the peak-end rule says half the memory forms. */
-  .maker-quote {
-    margin: 0;
-    max-width: var(--measure-mid);
-  }
-  .maker-quote p {
-    margin: 0 0 var(--space-4);
-    font-size: var(--text-xl);
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-  .maker-sig {
-    margin-top: var(--space-6);
-    color: var(--faint);
-    font-size: var(--text-sm);
-  }
-  .maker-sig a {
-    color: var(--muted);
-  }
-  .maker-sig a:hover {
-    color: var(--text-strong);
-  }
-
-  /* Entrance motion — transform ONLY, never opacity.
-     A keyframe that starts at `opacity: 0` gates the content on the animation
-     actually running. Animations do not advance in a non-rendering context
-     (headless Lighthouse, a background tab, a print/preview renderer), so the
-     hero froze at opacity 0 and axe reported the primary CTA as a serious
-     contrast failure — on the one check that is merge-critical here. Animating
-     the transform keeps every element visible at all times and still reads as
-     a rise. Do not reintroduce opacity into these keyframes. */
   @media (prefers-reduced-motion: no-preference) {
     .hero > * {
       animation: rise 0.6s var(--ease) both;

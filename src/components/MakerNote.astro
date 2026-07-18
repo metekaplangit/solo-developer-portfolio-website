@@ -1,25 +1,53 @@
 ---
 // Maker's note (STEP-0035, taste-round T5 — user-approved copy). A short
-// first-person rationale that opens the product description: why the app
-// exists and what it refuses to become. The voice is the maker's own; the
-// exact paragraphs were approved before publication. Renders nothing when the
-// content declares no note.
+// first-person rationale: why the app exists and what it refuses to become.
+// The voice is the maker's own; the exact paragraphs were approved before
+// publication. Renders nothing when the content declares no note.
+//
+// ONE component, two placements (STEP-0040). The home page previously inlined
+// its own markup — a 24px <blockquote> with a hidden heading and a run-on
+// signature — while the product page rendered the identical two paragraphs as
+// a 17px muted <aside>. A visitor going Home → Sole Focus read the same words
+// twice, in two different treatments, one click apart. `tone` selects the
+// placement, not different content.
 import type { Product } from '../content/schema';
 import { site } from '../lib/site';
+import { withBase } from '../lib/url';
 
 interface Props {
   product: Product;
+  /**
+   * 'lead' — the closing band of a page, where the note IS the content.
+   * 'inline' (default) — opening a longer description, subordinate to it.
+   */
+  tone?: 'lead' | 'inline';
+  /** Heading id, so the containing section can label itself. */
+  headingId?: string;
 }
-const { product } = Astro.props;
+const { product, tone = 'inline', headingId } = Astro.props;
+const isLead = tone === 'lead';
 ---
 
 {
   product.makerNote.length > 0 && (
-    <aside class="maker-note reveal" aria-label="A note from the maker">
+    <aside class={`maker-note reveal ${isLead ? 'is-lead' : 'is-inline'}`} aria-labelledby={headingId}>
+      {isLead ? (
+        <h2 id={headingId} class="maker-heading">Why this exists</h2>
+      ) : (
+        <p class="maker-heading" aria-hidden="true">A note from the maker</p>
+      )}
       {product.makerNote.map((para, i) => (
         <p class={i === 0 ? 'lead' : undefined}>{para}</p>
       ))}
-      <p class="sig">— {site.person}, {site.name}</p>
+      <p class="sig">
+        — {site.person}, {site.name}
+      </p>
+      {isLead && (
+        <p class="sig-support">
+          <a href={withBase('/support/')}>Support goes straight to me</a> — usually
+          answered in 2–3 business days.
+        </p>
+      )}
     </aside>
   )
 }
@@ -28,15 +56,36 @@ const { product } = Astro.props;
   /* Set apart by typography and air, NOT by a coloured side-stripe. A
      `border-left` above 1px used as an accent stripe is an absolute ban (and is
      on DESIGN.md's own don't-list); this component shipped one until
-     STEP-0038. The note now reads as a quieter, slightly larger voice with a
-     hairline rule closing it — one cue, no stripe. */
+     STEP-0038. One cue, no stripe. */
   .maker-note {
+    max-width: var(--measure-mid);
+  }
+  .is-inline {
     padding: 0 0 var(--space-6);
     margin-bottom: var(--space-8);
     border-bottom: 1px solid var(--border);
   }
+
+  .maker-heading {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--faint);
+  }
+  /* The closing note is the page's last and best beat; give it a real heading
+     rather than a hidden one, so it reads as intended content and not as a
+     stray pull-quote. */
+  .is-lead .maker-heading {
+    font-size: var(--text-xl);
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: var(--text-strong);
+    margin-bottom: var(--space-6);
+  }
+
   .maker-note p {
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-4);
     color: var(--muted);
     line-height: 1.6;
   }
@@ -44,9 +93,32 @@ const { product } = Astro.props;
     color: var(--text);
     font-size: 1.05rem;
   }
+  /* Large display text wants the SHORTER measure, not the longer one. */
+  .is-lead p.lead {
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    max-width: 46ch;
+  }
+  .is-lead p:not(.lead):not(.sig):not(.sig-support) {
+    max-width: 52ch;
+  }
+
   .sig {
     margin-bottom: 0;
     color: var(--faint);
     font-size: var(--text-sm);
+  }
+  /* On its own line: the reply-time promise is a checkable commitment, not
+     trailing detail on a signature. */
+  .sig-support {
+    margin: var(--space-2) 0 0;
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .sig-support a {
+    color: var(--muted);
+  }
+  .sig-support a:hover {
+    color: var(--text-strong);
   }
 </style>
