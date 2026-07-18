@@ -14,7 +14,18 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. Next packet undecided — see ROADMAP._
+### Fixed
+
+- **The support address stays in one piece on a phone.** At narrow widths
+  `support@metkapstudio.com` was wrapping between `.co` and `m`, so the one
+  thing the support page exists to hand over looked like a typo. The address now
+  scales to fit its panel on a single line from 320px up; it is unchanged from
+  about 476px on.
+- **Privacy page titles no longer eat the first screen on a phone.** The heading
+  was fixed at 44px, which ran "MetKap Studio Website Privacy Policy" to three
+  lines and 139px of header at 390px. It now scales down on narrow screens
+  (two lines, 59px), bringing the at-a-glance chips and the summary up with it.
+  Desktop is unchanged.
 
 ## [0.39.1] — 2026-07-18
 

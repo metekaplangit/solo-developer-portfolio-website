@@ -115,6 +115,9 @@
 
 html {
   font-family: var(--font-sans);
+  /* The rem basis itself, so it cannot be one of the `--text-*` tokens without
+     defining the scale in terms of itself. Every type token above resolves
+     against this value; it is the root of the ramp, not a step on it. */
   font-size: 16px;
   line-height: 1.65;
   color: var(--text);
@@ -193,6 +196,12 @@ img {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  /* Off the `--radius-*` scale on purpose. This rounds the focus RING, not a
+     surface, and it has to sit behind every focusable element on the site —
+     pills, cards, inline links. `--radius-sm` (8px) visibly bows the outline
+     away from square-ish targets like inline text links; 4px reads as a
+     tight-cornered ring against everything without competing with the shape
+     of the element it surrounds. */
   border-radius: 4px;
 }
 
