@@ -35,3 +35,6 @@ Thumbs.db
 #   npx impeccable@3.2.1 install --providers=claude --project --no-hooks --yes
 .claude/skills/impeccable/
 .claude/settings.local.json
+
+# Impeccable tool state (live-mode config, proof assets) — dev-time only.
+.impeccable/
