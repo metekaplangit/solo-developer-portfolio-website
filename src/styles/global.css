@@ -90,7 +90,14 @@
      --measure    short-form column (lede, summary) ~64ch
      --measure-mid prose column (description, FAQ) ~80ch */
   --gutter: clamp(1.5rem, 4vw, 3rem);
+  /* Three separations, not one. Every band gap on the site used to be
+     `--band-y` — measured identical (48px ≤872, 70px at 1280, 72px ≥1309) on
+     every page, so whitespace carried no information about what belonged with
+     what. Rhythm in this register comes from CONTRAST: attached things sit
+     tight, new arguments get room. Pick per relationship, never uniformly. */
+  --band-y-tight: clamp(2rem, 3vw, 2.5rem);
   --band-y: clamp(3rem, 5.5vw, 4.5rem);
+  --band-y-loose: clamp(5rem, 9vw, 7.5rem);
   --band-y-lg: clamp(4rem, 8vw, 6rem);
   --measure: 35rem;
   --measure-mid: 47rem;
@@ -132,13 +139,19 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Sticky footer. `min-height` alone only guaranteed the BODY was tall enough —
+   the footer still sat wherever content ended, leaving 1273px of bare
+   background under the 404 page's footer on a tall desktop window. */
 body {
   margin: 0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
   display: block;
+  flex: 1 0 auto;
 }
 
 h1,
@@ -264,11 +277,24 @@ img {
 .band + .band {
   margin-top: var(--band-y);
 }
+/* Rhythm modifiers. Put these on the LATER band — they set the space above it,
+   i.e. its relationship to what came before. `tight` = "this belongs with the
+   thing above"; `loose` = "a new argument starts here". */
+.band + .band-tight {
+  margin-top: var(--band-y-tight);
+}
+.band + .band-loose {
+  margin-top: var(--band-y-loose);
+}
 .band-lead {
   padding-top: var(--band-y-lg);
 }
+/* The tail closes the page, it does not need to out-space every real
+   separation on it. Footer adds its own `--band-y` on top; the two together
+   used to stack 166-182px of nothing after the least important line on the
+   page. */
 .band-tail {
-  padding-bottom: var(--band-y-lg);
+  padding-bottom: var(--band-y);
 }
 
 /* Quiet section heading — real `h2`/`h3` semantics (keeps the document outline

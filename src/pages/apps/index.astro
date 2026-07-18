@@ -46,7 +46,7 @@ const schema = [
 
   {
     lead && (
-      <section class="band lead-band" aria-labelledby="lead-h">
+      <section class="band band-loose lead-band" aria-labelledby="lead-h">
         <h2 id="lead-h" class="visually-hidden">{lead.name}</h2>
         <article class="panel panel-accent lead-row reveal">
           <div class="lead-body">
@@ -88,7 +88,7 @@ const schema = [
 
   {
     rest.length > 0 && (
-      <section class="band rest-band" aria-labelledby="rest-h">
+      <section class="band band-tight rest-band" aria-labelledby="rest-h">
         <h2 id="rest-h" class="band-title">Everything else</h2>
         <ul class="grid" role="list">
           {rest.map((p) => (
@@ -101,7 +101,7 @@ const schema = [
     )
   }
 
-  <section class="band band-tail closing">
+  <section class="band band-tight band-tail closing">
     <p>
       More is in progress. Nothing gets announced here until it&rsquo;s ready to
       install — <a href={withBase('/support/')}>get in touch</a> if you want to
@@ -155,7 +155,7 @@ const schema = [
     margin: 0;
     color: var(--muted);
     line-height: 1.6;
-    max-width: 34rem;
+    max-width: var(--measure);
   }
   .lead-cta {
     display: flex;

@@ -66,7 +66,7 @@ const makerLines = spotlight?.makerNote ?? [];
 
   {
     spotlight && (
-      <section class="band featured" aria-labelledby="featured-h">
+      <section class="band band-loose featured" aria-labelledby="featured-h">
         {hasCatalog ? (
           <div class="band-head">
             <h2 id="featured-h" class="band-title">Featured</h2>
@@ -144,7 +144,7 @@ const makerLines = spotlight?.makerNote ?? [];
 
   {
     makerLines.length > 0 && (
-      <section class="band band-tail maker">
+      <section class="band band-loose band-tail maker">
         <MakerNote product={spotlight} tone="lead" headingId="maker-h" />
       </section>
     )
@@ -156,9 +156,10 @@ const makerLines = spotlight?.makerNote ?? [];
      nav brand, every heading below, and the footer. The old hero centred
      itself in a narrower column and sat ~150px inboard of everything else;
      the text is capped by `.measure` instead of by the container. */
-  .hero {
-    padding-bottom: var(--band-y);
-  }
+  /* No `padding-bottom` here: `.band + .band` already supplies the separation,
+     and adding both stacked a measured 141px void — double every other gap on
+     the site, by accident rather than intent. The hero→featured beat is set
+     deliberately with `band-loose` on the following band instead. */
   .hero-title {
     margin: var(--space-4) 0 var(--space-6);
     font-size: var(--display);
@@ -225,7 +226,7 @@ const makerLines = spotlight?.makerNote ?? [];
     color: var(--muted);
     font-size: var(--text-base);
     line-height: 1.6;
-    max-width: 34rem;
+    max-width: var(--measure);
   }
   .spotlight-cta {
     display: flex;
