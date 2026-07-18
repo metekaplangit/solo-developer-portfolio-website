@@ -18,7 +18,11 @@
   copy baked into the picture, closing the known WCAG 2.2 SC 1.1.1 gap; the
   product gallery transcript is unchanged and non-duplicative. v0.39.2 before it
   fixed two responsive defects (the support address wrapping mid-domain, and
-  policy titles running three lines on a phone).
+  policy titles running three lines on a phone). Both are unnumbered fix
+  releases on top of **STEP-0043**, which remains the last numbered feature
+  packet. *(Keep that Step ID in this bullet: the validator resolves the active
+  step from the first `STEP-XXXX` token in this file, and without one here the
+  scan falls through to the trigger-armed STEP-0033 template and fails CI.)*
 - **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
   AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
   The catch-up repaired stale live-state, milestone, schema, testing, issue, and
@@ -57,7 +61,7 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: a11y-lead-image-alt (GitHub #3)
+current_step: STEP-0043 (last numbered packet; v0.39.2 and v0.39.3 are unnumbered fix releases)
 next_step: owner-supplied real product; or trigger-armed STEP-0033; or optional Terms/disclaimer page
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
