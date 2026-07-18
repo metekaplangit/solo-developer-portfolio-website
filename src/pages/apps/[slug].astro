@@ -15,7 +15,7 @@ import { canonicalPrivacyUrl } from '../../lib/privacy';
 import { formatDate } from '../../lib/format';
 import { withBase } from '../../lib/url';
 import { softwareApplicationSchema, breadcrumbSchema } from '../../lib/schema';
-import { resolveScreenshot } from '../../lib/screenshots';
+import { resolveScreenshot, screenshotTitle } from '../../lib/screenshots';
 import ScreenshotShowcase from '../../components/ScreenshotShowcase.astro';
 import DownloadButton from '../../components/DownloadButton.astro';
 import FactsLine from '../../components/FactsLine.astro';
@@ -41,8 +41,10 @@ const stores = visibleStoreLinks(product);
 
 // Resolve content screenshots to build-time-optimized image assets (astro:assets).
 const shots = product.screenshots
-  .map((s) => ({ img: resolveScreenshot(s.path), alt: s.altText }))
-  .filter((s): s is { img: NonNullable<typeof s.img>; alt: string } => Boolean(s.img));
+  .map((s) => ({ img: resolveScreenshot(s.path), alt: s.altText, title: screenshotTitle(s.path) }))
+  .filter((s): s is { img: NonNullable<typeof s.img>; alt: string; title: string } =>
+    Boolean(s.img),
+  );
 
 const seoTitle = product.seo?.title ?? product.name;
 const seoDescription = product.seo?.description ?? product.summary;
