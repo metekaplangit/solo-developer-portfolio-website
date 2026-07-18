@@ -52,6 +52,13 @@ describe('Sole Focus product content', () => {
     expect(product.releaseDate).toBeDefined();
   });
 
+  // First-glance facts (STEP-0031): the facts line renders from these fields;
+  // privacyFacts must only restate the already-tested policy claims.
+  it('carries the first-glance facts fields', () => {
+    expect(product.requirements).toBe('macOS 10.15 or later');
+    expect(product.privacyFacts).toBe('Works offline — no account, no cloud, no tracking');
+  });
+
   it('pins the verified system requirement shown beside the download button', () => {
     // Verified against the live Mac App Store listing (macOS 10.15+). Update
     // deliberately if the app's requirement changes.

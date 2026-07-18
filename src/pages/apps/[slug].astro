@@ -18,6 +18,7 @@ import { softwareApplicationSchema, breadcrumbSchema } from '../../lib/schema';
 import { resolveScreenshot } from '../../lib/screenshots';
 import ScreenshotShowcase from '../../components/ScreenshotShowcase.astro';
 import DownloadButton from '../../components/DownloadButton.astro';
+import FactsLine from '../../components/FactsLine.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -71,10 +72,9 @@ const schema = [
         <p class="summary">{product.summary}</p>
         <div class="head-cta">
           <DownloadButton product={product} />
-          {product.requirements && <p class="requirements">Requires {product.requirements}</p>}
+          <FactsLine product={product} />
           <p class="trust-line">
-            Made by <a href={withBase('/about/')}>Mete Kaplan</a> ·
-            <a href={withBase('/support/')}>direct support</a>, usually replies in 2–3 business days
+            Made by <a href={withBase('/about/')}>Mete Kaplan</a>{' · '}<a href={withBase('/support/')}>direct support</a>, usually replies in 2–3 business days
           </p>
         </div>
       </div>

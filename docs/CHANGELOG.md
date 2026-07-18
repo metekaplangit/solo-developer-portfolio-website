@@ -16,6 +16,19 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.31.0] — 2026-07-17
+
+First-glance facts (STEP-0031, design-review adoption).
+
+### Added
+
+- **Everything you need to know before downloading, in one glance.** A quiet
+  facts line now sits right under the download button on the product page and
+  home spotlight: "Free — no in-app purchases, no subscription · macOS 10.15 or
+  later · Works offline — no account, no cloud, no tracking". The home spotlight
+  also gained the maker/support line the product page already had. All facts
+  come from the product content file and restate already-verified claims.
+
 ## [0.30.0] — 2026-07-17
 
 Purchase-decision information beside the download button (STEP-0030).

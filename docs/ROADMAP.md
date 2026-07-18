@@ -295,6 +295,39 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   business days") linking About/Support. 2 new tests (40 total).
   **AUDIT-0006 + DISC-0010 + MC-0015** run (feature step #30).
 
+- **STEP-0031 — First-glance facts** *(COMPLETE — merged, tagged `v0.31.0`,
+  2026-07-17).* Adopted design-review-0002 COMP-01 + USER-02 (high-confidence:
+  explicit price before store click-through) + USER-05 + USER-04: one reusable
+  `FactsLine.astro` (price/requirements/privacyFacts from structured content,
+  renders nothing when absent) under the download CTA on the product header and
+  home spotlight; spotlight gained the maker/support trust line; middot-spacing
+  fix in trust lines. New optional `privacyFacts` schema field; content test
+  pins it (41 tests).
+
+## Review-0002 dispositions (external design review, 2026-07-17)
+
+Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so
+future reviews and sessions do not re-litigate:
+
+- **Adopted:** COMP-01/USER-02/USER-05/USER-04 → STEP-0031; AI-07 (screenshot
+  transcript) → STEP-0032.
+- **Deferred, trigger-armed:** COMP-02 + COMP-04 (+optional COMP-09 RSS) →
+  STEP-0033 (release-notes/updates block; trigger = first app update or second
+  product). Card exists; do not start before the trigger.
+- **Taste-tier, preview-first (design round pending user picks):** USER-01
+  workflow strip, USER-03 fit statement, USER-06 gallery captions, USER-07
+  shorter reading path (merged with the open prose-preserving description
+  refresh; second independent review to flag it), COMP-05 maker note.
+- **Parked until catalog growth:** COMP-06 facets, COMP-08 compatibility
+  notices, COMP-10 purpose labels, AI-10 availability states.
+- **Declined:** AI-08 save-data mode (no field problem; 1.3 MB site), AI-01
+  light theme (deliberate dark-premium brand; tokens keep it possible), AI-02
+  shareable gallery anchors, AI-05 locale-readiness (no demand), AI-06
+  contextual 404 (needs client JS, marginal), COMP-03 support-path split and
+  USER-09 feedback mailto (nice-to-have; revisit with support volume), USER-08
+  mobile hero screenshot (LCP/duplication tradeoff on a perf-lean site),
+  USER-10 gallery chrome relabel (gallery is a liked, working surface).
+
 ## Backlog — accepted enhancements (from ENH-0001 / ENH-0002 / ENH-0003)
 
 Not scheduled yet; promote to a Step Packet when triggered.
