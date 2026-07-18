@@ -108,11 +108,19 @@
   App Review and is live, which required the App-Privacy labels and privacy
   manifest (app-side, owner-completed). The long-standing "add the Mac App Store
   link once published" website blocker is **done** (STEP-0027).
-- **Next action:** the ship-blockers are cleared. Candidates: **`FAQPage`
-  JSON-LD** (natural follow-on to the release-pass structured data), on-site
-  **changelog/updates block**, more products (fills the now-centered grids),
-  optional Terms/disclaimer page, lighter-touch description refresh
-  (prose-preserving — Format B rejected). Freeze a Task Card before editing.
+- **Next action:** the ship-blockers are cleared and the full-site redesign has
+  landed (v0.36.0 + v0.37.0). Candidates: **`FAQPage` JSON-LD** (natural
+  follow-on to the release-pass structured data), on-site **changelog/updates
+  block** (STEP-0033, trigger-armed on the first app update), **more products**
+  (the home catalog band, the "Featured" heading and the catalog link all
+  re-arm automatically when a second product exists — see the `hasCatalog`
+  branch in `src/pages/index.astro`), optional Terms/disclaimer page. Freeze a
+  Task Card before editing.
+- **Open question for the owner:** whether a game and/or an app are genuinely
+  in development. The external design handoff assumed both and shipped
+  placeholder cards; those were declined as fabricated proof (STEP-0038). If
+  they are real, add them as `in-development` entries in
+  `src/content/products/` and the catalog UI switches itself back on.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
 - **Blockers:** none. Keep the policy and structured data truthful as the listing
