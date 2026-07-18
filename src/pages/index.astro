@@ -29,6 +29,16 @@ const rest = showcase.slice(1);
 const leadShot = spotlight?.screenshots?.[0];
 const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
 
+// Marketing screenshots carry copy baked into the picture. Here — the one place
+// the image is used as a marketing composition rather than as a gallery plate —
+// that copy is part of the image's meaning, so WCAG 2.2 SC 1.1.1 requires it in
+// the text alternative (GitHub #3). The gallery on the product page keeps the
+// bare `altText`, so the transcript stays a description of the UI rather than a
+// second copy of the marketing line.
+const leadAlt = leadShot
+  ? [leadShot.bakedInText, leadShot.altText].filter(Boolean).join(' ')
+  : '';
+
 // Hero leads with the flagship's download button when it has one; otherwise
 // "See apps & games" stays the primary action.
 const heroHasDownload =
@@ -88,7 +98,7 @@ const makerLines = spotlight?.makerNote ?? [];
                     the Retina Macs this audience uses — 1280w was the ceiling. */}
                 <Image
                   src={leadImg}
-                  alt={leadShot.altText}
+                  alt={leadAlt}
                   widths={[480, 720, 960, 1280, 1600]}
                   sizes="(min-width: 80rem) 594px, (min-width: 60rem) 47vw, calc(100vw - 6rem)"
                   format="webp"

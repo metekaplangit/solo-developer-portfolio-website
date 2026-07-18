@@ -31,6 +31,18 @@ export const mediaAssetSchema = z.object({
   type: z.enum(['icon', 'screenshot', 'hero', 'logo', 'press']),
   path: z.string().min(1),
   altText: z.string().min(1, 'every media asset requires alt text'),
+  /**
+   * Meaningful text rendered INSIDE the image itself (marketing headline,
+   * caption), as distinct from `altText`, which describes what the image shows.
+   *
+   * Marketing screenshots bake copy into the picture. WCAG 2.2 SC 1.1.1 wants
+   * that copy available as text, but repeating it in `altText` would put
+   * marketing lines into the product gallery's transcript, where they read as
+   * noise beside the UI descriptions. Keeping it in its own field lets a
+   * marketing context (the home lead) announce both, while the gallery keeps
+   * announcing only what the screenshot depicts. One source, two audiences.
+   */
+  bakedInText: z.string().optional(),
   dimensions: z
     .object({
       width: z.number().int().positive(),

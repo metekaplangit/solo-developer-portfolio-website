@@ -16,6 +16,19 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.39.3] — 2026-07-18
+
+### Fixed
+
+- **The home lead image now reads out the words printed on it.** That screenshot
+  has marketing copy inside the picture — "One quiet app for all of it. Timers,
+  tasks, statistics, and ranks — nothing you don't need." — and the description
+  read to screen-reader users covered only the app window, so those two lines
+  were simply missing for anyone not seeing the image (WCAG 2.2 SC 1.1.1,
+  GitHub #3). The home page now announces the printed copy and then the window
+  it shows. The product page's screenshot gallery and its text transcript are
+  unchanged, so the marketing line isn't repeated where it would just be noise.
+
 ## [0.39.2] — 2026-07-18
 
 ### Fixed

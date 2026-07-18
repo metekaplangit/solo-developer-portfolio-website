@@ -13,36 +13,39 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **Responsive touch-up packet complete, released as
-  v0.39.2** on 2026-07-18. The support address now holds one line on a phone
-  (it was breaking between `.co` and `m` at 320px) and policy titles scale down
-  on narrow screens (three lines and 139px of header became two lines and 59px
-  at 390px). Desktop rendering is unchanged. STEP-0043 before it quieted the
-  home maker note; STEP-0042 consolidated the shared card/row system.
+- **Latest product state:** **GitHub #3 resolved, released as v0.39.3** on
+  2026-07-18. The home lead image's text alternative now includes the marketing
+  copy baked into the picture, closing the known WCAG 2.2 SC 1.1.1 gap; the
+  product gallery transcript is unchanged and non-duplicative. v0.39.2 before it
+  fixed two responsive defects (the support address wrapping mid-domain, and
+  policy titles running three lines on a phone).
 - **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
   AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
   The catch-up repaired stale live-state, milestone, schema, testing, issue, and
   checkpoint documentation and hardened the validator against another false
   green when `STATUS` and `CHECKPOINTS` disagree about due work.
-- **Open issue:** [GitHub #3](https://github.com/metekaplangit/solo-developer-portfolio-website/issues/3)
-  tracks the known WCAG 1.1.1 gap: the home lead image alternative omits
-  meaningful marketing copy baked into that image. It is not release-blocking,
-  but is the recommended next small fix packet.
-- **Next action:** freeze one packet. Recommended: resolve **#3**. Product-growth
-  alternatives are another **real** product supplied by the owner, the
-  STEP-0033 updates block when its first-update/second-product trigger fires, or
-  an optional Terms/disclaimer page. Do not invent in-development products.
+- **Open issues:** none. [GitHub #3](https://github.com/metekaplangit/solo-developer-portfolio-website/issues/3)
+  (WCAG 1.1.1, home lead image alternative) was resolved in v0.39.3.
+- **Known accepted tradeoff:** at 320px the navigation row scrolls and ~52px of
+  "About" is clipped. Page overflow stays 0. The edge-fade cue was tried and
+  rejected (see `Nav.astro`), and fitting four items needs either sub-ramp type
+  or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
+  clean fix and is an owner naming decision, not a defect.
+- **Next action:** freeze one packet. No defect backlog remains. Candidates: a
+  **real** additional product supplied by the owner, the STEP-0033 updates block
+  when its first-update/second-product trigger fires, or an optional
+  Terms/disclaimer page. Do not invent in-development products.
 
 ## Current facts
 
 - Completed **feature** steps: **42** (`STEP-0001`..`STEP-0043`; STEP-0033 is
   trigger-armed and unstarted).
-- Current product tag: **v0.39.2**. `[Unreleased]` is empty.
+- Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
 - Blockers: **none**. Due checkpoints: **none**.
-- Open GitHub issues: **#3 only** as of the 2026-07-18 wrap-up.
+- Open GitHub issues: **none** — #3 resolved in v0.39.3.
 - Dependency note: the lockfile remains on Astro 7.0.5 and Vitest 4.1.9; patch
   updates 7.1.1/4.1.10 are available but were intentionally not mixed into this
   governance-only wrap-up. `npm audit --omit=dev` is clean.
@@ -54,11 +57,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: responsive-touchups (post STEP-0043)
-next_step: fix GitHub issue #3; or owner-supplied real product; or trigger-armed STEP-0033
+current_step: a11y-lead-image-alt (GitHub #3)
+next_step: owner-supplied real product; or trigger-armed STEP-0033; or optional Terms/disclaimer page
 branch: main
-head: regenerate live with git rev-parse HEAD; product release is v0.39.2 and later commits are internal-only governance
-product_tag: v0.39.2
+head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
+product_tag: v0.39.3
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

@@ -42,6 +42,7 @@ screenshots:
     type: screenshot
     path: 01-one-quiet-app.png
     altText: The Sole Focus Focus-timer window on macOS reading 15:00 with Start, Skip and mark-done controls, and a task-preset list (Default, Study, Workout) and a statistics panel stacked behind it.
+    bakedInText: "One quiet app for all of it. Timers, tasks, statistics, and ranks — nothing you don't need."
     dimensions: { width: 2880, height: 1800 }
     licenseOrOwnership: owned
   - id: sole-focus-shot-statistics
