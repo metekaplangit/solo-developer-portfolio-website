@@ -16,6 +16,37 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.37.0] — 2026-07-18
+
+Shorter buttons, a platform-neutral name, and the last pages brought into line
+(STEP-0039).
+
+### Changed
+
+- **Download buttons are short now.** Every download button just says
+  "Download", except the one in the home hero, which says "Mac App Store".
+  Screen readers still hear the full "Download Sole Focus on the Mac App
+  Store", so nothing was lost for anyone relying on them.
+- **The studio name on the home page is "Brilliant Products for All."** The
+  site no longer describes the studio itself as Mac-only — individual products
+  still state exactly which platform and version they need.
+- **Support, Privacy and the 404 page now match the rest of the site.** These
+  were the last pages still on the old narrow-column layout with their own
+  spacing. Support is now a headline, a contact panel with the address, and
+  "what to include" cards; the privacy policies are laid out as readable panels
+  instead of one long divided column; and the 404 page sits on the same left
+  edge as everything else.
+
+### Internal
+
+- `DownloadButton` gains a documented `label` override with a note on WCAG
+  2.5.3 (any override must remain a substring of the accessible name).
+  `PolicyArticle` sections became a panel grid; policy chips dropped their
+  stacked border+fill for a single cue. `PRODUCT.md` positioning made
+  platform-neutral so the docs and the site agree. Verified: 56 geometry checks
+  across 8 routes × 7 widths — 0 overflow, 0 misaligned headings; 0 axe-core
+  violations across all 8 routes.
+
 ## [0.36.0] — 2026-07-18
 
 Full-site redesign — "Graphite Refined" (STEP-0038).
