@@ -25,10 +25,15 @@ const { product } = Astro.props;
 }
 
 <style>
+  /* Set apart by typography and air, NOT by a coloured side-stripe. A
+     `border-left` above 1px used as an accent stripe is an absolute ban (and is
+     on DESIGN.md's own don't-list); this component shipped one until
+     STEP-0038. The note now reads as a quieter, slightly larger voice with a
+     hairline rule closing it — one cue, no stripe. */
   .maker-note {
-    border-left: 3px solid var(--accent);
-    padding: var(--space-1) 0 var(--space-1) var(--space-5);
+    padding: 0 0 var(--space-6);
     margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--border);
   }
   .maker-note p {
     margin: 0 0 var(--space-3);

@@ -77,6 +77,24 @@
      a touch wider than before so prose doesn't feel cramped. */
   --maxw-prose: 43rem;
 
+  /* Band rhythm (STEP-0038) — the site is a stack of bands, one idea each.
+     A band owns its vertical air and the page gutter; nothing inside a band
+     sets page-level padding, so every band shares ONE left rail from the nav
+     to the footer. This is what stops text reading as cramped: the air lives
+     between bands, and each band's text is capped at a real measure instead of
+     running the full shell width.
+
+     --gutter  page inset, 24px on phones → 48px from ~1200px up
+     --band-y  vertical air between bands
+     --band-y-lg  hero / first-band air
+     --measure    short-form column (lede, summary) ~64ch
+     --measure-mid prose column (description, FAQ) ~80ch */
+  --gutter: clamp(1.5rem, 4vw, 3rem);
+  --band-y: clamp(3rem, 5.5vw, 4.5rem);
+  --band-y-lg: clamp(4rem, 8vw, 6rem);
+  --measure: 35rem;
+  --measure-mid: 47rem;
+
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur: 220ms;
@@ -228,7 +246,91 @@ img {
   width: 100%;
   max-width: var(--maxw);
   margin-inline: auto;
-  padding-inline: var(--space-6);
+  padding-inline: var(--gutter);
+}
+
+/* Band system (STEP-0038) -------------------------------------------------- */
+/* One band = one idea. A band owns ONLY its vertical rhythm — the horizontal
+   rail (max-width + gutter) comes from `main.container`, which wraps every
+   page and matches the header and footer. Do not give `.band` its own
+   `max-width`/`padding-inline`: nested inside the container that double-insets
+   every band and puts each page's headings 24-48px inboard of the nav brand.
+   And never give a band `margin-inline: auto` with a narrower max-width —
+   that is what pushed the old hero 150px inboard of everything below it.
+   Cap the TEXT with `--measure`, not the band. */
+.band {
+  width: 100%;
+}
+.band + .band {
+  margin-top: var(--band-y);
+}
+.band-lead {
+  padding-top: var(--band-y-lg);
+}
+.band-tail {
+  padding-bottom: var(--band-y-lg);
+}
+
+/* Quiet section heading — real `h2`/`h3` semantics (keeps the document outline
+   and the a11y gate honest), styled small and unemphatic so it labels the band
+   without competing with the content. Deliberately NOT a tracked-uppercase
+   mono kicker: that treatment is reserved for factual metadata (`.facts-line`,
+   store/requirement lines), and using it as scaffolding above every section is
+   the single most over-generated layout tic there is. */
+.band-title {
+  margin: 0 0 var(--space-6);
+  font-size: var(--text-xl);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+.band-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.band-head .band-title {
+  margin-bottom: 0;
+}
+
+/* Reading measures — apply to the TEXT, never to its container. */
+.measure {
+  max-width: var(--measure);
+}
+.measure-mid {
+  max-width: var(--measure-mid);
+}
+
+/* Panel — the one elevated surface. Single separation cue: an elevated
+   gradient plus a shadow, never also a border (DESIGN.md §4, Single-Cue). */
+.panel {
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  box-shadow: var(--shadow-md);
+  padding: clamp(var(--space-6), 3.5vw, var(--space-10));
+}
+.panel-accent {
+  background: radial-gradient(130% 150% at 0% 0%, var(--accent-soft), transparent 58%),
+    linear-gradient(180deg, var(--surface), var(--surface-2));
+}
+
+/* Framed screenshot — one cue (shadow), matched corner rounding, no border. */
+.shot-frame {
+  display: block;
+  width: 100%;
+  line-height: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+/* Plain descendant selector — this is a global stylesheet, so Astro's
+   `:global()` scoping escape hatch is neither needed nor valid here. */
+.shot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* Buttons ------------------------------------------------------------------ */
@@ -308,11 +410,15 @@ img {
   white-space: nowrap;
 }
 
+/* Eyebrow — a quiet label above a heading. Deliberately NOT `--accent`:
+   the One Voice Rule reserves the accent for the one thing a visitor can act
+   on, and accent-coloured static text reads as a link that does nothing when
+   clicked (a real complaint from the critique's first-timer persona). */
 .eyebrow {
   font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--muted);
   margin: 0;
 }
 

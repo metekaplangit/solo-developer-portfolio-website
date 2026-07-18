@@ -18,7 +18,6 @@ const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
 const featured = getFeatured(products);
 const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
-const shippedCount = products.filter((p) => p.status === 'released').length;
 
 // The lead product gets a spotlight panel; any others fall to the card grid.
 const spotlight = showcase[0];
@@ -33,41 +32,56 @@ const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
 // "See apps & games" stays the primary action.
 const heroHasDownload =
   spotlight != null && visibleStoreLinks(spotlight).some((l) => l.status === 'available');
+
+/* "Featured" only means something when there is a set to be featured FROM.
+   With a single product, the catalog scaffolding (a "Featured" kicker, an
+   "All apps & games →" link, and a grid re-showing the same app with less
+   information than the spotlight already gave) advertises the emptiness
+   instead of the product — so the product simply becomes the page's second
+   band under its own name. This re-arms itself the moment a second product
+   exists; it is never a decision about what to *claim*, only what to *label*. */
+const hasCatalog = products.length > 1;
+
+// The home page's maker voice is the product's own note — the real, approved
+// copy from the content file. Nothing here is written for the page.
+const makerLines = spotlight?.makerNote ?? [];
 ---
 
 <BaseLayout title={site.name} description={site.description} schema={[organizationSchema(), websiteSchema()]}>
-  <section class="hero">
+  <section class="band band-lead hero" aria-labelledby="hero-h">
     <p class="eyebrow">{site.tagline}</p>
-    <h1 class="hero-title">{site.name}</h1>
-    <p class="lede">{site.description}</p>
+    <h1 id="hero-h" class="hero-title">{site.headline}</h1>
+    <p class="lede measure">{site.lede}</p>
     <div class="hero-cta">
-      {heroHasDownload && <DownloadButton product={spotlight} />}
-      <a class={`btn ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href={withBase('/apps/')}>See apps &amp; games</a>
-      <a class="btn btn-secondary" href={withBase('/support/')}>Get support</a>
+      {heroHasDownload && <DownloadButton product={spotlight} label={`Download ${spotlight.name} — free`} />}
+      <a class={`btn ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href={withBase('/apps/')}>
+        See apps &amp; games
+      </a>
     </div>
-    <p class="hero-meta">
-      {shippedCount > 0 ? `${shippedCount} shipped · ` : ''}Privacy &amp; support
-      for every product
-    </p>
+    {heroHasDownload && <FactsLine product={spotlight} />}
   </section>
 
-  <section class="featured" aria-labelledby="featured-h">
-    <div class="section-head">
-      <h2 id="featured-h">Featured</h2>
-      <a class="section-link" href={withBase('/apps/')}>All apps &amp; games →</a>
-    </div>
+  {
+    spotlight && (
+      <section class="band featured" aria-labelledby="featured-h">
+        {hasCatalog ? (
+          <div class="band-head">
+            <h2 id="featured-h" class="band-title">Featured</h2>
+            <a class="section-link" href={withBase('/apps/')}>All apps &amp; games →</a>
+          </div>
+        ) : (
+          <h2 id="featured-h" class="visually-hidden">{spotlight.name}</h2>
+        )}
 
-    {
-      spotlight && (
-        <article class={`spotlight reveal${leadImg ? ' has-shot' : ''}`}>
+        <article class={`panel panel-accent spotlight reveal${leadImg ? ' has-shot' : ''}`}>
           <div class="spotlight-media">
             {leadImg ? (
-              <a class="spotlight-shot" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
+              <a class="shot-frame" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
                 <Image
                   src={leadImg}
                   alt={leadShot.altText}
                   widths={[480, 720, 960, 1280]}
-                  sizes="(min-width: 52rem) 32rem, calc(100vw - 3rem)"
+                  sizes="(min-width: 60rem) 38rem, calc(100vw - 6rem)"
                   format="webp"
                   quality={78}
                   loading="eager"
@@ -87,25 +101,23 @@ const heroHasDownload =
             </h3>
             <p class="spotlight-lede">{spotlight.summary}</p>
             <div class="spotlight-cta">
-              <DownloadButton product={spotlight} />
-              <a class="btn btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
+              <a class="btn btn-primary" href={withBase(`/apps/${spotlight.slug}/`)}>
                 View {spotlight.name}
               </a>
               <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(spotlight))}>
                 Privacy
               </a>
             </div>
-            <FactsLine product={spotlight} />
-            <p class="spotlight-trust">
-              Made by <a href={withBase('/about/')}>Mete Kaplan</a>{' · '}<a href={withBase('/support/')}>direct support</a>, usually replies in 2–3 business days
-            </p>
           </div>
         </article>
-      )
-    }
+      </section>
+    )
+  }
 
-    {
-      rest.length > 0 && (
+  {
+    hasCatalog && rest.length > 0 && (
+      <section class="band catalog" aria-labelledby="catalog-h">
+        <h2 id="catalog-h" class="band-title">The catalog</h2>
         <ul class="grid" role="list">
           {rest.map((p) => (
             <li class="reveal">
@@ -113,29 +125,49 @@ const heroHasDownload =
             </li>
           ))}
         </ul>
-      )
-    }
-  </section>
+      </section>
+    )
+  }
+
+  {
+    makerLines.length > 0 && (
+      <section class="band band-tail maker" aria-labelledby="maker-h">
+        <h2 id="maker-h" class="visually-hidden">A note from the maker</h2>
+        <blockquote class="maker-quote reveal">
+          {makerLines.map((line) => (
+            <p>{line}</p>
+          ))}
+          <footer class="maker-sig">
+            <a href={withBase('/about/')}>{site.person}</a>{' · '}maker of {site.name}{' · '}
+            <a href={withBase('/support/')}>direct support</a>, usually replies in 2–3 business days
+          </footer>
+        </blockquote>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
+  /* Hero — shares the band gutter, so its left edge is the SAME rail as the
+     nav brand, every heading below, and the footer. The old hero centred
+     itself in a narrower column and sat ~150px inboard of everything else;
+     the text is capped by `.measure` instead of by the container. */
   .hero {
-    padding-block: var(--space-24) var(--space-20);
-    max-width: 54rem;
-    margin-inline: auto;
+    padding-bottom: var(--band-y);
   }
   .hero-title {
-    margin: var(--space-3) 0 var(--space-5);
+    margin: var(--space-4) 0 var(--space-6);
     font-size: var(--display);
     font-weight: 700;
-    letter-spacing: -0.03em;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    max-width: 18ch;
   }
   .lede {
     margin: 0 0 var(--space-8);
     color: var(--muted);
-    font-size: var(--text-xl);
-    line-height: 1.5;
-    max-width: 44rem;
+    font-size: var(--text-lg);
+    line-height: 1.6;
   }
   .hero-cta {
     display: flex;
@@ -143,23 +175,7 @@ const heroHasDownload =
     gap: var(--space-3);
     align-items: center;
   }
-  .hero-meta {
-    margin: var(--space-6) 0 0;
-    color: var(--faint);
-    font-size: var(--text-sm);
-  }
 
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-4);
-    margin-bottom: var(--space-6);
-  }
-  .section-head h2 {
-    margin: 0;
-    font-size: var(--text-2xl);
-  }
   .section-link {
     font-size: var(--text-sm);
     color: var(--muted);
@@ -168,72 +184,29 @@ const heroHasDownload =
   .section-link:hover {
     color: var(--text-strong);
   }
-  .grid {
-    list-style: none;
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 20rem));
-    justify-content: center;
-  }
 
-  /* Featured spotlight — image-forward panel for the lead app. The screenshot
-     is the hero of the section; the text column stays short (STEP-0036). */
+  /* Featured spotlight — image-forward. The screenshot is the largest element
+     in the band; the text column is short and capped. */
   .spotlight {
     display: grid;
     grid-template-columns: 1fr; /* mobile: stacked, media on top */
-    gap: var(--space-10);
+    gap: clamp(var(--space-6), 3vw, var(--space-10));
     align-items: center;
-    padding: clamp(var(--space-6), 4vw, var(--space-12));
-    border-radius: var(--radius-lg);
-    background:
-      radial-gradient(130% 150% at 0% 0%, var(--accent-soft), transparent 58%),
-      linear-gradient(180deg, var(--surface), var(--surface-2));
-    box-shadow: var(--shadow-md);
   }
   .spotlight-media {
     display: grid;
     place-items: center;
-  }
-  /* Lead screenshot: framed, clickable, with a soft hover lift. */
-  .spotlight-shot {
-    display: block;
-    width: 100%;
-    line-height: 0;
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
-  }
-  .spotlight-shot :global(img) {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2880 / 1800;
-  }
-  .spotlight-shot:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .spotlight-shot {
-      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-    }
-    .spotlight-shot:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg, 0 18px 40px -12px rgb(0 0 0 / 0.55));
-    }
+    min-width: 0;
   }
   .spotlight-tags {
     display: flex;
     gap: var(--space-2);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
   .spotlight-name {
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-4);
     font-size: var(--text-2xl);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
   .spotlight-name a {
     color: var(--text-strong);
@@ -246,20 +219,9 @@ const heroHasDownload =
   .spotlight-lede {
     margin: 0;
     color: var(--muted);
-    font-size: var(--text-lg);
-    line-height: 1.55;
+    font-size: var(--text-base);
+    line-height: 1.6;
     max-width: 34rem;
-  }
-  .spotlight-trust {
-    margin: var(--space-4) 0 0;
-    color: var(--faint);
-    font-size: var(--text-xs);
-  }
-  .spotlight-trust a {
-    color: var(--muted);
-  }
-  .spotlight-trust a:hover {
-    color: var(--text-strong);
   }
   .spotlight-cta {
     display: flex;
@@ -267,26 +229,25 @@ const heroHasDownload =
     gap: var(--space-3);
     margin-top: var(--space-6);
   }
-  @media (max-width: 40rem) {
-    .spotlight {
-      gap: var(--space-6);
-      padding: var(--space-6);
+  @media (prefers-reduced-motion: no-preference) {
+    .shot-frame {
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
     }
-    .spotlight-media {
-      justify-items: start;
+    .shot-frame:hover {
+      transform: translateY(-3px);
     }
   }
-  @media (min-width: 52rem) {
+  @media (min-width: 60rem) {
     /* Icon fallback: icon | body. */
     .spotlight {
       grid-template-columns: auto 1fr;
     }
     /* Screenshot lead: a compact text column and a dominant image
-       (body | shot; DOM order is media-first, so place explicitly). */
-    /* minmax(0, …) so the text column can never let its content's min-content
+       (body | shot; DOM order is media-first, so place explicitly).
+       minmax(0, …) so the text column can never let its content's min-content
        width dictate the track and starve the image (see FactsLine note). */
     .spotlight.has-shot {
-      grid-template-columns: minmax(0, 1fr) 1.3fr;
+      grid-template-columns: minmax(0, 0.85fr) 1.15fr;
     }
     .spotlight.has-shot .spotlight-body {
       grid-column: 1;
@@ -298,6 +259,49 @@ const heroHasDownload =
     }
   }
 
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  /* Maker note — the page's closing beat. A person's voice in the last
+     position, where the peak-end rule says half the memory forms. */
+  .maker-quote {
+    margin: 0;
+    max-width: var(--measure-mid);
+  }
+  .maker-quote p {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-xl);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .maker-sig {
+    margin-top: var(--space-6);
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .maker-sig a {
+    color: var(--muted);
+  }
+  .maker-sig a:hover {
+    color: var(--text-strong);
+  }
+
+  /* Entrance motion — transform ONLY, never opacity.
+     A keyframe that starts at `opacity: 0` gates the content on the animation
+     actually running. Animations do not advance in a non-rendering context
+     (headless Lighthouse, a background tab, a print/preview renderer), so the
+     hero froze at opacity 0 and axe reported the primary CTA as a serious
+     contrast failure — on the one check that is merge-critical here. Animating
+     the transform keeps every element visible at all times and still reads as
+     a rise. Do not reintroduce opacity into these keyframes. */
   @media (prefers-reduced-motion: no-preference) {
     .hero > * {
       animation: rise 0.6s var(--ease) both;
@@ -305,10 +309,9 @@ const heroHasDownload =
     .hero .hero-title { animation-delay: 0.05s; }
     .hero .lede { animation-delay: 0.1s; }
     .hero .hero-cta { animation-delay: 0.15s; }
-    .hero .hero-meta { animation-delay: 0.2s; }
     @keyframes rise {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { transform: translateY(12px); }
+      to { transform: translateY(0); }
     }
   }
 </style>

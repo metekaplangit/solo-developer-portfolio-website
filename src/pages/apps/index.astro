@@ -1,15 +1,26 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import { sortProducts } from '../../lib/products';
+import Badge from '../../components/Badge.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
+import FactsLine from '../../components/FactsLine.astro';
+import { sortProducts, getFeatured, statusLabel } from '../../lib/products';
+import { withBase } from '../../lib/url';
+import { resolveScreenshot } from '../../lib/screenshots';
 import { breadcrumbSchema, itemListSchema } from '../../lib/schema';
 
 const entries = await getCollection('products');
 const products = sortProducts(entries.map((e) => e.data));
-const apps = products.filter((p) => p.type === 'app');
-const games = products.filter((p) => p.type === 'game');
+
+// The lead product gets a full-width row; everything else falls to the grid.
+const featured = getFeatured(products);
+const lead = featured[0] ?? products[0];
+const rest = products.filter((p) => p.slug !== lead?.slug);
+
+const leadShot = lead?.screenshots?.[lead.screenshots.length - 1] ?? lead?.screenshots?.[0];
+const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
 
 const schema = [
   breadcrumbSchema([
@@ -25,16 +36,62 @@ const schema = [
   description="Every app and game — released, in beta, and planned — each with privacy and support links."
   schema={schema}
 >
-  <PageHeader title="Apps & Games">
-    <p>Everything here links to its own privacy and support information.</p>
-  </PageHeader>
+  <section class="band band-lead catalog-hero" aria-labelledby="catalog-h">
+    <h1 id="catalog-h" class="catalog-title">Apps &amp; Games</h1>
+    <p class="lede measure">
+      Everything the studio has shipped. Each product has its own privacy page
+      and its own support page — no shared boilerplate.
+    </p>
+  </section>
 
   {
-    apps.length > 0 && (
-      <section class="group" aria-labelledby="apps-h">
-        <h2 id="apps-h" class="group-title">Apps</h2>
+    lead && (
+      <section class="band lead-band" aria-labelledby="lead-h">
+        <h2 id="lead-h" class="visually-hidden">{lead.name}</h2>
+        <article class="panel panel-accent lead-row reveal">
+          <div class="lead-body">
+            <div class="tags">
+              <Badge label={lead.type === 'game' ? 'Game' : 'App'} tone="accent" />
+              <Badge label={statusLabel(lead.status)} />
+            </div>
+            <h3 class="lead-name">
+              <a href={withBase(`/apps/${lead.slug}/`)}>{lead.name}</a>
+            </h3>
+            <p class="lead-summary">{lead.summary}</p>
+            <div class="lead-cta">
+              <DownloadButton product={lead} />
+              <a class="btn btn-secondary" href={withBase(`/apps/${lead.slug}/`)}>
+                View {lead.name}
+              </a>
+            </div>
+            <FactsLine product={lead} />
+          </div>
+          {
+            leadImg && (
+              <a class="shot-frame" href={withBase(`/apps/${lead.slug}/`)} aria-label={`Open ${lead.name}`}>
+                <Image
+                  src={leadImg}
+                  alt={leadShot.altText}
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 60rem) 34rem, calc(100vw - 6rem)"
+                  format="webp"
+                  quality={78}
+                  loading="eager"
+                />
+              </a>
+            )
+          }
+        </article>
+      </section>
+    )
+  }
+
+  {
+    rest.length > 0 && (
+      <section class="band rest-band" aria-labelledby="rest-h">
+        <h2 id="rest-h" class="band-title">Everything else</h2>
         <ul class="grid" role="list">
-          {apps.map((p) => (
+          {rest.map((p) => (
             <li class="reveal">
               <ProductCard product={p} />
             </li>
@@ -44,42 +101,101 @@ const schema = [
     )
   }
 
-  {
-    games.length > 0 && (
-      <section class="group" aria-labelledby="games-h">
-        <h2 id="games-h" class="group-title">Games</h2>
-        <ul class="grid" role="list">
-          {games.map((p) => (
-            <li class="reveal">
-              <ProductCard product={p} />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  <section class="band band-tail closing">
+    <p>
+      More is in progress. Nothing gets announced here until it&rsquo;s ready to
+      install — <a href={withBase('/support/')}>get in touch</a> if you want to
+      hear when it is.
+    </p>
+  </section>
 </BaseLayout>
 
 <style>
-  .group {
-    margin-bottom: var(--space-12);
+  .catalog-title {
+    margin: 0 0 var(--space-6);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
-  .group-title {
-    font-size: var(--text-xl);
-    margin: 0 0 var(--space-5);
+  .lede {
+    margin: 0;
     color: var(--muted);
-    font-weight: 600;
-    text-align: center;
+    font-size: var(--text-lg);
+    line-height: 1.6;
   }
-  /* auto-fit + capped width + centered tracks keeps cards balanced under the
-     centered header whether there are one or many. */
+
+  .lead-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(var(--space-6), 3vw, var(--space-10));
+    align-items: center;
+  }
+  .lead-body {
+    min-width: 0;
+  }
+  .tags {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+  .lead-name {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-2xl);
+    letter-spacing: -0.025em;
+  }
+  .lead-name a {
+    color: var(--text-strong);
+  }
+  .lead-name a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+  .lead-summary {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 34rem;
+  }
+  .lead-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  @media (min-width: 60rem) {
+    .lead-row {
+      grid-template-columns: minmax(0, 1fr) 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .shot-frame {
+      transition: transform var(--dur) var(--ease);
+    }
+    .shot-frame:hover {
+      transform: translateY(-3px);
+    }
+  }
+
   .grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 20rem));
-    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  .closing p {
+    margin: 0;
+    max-width: var(--measure);
+    color: var(--faint);
+    font-size: var(--text-sm);
+  }
+  .closing a {
+    color: var(--muted);
+  }
+  .closing a:hover {
+    color: var(--text-strong);
   }
 </style>
