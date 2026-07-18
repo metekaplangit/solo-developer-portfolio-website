@@ -173,6 +173,11 @@
   `src/content/products/` and the catalog UI switches itself back on.
 - **Required reads:** `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`, `SECURITY.md`,
   `DATA_STORAGE.md`.
+- **Blockers:** none for shipping. **Governance debt:** four scheduled
+  checkpoints are overdue after today's six feature steps — Markdown
+  Consistency (38, 40, 42), Discussion (39, 42), Audit (40), Enhancement (42).
+  The cadence arithmetic was corrected 2026-07-18; the runs themselves are
+  outstanding. See `docs/CHECKPOINTS.md`.
 - **Blockers:** none. Keep the policy and structured data truthful as the listing
   evolves (ratings JSON-LD stays out until real rating data exists — see
   `lib/schema.ts` header and `SECURITY.md`).

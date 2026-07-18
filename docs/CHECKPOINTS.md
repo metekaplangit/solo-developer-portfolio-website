@@ -25,15 +25,27 @@ counter.
 - Completed **feature** Steps: **42** (STEP-0001..STEP-0043; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
 - Next feature step: **STEP-0044** (or STEP-0033 when its trigger fires).
-- Next-due: **Markdown Consistency + Discussion** after feature step **39**;
-  **Audit** after **40**; **Enhancement** after **42**. (MC-0018 + DISC-0012
-  done at 36; AUDIT-0007 + ENH-0005 at 35.)
+- Next-due (recomputed 2026-07-18 at count **42**): all four cadences have
+  come due and none has been run. Last completed: MC-0018 + DISC-0012 at 36;
+  AUDIT-0007 + ENH-0005 at 35.
+  - **Markdown Consistency** (every 2) — due at **38, 40, 42**
+  - **Discussion** (every 3) — due at **39, 42**
+  - **Audit** (every 5) — due at **40**
+  - **Enhancement** (every 7) — due at **42**
+  Once cleared, the next are MC **44**, DISC **45**, AUDIT **45**, ENH **49**.
 
 ## Due now
 
-**None.** **MC-0018 + DISC-0012** (due at feature step **36**) are **done**
-with the STEP-0037 / v0.35.0 polish pass; prior scheduled: AUDIT-0007 +
-ENH-0005(35), MC-0017(34). All prior scheduled checkpoints and every on-demand run
+**Four scheduled checkpoints are overdue** — see the recomputed Next-due block
+above. Six feature steps shipped on 2026-07-18 (STEP-0038..0043, v0.36.0 →
+v0.39.1) and the counter advanced 36 → 42 without the cadence being re-evaluated;
+this block still read "None" against step 36. The *arithmetic* was corrected in
+this wrap-up; the checkpoints themselves have **not** been run and are the next
+governance work. Most recent completed scheduled: MC-0018 + DISC-0012(36),
+AUDIT-0007 + ENH-0005(35), MC-0017(34).
+
+Note: `scripts/validate-governance.py` passes 43/43 with this drift present —
+it checks that the two counters agree, not that the cadence has been honoured. All prior scheduled checkpoints and every on-demand run
 (MC-OD-*, AUDIT-OD-*) are recorded once, in the **Ledger** table below — this
 block names only what is currently due and the most recent scheduled checkpoint,
 so wrap-ups no longer edit it (per-run range prose here lagged repeatedly; see
