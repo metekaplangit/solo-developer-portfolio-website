@@ -1,15 +1,16 @@
 # Markdown Consistency
 
 > **Purpose:** Cross-document synchronization checkpoint procedure and stale-instruction cleanup.
-> **Read when:** A Markdown Consistency checkpoint is due (every 2 feature steps) or on demand.
-> **Update when:** Cadence, format, ownership, or synchronization criteria change.
+> **Read when:** Running a Markdown Consistency checkpoint.
+> **Update when:** Format, ownership, or synchronization criteria change.
 > **Synchronize with:** CHECKPOINTS.md, all core docs, root CLAUDE.md.
 > **Status:** Active.
-> **Activation:** Standard profile. First check due after feature step 2.
+> **Activation:** Standard profile. Run on demand.
 
-## Cadence
+## When to run
 
-Every **2** completed feature Steps, plus on demand. Branch
+On demand — when docs feel drifted, or after a run of related packets. There is
+no step-count schedule (cadence retired 2026-07-18; see ROADMAP.md). Branch
 `markdown-consistency/<id>`; report
 `docs/markdown-consistency/MARKDOWN_CONSISTENCY_<id>.md`.
 

@@ -4,12 +4,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PolicyArticle from '../../components/PolicyArticle.astro';
 import { formatDate } from '../../lib/format';
 import { withBase } from '../../lib/url';
+import { GLOBAL_POLICY_ID, productPolicyEntries } from '../../lib/privacy';
 
 const entries = await getCollection('policies');
-const globalEntry = entries.find((e) => e.data.productId === 'global');
-const perProduct = entries
-  .filter((e) => e.data.productId !== 'global')
-  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+const globalEntry = entries.find((e) => e.data.productId === GLOBAL_POLICY_ID);
+const perProduct = productPolicyEntries(entries).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
 
 if (!globalEntry) {
   throw new Error('A global privacy policy (productId: global) is required.');

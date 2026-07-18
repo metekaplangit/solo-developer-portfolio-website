@@ -7,16 +7,21 @@
 > **Status:** Active.
 > **Activation:** Standard profile. Vitest and Lighthouse CI are active.
 
-## Commands (repeatable local + CI gates)
+## Commands (local gates + the one deploy gate)
 
-| Check | Command | Gate class |
-|---|---|---|
-| Static build | `npm run build` | Merge-critical |
-| Type + content schema check | `npm run check` (`astro check`) | Merge-critical |
-| Governance validator | `python3 scripts/validate-governance.py` | Merge-critical |
-| Unit tests (`lib/` + schema) | `npm test` (Vitest — **added in STEP-0001**) | Merge-critical |
-| Route/link generation | `npm run build` (sitemap + required static routes) | Merge-critical for release |
-| Accessibility check | `npm run lhci` on built pages; threshold enforced in CI/deploy | Merge-critical for user pages |
+Run locally before merge. CI was retired on 2026-07-18, so **no automation gates
+a merge** — "Merge-critical" below is a discipline, not an enforced check. The
+only machine-enforced gate is Lighthouse accessibility, and it runs *after*
+merge in `deploy.yml`, blocking the live publish rather than the merge.
+
+| Check | Command | Gate class | Enforced by |
+|---|---|---|---|
+| Static build | `npm run build` | Merge-critical | local only |
+| Type + content schema check | `npm run check` (`astro check`) | Merge-critical | local only |
+| Governance validator | `python3 scripts/validate-governance.py` | Merge-critical | local only |
+| Unit tests (`lib/` + schema) | `npm test` (Vitest — **added in STEP-0001**) | Merge-critical | local only |
+| Route/link generation | `npm run build` (sitemap + required static routes) | Merge-critical for release | local only |
+| Accessibility check | `npm run lhci` on built pages | Release-critical | **`deploy.yml` — blocks the live deploy** |
 
 **Current baseline:** Vitest is active (45 tests at the 2026-07-18 wrap-up) and
 Lighthouse CI requires accessibility ≥0.95 on built routes. An unavailable,

@@ -238,8 +238,6 @@ img {
    reading/content areas only; nav, buttons, and cards keep their own states. */
 .policy a:not(.avatar-link),
 .prose a,
-.about a,
-.support a,
 .privacy-ref a,
 .per-product-lead a,
 .footer-links a,
@@ -254,8 +252,6 @@ img {
 }
 .policy a:not(.avatar-link):hover,
 .prose a:hover,
-.about a:hover,
-.support a:hover,
 .privacy-ref a:hover,
 .per-product-lead a:hover,
 .footer-links a:hover,
@@ -393,7 +389,6 @@ img {
   letter-spacing: -0.01em;
   color: var(--text-strong);
 }
-.card-body,
 .card p {
   margin: 0;
   color: var(--muted);

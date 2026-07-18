@@ -22,7 +22,8 @@
   releases on top of **STEP-0043**, which remains the last numbered feature
   packet. *(Keep that Step ID in this bullet: the validator resolves the active
   step from the first `STEP-XXXX` token in this file, and without one here the
-  scan falls through to the trigger-armed STEP-0033 template and fails CI.)*
+  scan falls through to the trigger-armed STEP-0033 template and the validator
+  fails locally. CI is retired, so nothing catches this remotely.)*
 - **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
   AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
   The catch-up repaired stale live-state, milestone, schema, testing, issue, and
@@ -39,6 +40,23 @@
   **real** additional product supplied by the owner, the STEP-0033 updates block
   when its first-update/second-product trigger fires, or an optional
   Terms/disclaimer page. Do not invent in-development products.
+- **Open follow-ups from the 2026-07-18 system health check** (none are defects;
+  all are deliberate, unscheduled debt):
+  1. **Duplication.** The home spotlight and the catalog lead-row are the same
+     component built twice (6 byte-identical CSS rule bodies under different
+     selector names); the contact panel is built twice with its CSS written
+     three times. One `ProductLead` extraction would close both.
+  2. **`PolicyArticle.astro` holds hardcoded legal prose** (4 of 12 sections)
+     that the content schema is supposed to own. A product cannot vary that
+     text without editing a shared component.
+  3. **About/Support pages lack the animated in-content link underline** other
+     reading surfaces have — the rules targeted `.about`/`.support`, which no
+     element carries. Dead rules removed; applying the treatment for real is a
+     visual change and needs a preview before it ships.
+  4. **`noUncheckedIndexedAccess` is off** (`astro/tsconfigs/strict` does not set
+     it). `showcase[0]` types as non-optional while the pages correctly guard
+     for undefined — so deleting a "redundant" `?.` would crash at runtime with
+     a green typecheck.
 
 ## Current facts
 
@@ -95,7 +113,8 @@ state with `git status --porcelain --branch` and `git rev-parse HEAD`.
 | Git integrity | Pass | `git fsck`, `git diff --check`, no tracked secret-pattern hits |
 | Remote automation | Pass | Deploy workflow green (builds, passes the a11y gate, publishes) |
 
-The Lighthouse accessibility threshold remains enforced in CI/deploy. The
+The Lighthouse accessibility threshold remains enforced in `deploy.yml` — after
+merge, blocking the live publish rather than the merge itself. The
 latest product packets also recorded zero axe violations and no overflow across
 their measured route/viewport matrices; this docs-only catch-up did not change
 rendered output.

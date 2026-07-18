@@ -14,7 +14,20 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
-_Nothing pending. Next packet undecided — see ROADMAP._
+### Fixed
+
+- Structured data (JSON-LD) now derives its canonical origin from the `site`
+  value in `astro.config.mjs` instead of a second hardcoded copy of the domain,
+  and routes internal paths through `withBase()`. Output on the live
+  configuration is byte-identical; the fix matters if the domain or base path
+  ever changes, where the old code would have silently kept emitting the
+  previous host and dropped the base prefix.
+
+### Removed
+
+- Dead code: the unreferenced `PageHeader.astro`, two test-only privacy helpers,
+  and four dead CSS selectors (`.about a`, `.support a`, and their `:hover`
+  pairs, plus `.card-body`). No rendered output changes.
 
 ## [0.39.3] — 2026-07-18
 

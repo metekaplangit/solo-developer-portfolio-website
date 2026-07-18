@@ -26,7 +26,7 @@ installed.
 | Adopted item | Propagated to |
 |---|---|
 | Astro 7 agent-friendly workflow | AI_WORKFLOW.md (startup + build feedback), TECH_STACK.md |
-| `astro check` in CI | TESTING.md, DEPLOYMENT.md, `.github/workflows/ci.yml` |
+| `astro check` (local gate) | TESTING.md, DEPLOYMENT.md |
 | `yaml` security override | TECH_STACK.md, SECURITY.md |
 
 ## Calibration findings (2026-07-02)

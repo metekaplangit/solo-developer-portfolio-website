@@ -27,8 +27,8 @@ python3 scripts/validate-governance.py
 ```
 
 Run after docs change and before every merge/tag. A failure is `Needs Repair`,
-never a passing documentation check. Also recorded in `STATUS.md` and CI
-(`.github/workflows/ci.yml`).
+never a passing documentation check. Also recorded in `STATUS.md`. This runs
+locally only — CI was retired on 2026-07-18 and nothing enforces it remotely.
 
 ## Working rules
 

@@ -434,10 +434,13 @@ future reviews and sessions do not re-litigate:
 - **Deferred, trigger-armed:** COMP-02 + COMP-04 (+optional COMP-09 RSS) →
   STEP-0033 (release-notes/updates block; trigger = first app update or second
   product). Card exists; do not start before the trigger.
-- **Taste-tier, preview-first (design round pending user picks):** USER-01
-  workflow strip, USER-03 fit statement, USER-06 gallery captions, USER-07
-  shorter reading path (merged with the open prose-preserving description
-  refresh; second independent review to flag it), COMP-05 maker note.
+- **Taste-tier — round concluded (STEP-0034/0035, v0.33.0):** USER-03 fit
+  statement shipped (`FitStatement.astro`) and COMP-05 maker note shipped
+  (`MakerNote.astro`); USER-01 workflow strip and USER-06 gallery captions
+  **declined**; USER-07 shorter reading path **closed** unless reopened. Still
+  open from this thread: the **prose-preserving description refresh** — the
+  icon-panel/card treatment was rendered and rejected live, so any retry stays
+  prose-first and must be previewed before it is finalized.
 - **Parked until catalog growth:** COMP-06 facets, COMP-08 compatibility
   notices, COMP-10 purpose labels, AI-10 availability states.
 - **Declined:** AI-08 save-data mode (no field problem; 1.3 MB site), AI-01
@@ -452,8 +455,6 @@ future reviews and sessions do not re-litigate:
 
 Not scheduled yet; promote one outcome to a frozen packet when selected.
 
-- **Recommended small fix:** GitHub #3 — give the home lead marketing image a
-  complete text alternative without duplicating the gallery transcript.
 - **Highest product value:** add another real owner-supplied product. This is
   blocked on the product existing; never publish placeholder proof.
 - **Trigger-armed:** STEP-0033 updates/release-notes block, only after the first
@@ -469,5 +470,6 @@ Not scheduled yet; promote one outcome to a frozen packet when selected.
 ## Planning rules
 
 Append-only Step identity/order. One active packet. Ad hoc fixes/audits/refactors
-are normal packets and cannot bypass governance. Satisfy the REFACTORING
-consolidation cadence before opening each new feature packet.
+are normal packets and cannot bypass governance. Run a REFACTORING consolidation
+pass when the rule-of-three hotspot trigger fires — not on a packet timer (that
+cadence was retired with the rest on 2026-07-18).

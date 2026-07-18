@@ -18,9 +18,11 @@ behavior changed, split the work into a separate packet.
 1. **Hotspot (rule-of-three):** a third same-class patch to a module, or a
    fix-of-a-fix, forces a refactor/consolidation packet before another patch
    (unless explicitly blocked and recorded).
-2. **Consolidation cadence:** run a consolidation pass after every **one or two**
-   feature packets — review cohesion, coupling, dependency direction, duplication
-   (esp. product-fact duplication), naming, magic values, dead code, size.
+2. **Consolidation pass (on demand):** review cohesion, coupling, dependency
+   direction, duplication (esp. product-fact duplication), naming, magic values,
+   dead code, size. Run this when the hotspot trigger above fires or when the
+   code feels tangled — **not** on a packet timer (that cadence was retired with
+   the checkpoint cadence on 2026-07-18).
 3. **Milestone/backstop debt pass:** at each milestone boundary.
 
 ## Decision rubric

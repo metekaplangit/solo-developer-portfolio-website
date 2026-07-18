@@ -1,16 +1,17 @@
 # Discussion
 
 > **Purpose:** Multi-persona architecture/codebase improvement reviews.
-> **Read when:** A Discussion checkpoint is due (every 3 feature steps) or on demand.
-> **Update when:** Cadence, format, personas, or triage changes.
+> **Read when:** Running a Discussion checkpoint.
+> **Update when:** Format, personas, or triage changes.
 > **Synchronize with:** CHECKPOINTS.md, ROADMAP.md, ISSUE_TRACKING.md.
 > **Status:** Active.
-> **Activation:** Standard profile. First discussion due after feature step 3.
+> **Activation:** Standard profile. Run on demand.
 
-## Cadence
+## When to run
 
-Every **3** completed feature Steps, plus on demand (on-demand does not reset
-cadence). Report: `docs/discussions/DISCUSSION_<checkpoint-id>.md`.
+On demand — when an architecture or codebase question is worth several
+perspectives. There is no step-count schedule (cadence retired 2026-07-18; see
+ROADMAP.md). Report: `docs/discussions/DISCUSSION_<checkpoint-id>.md`.
 
 ## Method
 

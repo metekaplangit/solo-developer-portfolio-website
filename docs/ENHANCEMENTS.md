@@ -1,16 +1,17 @@
 # Enhancements
 
 > **Purpose:** Evidence-backed enhancement audits, invention, and feasibility review.
-> **Read when:** An Enhancement checkpoint is due (every 7 feature steps) or on demand.
-> **Update when:** Cadence, scope, source policy, or triage changes.
+> **Read when:** Running an Enhancement checkpoint.
+> **Update when:** Scope, source policy, or triage changes.
 > **Synchronize with:** CHECKPOINTS.md, RESEARCH.md, ROADMAP.md, STATUS.md, ISSUE_TRACKING.md.
 > **Status:** Active.
-> **Activation:** Standard profile. First enhancement review due after feature step 7.
+> **Activation:** Standard profile. Run on demand.
 
-## Cadence
+## When to run
 
-Every **7** completed feature Steps, plus on demand. Report:
-`docs/enhancements/ENHANCEMENT_<checkpoint-id>.md`.
+On demand — when looking for evidence-backed improvements worth scheduling.
+There is no step-count schedule (cadence retired 2026-07-18; see ROADMAP.md).
+Report: `docs/enhancements/ENHANCEMENT_<checkpoint-id>.md`.
 
 ## Method
 

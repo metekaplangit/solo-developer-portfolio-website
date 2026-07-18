@@ -44,7 +44,7 @@
 | `src/styles/**` | Design tokens |
 | `public/**` | Static assets (icons, screenshots, CNAME at M4) |
 | `scripts/validate-governance.py` | Governance validator |
-| `.github/workflows/**` | CI (validator + build + check) |
+| `.github/workflows/**` | `deploy.yml` only — build + Lighthouse a11y gate + Pages publish |
 | `.github/ISSUE_TEMPLATE/**` | Issue forms + security route |
 | `docs/tasks/**` | Task Cards per Step |
 | `docs/issues/LEDGER.md` | Pre-remote issue fallback |
