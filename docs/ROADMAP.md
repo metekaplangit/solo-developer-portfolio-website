@@ -405,6 +405,16 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   0 overflow; **0 ragged rows**; 0 axe violations. Lands STEP-0041's deferred
   card-grid consolidation. No checkpoint due (feature #41).
 
+- **STEP-0043 — Quiet home maker note** *(COMPLETE — merged, tagged `v0.39.1`,
+  2026-07-18).* Owner-directed: multiple small identical boxes, very subtle, so
+  the featured product keeps the focus. New `quiet` tone on `MakerNote` — three
+  cells with a transparent fill and one hairline, no shadow or accent, heading
+  32px → 15px faint. Subtlety via flatness rather than size, because the
+  spotlight is an elevated gradient panel. Identical width and height verified
+  at ten widths; fixed an orphan cell that stretched to double width at
+  744–820px and stacked cells that sized to their own copy. No checkpoint due
+  (feature #42).
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

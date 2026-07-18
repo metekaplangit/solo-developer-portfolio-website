@@ -9,7 +9,17 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0042 complete — consistency pass, released v0.39.0.**
+- **State: STEP-0043 complete — quiet home maker note, released v0.39.1.**
+  Owner-directed: "multiple small boxes… perfectly aligned and the same shape
+  and size… very, very subtle so the user's focus must be on the featured
+  application." Built as a new `quiet` tone on `MakerNote`: three identical
+  cells, transparent fill + one hairline, no shadow or accent, heading 32px →
+  15px faint. Subtlety comes from **flatness**, not size — the spotlight is an
+  elevated gradient panel, so merely smaller cells would still have competed.
+  Verified identical width AND height at all ten tested widths; two bugs caught
+  en route (an orphan cell stretched to double width at 744–820px, and stacked
+  cells sizing to their own copy). Contrast 5.59:1, clears AA.
+- **Prior: STEP-0042 — consistency pass, released v0.39.0.**
   Owner-annotated screenshots of the live site drove this: ragged box sizes on
   both policy pages, a mismatched lede colour, a too-large home hero gap, and
   the maker note leaving half its container empty. Root cause was **four
@@ -227,8 +237,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0042 merge, tagged v0.39.0
-product_tag: v0.39.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0043 merge, tagged v0.39.1
+product_tag: v0.39.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -276,7 +286,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **41** (STEP-0001..0042) — this counter is
+Completed **feature** steps: **42** (STEP-0001..0043) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

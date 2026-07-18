@@ -16,6 +16,16 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.39.1] — 2026-07-18
+
+### Changed
+
+- **The "Why this exists" note on the home page is much quieter.** It's now
+  three small, identical boxes — same width and same height at every screen
+  size — drawn with a thin outline and no fill, so the Sole Focus panel above
+  it clearly stays the centre of attention. The heading dropped from a large
+  title to a small quiet label.
+
 ## [0.39.0] — 2026-07-18
 
 Consistency pass (STEP-0042).
