@@ -29,3 +29,9 @@ Thumbs.db
 
 # Lighthouse CI reports (local artifacts)
 .lighthouseci/
+
+# AI design tooling installed locally (dev-time only; not part of the static
+# build/deploy). Impeccable skill — reinstall with:
+#   npx impeccable@3.2.1 install --providers=claude --project --no-hooks --yes
+.claude/skills/impeccable/
+.claude/settings.local.json
