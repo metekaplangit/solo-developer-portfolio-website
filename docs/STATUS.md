@@ -9,7 +9,14 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0037 complete — alignment & polish pass, released v0.35.0.**
+- **State: v0.35.1 patch — fixed a P0 regression from v0.35.0** found by
+  `/impeccable critique`: the facts line's `white-space: nowrap` became an
+  unbreakable 828px run that starved the featured screenshot (13px at 1024,
+  234px at 1280) and overflowed the page at 430/447/744/820px. Now a flex-wrap
+  row + `minmax(0,1fr)` grid; verified overflow-free at 9 widths, image back to
+  599px. **Impeccable installed** (global, no hooks) with `PRODUCT.md` +
+  `DESIGN.md` captured.
+- **Prior: STEP-0037 — alignment & polish pass, released v0.35.0.**
   User-directed: buttons now share one height (featured CTA 56/49/49→48/48/48;
   download leads via fill/glyph, not size), featured text column widened so the
   lede/trust wrap cleanly, and the facts line breaks only between facts. Fixed
@@ -151,8 +158,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0037 merge, tagged v0.35.0 (HEAD may carry post-release checkpoint docs)
-product_tag: v0.35.0
+head: regenerate-live (git rev-parse HEAD) — v0.35.1 patch (facts-line regression fix) on HEAD
+product_tag: v0.35.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)

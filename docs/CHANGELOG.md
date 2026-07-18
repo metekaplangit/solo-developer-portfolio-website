@@ -16,6 +16,17 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.35.1] — 2026-07-18
+
+### Fixed
+
+- **The featured screenshot is big again, and the page no longer scrolls
+  sideways on tablets.** A change in 0.35.0 accidentally made the facts line
+  (Free · macOS 10.15 · Works offline) refuse to wrap, which squeezed the
+  featured screenshot down to a sliver on desktop and pushed the page wider
+  than the screen on iPads and large phones. The facts now wrap between facts
+  as intended, and the image is back to full size.
+
 ## [0.35.0] — 2026-07-17
 
 Alignment & polish pass (STEP-0037).
