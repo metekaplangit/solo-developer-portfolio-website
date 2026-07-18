@@ -19,8 +19,12 @@ interface Props {
   /**
    * 'lead' — the closing band of a page, where the note IS the content.
    * 'inline' (default) — opening a longer description, subordinate to it.
+   * 'quiet' — a row of small, identical, deliberately understated cells. Used
+   *   where something else on the page must own the attention (the home page's
+   *   featured product); see the `.is-quiet` styles for why it is flat rather
+   *   than merely smaller.
    */
-  tone?: 'lead' | 'inline';
+  tone?: 'lead' | 'inline' | 'quiet';
   /** Heading id, so the containing section can label itself. */
   headingId?: string;
 }
@@ -30,26 +34,42 @@ const isLead = tone === 'lead';
 
 {
   product.makerNote.length > 0 && (
-    <aside class={`maker-note reveal ${isLead ? 'is-lead' : 'is-inline'}`} aria-labelledby={headingId}>
-      {isLead ? (
-        <h2 id={headingId} class="maker-heading">Why this exists</h2>
-      ) : (
+    <aside class={`maker-note reveal is-${tone}`} aria-labelledby={headingId}>
+      {tone === 'inline' ? (
         <p class="maker-heading" aria-hidden="true">A note from the maker</p>
+      ) : (
+        <h2 id={headingId} class="maker-heading">Why this exists</h2>
       )}
-      <div class="maker-body">
-        {product.makerNote.map((para, i) => (
-          <p class={i === 0 ? 'lead' : undefined}>{para}</p>
-        ))}
-        <p class="sig">
-          — {site.person}, {site.name}
-        </p>
-        {isLead && (
-          <p class="sig-support">
+
+      {tone === 'quiet' ? (
+        /* Equal cells: one per paragraph, plus the signature. Same track width
+           and stretched to the same height, so every box is the same shape. */
+        <ul class="maker-cells" role="list">
+          {product.makerNote.map((para) => (
+            <li class="maker-cell">{para}</li>
+          ))}
+          <li class="maker-cell">
+            <span class="cell-sig">— {site.person}, {site.name}</span>
             <a href={withBase('/support/')}>Support goes straight to me</a> — usually
             answered in 2–3 business days.
+          </li>
+        </ul>
+      ) : (
+        <div class="maker-body">
+          {product.makerNote.map((para, i) => (
+            <p class={i === 0 ? 'lead' : undefined}>{para}</p>
+          ))}
+          <p class="sig">
+            — {site.person}, {site.name}
           </p>
-        )}
-      </div>
+          {isLead && (
+            <p class="sig-support">
+              <a href={withBase('/support/')}>Support goes straight to me</a> — usually
+              answered in 2–3 business days.
+            </p>
+          )}
+        </div>
+      )}
     </aside>
   )
 }
@@ -145,6 +165,74 @@ const isLead = tone === 'lead';
     color: var(--muted);
   }
   .sig-support a:hover {
+    color: var(--text-strong);
+  }
+
+  /* Quiet tone — deliberately the flattest container on the site.
+     The featured spotlight is an elevated gradient panel with a shadow and an
+     accent wash. To read as clearly subordinate these cells have to be flatter
+     than that, not merely smaller: a hairline outline, no fill, no shadow, no
+     accent. That is also why the heading drops from 32px to a small faint
+     label. If these ever gain a surface fill they will start competing with
+     the product panel, which is the one thing this treatment exists to
+     prevent. Single-cue: an outline OR a fill, never both. */
+  .is-quiet {
+    max-width: none;
+  }
+  .is-quiet .maker-heading {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--faint);
+  }
+  /* One column, or one row — never a ragged last row.
+     `auto-fit` was wrong here: at 744-820px it fitted two tracks, leaving the
+     third cell alone on row two where `1fr` stretched it to double the width
+     of the other two. Same-shape-and-same-size has to hold at EVERY width, not
+     just the wide ones. Below 60rem everything stacks at equal width; above,
+     `grid-auto-flow: column` puts every cell in a single row at `1fr`, so the
+     count can change without ever producing an orphan. */
+  .maker-cells {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+    /* Equal rows too, so the cells stay identical when stacked — not just when
+       they sit side by side. Without this the stacked boxes size to their own
+       copy and the set stops reading as one repeated shape. */
+    grid-auto-rows: 1fr;
+  }
+  @media (min-width: 60rem) {
+    .maker-cells {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+  }
+  .maker-cell {
+    margin: 0;
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: none;
+    /* --faint on --bg = 5.59:1, still clears AA at this size. Do not go
+       quieter than this token; the next step down fails. */
+    color: var(--faint);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .cell-sig {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--muted);
+  }
+  .maker-cell a {
+    color: var(--muted);
+  }
+  .maker-cell a:hover {
     color: var(--text-strong);
   }
 </style>

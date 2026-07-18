@@ -145,9 +145,7 @@ const makerLines = spotlight?.makerNote ?? [];
   {
     makerLines.length > 0 && (
       <section class="band band-tail maker">
-        <div class="panel maker-panel">
-          <MakerNote product={spotlight} tone="lead" headingId="maker-h" />
-        </div>
+        <MakerNote product={spotlight} tone="quiet" headingId="maker-h" />
       </section>
     )
   }
@@ -181,13 +179,6 @@ const makerLines = spotlight?.makerNote ?? [];
     flex-wrap: wrap;
     gap: var(--space-3);
     align-items: center;
-  }
-
-  /* The note sits in a panel so its container matches its text block. Left
-     bare, a 46ch column of text floated in a 1152px band with ~600px of empty
-     space beside it and read as unfinished rather than composed. */
-  .maker-panel {
-    display: block;
   }
 
   .section-link {
