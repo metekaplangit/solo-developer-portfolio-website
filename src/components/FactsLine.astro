@@ -30,27 +30,24 @@ if (product.privacyFacts) facts.push(product.privacyFacts);
 }
 
 <style>
+  /* Flex-wrap, NOT nowrap spans. Each fact is a flex item, so the row breaks
+     between facts (never mid-phrase) while the element's min-content width stays
+     one word — not the full 828px run. `white-space: nowrap` here previously
+     forced the whole line to be unbreakable, which starved the featured image
+     column (13-234px instead of ~630px) and overflowed the page between ~417px
+     and ~880px. Never reintroduce it. */
   .facts-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
     margin: var(--space-4) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
     line-height: 1.65;
   }
-  /* Each fact stays whole; the line only ever breaks between facts (never
-     mid-phrase), and the separator is breakable so no middot leads a new line. */
-  .fact {
-    white-space: nowrap;
-  }
   .fact:not(:last-child)::after {
     content: '·';
-    white-space: normal;
     margin-inline: 0.55em;
     color: var(--faint);
-  }
-  /* Very narrow screens: let a long fact wrap internally rather than overflow. */
-  @media (max-width: 26rem) {
-    .fact {
-      white-space: normal;
-    }
   }
 </style>

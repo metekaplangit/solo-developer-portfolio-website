@@ -283,8 +283,10 @@ const heroHasDownload =
     }
     /* Screenshot lead: a compact text column and a dominant image
        (body | shot; DOM order is media-first, so place explicitly). */
+    /* minmax(0, …) so the text column can never let its content's min-content
+       width dictate the track and starve the image (see FactsLine note). */
     .spotlight.has-shot {
-      grid-template-columns: 1fr 1.3fr;
+      grid-template-columns: minmax(0, 1fr) 1.3fr;
     }
     .spotlight.has-shot .spotlight-body {
       grid-column: 1;
