@@ -53,10 +53,13 @@
      reading surfaces have — the rules targeted `.about`/`.support`, which no
      element carries. Dead rules removed; applying the treatment for real is a
      visual change and needs a preview before it ships.
-  4. **`noUncheckedIndexedAccess` is off** (`astro/tsconfigs/strict` does not set
-     it). `showcase[0]` types as non-optional while the pages correctly guard
-     for undefined — so deleting a "redundant" `?.` would crash at runtime with
-     a green typecheck.
+  4. **`noUncheckedIndexedAccess` is off** (`astro/tsconfigs/strict` sets only
+     `strict: true`; the flag lives in `strictest`). `showcase[0]` types as
+     non-optional while the pages correctly guard for undefined — so deleting a
+     "redundant" `?.` would crash at runtime with a green typecheck. Measured
+     2026-07-18: enabling it surfaces **exactly 7 errors** — `index.astro:158`,
+     `apps/index.astro:74`, `ScreenshotShowcase.astro:354`, and 4 in tests. A
+     contained packet, not an open-ended migration.
 
 ## Current facts
 
