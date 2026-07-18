@@ -22,9 +22,9 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **38** (STEP-0001..STEP-0039; 0033 deferred/unstarted does not count).
+- Completed **feature** Steps: **39** (STEP-0001..STEP-0040; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0040** (or STEP-0033 when its trigger fires).
+- Next feature step: **STEP-0041** (or STEP-0033 when its trigger fires).
 - Next-due: **Markdown Consistency + Discussion** after feature step **39**;
   **Audit** after **40**; **Enhancement** after **42**. (MC-0018 + DISC-0012
   done at 36; AUDIT-0007 + ENH-0005 at 35.)

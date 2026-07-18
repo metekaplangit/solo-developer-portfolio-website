@@ -9,7 +9,22 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0039 complete — copy + last-pages pass, released v0.37.0.**
+- **State: STEP-0040 complete — critique follow-ups, released v0.37.1.**
+  Second `/impeccable critique` of the home page scored **25/40 (trend 24 →
+  25)**: the restructure solved layout, and the remaining problems were
+  underneath it. Fixed: mobile nav hid **About** entirely (135px off-screen) —
+  "Home" now steps aside ≤40rem since the brand links home, four destinations
+  visible on one row, header steady at 94px, `overflow-x` kept only as a
+  safety valve below ~360px after a nowrap-only attempt overflowed the
+  document at 320px; FactsLine separator no longer dangles on wrap; MakerNote
+  consolidated to one component (home + product page were rendering identical
+  copy in two treatments); one accent primary per page; hero `sizes` matched to
+  the measured slot + 1600w. **Owner kept the headline and the App Store lead
+  image** (both in `.impeccable/critique/ignore.md`); the **[P0] hero does not
+  name the product** was deliberately not actioned — taste call on a
+  just-approved layout. **Open a11y item: the lead image's alt text omits the
+  marketing copy baked into it (WCAG 1.1.1).**
+- **Prior: STEP-0039 — copy + last-pages pass, released v0.37.0.**
   User-directed: download buttons shortened to "Download" (home hero reads
   "Mac App Store"), with accessible names deliberately left full; headline
   changed to **"Brilliant Products for All"** and all studio-level copy made
@@ -187,8 +202,8 @@ active_step: none
 current_step: STEP-0037
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0039 merge, tagged v0.37.0
-product_tag: v0.37.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0040 merge, tagged v0.37.1
+product_tag: v0.37.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -236,7 +251,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **38** (STEP-0001..0039) — this counter is
+Completed **feature** steps: **39** (STEP-0001..0040) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full

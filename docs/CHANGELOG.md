@@ -16,6 +16,40 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.37.1] — 2026-07-18
+
+Design-critique follow-ups (STEP-0040).
+
+### Fixed
+
+- **Every menu item is visible on a phone again.** On narrow screens two
+  destinations — including **About** — sat off-screen behind an invisible
+  sideways scroll. "Home" now steps aside at phone width (the logo already
+  takes you home), leaving the rest on one visible row with no change to header
+  height.
+- **No more stray dot at the end of a line.** When the facts line under the
+  download button wrapped onto two or three rows, a separator could be left
+  dangling at the end of a row.
+- **The maker's note reads the same everywhere.** The home page and the Sole
+  Focus page were rendering the identical words in two different styles. They
+  now share one treatment, the home version gets a real heading, and the
+  reply-time promise sits on its own line instead of trailing the signature.
+
+### Changed
+
+- Only one filled accent button per page now, so it's always obvious which
+  action the page is actually recommending.
+- Slightly crisper featured screenshot on high-resolution Macs, and less image
+  data downloaded on mid-size windows.
+
+### Internal
+
+- Critique snapshot 25/40 (trend 24 → 25). Owner elected to keep the headline
+  and the App Store lead image; both recorded in
+  `.impeccable/critique/ignore.md`. The lead image's alt-text gap is
+  deliberately **not** ignored and stays open. Verified: 64 geometry checks
+  (320–1440 × 8 routes) with 0 overflow, 0 axe-core violations across 8 routes.
+
 ## [0.37.0] — 2026-07-18
 
 Shorter buttons, a platform-neutral name, and the last pages brought into line
