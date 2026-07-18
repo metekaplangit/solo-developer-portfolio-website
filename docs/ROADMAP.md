@@ -7,11 +7,16 @@
 > **Status:** Active.
 > **Activation:** Standard profile.
 
-## Checkpoint cadence (by completed feature Steps)
+## Checkpoints — on demand (cadence retired 2026-07-18)
 
-Markdown Consistency every **2**, Discussion every **3**, Audit every **5**,
-Enhancement every **7**. Event/on-demand runs do not reset cadence.
-`CHECKPOINTS.md` is the ledger; this file is the schedule.
+There is no longer a step-count schedule. The fixed cadence (Markdown
+Consistency every 2 steps, Discussion every 3, Audit every 5, Enhancement
+every 7) generated recurring work on a timer rather than in response to
+anything changing, which is overhead a single maintainer does not need.
+
+Run a checkpoint when there is a reason to: after a run of related packets,
+before a release you care about, or when something feels drifted. Record it in
+`CHECKPOINTS.md` as before — that file remains the ledger. Nothing is "due".
 
 ## The one Standard Workflow
 

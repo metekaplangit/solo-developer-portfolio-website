@@ -91,9 +91,9 @@ state with `git status --porcelain --branch` and `git rev-parse HEAD`.
 | Type/content check | Pass | `npm run check`: 0 errors, 0 warnings, 0 hints |
 | Unit tests | Pass | `npm test`: 45/45 |
 | Production dependency audit | Pass | `npm audit --omit=dev`: 0 vulnerabilities |
-| Governance validator | Pass | 44/44 after cadence-agreement hardening |
+| Governance validator | Pass | 44/44 (now advisory, not merge-critical) |
 | Git integrity | Pass | `git fsck`, `git diff --check`, no tracked secret-pattern hits |
-| Remote automation | Pass | latest `main` CI run green; product-release deploy green |
+| Remote automation | Pass | Deploy workflow green (builds, passes the a11y gate, publishes) |
 
 The Lighthouse accessibility threshold remains enforced in CI/deploy. The
 latest product packets also recorded zero axe violations and no overflow across
@@ -102,9 +102,9 @@ rendered output.
 
 ## Checkpoints and issues
 
-`docs/CHECKPOINTS.md` is the sole checkpoint-history owner. Next cadence after
-this catch-up: Markdown Consistency at feature **44**, Discussion and Audit at
-**45**, Enhancement at **49**. On-demand runs do not reset cadence.
+`docs/CHECKPOINTS.md` is the sole checkpoint-history owner. The fixed cadence
+was retired on 2026-07-18 — checkpoints are now run on demand, when there is a
+reason, and nothing is ever "due". See ROADMAP.md.
 
 GitHub Issues is the active issue owner. `docs/issues/LEDGER.md` is read-only
 pre-remote history; LEDGER-001 and LEDGER-002 are resolved.
@@ -126,4 +126,19 @@ pre-remote history; LEDGER-001 and LEDGER-002 are resolved.
 python3 scripts/validate-governance.py
 ```
 
-The command is also recorded in `AI_WORKFLOW.md` and run by CI.
+The command is also recorded in `AI_WORKFLOW.md`. Run it locally before a merge
+you care about.
+
+**CI status: Blocked — deliberately, on 2026-07-18.** `.github/workflows/ci.yml`
+was removed. It ran the validator plus `npm run check`, `npm test`, and
+`npm run build` — commands that take about two seconds locally and gate nothing,
+since `deploy.yml` builds independently and a broken build therefore fails the
+deploy on its own. It had already failed one release over a prose paragraph that
+stopped naming a Step ID, while that same commit deployed cleanly. For a
+single-maintainer static site the duplication cost more attention than it
+returned.
+
+`deploy.yml` is untouched and remains the only required automation: it builds,
+enforces the Lighthouse accessibility gate at ≥0.95, and publishes to GitHub
+Pages. A genuine regression — a broken build or an accessibility failure — still
+blocks the deploy.
