@@ -92,6 +92,14 @@ export const productSchema = z.object({
   // 10.15 or later"). Only set from a confirmed source (the live store
   // listing); optional so unreleased products degrade gracefully.
   requirements: z.string().min(1).optional(),
+  // "For you if / Not for you if" pair (taste-round T2). Both must be present
+  // to render; claims must restate existing truthful content (e.g. the
+  // not-a-blocker FAQ answer), never introduce new capabilities.
+  fitFor: z.string().min(1).optional(),
+  fitNotFor: z.string().min(1).optional(),
+  // First-person maker's note paragraphs opening the description (taste-round
+  // T5). Published only with the maker's explicit approval of the exact copy.
+  makerNote: z.array(z.string().min(1)).default([]),
   // One short, truthful privacy line for the first-glance facts row (e.g.
   // "Works offline — no account, no cloud, no tracking"). Must restate claims
   // already made (and tested) in the product's policy/content — never new ones.

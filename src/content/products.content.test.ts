@@ -54,6 +54,18 @@ describe('Sole Focus product content', () => {
 
   // First-glance facts (STEP-0031): the facts line renders from these fields;
   // privacyFacts must only restate the already-tested policy claims.
+  // Taste-round T2/T5 (STEP-0034/0035): both render only from these fields and
+  // the copy was explicitly user-approved — pin it so changes are deliberate.
+  it('carries the approved fit statement', () => {
+    expect(product.fitFor).toContain('calm, native Mac timer');
+    expect(product.fitNotFor).toContain('website blocker');
+  });
+
+  it('carries the approved maker note', () => {
+    expect(product.makerNote).toHaveLength(2);
+    expect(product.makerNote[0]).toContain('I built Sole Focus');
+  });
+
   it('carries the first-glance facts fields', () => {
     expect(product.requirements).toBe('macOS 10.15 or later');
     expect(product.privacyFacts).toBe('Works offline — no account, no cloud, no tracking');
