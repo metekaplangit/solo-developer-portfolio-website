@@ -16,6 +16,30 @@ commits and does **not** consume a product version.
 
 _Nothing pending. Next packet undecided — see ROADMAP._
 
+## [0.34.0] — 2026-07-17
+
+Wider, image-forward redesign (STEP-0036).
+
+### Changed
+
+- **The site is wider and less cramped.** On big screens the pages used to sit
+  in a narrow centre column with large empty margins; the layout now uses much
+  more of the width (shell 68→78rem, reading columns a touch wider), so nothing
+  feels boxed-in.
+- **The featured product leads with its screenshot.** The home "Featured" panel
+  is now image-forward: the Sole Focus screenshot is the dominant element, the
+  text beside it is trimmed (the repeated bullet highlights were removed), and
+  the panel has more breathing room.
+- **Bigger product screenshots.** The gallery on each product page breaks out
+  wider (to 72rem) so the app imagery is more prominent.
+
+### Internal
+
+- Presentation-only: two width tokens + home layout + gallery max-width (with a
+  matched responsive `sizes` hint so no oversized image is fetched). No product
+  data, copy, or client JS changed. Verified no horizontal overflow at 1440 /
+  960 / 390. **AUDIT-0007 + ENH-0005** (due at feature step 35) run alongside.
+
 ## [0.33.0] — 2026-07-17
 
 Taste-round picks T2 + T5 (STEP-0034 + STEP-0035, user-approved copy).

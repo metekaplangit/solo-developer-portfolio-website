@@ -66,14 +66,16 @@
   --radius-pill: 999px;
 
   /* Layout measures — one shared reading column so every content page lines up.
-     --maxw    = wide shell (showcase grids: home, catalog)
+     --maxw    = wide shell (home, catalog, product galleries) — widened so wide
+                 screens read spacious and image-forward, not a narrow center
+                 column with large dead margins (STEP-0036).
      --maxw-prose = reading column (about, support, privacy, detail, headers)
      Convention: reading columns are CENTERED within the shell
      (`margin-inline: auto`), so content sits balanced, not pushed left. */
-  --maxw: 68rem;
-  /* Reading column ~72ch at 17px body — inside the 45–90 comfortable range
-     (Butterick), tighter than the old 44rem (~82ch) for better readability. */
-  --maxw-prose: 40rem;
+  --maxw: 78rem;
+  /* Reading column ~82ch at 17px body — still inside the comfortable range,
+     a touch wider than before so prose doesn't feel cramped. */
+  --maxw-prose: 43rem;
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

@@ -86,13 +86,6 @@ const heroHasDownload =
               <a href={withBase(`/apps/${spotlight.slug}/`)}>{spotlight.name}</a>
             </h3>
             <p class="spotlight-lede">{spotlight.summary}</p>
-            {spotlight.features.length > 0 && (
-              <ul class="spotlight-highlights" role="list">
-                {spotlight.features.slice(0, 3).map((f) => (
-                  <li>{f}</li>
-                ))}
-              </ul>
-            )}
             <div class="spotlight-cta">
               <DownloadButton product={spotlight} />
               <a class="btn btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
@@ -127,8 +120,8 @@ const heroHasDownload =
 
 <style>
   .hero {
-    padding-block: var(--space-24) var(--space-16);
-    max-width: 46rem;
+    padding-block: var(--space-24) var(--space-20);
+    max-width: 54rem;
     margin-inline: auto;
   }
   .hero-title {
@@ -142,7 +135,7 @@ const heroHasDownload =
     color: var(--muted);
     font-size: var(--text-xl);
     line-height: 1.5;
-    max-width: 38rem;
+    max-width: 44rem;
   }
   .hero-cta {
     display: flex;
@@ -185,13 +178,14 @@ const heroHasDownload =
     justify-content: center;
   }
 
-  /* Featured spotlight — a richer, product-led panel for the lead app. */
+  /* Featured spotlight — image-forward panel for the lead app. The screenshot
+     is the hero of the section; the text column stays short (STEP-0036). */
   .spotlight {
     display: grid;
     grid-template-columns: 1fr; /* mobile: stacked, media on top */
-    gap: var(--space-8);
+    gap: var(--space-10);
     align-items: center;
-    padding: var(--space-8);
+    padding: clamp(var(--space-6), 4vw, var(--space-12));
     border-radius: var(--radius-lg);
     background:
       radial-gradient(130% 150% at 0% 0%, var(--accent-soft), transparent 58%),
@@ -310,9 +304,10 @@ const heroHasDownload =
     .spotlight {
       grid-template-columns: auto 1fr;
     }
-    /* Screenshot lead: body | shot (DOM order is media-first, so place explicitly). */
+    /* Screenshot lead: a compact text column and a dominant image
+       (body | shot; DOM order is media-first, so place explicitly). */
     .spotlight.has-shot {
-      grid-template-columns: 1.05fr 1.2fr;
+      grid-template-columns: 0.85fr 1.45fr;
     }
     .spotlight.has-shot .spotlight-body {
       grid-column: 1;
