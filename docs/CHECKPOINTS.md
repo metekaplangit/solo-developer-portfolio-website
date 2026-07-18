@@ -22,9 +22,9 @@ counter.
 
 ## Counters
 
-- Completed **feature** Steps: **30** (STEP-0001..STEP-0030).
+- Completed **feature** Steps: **31** (STEP-0001..STEP-0031).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0031**.
+- Next feature step: **STEP-0032**.
 - Next-due: **Markdown Consistency** after feature step **32**; **Discussion**
   after **33**; **Enhancement + Audit** after **35**. (AUDIT-0006 + DISC-0010 +
   MC-0015 done at 30.)

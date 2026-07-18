@@ -1,0 +1,56 @@
+---
+// First-glance facts (STEP-0031, review-0002 COMP-01/USER-02/USER-05). One quiet
+// middot-separated line of the decision facts a visitor needs before clicking
+// through to the store: price, system requirement, privacy stance. Every fact is
+// derived from structured product content that is already verified elsewhere
+// (price/requirements against the live listing; privacy restating the tested
+// policy claims) — this component presents truth, it never creates it. Renders
+// nothing when a product has no facts yet.
+import type { Product } from '../content/schema';
+
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+
+const facts: string[] = [];
+if (product.price === '0') facts.push('Free — no in-app purchases, no subscription');
+else if (product.price != null) facts.push(`$${product.price} (one-time)`);
+if (product.requirements) facts.push(product.requirements);
+if (product.privacyFacts) facts.push(product.privacyFacts);
+---
+
+{
+  facts.length > 0 && (
+    <p class="facts-line">
+      {facts.map((f, i) => (
+        <>
+          {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+          <span class="fact">{f}</span>
+        </>
+      ))}
+    </p>
+  )
+}
+
+<style>
+  .facts-line {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+  .fact {
+    white-space: nowrap;
+  }
+  /* Long facts may wrap on narrow screens; separators keep breathing room. */
+  .sep {
+    margin-inline: 0.45em;
+    color: var(--faint);
+  }
+  @media (max-width: 30rem) {
+    .fact {
+      white-space: normal;
+    }
+  }
+</style>

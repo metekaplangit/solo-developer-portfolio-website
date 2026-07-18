@@ -92,6 +92,10 @@ export const productSchema = z.object({
   // 10.15 or later"). Only set from a confirmed source (the live store
   // listing); optional so unreleased products degrade gracefully.
   requirements: z.string().min(1).optional(),
+  // One short, truthful privacy line for the first-glance facts row (e.g.
+  // "Works offline — no account, no cloud, no tracking"). Must restate claims
+  // already made (and tested) in the product's policy/content — never new ones.
+  privacyFacts: z.string().min(1).optional(),
   releaseDate: z.coerce.date().optional(),
   lastUpdated: z.coerce.date().optional(),
   seo: z

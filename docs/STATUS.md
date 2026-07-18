@@ -9,7 +9,15 @@
 
 ## Handoff (5 bullets)
 
-- **State: STEP-0030 complete — purchase-decision info, released v0.30.0**
+- **State: STEP-0031 complete — first-glance facts, released v0.31.0.**
+  Adopted review-0002's consolidated top finding: one quiet `FactsLine` under
+  the download CTA on the product header + home spotlight ("Free — no in-app
+  purchases, no subscription · macOS 10.15 or later · Works offline — no
+  account, no cloud, no tracking"), plus the maker/support trust line on the
+  spotlight. New optional `privacyFacts` field; 41 tests. Review-0002's 30
+  ideas fully dispositioned in ROADMAP (adopted → 0031/0032; deferred →
+  STEP-0033 trigger-armed; taste-tier → design round; rest declined/parked).
+- **Prior: STEP-0030 — purchase-decision info, v0.30.0**
   (review-0001 OPP-04/07: human "macOS" platform badges from one shared map
   also feeding JSON-LD; verified "Requires macOS 10.15 or later" beside the
   header download button; truthful maker/support trust line linking
@@ -69,7 +77,13 @@ to read: `README.md`, `docs/PRIVACY.md`, `appstore/REVIEW_NOTES.md`, app icon,
 
 ## Last completed Step Packet
 
-- **STEP-0028 — Top-of-page download buttons** — **DONE**, merged, tagged
+- **STEP-0031 — First-glance facts** — **DONE**, merged, tagged **v0.31.0**.
+  Task Card: `docs/tasks/STEP-0031.md` (review-0002 adoption; FactsLine on
+  header + spotlight; spotlight trust line; privacyFacts field + test).
+- Prior: **STEP-0030 — purchase-decision info** (v0.30.0, with the step-30
+  checkpoint trio) and **STEP-0029 — small-screen usability** (v0.29.0), both
+  review-0001 remediation. Task Cards: `docs/tasks/STEP-0029.md`/`STEP-0030.md`.
+- Prior: **STEP-0028 — Top-of-page download buttons** — merged, tagged
   **v0.28.0**. Task Card: `docs/tasks/STEP-0028.md`. Delivered: reusable
   `DownloadButton.astro` placed on home hero (leading), spotlight, detail
   header, catalog card; graceful fallbacks for unreleased products; bottom
@@ -110,11 +124,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0030
+current_step: STEP-0031
 next_step: FAQPage JSON-LD; or changelog/updates block, more products, Apple-submission checklist doc, Terms/disclaimer page
 branch: main
-head: regenerate-live (git rev-parse HEAD) — STEP-0030 merge, tagged v0.30.0 (HEAD may carry post-release checkpoint docs)
-product_tag: v0.30.0
+head: regenerate-live (git rev-parse HEAD) — STEP-0031 merge, tagged v0.31.0 (HEAD may carry post-release checkpoint docs)
+product_tag: v0.31.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; cert approved; https_enforced: true)
@@ -162,7 +176,7 @@ No escalation triggers observed. No maturity thresholds breached (baseline).
 
 ## Checkpoints
 
-Completed **feature** steps: **30** (STEP-0001..0030) — this counter is
+Completed **feature** steps: **31** (STEP-0001..0030) — this counter is
 machine-cross-checked against CHECKPOINTS by the validator. Next-due: Markdown
 Consistency after 32; Discussion after 33; Enhancement after 35; Audit after 35
 (AUDIT-0006 + DISC-0010 + MC-0015 done at 30). The full
