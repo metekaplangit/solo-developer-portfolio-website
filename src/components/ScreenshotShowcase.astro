@@ -75,7 +75,7 @@ const many = shots.length > 1;
                 />
               </svg>
             </button>
-            <p class="counter" aria-hidden="true">
+            <p class="chip chip-glass counter" aria-hidden="true">
               <span class="counter-now">1</span> / {shots.length}
             </p>
           </>
@@ -211,21 +211,19 @@ const many = shots.length > 1;
     pointer-events: none;
   }
 
-  /* Position counter — bottom-right pill. */
+  /* Position counter — the shared `.chip .chip-glass` pill, placed. Its fill,
+     blur, hairline and radius come from global.css; only position, margin and
+     the tabular figures are local.
+
+     Its fill used to be a hardcoded `rgba(22, 23, 27, 0.6)` — the RETIRED
+     graphite ground `#16171b` at 60%, left behind by the Spectrum swap. The
+     shared chip mixes from `--bg`, so it cannot go stale again. */
   .counter {
     position: absolute;
     right: var(--space-4);
     bottom: var(--space-4);
     margin: 0;
-    padding: 0.25rem 0.6rem;
-    font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
-    color: var(--text-strong);
-    background: rgba(22, 23, 27, 0.6);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
   }
 
   /* Dot rail below the frame. Buttons carry their own hit-area width now, so
