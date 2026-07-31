@@ -66,7 +66,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **54** (`STEP-0001`..`STEP-0055`; STEP-0033 is
+- Completed **feature** steps: **55** (`STEP-0001`..`STEP-0056`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -85,11 +85,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0055 (Reveal repaired + staggered; product release v0.44.6)
-next_step: STEP-0056 (Page-to-page continuity) — motion phase, STEP-0054..0056
+current_step: STEP-0056 (Page transitions; product release v0.44.7 — motion phase complete)
+next_step: owner-supplied real product; or trigger-armed STEP-0033; or the brand-mark refresh (STEP-0045); or the deferred view-transition morph (STEP-0056)
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.44.6
+product_tag: v0.44.7
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

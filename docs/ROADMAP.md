@@ -581,7 +581,19 @@ software), loading skeletons (nothing here is async), and parallax / typing text
   "settle" was **attempted and removed** — three tries, timeline attached but
   progress always `null`; new motion that cannot be shown to work is not motion
   to ship.
-- **STEP-0056 — Page-to-page continuity** *(planned).*
+- **STEP-0056 — Page-to-page continuity** *(COMPLETE — merged, tagged
+  `v0.44.7`, 2026-08-01; phase closer).* Native `@view-transition` — CSS only,
+  **zero bytes of script** — on all eight routes, so every navigation is a
+  hand-off rather than a hard cut. Header and footer carry their own
+  `view-transition-name` so persistent chrome does not cross-fade against
+  itself, which is the usual way this feature looks broken. Astro's
+  `ClientRouter` was declined: it would turn the static site into an SPA and
+  require every script to be re-initialised per navigation, against the
+  no-runtime guardrail. The shared-element **morph was deliberately deferred** —
+  its whole value is visual and appearance is not observable in the harness
+  here; take it as a follow-up once the cross-fade has been watched live.
+
+The motion phase is complete.
 
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
