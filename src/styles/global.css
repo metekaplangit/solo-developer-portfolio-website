@@ -369,6 +369,29 @@ img {
   padding-bottom: var(--band-y);
 }
 
+/* Standalone link targets -----------------------------------------------------
+   Every link that is NOT inside a sentence has to be at least 24×24 CSS px
+   (WCAG 2.2 SC 2.5.8, AA) — the "inline in a block of text" exception covers
+   prose links and nothing else. Measured 2026-07-31, all of these were 19–21px
+   tall: the footer row, the back/breadcrumb links, the 404 destinations, the
+   supported-products list and the About "elsewhere" list.
+
+   One rule for all of them rather than five copies — five copies of one
+   treatment is exactly what STEP-0051 had to undo for chips. Height is bought
+   with block padding on an inline-flex box, so type size, colour and the
+   underline treatment are all untouched: the target grows, the design does not.
+   `--space-1` either side of a 1.5rem line box is exactly 24px. */
+.footer-links a,
+.back a,
+.links a,
+.products a,
+.elsewhere a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding-block: var(--space-1);
+}
+
 /* Chips ---------------------------------------------------------------------
    ONE definition of the small pill. Before this the same shape was written
    three times — `Badge.astro`, the policy at-a-glance row and the gallery's
