@@ -34,6 +34,10 @@ const many = shots.length > 1;
         >
           {shots.map((shot, i) => (
             <li class="slide" aria-label={`Screenshot ${i + 1} of ${shots.length}`}>
+              {/* The first slide is the largest thing on this page's first
+                  screen, so it is the LCP element and the ONE image here that
+                  gets a priority hint. Slides 2-5 stay lazy — marking every
+                  slide high is the same as marking none. */}
               <Image
                 src={shot.img}
                 alt={shot.alt}
@@ -42,10 +46,6 @@ const many = shots.length > 1;
                 format="webp"
                 quality={78}
                 loading={i === 0 ? 'eager' : 'lazy'}
-                {/* The first slide is the largest thing on the product page's
-                    first screen, so it is the LCP element and the ONE image on
-                    this page that gets a priority hint. Slides 2-5 stay lazy —
-                    marking every slide high is the same as marking none. */}
                 fetchpriority={i === 0 ? 'high' : undefined}
                 class="shot-img"
                 draggable={false}

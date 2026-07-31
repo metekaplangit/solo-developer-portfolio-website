@@ -547,6 +547,29 @@ a measured conformance fix rather than a design change.
 
 The UI-polish phase is complete.
 
+### Phase: Motion polish (owner-requested) ▶ in progress
+
+Owner, 2026-07-31: *"look for areas where we can add animations and effects… only
+meaningful, smooth, dynamic animations… This is NOT a full-design UI request."*
+Three packets. Declined and recorded rather than built: Astro's `ClientRouter`
+(turns a static site into an SPA and contradicts the no-runtime guardrail), a
+pointer-reactive glow (a continuous rAF loop on a site whose argument is calm
+software), loading skeletons (nothing here is async), and parallax / typing text
+/ counting numbers (all on the anti-reference page `DESIGN.md` names).
+
+- **STEP-0054 — Motion roles, and the hero entrance finished** *(COMPLETE —
+  merged, tagged `v0.44.5`, 2026-07-31).* One 220ms duration drove everything
+  from a link colour to a button press; now three named roles (120/220/420ms)
+  plus `--ease-out` for entrances, with the default deliberately unmoved. The
+  hero fades as well as rises. **Two real defects found:** the hero stagger had
+  never run — the delays lost on specificity to the wildcard rule and every
+  child computed 0s — and `astro check` had been failing since v0.44.4 because
+  STEP-0053's last edit put a JSX comment inside an `<Image>` attribute list and
+  the check was not re-run after it.
+- **STEP-0055 — Reveals that read as crafted, and a nav that knows it has
+  scrolled** *(planned).*
+- **STEP-0056 — Page-to-page continuity** *(planned).*
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

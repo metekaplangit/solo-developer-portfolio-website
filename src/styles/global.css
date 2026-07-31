@@ -146,9 +146,25 @@
   --measure: 35rem;
   --measure-mid: 47rem;
 
-  /* Motion */
+  /* Motion — three roles, and no surface invents a fourth.
+
+     A link changing colour and a panel arriving on screen are not the same
+     job, and before this they shared one 220ms duration. Named roles the same
+     way `--space-*`, `--band-y-*` and `--display-*` are named:
+
+       --dur-fast   a state change you should barely notice (colour, opacity
+                    on something already present)
+       --dur        the default: a surface responding to the pointer
+       --dur-slow   an entrance — something arriving that was not there
+
+     `--ease` settles rather than bounces and is right for responses.
+     `--ease-out` decelerates harder, which is what makes an entrance feel like
+     it lands rather than drifts to a stop. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
   --dur: 220ms;
+  --dur-slow: 420ms;
 }
 
 *,
@@ -222,7 +238,8 @@ time {
 a {
   color: var(--text-strong);
   text-decoration: none;
-  transition: color var(--dur) var(--ease);
+  /* Colour only, on something already on screen — the fast role. */
+  transition: color var(--dur-fast) var(--ease);
 }
 a:hover {
   color: var(--text-strong);
