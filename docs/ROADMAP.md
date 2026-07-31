@@ -566,8 +566,21 @@ software), loading skeletons (nothing here is async), and parallax / typing text
   child computed 0s — and `astro check` had been failing since v0.44.4 because
   STEP-0053's last edit put a JSX comment inside an `<Image>` attribute list and
   the check was not re-run after it.
-- **STEP-0055 — Reveals that read as crafted, and a nav that knows it has
-  scrolled** *(planned).*
+- **STEP-0055 — The reveal, actually running, and staggered** *(COMPLETE —
+  merged, tagged `v0.44.6`, 2026-08-01).* **The scroll-reveal had never run in
+  the built site.** Written as `animation: reveal-rise linear both` +
+  `animation-timeline: view()`, the minifier folded them into
+  `animation: linear both reveal-rise view()` — a timeline is not legal in that
+  shorthand, so the browser dropped it and every `.reveal` computed
+  `animation-name: none` with zero running animations. It shipped invisibly
+  because the designed fallback is "content fully visible". Fixed with
+  longhands; 21 revealed elements now each report a live `view()` timeline.
+  Siblings stagger by shifting their own entry range (a scroll animation has no
+  clock, so `animation-delay` does nothing), counted with `of .reveal` because
+  a visually-hidden `h2` was making a plain `nth-child` off by one. The nav
+  "settle" was **attempted and removed** — three tries, timeline attached but
+  progress always `null`; new motion that cannot be shown to work is not motion
+  to ship.
 - **STEP-0056 — Page-to-page continuity** *(planned).*
 
 ## Review-0002 dispositions (external design review, 2026-07-17)

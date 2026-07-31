@@ -47,6 +47,17 @@ function isCurrent(href: string): boolean {
     -webkit-backdrop-filter: saturate(160%) blur(16px);
     backdrop-filter: saturate(160%) blur(16px);
   }
+
+  /* ATTEMPTED AND REMOVED (STEP-0055, 2026-08-01): a scroll-driven "settle"
+     that faded the hairline in over the first 120px. The timeline attached
+     correctly — `getAnimations()` returned a real `ScrollTimeline` — but its
+     progress stayed `null` and the computed border never moved, across three
+     attempts (bare `scroll()`, then longhand properties, then an explicit
+     `scroll(root block)` after checking MDN). Unprovable in the harness
+     available here, and an effect that cannot be shown to work is not one to
+     ship. The header keeps the hairline it has always had. Do not re-attempt
+     without a way to observe scroll-timeline progress on this machine. */
+
   .header-inner {
     display: flex;
     flex-wrap: wrap;

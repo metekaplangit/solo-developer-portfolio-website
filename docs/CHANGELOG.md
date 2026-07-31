@@ -14,6 +14,21 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.6] — 2026-08-01
+
+### Fixed
+
+- **The fade-in-as-you-scroll effect had never actually worked.** It was written
+  correctly but the build step was rewriting it into something browsers reject,
+  so it silently did nothing. It runs now. Nobody would have noticed it missing,
+  because when it fails the content simply shows normally — which is what you
+  have been seeing.
+
+### Changed
+
+- **Things in a group now arrive one after another** as they come into view,
+  instead of all at the same instant. Capped so a long list never crawls.
+
 ## [0.44.5] — 2026-07-31
 
 ### Changed
