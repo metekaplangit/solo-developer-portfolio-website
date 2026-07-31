@@ -27,7 +27,7 @@ const schema = [
   <section class="masthead" aria-labelledby="catalog-h">
     <div class="rail">
       <p class="over">{products.length} {products.length === 1 ? 'product' : 'products'}</p>
-      <h1 id="catalog-h">Apps &amp; Games</h1>
+      <h1 id="catalog-h" class="page-title">Apps &amp; Games</h1>
       <p class="lede">
         Everything the studio has shipped. Each product has its own privacy page
         and its own support page — no shared boilerplate.
@@ -68,14 +68,6 @@ const schema = [
   }
   .masthead {
     padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem);
-  }
-  .masthead h1 {
-    margin: 0 0 var(--space-6);
-    font-size: clamp(2.5rem, 7vw, 5.5rem);
-    font-weight: 700;
-    line-height: 0.96;
-    letter-spacing: -0.045em;
-    color: var(--text-strong);
   }
   .lede {
     margin: 0;

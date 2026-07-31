@@ -35,7 +35,7 @@ const chips: { label: string; ok: boolean }[] = [
   <header class="policy-head">
     {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={72} alt={icon.altText} href={iconHref} />}
     <div class="policy-head-text">
-      <h1>{policy.title}</h1>
+      <h1 class="page-title">{policy.title}</h1>
       <p class="policy-meta">
         Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{policy.effectiveScope}
       </p>
@@ -249,12 +249,12 @@ const chips: { label: string; ok: boolean }[] = [
      header on a 390px phone, pushing the at-a-glance chips and the lede down
      the first screen. The cap is the original `--text-3xl`, so desktop is
      unchanged from ~628px up; only phones scale down. */
+  /* Size, weight, line-height and tracking come from the shared `.page-title`
+     (global.css) so a policy heading is the same size as every other page
+     masthead. Only the bottom margin is local: a policy title is immediately
+     followed by its dated meta line, which sits tighter than a page lede. */
   .policy-head h1 {
-    margin: 0 0 var(--space-3);
-    font-size: clamp(1.75rem, 7vw, var(--text-3xl));
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    margin-bottom: var(--space-3);
   }
   .policy-meta {
     margin: 0;

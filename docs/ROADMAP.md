@@ -474,7 +474,16 @@ eight routes at once precisely because every route already draws from `:root`.
   knowing hues exist. The detail page's gallery/fit/features/prose sections keep
   their structure deliberately — working, tested surfaces; residual drift is
   STEP-0049's to measure. 21 page-states swept, 0 overflow.
-- **STEP-0048 — Reading surfaces: privacy, support, about, 404** *(planned).*
+- **STEP-0048 — Reading surfaces + the display ramp** *(COMPLETE — merged,
+  tagged `v0.43.0`, 2026-07-31).* The eight routes carried **four different h1
+  sizes**; they now come from one three-step ramp (`--display-1` home hero,
+  `--display-2` page mastheads via `.page-title`, `--display-3` a product's
+  name). Privacy, support, about and 404 joined the system. Closes 2026-07-18
+  health-check **follow-up #3**: the in-content underline targeted
+  `.about`/`.support`, which nothing carried, so the rules were dead — it now
+  targets `.elsewhere a` and `.products a` and is proved by computed style.
+  Follow-up #2 (hardcoded policy prose) stays queued on purpose. 56 page-states
+  swept across all eight routes, 0 overflow.
 - **STEP-0049 — Harmony sweep across all eight routes** *(planned — phase
   closer; the release the owner asked for).*
 
