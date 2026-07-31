@@ -301,6 +301,18 @@ img {
   padding-inline: var(--gutter);
 }
 
+/* The rail — the same measure `.container` gives, but applied INSIDE a
+   full-bleed band so the band's background can run edge to edge while its
+   content stays on the one left rail the nav brand and the footer share.
+   `width: 100%` is load-bearing: a `.rail` inside a flex band collapses to its
+   content width without it, and the band silently loses its left edge. */
+.rail {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
 /* Band system (STEP-0038) -------------------------------------------------- */
 /* One band = one idea. A band owns ONLY its vertical rhythm — the horizontal
    rail (max-width + gutter) comes from `main.container`, which wraps every

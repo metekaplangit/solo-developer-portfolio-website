@@ -11,8 +11,20 @@ interface Props {
   description?: string;
   /** Schema.org JSON-LD for this page (one object or an array). Optional. */
   schema?: object | object[];
+  /**
+   * Drop the shared `.container` rail from `<main>` so the page can run bands
+   * edge to edge (the Spectrum poster layout, DESIGN.md §1). A page that opts
+   * in owns its own rails and must wrap its content in `.rail` — nothing else
+   * will keep it aligned with the header and footer.
+   *
+   * Deliberately not implemented with `calc(50% - 50vw)` bleed inside the
+   * container: `scrollbar-gutter: stable` reserves the scrollbar, so `100vw`
+   * exceeds the client width and produces horizontal page overflow — the one
+   * thing that is never acceptable here.
+   */
+  bleed?: boolean;
 }
-const { title, description = site.description, schema } = Astro.props;
+const { title, description = site.description, schema, bleed = false } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
@@ -46,7 +58,7 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     <Nav />
-    <main id="main" class="container">
+    <main id="main" class={bleed ? undefined : 'container'}>
       <slot />
     </main>
     <Footer />

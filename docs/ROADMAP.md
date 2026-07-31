@@ -454,7 +454,16 @@ eight routes at once precisely because every route already draws from `:root`.
   15 contrast pairs computed, 0 below AA (lowest 5.44:1); 56 page-states swept,
   0 overflow. A nav Download pill from the mockup was **declined** — it
   reintroduces the narrow-screen clipping review-0001 OPP-01 fixed.
-- **STEP-0046 — Home as the poster** *(planned).*
+- **STEP-0046 — Home as the poster** *(COMPLETE — merged, tagged `v0.41.0`,
+  2026-07-31).* Studio hero (capped at `min(82vh, 900px)`), hue-painted product
+  band, three statements read from the product's own approved prose, a mosaic of
+  the four remaining screenshots, the promise band, the maker note. **All five**
+  real screenshots now appear on the home page; one did before. Owner chose the
+  headline "Small studio. / Serious craft." from four options. New: `bleed` prop
+  on `BaseLayout` + `.rail` (a `100vw` bleed was rejected — `scrollbar-gutter:
+  stable` makes it overflow), and `src/lib/prose.ts` so approved copy has one
+  source. Writing that helper's tests caught a real defect first. 21 page-states
+  swept, 0 overflow.
 - **STEP-0047 — Product surfaces: catalog and detail** *(planned).*
 - **STEP-0048 — Reading surfaces: privacy, support, about, 404** *(planned).*
 - **STEP-0049 — Harmony sweep across all eight routes** *(planned — phase
