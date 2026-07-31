@@ -114,11 +114,19 @@ const hue = spotlight ? productHue(spotlight) : undefined;
             const img = resolveScreenshot(s.path);
             return img ? (
               <figure class="reveal">
+                {/* `sizes` measured against the real slot, not guessed: the
+                    mosaic is a two-column grid inside the 86rem rail, so the
+                    cell is ~42vw once the gap and the gutter are taken out —
+                    the previous `40vw` under-declared it (576px against a
+                    604px slot at 1440), which made the browser choose a
+                    variant one step too small. The 1400w step covers the same
+                    slot at DPR 2 on the Retina Macs this audience uses; it
+                    changes nothing at DPR 1. */}
                 <Image
                   src={img}
                   alt={s.altText}
-                  widths={[500, 800, 1200]}
-                  sizes="(min-width: 60rem) 40vw, calc(100vw - 2 * 1.25rem)"
+                  widths={[500, 800, 1200, 1400]}
+                  sizes="(min-width: 60rem) 42vw, calc(100vw - 2 * 1.25rem)"
                   format="webp"
                   quality={78}
                   loading="lazy"
