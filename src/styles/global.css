@@ -754,7 +754,14 @@ img {
     .reveal {
       animation-name: reveal-rise;
       animation-timing-function: linear;
-      animation-fill-mode: both;
+      /* `none`, not `both`. With `both`, an element whose timeline never
+         advances holds the `from` state permanently — which put five elements
+         on the live home page at `opacity: 0` on 2026-08-01, and then, once the
+         opacity was removed, left them sitting 22px low forever. With `none`
+         the animation contributes nothing outside its active range, so an
+         inactive timeline means the element simply renders normally. The effect
+         is a bonus where it runs and invisible where it does not. */
+      animation-fill-mode: none;
       animation-timeline: view();
       animation-range: entry 5% cover 22%;
     }
