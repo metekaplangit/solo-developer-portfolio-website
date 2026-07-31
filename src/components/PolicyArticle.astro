@@ -235,10 +235,15 @@ const chips: { label: string; ok: boolean }[] = [
   .policy {
     padding-block: var(--band-y-lg) var(--band-y);
   }
+  /* Stacked, not side-by-side — same measurement and same reason as the
+     product detail head: with the avatar beside it the policy title started
+     108px (390) / 147px (1024) / 195px (1440) from the edge while every other
+     heading on the site started on the shared rail. */
   .policy-head {
     display: flex;
-    align-items: center;
-    gap: clamp(var(--space-4), 2.5vw, var(--space-6));
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
   }
   .policy-head-text {
     min-width: 0;

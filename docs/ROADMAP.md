@@ -484,8 +484,19 @@ eight routes at once precisely because every route already draws from `:root`.
   targets `.elsewhere a` and `.products a` and is proved by computed style.
   Follow-up #2 (hardcoded policy prose) stays queued on purpose. 56 page-states
   swept across all eight routes, 0 overflow.
-- **STEP-0049 — Harmony sweep across all eight routes** *(planned — phase
-  closer; the release the owner asked for).*
+- **STEP-0049 — Harmony sweep across all eight routes** *(COMPLETE — merged,
+  tagged `v0.44.0`, 2026-07-31; phase closer).* 8 routes × 7 widths = **56
+  page-states** measured for rail equality, button-height membership and
+  overflow. Found and fixed three real defects: the product name started 227px
+  from the edge at 1440 while every other h1 started at 99 (avatar in a left
+  grid column — head now stacks); the policy title had the same defect at 108px
+  on a 390px phone; and the product name rendered 32px on its own page against
+  60px in every band, because its scoped rule was not reaching the built
+  stylesheet. Ramp now measures 112 / 68 / 60px across the site. Final: 56
+  page-states, **0 findings**. Left open on purpose: the brand mark is still
+  periwinkle, the last chromatic thing in the studio chrome.
+
+The Spectrum phase is complete.
 
 ## Review-0002 dispositions (external design review, 2026-07-17)
 

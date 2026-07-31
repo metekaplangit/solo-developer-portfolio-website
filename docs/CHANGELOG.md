@@ -14,6 +14,25 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.0] — 2026-07-31
+
+The site-wide redesign is finished. Six steps, every page rebuilt.
+
+### Changed
+
+- **Everything now lines up.** Every page's title, and the footer under it,
+  starts at exactly the same distance from the edge as the studio name in the
+  header — at every screen size, on all eight pages. Measured, not eyeballed.
+- **Sole Focus's name is the same size everywhere it appears** — on the home
+  page, on the Apps page, and on its own page. It had been rendering at half
+  size on its own page.
+
+### Fixed
+
+- The app's name on its own page, and the title on each privacy page, sat well
+  inboard of everything else because the icon beside them pushed them across.
+  On a phone the privacy title started a fifth of the way into the screen.
+
 ## [0.43.0] — 2026-07-31
 
 ### Changed

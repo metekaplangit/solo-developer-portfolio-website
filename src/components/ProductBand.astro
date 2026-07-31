@@ -58,7 +58,7 @@ const facts = [product.requirements, product.privacyFacts].filter(Boolean).join(
         {String(index).padStart(2, '0')} — {product.type === 'game' ? 'Game' : 'App'} ·{' '}
         {statusLabel(product.status)}
       </p>
-      <h2 id={headingId} class="band-name">
+      <h2 id={headingId} class="product-title band-name">
         <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
       </h2>
       <p class="band-summary">{product.summary}</p>
@@ -123,12 +123,9 @@ const facts = [product.requirements, product.privacyFacts].filter(Boolean).join(
     text-transform: uppercase;
     color: var(--faint);
   }
+  /* Size comes from the global `.product-title`. */
   .band-name {
     margin: 0 0 var(--space-4);
-    font-size: var(--display-3);
-    font-weight: 700;
-    line-height: 0.98;
-    letter-spacing: -0.04em;
   }
   .band-name a {
     color: var(--text-strong);
