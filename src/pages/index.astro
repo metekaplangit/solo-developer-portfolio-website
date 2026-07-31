@@ -3,18 +3,16 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
+import ProductBand from '../components/ProductBand.astro';
 import DownloadButton from '../components/DownloadButton.astro';
 import MakerNote from '../components/MakerNote.astro';
 import { site } from '../lib/site';
-import { withBase } from '../lib/url';
 import {
   getFeatured,
   sortProducts,
-  statusLabel,
   visibleStoreLinks,
   productHue,
 } from '../lib/products';
-import { canonicalPrivacyUrl } from '../lib/privacy';
 import { organizationSchema, websiteSchema } from '../lib/schema';
 import { resolveScreenshot, screenshotTitle } from '../lib/screenshots';
 import { bodySections } from '../lib/prose';
@@ -28,15 +26,7 @@ const spotlight = showcase[0];
 const spotlightEntry = spotlight ? entries.find((e) => e.data.id === spotlight.id) : undefined;
 const rest = showcase.slice(1);
 
-// The lead screenshot carries marketing copy baked into the picture, so the text
-// alternative has to announce that copy as well as the UI (WCAG 2.2 SC 1.1.1,
-// GitHub #3). The gallery on the product page keeps the bare `altText`.
 const shots = spotlight?.screenshots ?? [];
-const leadShot = shots[0];
-const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
-const leadAlt = leadShot
-  ? [leadShot.bakedInText, leadShot.altText].filter(Boolean).join(' ')
-  : '';
 const mosaic = shots.slice(1);
 
 const heroHasDownload =
@@ -90,51 +80,8 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   <!-- BAND 2 — the product owns this band, in its own colour -->
   {
     spotlight && (
-      <section
-        class="band-product"
-        id="product"
-        style={`--hue: ${hue};`}
-        aria-labelledby="product-h"
-      >
-        <div class="rail product-in">
-          <div class="product-copy">
-            <p class="over">
-              01 — {spotlight.type === 'game' ? 'Game' : 'App'} · {statusLabel(spotlight.status)}
-            </p>
-            <h2 id="product-h">
-              <a href={withBase(`/apps/${spotlight.slug}/`)}>{spotlight.name}</a>
-            </h2>
-            <p class="product-lede">{spotlight.summary}</p>
-            <div class="actions">
-              <DownloadButton product={spotlight} tone="hue" label="Mac App Store" />
-              <a class="btn btn-lg btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
-                View {spotlight.name}
-              </a>
-            </div>
-            <p class="product-facts">
-              {[spotlight.requirements, spotlight.privacyFacts].filter(Boolean).join(' · ')}
-              {' · '}
-              <a href={withBase(canonicalPrivacyUrl(spotlight))}>Privacy</a>
-            </p>
-          </div>
-          {leadImg && (
-            <a class="product-shot" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
-              {/* `sizes` measured against the real slot: the image column is
-                  ~53rem at 1440, ~47vw through the mid range, and full width
-                  below 66rem. The 1900w step exists because the slot needs
-                  ~1700 device px at DPR 2 on the Retina Macs this audience uses. */}
-              <Image
-                src={leadImg}
-                alt={leadAlt}
-                widths={[600, 900, 1300, 1900]}
-                sizes="(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)"
-                format="webp"
-                quality={80}
-                loading="eager"
-              />
-            </a>
-          )}
-        </div>
+      <section id="product" aria-labelledby="product-h">
+        <ProductBand product={spotlight} headingId="product-h" eager announceBakedInText />
       </section>
     )
   }
@@ -282,66 +229,6 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     height: 70%;
     background: radial-gradient(closest-side, var(--hue-wash), transparent 72%);
     pointer-events: none;
-  }
-
-  /* BAND 2 — the product */
-  .band-product {
-    padding-block: clamp(3.5rem, 7vw, 6rem);
-    background:
-      radial-gradient(70% 90% at 8% 0%, var(--hue-soft), transparent 62%),
-      linear-gradient(180deg, var(--bg-2), var(--bg));
-  }
-  .product-in {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-    gap: clamp(var(--space-8), 5vw, var(--space-16));
-    align-items: center;
-  }
-  .band-product h2 {
-    margin: 0 0 var(--space-4);
-    font-size: clamp(2.25rem, 4.6vw, 3.75rem);
-    font-weight: 700;
-    line-height: 0.98;
-    letter-spacing: -0.04em;
-  }
-  .band-product h2 a {
-    color: var(--text-strong);
-  }
-  .product-lede {
-    margin: 0 0 var(--space-8);
-    max-width: var(--measure);
-    font-size: var(--text-base);
-    line-height: 1.6;
-    color: var(--muted);
-  }
-  .product-facts {
-    margin: var(--space-6) 0 0;
-    font-size: var(--text-xs);
-    line-height: 1.6;
-    color: var(--faint);
-  }
-  .product-facts a {
-    color: var(--faint);
-  }
-  .product-shot {
-    display: block;
-    line-height: 0;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
-  }
-  .product-shot img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .product-shot {
-      transition: transform var(--dur) var(--ease);
-    }
-    .product-shot:hover {
-      transform: translateY(-3px);
-    }
   }
 
   /* BAND 3 — statements */

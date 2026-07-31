@@ -40,9 +40,9 @@
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
 - **Next action:** continue the **Spectrum identity phase** (owner-selected
-  mockup option E, 2026-07-31): **STEP-0047** — the catalog and product detail pages.
-  Six packets, STEP-0044..0049, listed in ROADMAP; 0044, 0045 and 0046 are complete
-  and 0046 released as **v0.41.0**. Do not invent in-development products.
+  mockup option E, 2026-07-31): **STEP-0048** — the reading routes (privacy, support, about, 404).
+  Six packets, STEP-0044..0049, listed in ROADMAP; 0044–0047 are complete
+  and 0047 released as **v0.42.0**. Do not invent in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
   1. **Duplication.** The home spotlight and the catalog lead-row are the same
@@ -66,7 +66,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **45** (`STEP-0001`..`STEP-0046`; STEP-0033 is
+- Completed **feature** steps: **46** (`STEP-0001`..`STEP-0047`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -85,11 +85,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0046 (Home as the poster; product release v0.41.0)
-next_step: STEP-0047 (Product surfaces: catalog and detail)
+current_step: STEP-0047 (Product surfaces; product release v0.42.0)
+next_step: STEP-0048 (Reading surfaces: privacy, support, about, 404)
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.41.0
+product_tag: v0.42.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

@@ -6,6 +6,7 @@ import ProductAvatar from '../../components/ProductAvatar.astro';
 import {
   visibleStoreLinks,
   hasStoreLinks,
+  productHue,
   storeLabel,
   statusLabel,
   platformLabel,
@@ -62,6 +63,13 @@ const schema = [
 ---
 
 <BaseLayout title={seoTitle} description={seoDescription} schema={schema}>
+  {/* A product's own page IS that product's band, in full — so the page speaks
+      in its colour rather than the studio's. Remapping the four accent tokens
+      here (instead of touching each component) means the download button, the
+      badges, the gallery controls and the focus ring all pick up the product's
+      hue with no component knowing anything about hues. One Voice Per Band,
+      DESIGN.md §2. */}
+  <div class="product-page" style={`--hue: ${productHue(product)};`}>
   <nav class="band back" aria-label="Breadcrumb">
     <a href={withBase('/apps/')}>← Apps &amp; Games</a>
   </nav>
@@ -209,9 +217,19 @@ const schema = [
       )
     }
   </section>
+  </div>
 </BaseLayout>
 
 <style>
+  /* The whole page is this product's band. */
+  .product-page {
+    --accent: var(--hue);
+    --accent-hover: var(--hue);
+    --accent-soft: var(--hue-soft);
+    --accent-contrast: var(--hue-contrast);
+    --accent-glow: var(--hue-wash);
+  }
+
   .back {
     padding-top: var(--space-8);
     font-size: var(--text-sm);
@@ -259,7 +277,11 @@ const schema = [
     margin: 0 0 var(--space-4);
     /* Clamped, and allowed to break: `--text-3xl` is a flat 2.75rem, so an
        unbreakable long name at 44px overflowed a 149px track. */
-    font-size: clamp(2rem, 6vw, 2.75rem);
+    /* Poster scale, matching the product band on the home and catalog pages so
+       a product's name is the same size wherever it leads a surface. */
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    letter-spacing: -0.04em;
+    line-height: 0.98;
     overflow-wrap: anywhere;
     font-weight: 700;
     letter-spacing: -0.03em;

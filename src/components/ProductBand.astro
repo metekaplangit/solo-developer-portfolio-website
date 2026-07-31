@@ -1,0 +1,183 @@
+---
+// The product band — ONE definition of "a product presented at full width in
+// its own colour", used by the home page and the catalog (STEP-0047).
+//
+// History: the home spotlight and the catalog lead-row were the same component
+// built twice — six byte-identical CSS rule bodies under different selector
+// names, flagged by the 2026-07-18 system health check. Anything that renders a
+// product at band scale uses this and nothing else.
+//
+// The band re-declares `--hue` from the product's own colour, which is what
+// makes One Voice Per Band (DESIGN.md §2) true rather than aspirational: the
+// hue cannot leak, because it is scoped to this element.
+import { Image } from 'astro:assets';
+import type { Product } from '../content/schema';
+import DownloadButton from './DownloadButton.astro';
+import { statusLabel, productHue } from '../lib/products';
+import { canonicalPrivacyUrl } from '../lib/privacy';
+import { withBase } from '../lib/url';
+import { resolveScreenshot } from '../lib/screenshots';
+
+interface Props {
+  product: Product;
+  /** 1-based position, rendered as "01". */
+  index?: number;
+  /** The id the surrounding section labels itself with. */
+  headingId: string;
+  /** Above the fold? Only the first band on a page should be eager. */
+  eager?: boolean;
+  /**
+   * Include the lead screenshot's baked-in marketing copy in the alt text.
+   * True where the image is used as a marketing composition (the home lead),
+   * false where it is one plate among many (WCAG 2.2 SC 1.1.1, GitHub #3).
+   */
+  announceBakedInText?: boolean;
+}
+const {
+  product,
+  index = 1,
+  headingId,
+  eager = false,
+  announceBakedInText = false,
+} = Astro.props;
+
+const shot = product.screenshots?.[0];
+const img = shot ? resolveScreenshot(shot.path) : undefined;
+const alt = shot
+  ? announceBakedInText
+    ? [shot.bakedInText, shot.altText].filter(Boolean).join(' ')
+    : shot.altText
+  : '';
+const facts = [product.requirements, product.privacyFacts].filter(Boolean).join(' · ');
+---
+
+<div class="product-band" style={`--hue: ${productHue(product)};`}>
+  <div class="rail band-in">
+    <div class="band-copy">
+      <p class="band-over">
+        {String(index).padStart(2, '0')} — {product.type === 'game' ? 'Game' : 'App'} ·{' '}
+        {statusLabel(product.status)}
+      </p>
+      <h2 id={headingId} class="band-name">
+        <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
+      </h2>
+      <p class="band-summary">{product.summary}</p>
+      <div class="band-actions">
+        <DownloadButton product={product} tone="hue" label="Mac App Store" />
+        <a class="btn btn-lg btn-secondary" href={withBase(`/apps/${product.slug}/`)}>
+          View {product.name}
+        </a>
+      </div>
+      {
+        facts && (
+          <p class="band-facts">
+            {facts} · <a href={withBase(canonicalPrivacyUrl(product))}>Privacy</a>
+          </p>
+        )
+      }
+    </div>
+    {
+      img && (
+        <a
+          class="band-shot"
+          href={withBase(`/apps/${product.slug}/`)}
+          aria-label={`Open ${product.name}`}
+        >
+          {/* `sizes` measured against the real slot: the image column is ~47vw
+              from 66rem up and the full rail below it. The 1900w step exists
+              because the slot needs ~1700 device px at DPR 2 on the Retina Macs
+              this audience uses. */}
+          <Image
+            src={img}
+            alt={alt}
+            widths={[600, 900, 1300, 1900]}
+            sizes="(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)"
+            format="webp"
+            quality={80}
+            loading={eager ? 'eager' : 'lazy'}
+          />
+        </a>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .product-band {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+    background:
+      radial-gradient(70% 90% at 8% 0%, var(--hue-soft), transparent 62%),
+      linear-gradient(180deg, var(--bg-2), var(--bg));
+  }
+  .band-in {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(var(--space-8), 5vw, var(--space-16));
+    align-items: center;
+  }
+  .band-over {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-xs);
+    font-weight: 650;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .band-name {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+  .band-name a {
+    color: var(--text-strong);
+  }
+  .band-summary {
+    margin: 0 0 var(--space-8);
+    max-width: var(--measure);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .band-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  .band-facts {
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    color: var(--faint);
+  }
+  .band-facts a {
+    color: var(--faint);
+  }
+  .band-shot {
+    display: block;
+    line-height: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+  }
+  .band-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .band-shot {
+      transition: transform var(--dur) var(--ease);
+    }
+    .band-shot:hover {
+      transform: translateY(-3px);
+    }
+  }
+  @media (max-width: 66rem) {
+    .band-in {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
