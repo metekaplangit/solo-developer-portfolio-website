@@ -24,8 +24,15 @@ interface Props {
    * "Download" and "Mac App Store" both are. "Get it now" would not be.
    */
   label?: string;
+  /**
+   * 'neutral' (default) is studio chrome — the achromatic fill used anywhere on
+   * the site. 'hue' is only legal inside a band that this product owns, where
+   * `--hue` has been re-declared from the product's own colour (DESIGN.md §2,
+   * One Voice Per Band).
+   */
+  tone?: 'neutral' | 'hue';
 }
-const { product, size = 'md', label } = Astro.props;
+const { product, size = 'md', label, tone = 'neutral' } = Astro.props;
 
 const link = visibleStoreLinks(product).find((l) => l.status === 'available');
 const isApple = link && (link.store === 'mac-app-store' || link.store === 'app-store');
@@ -34,7 +41,7 @@ const isApple = link && (link.store === 'mac-app-store' || link.store === 'app-s
 {
   link && (
     <a
-      class={`btn btn-primary download-btn ${size === 'sm' ? 'download-sm' : ''}`}
+      class={`btn ${tone === 'hue' ? 'btn-hue' : 'btn-primary'} ${size === 'sm' ? 'btn-sm' : 'btn-lg'} download-btn`}
       href={link.url}
       rel="noopener"
       target="_blank"
@@ -51,23 +58,14 @@ const isApple = link && (link.store === 'mac-app-store' || link.store === 'app-s
 }
 
 <style>
-  .download-btn {
-    /* Same height as every other button (from .btn min-height); the main action
-       stands out through the accent fill, the Apple mark, and its wider label —
-       not a taller box. */
-    padding-inline: 1.5rem;
-    font-size: var(--text-base);
-  }
+  /* Height and padding come from the shared `.btn-lg` / `.btn-sm` set — the
+     main action stands out through its fill, the Apple mark and its wider
+     label, never through a one-off height (One Height Per Set). */
   .apple-mark {
     width: 1.15em;
     height: 1.15em;
     flex: none;
     /* Optically center the glyph against the text baseline. */
     margin-top: -0.1em;
-  }
-  .download-sm {
-    min-height: 2.5rem;
-    padding-inline: 1rem;
-    font-size: var(--text-sm);
   }
 </style>

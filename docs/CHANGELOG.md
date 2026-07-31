@@ -14,6 +14,23 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.40.0] — 2026-07-31
+
+### Changed
+
+- **The site has a new identity.** The stage is now near-black rather than
+  graphite, and the site itself no longer has a colour of its own: the header,
+  footer, buttons and focus rings are white, and the only colour on a page
+  belongs to a product. Sole Focus brings its own orange — taken from its icon —
+  and paints only its own section with it. A second app will bring its own, so
+  the catalogue will read as several distinct things instead of several rows of
+  one template.
+- Corners are softer (10/18/24px), the page rail is wider on large screens, and
+  buttons come in three sizes instead of one, so a small action in a card and the
+  main action in a hero no longer have to be the same size.
+- **Links inside text are now always underlined**, not only on hover. With no
+  colour in the chrome, the underline is what tells you something is a link.
+
 ### Fixed
 
 - Structured data (JSON-LD) now derives its canonical origin from the `site`

@@ -45,20 +45,35 @@ Spacing, type scale, color, focus/hover/pressed/disabled states live in
 values. Extract a component when a second cross-cutting concern appears
 (rule-of-three).
 
-### Implemented theme (STEP-0005): dark-premium "light dark"
+### Implemented theme (STEP-0045): "Spectrum"
 
-- **Dark-first by design** (`color-scheme: dark`). Elevated graphite surfaces
-  (`--bg #16171b`, `--surface`, `--surface-2`) — never pure black. A future light
-  theme/toggle stays possible without touching components (tokens only).
+Replaced the dark-premium graphite-and-periwinkle theme of STEP-0005. Full
+rationale and the two named rules it retires live in `DESIGN.md` §1–2; this is
+the implementation summary.
+
+- **Dark-first by design** (`color-scheme: dark`). Near-black stage
+  (`--bg #08090c`, `--bg-2`, `--surface`, `--surface-2`) — the **Near-Black
+  Floor Rule** replaces Never-Black: nothing below linear ~5, where halation and
+  OLED black crush start. A future light theme/toggle stays possible without
+  touching components (tokens only).
 - **Type:** SF Pro / system stack; modular scale (`--text-*`, `--display`);
   tight letter-spacing on large headings; body ~17px, generous line-height.
-- **Accent:** restrained periwinkle-blue (`--accent #7f8dff`) + soft/glow variants.
+- **Colour:** the site has none. `--accent` is white (studio chrome: focus rings,
+  current nav pill, neutral action fill). Colour arrives as `--hue`, authored per
+  product (`hue` field → `productHue()`) and scoped to that product's band — the
+  **One Voice Per Band Rule**.
 - **Depth (Apple "deference/depth"):** hairline borders (`--border`), soft
-  shadows (`--shadow-*`), rounded corners (`--radius*`), a **translucent sticky
-  header** (backdrop-blur), and a faint hero accent-glow.
+  shadows (`--shadow-*`), rounded corners (`--radius*` 10/18/24), a **translucent
+  sticky header** (backdrop-blur). The page-wide accent glow is gone: the only
+  wash on a page belongs to a product band.
 - **Motion:** `--ease`/`--dur` tokens; subtle hover lifts + a hero entrance
   animation, all gated by `prefers-reduced-motion`.
-- **Buttons:** `.btn` / `.btn-primary` (filled accent) / `.btn-secondary` (ghost).
+- **Buttons:** `.btn` in three heights (`.btn-sm` 2.25 / default 2.75 /
+  `.btn-lg` 3.25rem) × `.btn-primary` (white, neutral) / `.btn-hue` (product
+  colour, band-scoped only) / `.btn-secondary` (ghost).
+- **In-content links:** underline is persistent, not hover-only — with achromatic
+  chrome, colour alone can no longer distinguish a link from its prose
+  (WCAG 1.4.1). Hover thickens and brightens it.
 - Applied to tokens + shell (Nav/Footer/Badge/BaseLayout) + home in STEP-0005;
   STEP-0038 moved every primary page onto the shared band rhythm, and STEP-0042
   consolidated cards and policy rows onto shared primitives. Page files should
