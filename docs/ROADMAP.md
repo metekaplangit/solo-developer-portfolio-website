@@ -513,7 +513,16 @@ a measured conformance fix rather than a design change.
   `--text-lede` role replaces two clamps a pixel apart, and `MakerNote`'s raw
   `1.05rem` is now `--text-base`. 0 off-scale band paddings at two widths on
   both banded routes; 56 page-states swept, 0 overflow.
-- **STEP-0051 — One chip, one definition** *(planned).*
+- **STEP-0051 — One chip, one definition** *(COMPLETE — merged, tagged
+  `v0.44.2`, 2026-07-31).* `padding: 0.25rem 0.6rem` appeared verbatim in three
+  components; there is now one `.chip` in `global.css` with size as a named
+  modifier (`.chip-lg` keeps the at-a-glance row deliberately louder).
+  Consolidating settled two real defects: the neutral badge carried a fill AND
+  a hairline, breaking Single-Cue, and the gallery counter's fill was a
+  hardcoded `rgba(22,23,27,0.6)` — the **retired** graphite ground left behind
+  by the STEP-0045 swap. Padding moved to the space scale (4px 12px). The
+  counter's live update is recorded **unproven**: it runs on an
+  IntersectionObserver, which does not fire in the harness available here.
 - **STEP-0052 — Every target reaches 24px** *(planned).*
 - **STEP-0053 — The hero image loads first, at the right size** *(planned).*
 

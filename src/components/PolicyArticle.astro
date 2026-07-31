@@ -43,7 +43,7 @@ const chips: { label: string; ok: boolean }[] = [
   </header>
 
   <ul class="glance" aria-label="At a glance">
-    {chips.map((c) => <li class={c.ok ? 'chip chip-ok' : 'chip'}>{c.label}</li>)}
+    {chips.map((c) => <li class={`chip chip-lg${c.ok ? ' chip-accent' : ''}`}>{c.label}</li>)}
   </ul>
 
   <div class="policy-lead"><slot /></div>
@@ -277,19 +277,8 @@ const chips: { label: string; ok: boolean }[] = [
     margin: var(--space-8) 0 0;
     padding: 0;
   }
-  /* Single cue per chip: a fill, never a fill AND a border. */
-  .chip {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    padding: 0.25rem 0.6rem;
-    border-radius: var(--radius-pill);
-    background: var(--surface-2);
-    color: var(--muted);
-  }
-  .chip-ok {
-    background: var(--accent-soft);
-    color: var(--accent-hover);
-  }
+  /* The chip's shape and tones live in `.chip` / `.chip-lg` / `.chip-accent`
+     (global.css). Nothing about the pill is defined here any more. */
 
   /* `--muted`, matching every other page's lede. It was `--text` (near-white)
      at 20px, which made this one paragraph brighter than the body copy on

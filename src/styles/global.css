@@ -369,6 +369,54 @@ img {
   padding-bottom: var(--band-y);
 }
 
+/* Chips ---------------------------------------------------------------------
+   ONE definition of the small pill. Before this the same shape was written
+   three times — `Badge.astro`, the policy at-a-glance row and the gallery's
+   position counter — each with its own copy of `padding: 0.25rem 0.6rem`, and
+   each free to drift. This is the same failure the card system fixed in
+   STEP-0042, one scale down.
+
+   Shape is shared; SIZE is a named modifier, because the at-a-glance row is
+   deliberately larger than a metadata badge. Padding is on the space scale
+   (`0.6rem` was an invented value).
+
+   Single-cue: a fill, never a fill AND a border. `.chip-glass` is the one
+   exception and states why. */
+.chip {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+/* The at-a-glance row: same pill, deliberately louder. */
+.chip-lg {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.chip-accent {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+.chip-quiet {
+  background: transparent;
+  color: var(--faint);
+}
+/* Over arbitrary imagery, so a fill alone cannot be relied on to separate it —
+   the one place a chip carries both a fill and a hairline, on purpose. */
+.chip-glass {
+  background: color-mix(in srgb, var(--bg) 62%, transparent);
+  border-color: var(--border);
+  color: var(--text-strong);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
 /* A page masthead heading — the one definition of "this page's title", so a
    route cannot drift onto a size of its own. Product names use `--display-3`
    through their own components; only the home hero uses `--display-1`. */

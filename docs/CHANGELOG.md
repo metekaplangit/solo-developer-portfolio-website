@@ -14,6 +14,18 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.2] — 2026-07-31
+
+### Fixed
+
+- **The little rounded labels are now one thing, not three.** Badges, the
+  privacy "at a glance" row and the counter on the screenshot gallery were three
+  separate copies of the same shape. They are one now, so they can't drift apart.
+- **The gallery counter was still painted the old grey** from before the
+  redesign — a leftover colour that no longer matched anything. Fixed.
+- A badge had both a fill and an outline, which the site's own rule says never
+  to do. It has a fill.
+
 ## [0.44.1] — 2026-07-31
 
 ### Fixed
