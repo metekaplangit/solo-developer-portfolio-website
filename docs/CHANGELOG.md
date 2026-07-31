@@ -14,6 +14,24 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.5] — 2026-07-31
+
+### Changed
+
+- **The home page's opening now fades in as it rises**, instead of appearing at
+  full strength and then sliding — which read as a jolt. The four lines arrive
+  one after another over about half a second.
+- Small state changes (a link changing colour) are now quicker than a panel
+  responding to your pointer, which is quicker again than something arriving on
+  screen. They had all been the same speed.
+
+### Fixed
+
+- **The staggered timing on the home page opening had never actually worked** —
+  all four lines were arriving at once.
+- A type check had been failing since the previous release because of a stray
+  comment in the wrong place. Fixed, and the check is green again.
+
 ## [0.44.4] — 2026-07-31
 
 ### Changed

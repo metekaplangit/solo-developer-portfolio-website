@@ -331,24 +331,39 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     }
   }
 
+  /* Hero entrance. It used to animate `transform` only, so the text appeared at
+     full strength and then moved — which reads as a jolt rather than an
+     arrival. Opacity and transform together, on the entrance role, with the
+     four children declared in reading order rather than three of them delayed
+     and the fourth left implicit. */
   @media (prefers-reduced-motion: no-preference) {
     .band-hero > .rail > * {
-      animation: rise 0.6s var(--ease) both;
+      animation: rise var(--dur-slow) var(--ease-out) both;
     }
-    .band-hero h1 {
-      animation-delay: 0.05s;
+    /* The delays MUST match the wildcard rule's shape. Measured 2026-07-31:
+       written as `.band-hero h1` they lost to `.band-hero > .rail > *` on
+       specificity — three classes beat two — so every child computed a 0s
+       delay and the whole stagger had silently never run. Selecting through
+       the same path keeps them equal, and later-wins does the rest. */
+    .band-hero > .rail > .over {
+      animation-delay: 0s;
     }
-    .band-hero .lede {
-      animation-delay: 0.1s;
+    .band-hero > .rail > h1 {
+      animation-delay: 60ms;
     }
-    .band-hero .actions {
-      animation-delay: 0.15s;
+    .band-hero > .rail > .lede {
+      animation-delay: 120ms;
+    }
+    .band-hero > .rail > .actions {
+      animation-delay: 180ms;
     }
     @keyframes rise {
       from {
+        opacity: 0;
         transform: translateY(12px);
       }
       to {
+        opacity: 1;
         transform: translateY(0);
       }
     }
