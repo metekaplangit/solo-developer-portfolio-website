@@ -71,6 +71,18 @@
   --text-3xl: 2.75rem;
   --display: clamp(2.75rem, 7vw, 4.75rem);
 
+  /* The display ramp — three steps, and no page invents a fourth (STEP-0048).
+     Before this the eight routes carried four different h1 sizes (a flat
+     2.75rem on about/support/404, three different clamps elsewhere), so the
+     same level of heading changed size depending on which page you were on.
+
+       --display-1  the home hero. One per site.
+       --display-2  a page masthead: Apps & Games, About, Support, Privacy, 404.
+       --display-3  a product's name, wherever a product leads a surface. */
+  --display-1: clamp(2.75rem, 8.5vw, 7rem);
+  --display-2: clamp(2.25rem, 5.5vw, 4.25rem);
+  --display-3: clamp(2.25rem, 4.6vw, 3.75rem);
+
   /* Spacing scale */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -269,6 +281,8 @@ img {
 .per-product-lead a,
 .footer-links a,
 .back a,
+.elsewhere a,
+.products a,
 .section-link {
   /* The rule is dimmed, never the text: a link must not read as weaker than the
      prose around it. `color-mix` fades the underline alone. */
@@ -289,6 +303,8 @@ img {
 .per-product-lead a:hover,
 .footer-links a:hover,
 .back a:hover,
+.elsewhere a:hover,
+.products a:hover,
 .section-link:hover {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 100% 2px;
@@ -346,6 +362,18 @@ img {
    page. */
 .band-tail {
   padding-bottom: var(--band-y);
+}
+
+/* A page masthead heading — the one definition of "this page's title", so a
+   route cannot drift onto a size of its own. Product names use `--display-3`
+   through their own components; only the home hero uses `--display-1`. */
+.page-title {
+  margin: 0 0 var(--space-6);
+  font-size: var(--display-2);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--text-strong);
 }
 
 /* Quiet section heading — real `h2`/`h3` semantics (keeps the document outline

@@ -14,6 +14,22 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.43.0] — 2026-07-31
+
+### Changed
+
+- **Every page title is now the same size.** Across the eight pages there were
+  four different heading sizes for the same level of heading, so the site
+  changed scale depending on where you were. There are now three sizes and a
+  rule about which is used where.
+- Privacy, Support, About and the not-found page joined the new look.
+
+### Fixed
+
+- **Links inside the text on About and Support were never underlined.** The
+  styling existed but pointed at names nothing on the page used, so it had never
+  done anything. It works now.
+
 ## [0.42.0] — 2026-07-31
 
 ### Changed

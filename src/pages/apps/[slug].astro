@@ -277,9 +277,9 @@ const schema = [
     margin: 0 0 var(--space-4);
     /* Clamped, and allowed to break: `--text-3xl` is a flat 2.75rem, so an
        unbreakable long name at 44px overflowed a 149px track. */
-    /* Poster scale, matching the product band on the home and catalog pages so
-       a product's name is the same size wherever it leads a surface. */
-    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    /* Ramp step 3 — a product's name is the same size wherever a product leads
+       a surface (home band, catalog band, its own page). */
+    font-size: var(--display-3);
     letter-spacing: -0.04em;
     line-height: 0.98;
     overflow-wrap: anywhere;
