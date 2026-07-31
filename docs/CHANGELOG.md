@@ -14,6 +14,23 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.9] — 2026-08-01
+
+### Fixed
+
+- The fade-in effect no longer leaves anything shifted 22px out of place on
+  browsers where it doesn't run. It now adds nothing at all unless it is
+  actually running.
+
+## [0.44.8] — 2026-08-01
+
+### Fixed
+
+- **Urgent: five things on the home page had become invisible.** Repairing the
+  fade-in effect in v0.44.6 made it hold content hidden on browsers where the
+  scroll timing never starts. Content is visible again; the effect now moves
+  things rather than hiding them.
+
 ## [0.44.7] — 2026-08-01
 
 ### Changed
