@@ -8,6 +8,8 @@ import {
   statusLabel,
   platformLabel,
   relatedProducts,
+  productHue,
+  NEUTRAL_HUE,
 } from './products';
 import type { Product } from '../content/schema';
 
@@ -115,5 +117,17 @@ describe('labels', () => {
     expect(platformLabel('macos')).toBe('macOS');
     expect(platformLabel('ios')).toBe('iOS');
     expect(platformLabel('somefuture')).toBe('somefuture');
+  });
+});
+
+describe('productHue', () => {
+  it('returns the product’s authored hue', () => {
+    expect(productHue(make({ hue: '#ff9245' }))).toBe('#ff9245');
+  });
+
+  it('falls back to the neutral hue when none is authored', () => {
+    // An unclaimed band reads as studio chrome, not as a product with a
+    // forgotten colour — so the fallback is the site's own near-white.
+    expect(productHue(make({}))).toBe(NEUTRAL_HUE);
   });
 });

@@ -36,10 +36,10 @@
   rejected (see `Nav.astro`), and fitting four items needs either sub-ramp type
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
-- **Next action:** freeze one packet. No defect backlog remains. Candidates: a
-  **real** additional product supplied by the owner, the STEP-0033 updates block
-  when its first-update/second-product trigger fires, or an optional
-  Terms/disclaimer page. Do not invent in-development products.
+- **Next action:** continue the **Spectrum identity phase** (owner-selected
+  mockup option E, 2026-07-31): **STEP-0045** — tokens, chrome and the two
+  replaced `DESIGN.md` rules. Six packets, STEP-0044..0049, listed in ROADMAP.
+  STEP-0044 is complete. Do not invent in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
   1. **Duplication.** The home spotlight and the catalog lead-row are the same
@@ -63,7 +63,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **42** (`STEP-0001`..`STEP-0043`; STEP-0033 is
+- Completed **feature** steps: **43** (`STEP-0001`..`STEP-0044`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -82,8 +82,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0043 (last numbered packet; v0.39.2 and v0.39.3 are unnumbered fix releases)
-next_step: owner-supplied real product; or trigger-armed STEP-0033; or optional Terms/disclaimer page
+current_step: STEP-0044 (last numbered packet; v0.39.2 and v0.39.3 are unnumbered fix releases)
+next_step: STEP-0045 (Spectrum identity — tokens, chrome, replaced DESIGN.md rules)
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
 product_tag: v0.39.3

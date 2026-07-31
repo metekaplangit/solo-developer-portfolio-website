@@ -91,3 +91,21 @@ export const PLATFORM_LABELS: Record<string, string> = {
 export function platformLabel(platform: string): string {
   return PLATFORM_LABELS[platform] ?? platform;
 }
+
+/**
+ * The neutral hue a product band falls back to when the product has not
+ * authored one. Deliberately the site's own near-white rather than a second
+ * chromatic voice: an unclaimed band should read as studio chrome, not as a
+ * product whose colour someone forgot to pick.
+ */
+export const NEUTRAL_HUE = '#f2f3f6';
+
+/**
+ * The identity colour a product paints its band with (DESIGN.md §2, One Voice
+ * Per Band). Every surface that renders a product band reads the hue through
+ * this one function, so a product can never end up with two different colours
+ * on two different pages.
+ */
+export function productHue(product: Product): string {
+  return product.hue ?? NEUTRAL_HUE;
+}

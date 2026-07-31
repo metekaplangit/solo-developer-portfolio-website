@@ -424,6 +424,32 @@ UI-only phase. Allowed: visual system, tokens, layout, motion, accessibility.
   Enhancement became due at feature #42** and were cleared in the feature-42
   governance catch-up (MC-0019 + DISC-0013 + ENH-0006).
 
+### Phase: Spectrum identity (owner-selected makeover) ▶ in progress
+
+Owner ran a mockup round on 2026-07-31 (five whole-site options, rendered from
+the real content and screenshots) and selected option **E — "Spectrum"**: a
+near-black stage, full-bleed poster bands, and colour supplied by the product
+rather than by the site. Six packets, in dependency order. Two named rules in
+`DESIGN.md` are deliberately replaced by STEP-0045 (Never-Black → Near-Black
+Floor; One Voice → One Voice Per Band); both replacements are recorded there,
+not re-litigated per packet.
+
+Every packet merges to `main` and therefore publishes, so each one is scoped to
+leave the site coherent on its own — the token swap in STEP-0045 re-skins all
+eight routes at once precisely because every route already draws from `:root`.
+
+- **STEP-0044 — Per-product hue in the content model** *(COMPLETE — merged,
+  2026-07-31).* Optional six-digit-hex `hue` on the product schema plus
+  `productHue()`/`NEUTRAL_HUE` in `lib/products.ts`; Sole Focus declares
+  `#ff9245`, taken from its own icon. Nothing consumes it yet, so no rendered
+  output changed. Nine new tests (54 total). Internal — no tag.
+- **STEP-0045 — Spectrum identity: tokens, chrome, replaced rules** *(planned).*
+- **STEP-0046 — Home as the poster** *(planned).*
+- **STEP-0047 — Product surfaces: catalog and detail** *(planned).*
+- **STEP-0048 — Reading surfaces: privacy, support, about, 404** *(planned).*
+- **STEP-0049 — Harmony sweep across all eight routes** *(planned — phase
+  closer; the release the owner asked for).*
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

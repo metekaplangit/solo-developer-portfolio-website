@@ -116,6 +116,16 @@ export const productSchema = z.object({
   // "Works offline — no account, no cloud, no tracking"). Must restate claims
   // already made (and tested) in the product's policy/content — never new ones.
   privacyFacts: z.string().min(1).optional(),
+  // The product's own identity colour, used to paint its band on any surface
+  // that presents it (One Voice Per Band, DESIGN.md §2). Authored per product
+  // rather than per site so a catalogue of several products reads as several
+  // products; the studio's own chrome stays neutral and never takes a hue.
+  // Six-digit hex only — the value is interpolated into CSS custom properties,
+  // so shorthand and named colours are rejected rather than normalised.
+  hue: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/, 'hue must be a six-digit hex colour like "#ff9245"')
+    .optional(),
   releaseDate: z.coerce.date().optional(),
   lastUpdated: z.coerce.date().optional(),
   seo: z
