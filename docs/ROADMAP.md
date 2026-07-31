@@ -498,6 +498,25 @@ eight routes at once precisely because every route already draws from `:root`.
 
 The Spectrum phase is complete.
 
+### Phase: UI polish (owner-requested) ▶ in progress
+
+Owner, 2026-07-31, after the makeover: *"make sure every UI element we have is
+nicely sized, positioned aligned, categorized and meaningfully placed… This is
+NOT a full-design UI request. This is a UI polish request."* Four packets, each
+a measured conformance fix rather than a design change.
+
+- **STEP-0050 — Spacing and type on the scale** *(COMPLETE — merged, tagged
+  `v0.44.1`, 2026-07-31).* The banded routes hand-rolled six `clamp()` padding
+  expressions, rendering 96/80/80/80/48px on the home page — 80px belonging to
+  no scale — while the four `--band-y-*` rhythm tokens sat unused. Snapped to
+  the tokens (96/72/72/72/40), every move ≤8px, no new step needed. One
+  `--text-lede` role replaces two clamps a pixel apart, and `MakerNote`'s raw
+  `1.05rem` is now `--text-base`. 0 off-scale band paddings at two widths on
+  both banded routes; 56 page-states swept, 0 overflow.
+- **STEP-0051 — One chip, one definition** *(planned).*
+- **STEP-0052 — Every target reaches 24px** *(planned).*
+- **STEP-0053 — The hero image loads first, at the right size** *(planned).*
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so

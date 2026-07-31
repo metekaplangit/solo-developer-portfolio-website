@@ -203,7 +203,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     /* Capped: 82vh is right up to a ~1100px-tall window, above which a hero
        taller than 900px is a wall of nothing rather than a poster. */
     min-height: min(82vh, 900px);
-    padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3rem, 6vw, 5rem);
+    padding-block: var(--band-y-lg) var(--band-y);
     overflow: hidden;
   }
   .band-hero h1 {
@@ -217,7 +217,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   .lede {
     margin: 0 0 var(--space-8);
     max-width: var(--measure-mid);
-    font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
+    font-size: var(--text-lede);
     line-height: 1.55;
     color: var(--muted);
   }
@@ -233,7 +233,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
 
   /* BAND 3 — statements */
   .band-says {
-    padding-block: clamp(3rem, 6vw, 5rem);
+    padding-block: var(--band-y);
   }
   .says-in {
     display: grid;
@@ -256,7 +256,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
 
   /* BAND 4 — mosaic */
   .band-mosaic {
-    padding-bottom: clamp(3rem, 6vw, 5rem);
+    padding-bottom: var(--band-y);
   }
   .mosaic-in {
     display: grid;
@@ -283,12 +283,12 @@ const hue = spotlight ? productHue(spotlight) : undefined;
 
   /* Catalog (dormant until a second product exists) */
   .band-catalog {
-    padding-bottom: clamp(3rem, 6vw, 5rem);
+    padding-bottom: var(--band-y);
   }
 
   /* BAND 5 — the deal */
   .band-promise {
-    padding-block: clamp(3rem, 6vw, 5rem);
+    padding-block: var(--band-y);
     border-top: 1px solid var(--border);
   }
   .band-promise ul {
@@ -311,7 +311,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   }
 
   .band-maker {
-    padding-bottom: clamp(2rem, 4vw, 3rem);
+    padding-bottom: var(--band-y-tight);
   }
 
   @media (max-width: 66rem) {

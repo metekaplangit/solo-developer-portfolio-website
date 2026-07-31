@@ -66,7 +66,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **48** (`STEP-0001`..`STEP-0049`; STEP-0033 is
+- Completed **feature** steps: **49** (`STEP-0001`..`STEP-0050`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -85,11 +85,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0049 (Harmony sweep; product release v0.44.0 — Spectrum phase complete)
-next_step: owner-supplied real product; or trigger-armed STEP-0033; or the brand-mark refresh left open by STEP-0045; owner may also wish to cut v1.0.0 now the redesign is complete
+current_step: STEP-0050 (Spacing and type on the scale; product release v0.44.1)
+next_step: STEP-0051 (One chip, one definition) — UI polish phase, STEP-0050..0053
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.44.0
+product_tag: v0.44.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

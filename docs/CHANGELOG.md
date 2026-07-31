@@ -14,6 +14,18 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.1] — 2026-07-31
+
+### Fixed
+
+- **The gaps between sections now come from one set of sizes.** Pages had been
+  using their own hand-written spacing, including an 80px gap that matched
+  nothing else on the site. Everything now uses the four spacing steps the site
+  already had. The home page tightens by 8px in three places.
+- The one-line intro under a page title was two different sizes, one pixel
+  apart, on two pages. It is one size now. Same for a stray text size in the
+  maker's note.
+
 ## [0.44.0] — 2026-07-31
 
 The site-wide redesign is finished. Six steps, every page rebuilt.
