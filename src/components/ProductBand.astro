@@ -24,7 +24,12 @@ interface Props {
   index?: number;
   /** The id the surrounding section labels itself with. */
   headingId: string;
-  /** Above the fold? Only the first band on a page should be eager. */
+  /**
+   * Above the fold? Only the FIRST band on a page may set this. It sets both
+   * `loading="eager"` and `fetchpriority="high"`, and `fetchpriority` is only
+   * meaningful on one image per page — marking everything high is the same as
+   * marking nothing high (web.dev, Fetch Priority API, checked 2026-07-31).
+   */
   eager?: boolean;
   /**
    * Include the lead screenshot's baked-in marketing copy in the alt text.
@@ -95,6 +100,7 @@ const facts = [product.requirements, product.privacyFacts].filter(Boolean).join(
             format="webp"
             quality={80}
             loading={eager ? 'eager' : 'lazy'}
+            fetchpriority={eager ? 'high' : undefined}
           />
         </a>
       )

@@ -14,6 +14,20 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.4] — 2026-07-31
+
+### Changed
+
+- **The big picture at the top of each page now loads first.** It is marked as
+  the most important thing to fetch, so it appears sooner. Only one image per
+  page gets this — marking everything urgent is the same as marking nothing.
+
+### Fixed
+
+- **The four screenshots on the home page were being loaded slightly too small
+  for the space they sit in**, so they were very mildly upscaled. They now load
+  at the right size, and a sharper version is available for Retina screens.
+
 ## [0.44.3] — 2026-07-31
 
 ### Fixed

@@ -533,7 +533,17 @@ a measured conformance fix rather than a design change.
   untouched. **406 targets measured across 8 routes × 3 widths, 0 failures**;
   the 38 still under 24px are all inline in a sentence, where the exception
   applies.
-- **STEP-0053 — The hero image loads first, at the right size** *(planned).*
+- **STEP-0053 — The hero image loads first, at the right size** *(COMPLETE —
+  merged, tagged `v0.44.4`, 2026-07-31; phase closer).* `fetchpriority="high"`
+  on exactly one image per page — the product band's lead shot on `/` and
+  `/apps/`, the gallery's first slide on the product page — carried by the same
+  prop as `loading="eager"` so the two cannot drift apart. The home mosaic's
+  `sizes` under-declared its slot (`40vw` = 576px against a 604px slot), so the
+  browser was picking a variant one step too small; corrected to `42vw` with a
+  1400w step for DPR-2 Retina. Build grew 1.4MB → 1.5MB (4 new variants), stated
+  on the card rather than hidden. 11 images measured, 0 undersized.
+
+The UI-polish phase is complete.
 
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
