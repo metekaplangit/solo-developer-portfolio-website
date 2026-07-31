@@ -521,8 +521,10 @@ a measured conformance fix rather than a design change.
   a hairline, breaking Single-Cue, and the gallery counter's fill was a
   hardcoded `rgba(22,23,27,0.6)` — the **retired** graphite ground left behind
   by the STEP-0045 swap. Padding moved to the space scale (4px 12px). The
-  counter's live update is recorded **unproven**: it runs on an
-  IntersectionObserver, which does not fire in the harness available here.
+  counter's live update could not be proved locally (it runs on an
+  IntersectionObserver, which does not fire in the harness here) and was
+  **confirmed working on the live site** after deploy: `1 / 5` → `2 / 5` on the
+  next-arrow, active dot advancing with it.
 - **STEP-0052 — Every target reaches 24px** *(COMPLETE — merged, tagged
   `v0.44.3`, 2026-07-31).* Five standalone link groups measured 19–21px tall
   against the WCAG 2.2 SC 2.5.8 (AA) minimum of 24×24: the footer row, the
