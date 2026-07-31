@@ -14,6 +14,23 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.42.0] — 2026-07-31
+
+### Changed
+
+- **Apps & Games is now one full-width panel per app**, each in that app's own
+  colour, instead of one large card plus a grid of small ones. With one app it
+  is one panel; with five it will read as five distinct things.
+- **An app's own page is now entirely in that app's colour** — the download
+  button, the badges, the gallery arrows and dots all pick up Sole Focus's
+  orange.
+
+### Fixed
+
+- The home page and the Apps page were showing the same app panel built twice,
+  in two separate places, with six identical blocks of styling under different
+  names. They are now one component, so a change to one is a change to both.
+
 ## [0.41.0] — 2026-07-31
 
 ### Changed

@@ -464,7 +464,16 @@ eight routes at once precisely because every route already draws from `:root`.
   stable` makes it overflow), and `src/lib/prose.ts` so approved copy has one
   source. Writing that helper's tests caught a real defect first. 21 page-states
   swept, 0 overflow.
-- **STEP-0047 — Product surfaces: catalog and detail** *(planned).*
+- **STEP-0047 — Product surfaces: catalog and detail** *(COMPLETE — merged,
+  tagged `v0.42.0`, 2026-07-31).* One shared `ProductBand.astro` now serves the
+  home page and the catalog; the catalog lead-row that duplicated the home
+  spotlight is gone, closing 2026-07-18 health-check follow-up #1. The catalog
+  is one band per product, each in its own hue. A product's own page remaps four
+  accent tokens once on a wrapper, so the download button, badges, gallery
+  controls and focus ring all speak that product's colour without any component
+  knowing hues exist. The detail page's gallery/fit/features/prose sections keep
+  their structure deliberately — working, tested surfaces; residual drift is
+  STEP-0049's to measure. 21 page-states swept, 0 overflow.
 - **STEP-0048 — Reading surfaces: privacy, support, about, 404** *(planned).*
 - **STEP-0049 — Harmony sweep across all eight routes** *(planned — phase
   closer; the release the owner asked for).*
