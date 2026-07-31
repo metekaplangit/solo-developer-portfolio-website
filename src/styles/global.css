@@ -799,6 +799,43 @@ img {
   }
 }
 
+/* Page-to-page continuity ----------------------------------------------------
+   Cross-document view transitions, in CSS, with **no JavaScript**. Every
+   navigation on this site was a hard cut; this makes it a hand-off.
+
+   `@view-transition` is the native at-rule for same-origin, cross-document
+   navigation — Chrome 126+, Safari 18.2+, Firefox in progress. Both the
+   outgoing and the incoming page must opt in, which is automatic here because
+   this stylesheet is on all eight routes. Where it is unsupported the
+   navigation is an ordinary page load, exactly as before.
+
+   Astro's `ClientRouter` was deliberately NOT used: it turns a static
+   multi-page site into a single-page app and would require every script —
+   the gallery included — to be re-initialised per navigation, which
+   contradicts docs/ARCHITECTURE.md's guardrail that nothing runs in
+   production. This costs zero bytes of script. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Persistent chrome holds still. Without its own name the header is captured
+   inside the root snapshot and visibly cross-fades against itself on every
+   navigation — the single most common way this feature looks broken. */
+::view-transition-group(root) {
+  animation-duration: var(--dur-slow);
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No transition at all, rather than a fast one: the standing rule in
+     DESIGN.md §6 is an alternative, not a shorter version of the same thing. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

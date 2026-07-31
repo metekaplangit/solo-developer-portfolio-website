@@ -14,6 +14,15 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.7] — 2026-08-01
+
+### Changed
+
+- **Moving between pages is now a smooth transition instead of a hard cut.**
+  The header and footer stay put while the page beneath them changes. It costs
+  no JavaScript at all — the browser does it — and on a browser that doesn't
+  support it, pages simply load the way they always did.
+
 ## [0.44.6] — 2026-08-01
 
 ### Fixed

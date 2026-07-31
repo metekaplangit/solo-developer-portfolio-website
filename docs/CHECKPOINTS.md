@@ -23,7 +23,7 @@ See `ROADMAP.md` for the rationale.
 
 ## Counters
 
-- Completed **feature** Steps: **54** (STEP-0001..STEP-0055; 0033 deferred/unstarted does not count).
+- Completed **feature** Steps: **55** (STEP-0001..STEP-0056; 0033 deferred/unstarted does not count).
 - Calibration status: **completed** (2026-07-02).
 - Next feature step: **STEP-0044** (or STEP-0033 when its trigger fires).
 - The 2026-07-18 catch-up (MC-0019, DISC-0013, AUDIT-0008, ENH-0006) cleared the

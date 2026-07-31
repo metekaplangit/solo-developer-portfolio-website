@@ -39,6 +39,9 @@ function isCurrent(href: string): boolean {
 <style>
   /* Translucent "liquid glass" sticky header — Apple depth cue. */
   .site-header {
+    /* Named, so it is snapshotted separately from the page body and holds
+       still across a navigation instead of cross-fading against itself. */
+    view-transition-name: site-header;
     position: sticky;
     top: 0;
     z-index: 50;
