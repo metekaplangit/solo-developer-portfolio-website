@@ -84,7 +84,7 @@ const schema = [
           <Badge label={statusLabel(product.status)} />
           {product.platforms.map((p) => <Badge label={platformLabel(p)} tone="muted" />)}
         </div>
-        <h1 id="product-h" class="product-name">{product.name}</h1>
+        <h1 id="product-h" class="product-title product-name">{product.name}</h1>
         <p class="summary measure-mid">{product.summary}</p>
       </div>
     </div>
@@ -247,23 +247,21 @@ const schema = [
   .detail-head {
     margin-top: var(--space-6);
   }
+  /* Stacked, not side-by-side. Measured 2026-07-31: with the avatar in a left
+     column the product name started 173px (1024) / 227px (1440) from the
+     viewport edge while the nav brand, the footer and every other h1 on the
+     site started at 51 / 99 — the product's own name was the one heading that
+     did not sit on the shared rail. Stacking puts it back and costs one row of
+     vertical space. */
   .head-grid {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: clamp(var(--space-4), 2.5vw, var(--space-8));
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
     align-items: start;
+    justify-items: start;
   }
-  /* Below ~34rem the 96px avatar leaves too little for the name: a product
-     whose name is a single long token (e.g. "Chronoscope") pushed the DOCUMENT
-     87px wide at 320px — verified by substitution, and an absolute ban. Today's
-     "Sole Focus" happens to break into two short words and hides it. Stack
-     instead of squeezing. */
-  @media (max-width: 34rem) {
-    .head-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
-    }
-  }
+  /* (The old narrow-screen stacking rule is gone: the head stacks at every
+     width now, so the 320px overflow it guarded against cannot occur.)
   .head-body {
     min-width: 0;
   }
@@ -277,11 +275,8 @@ const schema = [
     margin: 0 0 var(--space-4);
     /* Clamped, and allowed to break: `--text-3xl` is a flat 2.75rem, so an
        unbreakable long name at 44px overflowed a 149px track. */
-    /* Ramp step 3 — a product's name is the same size wherever a product leads
-       a surface (home band, catalog band, its own page). */
-    font-size: var(--display-3);
-    letter-spacing: -0.04em;
-    line-height: 0.98;
+    /* Size, weight, line-height and tracking come from the global
+       `.product-title`; only the wrapping guard is local. */
     overflow-wrap: anywhere;
     font-weight: 700;
     letter-spacing: -0.03em;

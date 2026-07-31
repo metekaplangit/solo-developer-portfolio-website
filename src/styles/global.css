@@ -376,6 +376,19 @@ img {
   color: var(--text-strong);
 }
 
+/* A product's name where a product leads a surface — the home band, a catalog
+   band, and the product's own page. Global rather than scoped per component so
+   the three cannot drift apart; measured 2026-07-31 with the detail page's own
+   scoped rule failing to apply and its name rendering 32px against the bands'
+   60px. */
+.product-title {
+  font-size: var(--display-3);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--text-strong);
+}
+
 /* Quiet section heading — real `h2`/`h3` semantics (keeps the document outline
    and the a11y gate honest), styled small and unemphatic so it labels the band
    without competing with the content. Deliberately NOT a tracked-uppercase
