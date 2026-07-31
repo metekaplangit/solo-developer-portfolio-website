@@ -13,15 +13,16 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** the **Spectrum identity** shipped as **v0.40.0** on
-  2026-07-31 under **STEP-0045**, the second of six packets in the owner-selected
-  makeover (option E of the 2026-07-31 mockup round). The stage is near-black,
-  the studio's chrome is achromatic, and colour now belongs to a product and is
-  scoped to that product's band. Three named `DESIGN.md` rules were deliberately
-  replaced — Never-Black → Near-Black Floor, One Voice → One Voice Per Band, One
-  Height → One Height Per Set. Page *structure* is unchanged so far; STEP-0046
-  through 0048 rebuild it route family by route family, and STEP-0049 closes the
-  phase with a cross-route alignment sweep. *(Keep a Step ID in this bullet: the
+- **Latest product state:** the **Spectrum makeover** is three packets in
+  (option E of the 2026-07-31 mockup round). **STEP-0045** shipped the identity
+  as v0.40.0 — near-black stage, achromatic studio chrome, colour scoped to a
+  product's own band, and three named `DESIGN.md` rules deliberately replaced
+  (Never-Black → Near-Black Floor, One Voice → One Voice Per Band, One Height →
+  One Height Per Set). **STEP-0046** shipped the home page as the poster in
+  v0.41.0, putting all five real screenshots on it. Route *structure* elsewhere
+  is still the pre-makeover layout: STEP-0047 and 0048 rebuild the product and
+  reading routes, and STEP-0049 closes the phase with a cross-route alignment
+  sweep. *(Keep a Step ID in this bullet: the
   validator resolves the active step from the first `STEP-XXXX` token in this
   file, and without one here the scan falls through to the trigger-armed
   STEP-0033 template and the validator fails locally. CI is retired, so nothing
@@ -39,9 +40,9 @@
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
 - **Next action:** continue the **Spectrum identity phase** (owner-selected
-  mockup option E, 2026-07-31): **STEP-0046** — the home page as the poster.
-  Six packets, STEP-0044..0049, listed in ROADMAP; 0044 and 0045 are complete
-  and 0045 released as **v0.40.0**. Do not invent in-development products.
+  mockup option E, 2026-07-31): **STEP-0047** — the catalog and product detail pages.
+  Six packets, STEP-0044..0049, listed in ROADMAP; 0044, 0045 and 0046 are complete
+  and 0046 released as **v0.41.0**. Do not invent in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
   1. **Duplication.** The home spotlight and the catalog lead-row are the same
@@ -65,7 +66,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **44** (`STEP-0001`..`STEP-0045`; STEP-0033 is
+- Completed **feature** steps: **45** (`STEP-0001`..`STEP-0046`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -84,11 +85,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0045 (Spectrum identity; product release v0.40.0)
-next_step: STEP-0046 (Home as the poster)
+current_step: STEP-0046 (Home as the poster; product release v0.41.0)
+next_step: STEP-0047 (Product surfaces: catalog and detail)
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.40.0
+product_tag: v0.41.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

@@ -3,296 +3,459 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
-import ProductAvatar from '../components/ProductAvatar.astro';
-import Badge from '../components/Badge.astro';
 import DownloadButton from '../components/DownloadButton.astro';
-import FactsLine from '../components/FactsLine.astro';
 import MakerNote from '../components/MakerNote.astro';
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
-import { getFeatured, sortProducts, statusLabel, visibleStoreLinks } from '../lib/products';
+import {
+  getFeatured,
+  sortProducts,
+  statusLabel,
+  visibleStoreLinks,
+  productHue,
+} from '../lib/products';
 import { canonicalPrivacyUrl } from '../lib/privacy';
 import { organizationSchema, websiteSchema } from '../lib/schema';
-import { resolveScreenshot } from '../lib/screenshots';
+import { resolveScreenshot, screenshotTitle } from '../lib/screenshots';
+import { bodySections } from '../lib/prose';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
 const featured = getFeatured(products);
 const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
 
-// The lead product gets a spotlight panel; any others fall to the card grid.
 const spotlight = showcase[0];
+const spotlightEntry = spotlight ? entries.find((e) => e.data.id === spotlight.id) : undefined;
 const rest = showcase.slice(1);
 
-// The spotlight leads with the product's first real screenshot when one exists,
-// falling back to the icon avatar otherwise.
-const leadShot = spotlight?.screenshots?.[0];
+// The lead screenshot carries marketing copy baked into the picture, so the text
+// alternative has to announce that copy as well as the UI (WCAG 2.2 SC 1.1.1,
+// GitHub #3). The gallery on the product page keeps the bare `altText`.
+const shots = spotlight?.screenshots ?? [];
+const leadShot = shots[0];
 const leadImg = leadShot ? resolveScreenshot(leadShot.path) : undefined;
-
-// Marketing screenshots carry copy baked into the picture. Here — the one place
-// the image is used as a marketing composition rather than as a gallery plate —
-// that copy is part of the image's meaning, so WCAG 2.2 SC 1.1.1 requires it in
-// the text alternative (GitHub #3). The gallery on the product page keeps the
-// bare `altText`, so the transcript stays a description of the UI rather than a
-// second copy of the marketing line.
 const leadAlt = leadShot
   ? [leadShot.bakedInText, leadShot.altText].filter(Boolean).join(' ')
   : '';
+const mosaic = shots.slice(1);
 
-// Hero leads with the flagship's download button when it has one; otherwise
-// "See apps & games" stays the primary action.
 const heroHasDownload =
   spotlight != null && visibleStoreLinks(spotlight).some((l) => l.status === 'available');
 
 /* "Featured" only means something when there is a set to be featured FROM.
-   With a single product, the catalog scaffolding (a "Featured" kicker, an
-   "All apps & games →" link, and a grid re-showing the same app with less
-   information than the spotlight already gave) advertises the emptiness
-   instead of the product — so the product simply becomes the page's second
-   band under its own name. This re-arms itself the moment a second product
-   exists; it is never a decision about what to *claim*, only what to *label*. */
+   With a single product the catalog scaffolding advertises the emptiness
+   instead of the product, so it stays off until a second product exists. */
 const hasCatalog = products.length > 1;
 
-// The home page's maker voice is the product's own note — the real, approved
-// copy from the content file. Nothing here is written for the page.
+/* One Voice Per Band (DESIGN.md §2): a hue belongs to a product and stays in
+   that product's band. The hero is an exception with a stated condition — when
+   exactly ONE product is featured, the whole page IS that product's band, so
+   the hero may carry its colour. The moment a second product is featured the
+   hero goes achromatic again, because the colour would no longer belong to
+   anything in particular. */
+const heroOwnsHue = featured.length === 1 && spotlight != null;
+
+// Three statements from the product's own approved prose — the FAQ is a
+// different surface and the closing sign-off is not body copy.
+const statements = spotlightEntry
+  ? bodySections(spotlightEntry.body ?? '', ['Common questions']).slice(0, 3)
+  : [];
+
 const makerLines = spotlight?.makerNote ?? [];
+const hue = spotlight ? productHue(spotlight) : undefined;
 ---
 
-<BaseLayout title={site.name} description={site.description} schema={[organizationSchema(), websiteSchema()]}>
-  <section class="band band-lead hero" aria-labelledby="hero-h">
-    <p class="eyebrow">{site.tagline}</p>
-    <h1 id="hero-h" class="hero-title">{site.headline}</h1>
-    <p class="lede measure">{site.lede}</p>
-    <div class="hero-cta">
-      {/* The hero button names the store rather than the action; every other
-          download button on the site just says "Download". */}
-      {heroHasDownload && <DownloadButton product={spotlight} label="Mac App Store" />}
-      <a class={`btn ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href={withBase('/apps/')}>
-        See apps &amp; games
-      </a>
+<BaseLayout
+  title={site.name}
+  description={site.description}
+  schema={[organizationSchema(), websiteSchema()]}
+  bleed
+>
+  <!-- BAND 1 — the studio, poster scale -->
+  <section class={`band-hero${heroOwnsHue ? ' owns-hue' : ''}`} style={heroOwnsHue ? `--hue: ${hue};` : undefined} aria-labelledby="hero-h">
+    <div class="rail">
+      <p class="over">{site.tagline}</p>
+      <h1 id="hero-h">Small studio.<br /><span class="voice">Serious craft.</span></h1>
+      <p class="lede">{site.lede}</p>
+      <div class="actions">
+        {heroHasDownload && <DownloadButton product={spotlight} label="Mac App Store" />}
+        <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
+          See the app
+        </a>
+      </div>
     </div>
-    {heroHasDownload && <FactsLine product={spotlight} />}
+    {heroOwnsHue && <div class="hero-glow" aria-hidden="true"></div>}
   </section>
 
+  <!-- BAND 2 — the product owns this band, in its own colour -->
   {
     spotlight && (
-      <section class="band featured" aria-labelledby="featured-h">
-        {hasCatalog ? (
-          <div class="band-head">
-            <h2 id="featured-h" class="band-title">Featured</h2>
-            <a class="section-link" href={withBase('/apps/')}>All apps &amp; games →</a>
-          </div>
-        ) : (
-          <h2 id="featured-h" class="visually-hidden">{spotlight.name}</h2>
-        )}
-
-        <article class={`panel panel-accent spotlight reveal${leadImg ? ' has-shot' : ''}`}>
-          <div class="spotlight-media">
-            {leadImg ? (
-              <a class="shot-frame" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
-                {/* `sizes` measured against the real slot, not guessed: the
-                    image column is ~452px near 960vw, ~540px at 1156vw and
-                    594px at 1281vw. The old flat `38rem` (608px) over-fetched
-                    by ~35% through the mid range. The 1600w step exists
-                    because the slot needs ~1188 device px at DPR 2 on exactly
-                    the Retina Macs this audience uses — 1280w was the ceiling. */}
-                <Image
-                  src={leadImg}
-                  alt={leadAlt}
-                  widths={[480, 720, 960, 1280, 1600]}
-                  sizes="(min-width: 80rem) 594px, (min-width: 60rem) 47vw, calc(100vw - 6rem)"
-                  format="webp"
-                  quality={78}
-                  loading="eager"
-                />
-              </a>
-            ) : (
-              <ProductAvatar icon={spotlight.icon} name={spotlight.name} size={112} href={`/apps/${spotlight.slug}/`} redundant />
-            )}
-          </div>
-          <div class="spotlight-body">
-            <div class="spotlight-tags">
-              <Badge label={spotlight.type === 'game' ? 'Game' : 'App'} tone="accent" />
-              <Badge label={statusLabel(spotlight.status)} />
-            </div>
-            <h3 class="spotlight-name">
+      <section
+        class="band-product"
+        id="product"
+        style={`--hue: ${hue};`}
+        aria-labelledby="product-h"
+      >
+        <div class="rail product-in">
+          <div class="product-copy">
+            <p class="over">
+              01 — {spotlight.type === 'game' ? 'Game' : 'App'} · {statusLabel(spotlight.status)}
+            </p>
+            <h2 id="product-h">
               <a href={withBase(`/apps/${spotlight.slug}/`)}>{spotlight.name}</a>
-            </h3>
-            <p class="spotlight-lede">{spotlight.summary}</p>
-            <div class="spotlight-cta">
-              {/* Secondary, not primary: the accent fill marks the ONE action
-                  the page wants (the download, in the hero). Two accent-filled
-                  buttons on one page is the One Voice Rule broken by the page
-                  that wrote it. */}
-              <a class="btn btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
+            </h2>
+            <p class="product-lede">{spotlight.summary}</p>
+            <div class="actions">
+              <DownloadButton product={spotlight} tone="hue" label="Mac App Store" />
+              <a class="btn btn-lg btn-secondary" href={withBase(`/apps/${spotlight.slug}/`)}>
                 View {spotlight.name}
               </a>
-              <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(spotlight))}>
-                Privacy
-              </a>
             </div>
+            <p class="product-facts">
+              {[spotlight.requirements, spotlight.privacyFacts].filter(Boolean).join(' · ')}
+              {' · '}
+              <a href={withBase(canonicalPrivacyUrl(spotlight))}>Privacy</a>
+            </p>
           </div>
-        </article>
+          {leadImg && (
+            <a class="product-shot" href={withBase(`/apps/${spotlight.slug}/`)} aria-label={`Open ${spotlight.name}`}>
+              {/* `sizes` measured against the real slot: the image column is
+                  ~53rem at 1440, ~47vw through the mid range, and full width
+                  below 66rem. The 1900w step exists because the slot needs
+                  ~1700 device px at DPR 2 on the Retina Macs this audience uses. */}
+              <Image
+                src={leadImg}
+                alt={leadAlt}
+                widths={[600, 900, 1300, 1900]}
+                sizes="(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)"
+                format="webp"
+                quality={80}
+                loading="eager"
+              />
+            </a>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- BAND 3 — three statements, in the product's own approved words -->
+  {
+    statements.length > 0 && (
+      <section class="band-says" style={`--hue: ${hue};`} aria-labelledby="says-h">
+        <div class="rail says-in">
+          <h2 id="says-h" class="visually-hidden">What {spotlight?.name} does</h2>
+          {statements.map((s, i) => (
+            <article>
+              <p class="over voice">{String(i + 1).padStart(2, '0')}</p>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- BAND 4 — the rest of the real screenshots -->
+  {
+    mosaic.length > 0 && (
+      <section class="band-mosaic" aria-labelledby="mosaic-h">
+        <div class="rail mosaic-in">
+          <h2 id="mosaic-h" class="visually-hidden">More of {spotlight?.name}</h2>
+          {mosaic.map((s) => {
+            const img = resolveScreenshot(s.path);
+            return img ? (
+              <figure class="reveal">
+                <Image
+                  src={img}
+                  alt={s.altText}
+                  widths={[500, 800, 1200]}
+                  sizes="(min-width: 60rem) 40vw, calc(100vw - 2 * 1.25rem)"
+                  format="webp"
+                  quality={78}
+                  loading="lazy"
+                />
+                <figcaption>{screenshotTitle(s.path)}</figcaption>
+              </figure>
+            ) : null;
+          })}
+        </div>
       </section>
     )
   }
 
   {
     hasCatalog && rest.length > 0 && (
-      <section class="band catalog" aria-labelledby="catalog-h">
-        <h2 id="catalog-h" class="band-title">The catalog</h2>
-        <ul class="grid" role="list">
-          {rest.map((p) => (
-            <li class="reveal">
-              <ProductCard product={p} />
-            </li>
-          ))}
-        </ul>
+      <section class="band-catalog" aria-labelledby="catalog-h">
+        <div class="rail">
+          <h2 id="catalog-h" class="band-title">The catalog</h2>
+          <ul class="card-grid" role="list">
+            {rest.map((p) => (
+              <li class="reveal">
+                <ProductCard product={p} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     )
   }
 
+  <!-- BAND 5 — the deal, stated as checkable facts -->
+  <section class="band-promise" aria-labelledby="promise-h">
+    <div class="rail">
+      <h2 id="promise-h" class="over">The deal</h2>
+      <ul role="list">
+        <li>Free. No in-app purchases, no subscription.</li>
+        <li>Offline. No account, no cloud, no tracking.</li>
+        <li>Answered. A real person reads {site.supportEmail}.</li>
+      </ul>
+    </div>
+  </section>
+
   {
-    makerLines.length > 0 && (
-      <section class="band band-tail maker">
-        <MakerNote product={spotlight} tone="quiet" headingId="maker-h" />
+    makerLines.length > 0 && spotlight && (
+      <section class="band-maker">
+        <div class="rail">
+          <MakerNote product={spotlight} tone="quiet" headingId="maker-h" />
+        </div>
       </section>
     )
   }
 </BaseLayout>
 
 <style>
-  /* Hero — shares the band gutter, so its left edge is the SAME rail as the
-     nav brand, every heading below, and the footer. The old hero centred
-     itself in a narrower column and sat ~150px inboard of everything else;
-     the text is capped by `.measure` instead of by the container. */
-  /* No `padding-bottom` here: `.band + .band` already supplies the separation,
-     and adding both stacked a measured 141px void — double every other gap on
-     the site, by accident rather than intent. The hero→featured beat is set
-     deliberately with `band-loose` on the following band instead. */
-  .hero-title {
-    margin: var(--space-4) 0 var(--space-6);
-    font-size: var(--display);
+  /* Bands ------------------------------------------------------------------
+     Each band owns its own vertical air and runs edge to edge; `.rail` inside
+     it carries the one shared horizontal measure. Nothing here sets a
+     page-level max-width, so every band's left edge is the nav brand's. */
+  .over {
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-xs);
+    font-weight: 650;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .voice {
+    color: var(--hue);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  /* BAND 1 — hero */
+  .band-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* Capped: 82vh is right up to a ~1100px-tall window, above which a hero
+       taller than 900px is a wall of nothing rather than a poster. */
+    min-height: min(82vh, 900px);
+    padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+  .band-hero h1 {
+    margin: 0 0 var(--space-6);
+    font-size: clamp(2.75rem, 8.5vw, 7rem);
     font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-    max-width: 18ch;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    color: var(--text-strong);
   }
   .lede {
     margin: 0 0 var(--space-8);
+    max-width: var(--measure-mid);
+    font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
+    line-height: 1.55;
     color: var(--muted);
-    font-size: var(--text-lg);
-    line-height: 1.6;
   }
-  .hero-cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    align-items: center;
+  /* The single wash on the page that belongs to the featured product. Sized in
+     % of the band rather than vw so it cannot widen the document. */
+  .hero-glow {
+    position: absolute;
+    inset: auto 0 -45% 15%;
+    height: 70%;
+    background: radial-gradient(closest-side, var(--hue-wash), transparent 72%);
+    pointer-events: none;
   }
 
-  .section-link {
-    font-size: var(--text-sm);
-    color: var(--muted);
-    white-space: nowrap;
+  /* BAND 2 — the product */
+  .band-product {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+    background:
+      radial-gradient(70% 90% at 8% 0%, var(--hue-soft), transparent 62%),
+      linear-gradient(180deg, var(--bg-2), var(--bg));
   }
-  .section-link:hover {
-    color: var(--text-strong);
-  }
-
-  /* Featured spotlight — image-forward. The screenshot is the largest element
-     in the band; the text column is short and capped. */
-  .spotlight {
+  .product-in {
     display: grid;
-    grid-template-columns: 1fr; /* mobile: stacked, media on top */
-    gap: clamp(var(--space-6), 3vw, var(--space-10));
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(var(--space-8), 5vw, var(--space-16));
     align-items: center;
   }
-  .spotlight-media {
-    display: grid;
-    place-items: center;
-    min-width: 0;
-  }
-  .spotlight-tags {
-    display: flex;
-    gap: var(--space-2);
-    margin-bottom: var(--space-4);
-  }
-  .spotlight-name {
+  .band-product h2 {
     margin: 0 0 var(--space-4);
-    font-size: var(--text-2xl);
-    letter-spacing: -0.025em;
+    font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
   }
-  .spotlight-name a {
+  .band-product h2 a {
     color: var(--text-strong);
-    text-decoration: none;
   }
-  .spotlight-name a:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-  }
-  .spotlight-lede {
-    margin: 0;
-    color: var(--muted);
+  .product-lede {
+    margin: 0 0 var(--space-8);
+    max-width: var(--measure);
     font-size: var(--text-base);
     line-height: 1.6;
-    max-width: var(--measure);
+    color: var(--muted);
   }
-  .spotlight-cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
+  .product-facts {
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    color: var(--faint);
+  }
+  .product-facts a {
+    color: var(--faint);
+  }
+  .product-shot {
+    display: block;
+    line-height: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+  }
+  .product-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .shot-frame {
-      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    .product-shot {
+      transition: transform var(--dur) var(--ease);
     }
-    .shot-frame:hover {
+    .product-shot:hover {
       transform: translateY(-3px);
     }
   }
-  @media (min-width: 60rem) {
-    /* Icon fallback: icon | body. */
-    .spotlight {
-      grid-template-columns: auto 1fr;
-    }
-    /* Screenshot lead: a compact text column and a dominant image
-       (body | shot; DOM order is media-first, so place explicitly).
-       minmax(0, …) so the text column can never let its content's min-content
-       width dictate the track and starve the image (see FactsLine note). */
-    .spotlight.has-shot {
-      grid-template-columns: minmax(0, 0.85fr) 1.15fr;
-    }
-    .spotlight.has-shot .spotlight-body {
-      grid-column: 1;
-      grid-row: 1;
-    }
-    .spotlight.has-shot .spotlight-media {
-      grid-column: 2;
-      grid-row: 1;
-    }
+
+  /* BAND 3 — statements */
+  .band-says {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .says-in {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+    gap: clamp(var(--space-8), 4vw, var(--space-12));
+    align-items: start;
+  }
+  .says-in h3 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-xl);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .says-in article p:last-child {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
   }
 
-  .grid {
+  /* BAND 4 — mosaic */
+  .band-mosaic {
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .mosaic-in {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
+    gap: var(--space-6);
+  }
+  .mosaic-in figure {
+    margin: 0;
+  }
+  .mosaic-in img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+  }
+  .mosaic-in figcaption {
+    margin-top: var(--space-3);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* Catalog (dormant until a second product exists) */
+  .band-catalog {
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* BAND 5 — the deal */
+  .band-promise {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid var(--border);
+  }
+  .band-promise ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-2);
+  }
+  .band-promise li {
+    font-size: clamp(1.375rem, 3.2vw, 2.5rem);
+    font-weight: 650;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+    color: var(--text-strong);
+    text-wrap: balance;
+  }
+  .band-promise li + li {
+    color: var(--muted);
+  }
+
+  .band-maker {
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  @media (max-width: 66rem) {
+    .product-in {
+      grid-template-columns: 1fr;
+    }
+    .band-hero {
+      min-height: 0;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .hero > * {
+    .band-hero > .rail > * {
       animation: rise 0.6s var(--ease) both;
     }
-    .hero .hero-title { animation-delay: 0.05s; }
-    .hero .lede { animation-delay: 0.1s; }
-    .hero .hero-cta { animation-delay: 0.15s; }
+    .band-hero h1 {
+      animation-delay: 0.05s;
+    }
+    .band-hero .lede {
+      animation-delay: 0.1s;
+    }
+    .band-hero .actions {
+      animation-delay: 0.15s;
+    }
     @keyframes rise {
-      from { transform: translateY(12px); }
-      to { transform: translateY(0); }
+      from {
+        transform: translateY(12px);
+      }
+      to {
+        transform: translateY(0);
+      }
     }
   }
 </style>

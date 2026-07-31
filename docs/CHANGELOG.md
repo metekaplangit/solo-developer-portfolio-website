@@ -14,6 +14,20 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.41.0] — 2026-07-31
+
+### Changed
+
+- **The home page is a poster now.** It opens with the studio line at full size,
+  then hands the page to Sole Focus in the app's own colour: a large screenshot,
+  the summary, and the download, all in one band. Below that, three short
+  sections in the app's own words, then the deal stated plainly — free, offline,
+  answered by a person.
+- **All five screenshots are on the home page.** Four of them had been written,
+  described and never shown anywhere but the product page.
+- The home headline is now "Small studio. Serious craft." The previous line is
+  kept in the source, unused, so it is one edit to go back.
+
 ## [0.40.0] — 2026-07-31
 
 ### Changed
