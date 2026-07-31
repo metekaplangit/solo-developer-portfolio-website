@@ -13,17 +13,19 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **GitHub #3 resolved, released as v0.39.3** on
-  2026-07-18. The home lead image's text alternative now includes the marketing
-  copy baked into the picture, closing the known WCAG 2.2 SC 1.1.1 gap; the
-  product gallery transcript is unchanged and non-duplicative. v0.39.2 before it
-  fixed two responsive defects (the support address wrapping mid-domain, and
-  policy titles running three lines on a phone). Both are unnumbered fix
-  releases on top of **STEP-0043**, which remains the last numbered feature
-  packet. *(Keep that Step ID in this bullet: the validator resolves the active
-  step from the first `STEP-XXXX` token in this file, and without one here the
-  scan falls through to the trigger-armed STEP-0033 template and the validator
-  fails locally. CI is retired, so nothing catches this remotely.)*
+- **Latest product state:** the **Spectrum identity** shipped as **v0.40.0** on
+  2026-07-31 under **STEP-0045**, the second of six packets in the owner-selected
+  makeover (option E of the 2026-07-31 mockup round). The stage is near-black,
+  the studio's chrome is achromatic, and colour now belongs to a product and is
+  scoped to that product's band. Three named `DESIGN.md` rules were deliberately
+  replaced — Never-Black → Near-Black Floor, One Voice → One Voice Per Band, One
+  Height → One Height Per Set. Page *structure* is unchanged so far; STEP-0046
+  through 0048 rebuild it route family by route family, and STEP-0049 closes the
+  phase with a cross-route alignment sweep. *(Keep a Step ID in this bullet: the
+  validator resolves the active step from the first `STEP-XXXX` token in this
+  file, and without one here the scan falls through to the trigger-armed
+  STEP-0033 template and the validator fails locally. CI is retired, so nothing
+  catches this remotely.)*
 - **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
   AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
   The catch-up repaired stale live-state, milestone, schema, testing, issue, and
@@ -37,9 +39,9 @@
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
 - **Next action:** continue the **Spectrum identity phase** (owner-selected
-  mockup option E, 2026-07-31): **STEP-0045** — tokens, chrome and the two
-  replaced `DESIGN.md` rules. Six packets, STEP-0044..0049, listed in ROADMAP.
-  STEP-0044 is complete. Do not invent in-development products.
+  mockup option E, 2026-07-31): **STEP-0046** — the home page as the poster.
+  Six packets, STEP-0044..0049, listed in ROADMAP; 0044 and 0045 are complete
+  and 0045 released as **v0.40.0**. Do not invent in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
   1. **Duplication.** The home spotlight and the catalog lead-row are the same
@@ -63,7 +65,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **43** (`STEP-0001`..`STEP-0044`; STEP-0033 is
+- Completed **feature** steps: **44** (`STEP-0001`..`STEP-0045`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -82,11 +84,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0044 (last numbered packet; v0.39.2 and v0.39.3 are unnumbered fix releases)
-next_step: STEP-0045 (Spectrum identity — tokens, chrome, replaced DESIGN.md rules)
+current_step: STEP-0045 (Spectrum identity; product release v0.40.0)
+next_step: STEP-0046 (Home as the poster)
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.39.3
+product_tag: v0.40.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

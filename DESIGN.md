@@ -1,21 +1,24 @@
 ---
 name: MetKap Studio
-description: Dark-premium, Apple-minimal studio site — a quiet instrument, not a storefront.
+description: Spectrum — a near-black stage, neutral studio chrome, and colour supplied by the product rather than by the site.
 colors:
-  bg: "#16171b"
-  surface: "#1e2025"
-  surface-2: "#24262c"
-  surface-hover: "#282a31"
-  text: "#f4f5f7"
+  bg: "#08090c"
+  bg-2: "#0c0d11"
+  surface: "#121419"
+  surface-2: "#171a21"
+  surface-hover: "#1c2029"
+  text: "#f2f3f6"
   text-strong: "#ffffff"
-  muted: "#9ea3ad"
-  faint: "#8b909a"
-  accent: "#7f8dff"
-  accent-hover: "#9aa6ff"
-  accent-contrast: "#0e0f13"
-  accent-soft: "#7f8dff24"
+  muted: "#a2a7b3"
+  faint: "#8b909c"
+  accent: "#ffffff"
+  accent-hover: "#ffffff"
+  accent-contrast: "#08090c"
+  accent-soft: "#ffffff1a"
+  hue: "#ff9245"
+  hue-contrast: "#1c0d02"
   border: "#ffffff17"
-  border-strong: "#ffffff26"
+  border-strong: "#ffffff2e"
 typography:
   display:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, system-ui, sans-serif"
@@ -48,9 +51,9 @@ typography:
     lineHeight: 1.4
     letterSpacing: "normal"
 rounded:
-  sm: "8px"
-  md: "14px"
-  lg: "20px"
+  sm: "10px"
+  md: "18px"
+  lg: "24px"
   pill: "999px"
 spacing:
   "1": "0.25rem"
@@ -114,79 +117,88 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "The Quiet Instrument"**
+**Creative North Star: "Spectrum"**
 
-This system behaves like a well-made instrument rather than a shopfront. An
-instrument is machined to a tolerance, tells you the truth, and does not
-congratulate itself — which is exactly the impression a one-person studio needs
-to leave on an audience that inspects craft before it trusts anyone. The site is
-the argument for the software: if the page is calm, fast, and precise, the app
-probably is too.
+The site is a dark stage, and the software is what is lit on it. The studio's own
+chrome — header, footer, buttons, focus rings — is deliberately colourless; the
+only colour on any page belongs to a product and is confined to that product's
+band. One app, one voice, one band. A catalogue of five apps therefore reads as
+five distinct things rather than as five rows of the same template, and the site
+never competes with the thing it is selling.
 
-The surface is graphite — never pure black, never washed grey — lit by a single
-periwinkle signal that appears only where something can be acted on. Nothing
-gradients, nothing glows for decoration, nothing shouts. Density is low and
-deliberate: one idea per band of the page, generous vertical air between bands,
-and a wide measure so content never reads as a cramped column squeezed between
-dead margins.
+That is the change from the previous system, which lit the whole site with a
+single periwinkle accent. The accent was restrained and correct, and it was also
+the most common indie-dark treatment on the web — the audience reads it as a
+template before it reads anything else. Colour that comes from the product cannot
+be mistaken for a theme someone downloaded.
 
-It explicitly rejects the **generic SaaS landing page** — gradient hero, one giant
-metric, endless identical feature cards, a "trusted by" logo wall. That template
-is the thing this audience scrolls past. Restraint here is not timidity; it is
-the brand's actual position, and every visual decision has to survive the
-question *would a careful person do this?*
+The stage is near-black rather than graphite: full-bleed poster bands need a
+ground dark enough to disappear behind an image. It stops short of the point
+where white text starts to halate.
+
+It still explicitly rejects the **generic SaaS landing page** — gradient hero, one
+giant metric, endless identical feature cards, a "trusted by" logo wall. That
+template is the thing this audience scrolls past, and restraint about *claims*
+is not the same as restraint about *presence*: the site may be bold, it may
+never be loud about things it cannot prove.
 
 **Key Characteristics:**
-- Graphite dark surface with exactly one accent hue
+- Near-black stage, achromatic chrome, one hue per product band
 - System typeface only; no webfont is ever downloaded
 - One separation cue at a time — a hairline *or* a lift, never both
-- Wide measure, generous air, image-forward product moments
+- Full-bleed bands, poster-scale display type, image-forward product moments
 - Motion that settles rather than bounces, always reduced-motion safe
 
-## 2. Colors: The Graphite-and-Signal Palette
+## 2. Colors: The Stage and the Product Voice
 
-A near-monochrome graphite field carrying a single chromatic voice. There is one
-accent and no secondary or tertiary role — the restraint is the identity, so
-inventing more roles would break it.
+An achromatic stage carrying no colour of its own, plus one hue per product,
+authored in that product's content file (`hue`, resolved by `productHue()` in
+`src/lib/products.ts`).
 
-### Primary
-- **Signal Periwinkle** (`#7f8dff`): The only chromatic voice in the system. It
-  marks the one thing a visitor can act on — the download button, the current nav
-  item, links in prose, the active gallery dot, focus rings. Its scarcity is what
-  makes it read as a signal instead of decoration.
-- **Signal Periwinkle Raised** (`#9aa6ff`): Hover state only. Slightly lighter so
-  the surface appears to come toward the pointer.
-- **Signal Wash** (`#7f8dff24`): A 14%-alpha tint for accent-tinted chips, the
-  active nav pill, and icon tiles. Never used for text.
+### Studio chrome — achromatic
+- **Full White** (`#ffffff`): the chrome signal. Focus rings, the current nav
+  pill, the neutral action fill, headings. This is `--accent`; the token name is
+  kept so every component keeps working, but it no longer carries a hue.
+- **Chrome Wash** (`#ffffff1a`): the active nav pill and other 10% tints.
+- **Near-White** (`#f2f3f6`): body text. Not `#ffffff`, so long prose does not
+  vibrate against a near-black ground.
+- **Muted Slate** (`#a2a7b3`): supporting prose, summaries, descriptions.
+- **Faint Slate** (`#8b909c`): the quietest tier — metadata, trust lines,
+  timestamps. Measured **6.23:1** on the ground.
 
-### Neutral
-- **Graphite Base** (`#16171b`): The page ground. Deliberately not pure black —
-  black on an OLED Mac display reads as a hole, graphite reads as a material.
-- **Raised Graphite** (`#1e2025`): Cards, panels, the product header block. One
-  step of light above the ground.
-- **Lifted Graphite** (`#24262c`): Chips, badges, secondary-button hover — the
-  second step, used for small elements resting on a card.
-- **Near-White** (`#f4f5f7`): Body text. Not `#ffffff`, so long prose doesn't
-  vibrate against the dark ground.
-- **Full White** (`#ffffff`): Headings and the strongest emphasis only.
-- **Muted Slate** (`#9ea3ad`): Supporting prose, summaries, descriptions.
-- **Faint Slate** (`#8b909a`): The quietest tier — metadata, trust lines,
-  timestamps. Verified at **4.5:1** on the base ground; it is the floor, and
-  nothing lighter is permitted for text.
+### Stage
+- **Stage** (`#08090c`): the page ground.
+- **Band** (`#0c0d11`): the ground a product band sits on before its hue wash.
+- **Surface** (`#121419`) / **Lifted** (`#171a21`): cards, panels, chips.
+
+### Product voice
+- **`--hue`**: the product's own colour, re-declared per band. Sole Focus is
+  `#ff9245`, taken from its own icon. Measured **8.96:1** on the stage.
+- **`--hue-contrast`** (`#1c0d02`): label colour on a hue-filled button —
+  **8.53:1**.
+- **`--hue-soft` / `--hue-wash`**: `color-mix(in oklab, …)` tints for band
+  washes. Never used for text.
 
 ### Named Rules
 
-**The One Voice Rule.** Signal Periwinkle covers no more than ~10% of any screen.
-If a second thing on the page is competing for the accent, one of them is not
-actually the next action.
+**The One Voice Per Band Rule.** *(Replaces the One Voice Rule, 2026-07-31.)*
+The site itself has no colour. Every hue on a page belongs to a product and is
+confined to that product's band, where `--hue` has been re-declared from that
+product's own field. Referencing `--hue` outside a band a product owns is the
+bug this rule exists to name.
 
-**The Never-Black Rule.** The ground is graphite (`#16171b`), never `#000`. Pure
-black on Apple displays reads as an absence; the whole system loses its material
-quality.
+**The Near-Black Floor Rule.** *(Replaces the Never-Black Rule, 2026-07-31.)*
+The ground is `#08090c` and nothing on the site goes below linear value ~5,
+which is where white-on-black halation and OLED black crush begin — the real
+reason the old rule existed. The floor moved down, not away: dark enough for a
+full-bleed band to read as a poster, light enough to stay a material rather than
+a hole.
 
-**The Contrast Floor Rule.** `#8b909a` on `#16171b` is the lightest text
-permitted anywhere. Prohibited: lighter greys "for elegance". This floor exists
-because it was previously breached (`#71757e` at 3.9:1) and had to be repaired.
+**The Contrast Floor Rule.** *(Unchanged in intent, recomputed.)* `#8b909c` on
+`#08090c` is the lightest text permitted anywhere. Prohibited: lighter greys
+"for elegance". This floor exists because it was previously breached (`#71757e`
+at 3.9:1) and had to be repaired. Every pair in this section was recomputed when
+the palette changed; the lowest is 5.44:1.
 
 ## 3. Typography
 
@@ -249,19 +261,24 @@ line. If a border is visible as a distinct grey stroke, it is too strong.
 
 ### Buttons
 - **Shape:** Fully rounded pill (`999px`).
-- **Height:** Every button is exactly `3rem`. No exceptions.
-- **Primary:** Signal Periwinkle fill, near-black text (`#0e0f13`), with an inset
-  top highlight (`inset 0 1px 0 rgba(255,255,255,0.18)`) that reads as a lit edge.
-- **Secondary:** Transparent with a `border-strong` hairline and body-coloured
-  text. On hover it fills to Lifted Graphite.
-- **Download:** The primary button plus the Apple mark and a wider label; the same
-  `3rem` height as everything else.
-- **Hover / Focus:** Primary lifts `-1px` with an accent glow; secondary fills.
-  Focus is always a visible 2px accent ring, never removed.
+- **Heights:** three, and no others — `.btn-sm` `2.25rem` (chrome), `.btn`
+  `2.75rem` (page actions), `.btn-lg` `3.25rem` (the one hero action on a poster
+  band).
+- **Primary (`.btn-primary`):** white fill, stage-coloured text. This is the
+  *neutral* action and is legal anywhere.
+- **Product (`.btn-hue`):** `--hue` fill, `--hue-contrast` text. Legal **only**
+  inside a band that product owns.
+- **Secondary:** transparent with a `border-strong` hairline and body-coloured
+  text; fills to Lifted on hover.
+- **Download:** primary or product tone (`tone` prop) plus the Apple mark, at
+  `.btn-lg` in a hero and `.btn-sm` in a card.
+- **Hover / Focus:** lifts `-1px` with a glow matching its own fill. Focus is
+  always a visible 2px white ring, never removed.
 
-**The One Height Rule.** All buttons share one height; emphasis comes from fill,
-width, and the mark — never from a taller box. A group of buttons must read as a
-set.
+**The One Height Per Set Rule.** *(Replaces the One Height Rule, 2026-07-31.)*
+Every button within one group is the same height, and the site has exactly three
+heights. Emphasis comes from fill, width, and the mark — never from a taller box
+inside a set. A one-off height on a single button is the failure this names.
 
 ### Cards / Panels
 - **Corner Style:** `20px` (`--radius-lg`) for panels and cards; `14px` for
@@ -299,10 +316,10 @@ set.
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** keep Signal Periwinkle (`#7f8dff`) under ~10% of any screen; it marks the
-  next action and nothing else.
-- **Do** give every button the same `3rem` height and let fill and width carry
-  emphasis.
+- **Do** keep every hue inside the band of the product that owns it; the studio's
+  own chrome stays achromatic.
+- **Do** give every button in a group the same height, from the set of three, and
+  let fill and width carry emphasis.
 - **Do** separate a surface with a tone-and-shadow lift **or** a hairline —
   exactly one.
 - **Do** keep body text at `#f4f5f7` and never let any text go lighter than
@@ -320,8 +337,11 @@ set.
   ever. There is currently **no** social proof; absence is stated honestly rather
   than implied.
 - **Don't** download a webfont. The system stack is the typeface.
-- **Don't** use pure black (`#000`) as a surface, or a colored `border-left`
-  greater than 1px as a stripe, or gradient text (`background-clip: text`).
+- **Don't** take any surface below linear value ~5 (the Near-Black Floor), or use
+  a colored `border-left` greater than 1px as a stripe, or gradient text
+  (`background-clip: text`).
+- **Don't** give the studio itself a colour, or reference `--hue` outside a band
+  a product owns.
 - **Don't** stack a border on top of a shadowed card.
 - **Don't** add decorative glassmorphism; blur is reserved for the sticky header
   and gallery controls where content genuinely passes beneath.

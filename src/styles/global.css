@@ -1,37 +1,62 @@
 /* ============================================================================
-   Design system — dark-premium, Apple-minimal ("light dark": graphite, not black)
-   Owner: docs/UI_DESIGN.md. Dark-first by design; tokens keep a future light
-   theme / toggle possible without touching components.
+   Design system — "Spectrum": a near-black stage, neutral studio chrome, and
+   colour supplied by the PRODUCT rather than by the site (STEP-0045).
+   Owner: DESIGN.md and docs/UI_DESIGN.md. Dark-first by design; tokens keep a
+   future light theme / toggle possible without touching components.
    ========================================================================== */
 :root {
   color-scheme: dark;
 
-  /* Surfaces — elevated graphite, cool-neutral (never pure black) */
-  --bg: #16171b;
-  --surface: #1e2025;
-  --surface-2: #24262c;
-  --surface-hover: #282a31;
+  /* Surfaces — near-black stage, lifted in steps.
 
-  /* Text */
-  --text: #f4f5f7;
+     THE NEAR-BLACK FLOOR RULE. `#08090c` is linear value ~8; nothing on this
+     site goes below ~5, which is where white-on-black halation and OLED black
+     crush start (the reason the previous Never-Black Rule existed at #16171b).
+     The floor moved down, not away: the stage is dark enough to make a
+     full-bleed poster band read as a poster, and light enough to stay a
+     material rather than a hole. */
+  --bg: #08090c;
+  /* One step up — the ground a product band sits on before its hue wash. */
+  --bg-2: #0c0d11;
+  --surface: #121419;
+  --surface-2: #171a21;
+  --surface-hover: #1c2029;
+
+  /* Text — off-white, never #fff for prose: pure white on a near-black ground
+     is what makes long reading vibrate. */
+  --text: #f2f3f6;
   --text-strong: #ffffff;
-  --muted: #9ea3ad;
-  /* WCAG AA: 4.5:1 on --bg even at small sizes (was #71757e = 3.9:1, a fail). */
-  --faint: #8b909a;
+  --muted: #a2a7b3;
+  /* The lightest text permitted anywhere. 6.3:1 on --bg — the contrast floor. */
+  --faint: #8b909c;
 
   /* Hairlines & depth */
   --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 20px 48px -16px rgba(0, 0, 0, 0.6);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 40px 90px -35px rgba(0, 0, 0, 0.95);
 
-  /* Accent — restrained periwinkle-blue, premium on dark */
-  --accent: #7f8dff;
-  --accent-hover: #9aa6ff;
-  --accent-contrast: #0e0f13;
-  --accent-soft: rgba(127, 141, 255, 0.14);
-  --accent-glow: rgba(127, 141, 255, 0.22);
+  /* Studio chrome signal — deliberately ACHROMATIC.
+
+     THE ONE VOICE PER BAND RULE. The site itself has no colour: chrome
+     (focus rings, the current nav pill, the neutral action fill) is white, and
+     the only colour on any page belongs to a product, scoped to that product's
+     band via `--hue`. One product, one voice, one band. A site-wide accent is
+     exactly what made the previous design read as a template. */
+  --accent: #ffffff;
+  --accent-hover: #ffffff;
+  --accent-contrast: #08090c;
+  --accent-soft: rgba(255, 255, 255, 0.1);
+  --accent-glow: rgba(255, 255, 255, 0.16);
+
+  /* Product voice. `--hue` is a DEFAULT, not a site colour: every product band
+     re-declares it from the product's own `hue` field (src/lib/products.ts,
+     `productHue`). Never reference it outside a band that a product owns. */
+  --hue: #ff9245;
+  --hue-contrast: #1c0d02;
+  --hue-soft: color-mix(in oklab, var(--hue) 16%, transparent);
+  --hue-wash: color-mix(in oklab, var(--hue) 22%, transparent);
 
   /* Typography */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
@@ -60,9 +85,11 @@
   --space-20: 5rem;
   --space-24: 6rem;
 
-  --radius-sm: 8px;
-  --radius: 14px;
-  --radius-lg: 20px;
+  /* Softer than the previous 8/14/20 — a poster band wants a generous corner,
+     and the shot frames that sit inside them are large. */
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-lg: 24px;
   --radius-pill: 999px;
 
   /* Layout measures — one shared reading column so every content page lines up.
@@ -72,7 +99,7 @@
      --maxw-prose = reading column (about, support, privacy, detail, headers)
      Convention: reading columns are CENTERED within the shell
      (`margin-inline: auto`), so content sits balanced, not pushed left. */
-  --maxw: 78rem;
+  --maxw: 86rem;
   /* Reading column ~82ch at 17px body — still inside the comfortable range,
      a touch wider than before so prose doesn't feel cramped. */
   --maxw-prose: 43rem;
@@ -89,7 +116,7 @@
      --band-y-lg  hero / first-band air
      --measure    short-form column (lede, summary) ~64ch
      --measure-mid prose column (description, FAQ) ~80ch */
-  --gutter: clamp(1.5rem, 4vw, 3rem);
+  --gutter: clamp(1.25rem, 5vw, 4.5rem);
   /* Three separations, not one. Every band gap on the site used to be
      `--band-y` — measured identical (48px ≤872, 70px at 1280, 72px ≥1309) on
      every page, so whitespace carried no information about what belonged with
@@ -122,14 +149,10 @@ html {
   line-height: 1.65;
   color: var(--text);
   background-color: var(--bg);
-  /* Cinematic depth: a faint accent glow up top, fading into graphite. */
-  background-image: radial-gradient(
-    120% 60% at 50% -10%,
-    var(--accent-soft) 0%,
-    transparent 55%
-  );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  /* Flat stage. The old page-wide accent glow was the site claiming a colour of
+     its own; under One Voice Per Band the only wash on any page belongs to a
+     product band and is painted by that band. */
+  background-image: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
@@ -180,12 +203,12 @@ time {
 }
 
 a {
-  color: var(--accent);
+  color: var(--text-strong);
   text-decoration: none;
   transition: color var(--dur) var(--ease);
 }
 a:hover {
-  color: var(--accent-hover);
+  color: var(--text-strong);
 }
 
 img {
@@ -205,9 +228,8 @@ img {
   border-radius: 4px;
 }
 
-/* Accent-tinted text selection — small detail that reads as considered. */
 ::selection {
-  background: rgba(127, 141, 255, 0.32);
+  background: rgba(255, 255, 255, 0.22);
   color: var(--text-strong);
 }
 
@@ -234,7 +256,12 @@ img {
   }
 }
 
-/* Animated underline for in-content links — slides in on hover. Applied to
+/* In-content links.
+
+   The underline is now PERSISTENT, not hover-only. Under One Voice Per Band
+   the chrome is achromatic, so a link and the prose around it are the same
+   colour — colour alone can no longer distinguish them (WCAG 1.4.1). The
+   underline is the distinction; hover thickens and brightens it. Applied to
    reading/content areas only; nav, buttons, and cards keep their own states. */
 .policy a:not(.avatar-link),
 .prose a,
@@ -243,12 +270,18 @@ img {
 .footer-links a,
 .back a,
 .section-link {
-  background-image: linear-gradient(currentColor, currentColor);
+  /* The rule is dimmed, never the text: a link must not read as weaker than the
+     prose around it. `color-mix` fades the underline alone. */
+  background-image: linear-gradient(
+    color-mix(in oklab, currentColor 50%, transparent),
+    color-mix(in oklab, currentColor 50%, transparent)
+  );
   background-position: 0 100%;
   background-repeat: no-repeat;
-  background-size: 0% 1.5px;
-  padding-bottom: 1px;
-  transition: background-size var(--dur) var(--ease), color var(--dur) var(--ease);
+  background-size: 100% 1px;
+  padding-bottom: 2px;
+  transition: background-size var(--dur) var(--ease),
+    background-image var(--dur) var(--ease);
 }
 .policy a:not(.avatar-link):hover,
 .prose a:hover,
@@ -257,7 +290,8 @@ img {
 .footer-links a:hover,
 .back a:hover,
 .section-link:hover {
-  background-size: 100% 1.5px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 2px;
 }
 
 .container {
@@ -342,8 +376,9 @@ img {
   box-shadow: var(--shadow-md);
   padding: clamp(var(--space-6), 3.5vw, var(--space-10));
 }
+/* A panel a product owns: the wash is the product's hue, never the site's. */
 .panel-accent {
-  background: radial-gradient(130% 150% at 0% 0%, var(--accent-soft), transparent 58%),
+  background: radial-gradient(130% 150% at 0% 0%, var(--hue-soft), transparent 58%),
     linear-gradient(180deg, var(--surface), var(--surface-2));
 }
 
@@ -446,18 +481,21 @@ img {
 }
 
 /* Buttons ------------------------------------------------------------------ */
-/* One shared height + centered label so any group of buttons reads as a
-   considered set. Emphasis comes from fill/width, never from a taller box. */
+/* THE ONE HEIGHT PER SET RULE. Every button in one group is the same height;
+   emphasis comes from fill and width, never from a taller box. There are three
+   heights on the site and no others: `--btn-h-sm` for chrome, the default for
+   page actions, `--btn-h-lg` for the one hero action on a poster band. */
 .btn {
+  --btn-h: 2.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: 3rem;
-  padding: 0.5rem 1.35rem;
+  min-height: var(--btn-h);
+  padding: 0.5rem 1.4rem;
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 650;
   line-height: 1.2;
   text-decoration: none;
   border: 1px solid transparent;
@@ -466,23 +504,42 @@ img {
     box-shadow var(--dur) var(--ease);
   will-change: transform;
 }
+.btn-sm {
+  --btn-h: 2.25rem;
+  padding-inline: 1rem;
+  font-size: var(--text-xs);
+}
+.btn-lg {
+  --btn-h: 3.25rem;
+  padding-inline: 1.75rem;
+  font-size: var(--text-base);
+}
 /* Press feedback — a quick settle that confirms the click was registered. */
 .btn:active {
   transform: translateY(0) scale(0.97);
   transition-duration: 90ms;
 }
+/* The neutral action: studio chrome, so it is achromatic. */
 .btn-primary {
   background: var(--accent);
   color: var(--accent-contrast);
-  /* Subtle top-edge highlight — a small tactile, crafted detail. */
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 .btn-primary:hover {
   background: var(--accent-hover);
   color: var(--accent-contrast);
   transform: translateY(-1px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 10px 28px -10px var(--accent-glow);
+  box-shadow: 0 12px 30px -12px var(--accent-glow);
+}
+/* The product action. Only legal inside a band that a product owns, where
+   `--hue` has been re-declared from that product's own `hue` field. */
+.btn-hue {
+  background: var(--hue);
+  color: var(--hue-contrast);
+}
+.btn-hue:hover {
+  color: var(--hue-contrast);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px -12px var(--hue-wash);
 }
 .btn-secondary {
   background: transparent;

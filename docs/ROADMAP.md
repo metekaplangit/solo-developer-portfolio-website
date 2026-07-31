@@ -443,7 +443,17 @@ eight routes at once precisely because every route already draws from `:root`.
   `productHue()`/`NEUTRAL_HUE` in `lib/products.ts`; Sole Focus declares
   `#ff9245`, taken from its own icon. Nothing consumes it yet, so no rendered
   output changed. Nine new tests (54 total). Internal — no tag.
-- **STEP-0045 — Spectrum identity: tokens, chrome, replaced rules** *(planned).*
+- **STEP-0045 — Spectrum identity: tokens, chrome, replaced rules** *(COMPLETE
+  — merged, tagged `v0.40.0`, 2026-07-31).* Near-black stage `#08090c`,
+  achromatic chrome (`--accent` is white), product hue plumbed to every band,
+  three button heights, radii 10/18/24, rail `clamp(1.25rem,5vw,4.5rem)`, shell
+  `--maxw 86rem`. Three named rules replaced and recorded in `DESIGN.md`:
+  Never-Black → **Near-Black Floor**, One Voice → **One Voice Per Band**, One
+  Height → **One Height Per Set**. In-content link underlines became persistent
+  (achromatic chrome means colour alone can no longer mark a link, WCAG 1.4.1).
+  15 contrast pairs computed, 0 below AA (lowest 5.44:1); 56 page-states swept,
+  0 overflow. A nav Download pill from the mockup was **declined** — it
+  reintroduces the narrow-screen clipping review-0001 OPP-01 fixed.
 - **STEP-0046 — Home as the poster** *(planned).*
 - **STEP-0047 — Product surfaces: catalog and detail** *(planned).*
 - **STEP-0048 — Reading surfaces: privacy, support, about, 404** *(planned).*
