@@ -787,12 +787,21 @@ img {
       animation-range: entry 17% cover 34%;
     }
     @keyframes reveal-rise {
+      /* NO opacity here. With `animation-fill-mode: both`, an element whose
+         timeline never advances holds the `from` state forever — and on
+         2026-08-01 that is exactly what happened on the live site: the reveal
+         was repaired in STEP-0055, went live, and five elements on the home
+         page sat at `opacity: 0` with progress stuck at 0 at every scroll
+         position. Content was invisible.
+
+         That is the failure DESIGN.md §6 names — never gate content visibility
+         on a scroll-triggered class — and it is silent, which is why the rule
+         exists. The reveal now moves content only. Worst case it is offset by
+         22px; it can never be missing. */
       from {
-        opacity: 0;
         transform: translateY(22px);
       }
       to {
-        opacity: 1;
         transform: translateY(0);
       }
     }
