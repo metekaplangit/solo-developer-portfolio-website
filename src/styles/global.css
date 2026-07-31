@@ -742,10 +742,49 @@ img {
    browser supports scroll-driven timelines; otherwise content is fully visible. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
+    /* LONGHANDS, deliberately — never the `animation` shorthand here.
+       Measured 2026-07-31: written as `animation: reveal-rise linear both`
+       followed by `animation-timeline: view()`, the build's minifier merged the
+       two into `animation: linear both reveal-rise view()`. A timeline is not
+       a legal component of the `animation` shorthand, so the whole declaration
+       was dropped and the computed style came back `animation-name: none`,
+       `animation-timeline: auto`, zero running animations. The reveal had
+       therefore never run in the built site — invisibly, because its fallback
+       is exactly "content fully visible", which is what everyone saw. */
     .reveal {
-      animation: reveal-rise linear both;
+      animation-name: reveal-rise;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 5% cover 22%;
+    }
+
+    /* Stagger inside a group. Ten elements sharing one identical animation
+       reads as a plugin; siblings that acknowledge their order read as
+       considered. The delay is a fraction of the element's OWN view range, not
+       a wall-clock delay — a scroll-driven animation has no clock, so
+       `animation-delay` would do nothing here. Shifting the range start is the
+       equivalent, and it is what makes the second card begin a beat after the
+       first as the group crosses the fold.
+
+       Capped at four steps: the fifth sibling and beyond share the last offset,
+       so a long list never leaves its tail crawling. Measured range spread
+       first → last is 12% of the entry window, which lands the group inside
+       ~250ms of normal scrolling rather than strung out.
+
+       Counted with `of .reveal`: measured 2026-07-31, a plain `:nth-child(2)`
+       matched the FIRST figure of the home mosaic, because a visually-hidden
+       `h2` labels the group and `nth-child` counts every sibling regardless of
+       type or class. Counting only revealed siblings is what makes the first
+       one actually first. */
+    .reveal:nth-child(2 of .reveal) {
+      animation-range: entry 9% cover 26%;
+    }
+    .reveal:nth-child(3 of .reveal) {
+      animation-range: entry 13% cover 30%;
+    }
+    .reveal:nth-child(n + 4 of .reveal) {
+      animation-range: entry 17% cover 34%;
     }
     @keyframes reveal-rise {
       from {
