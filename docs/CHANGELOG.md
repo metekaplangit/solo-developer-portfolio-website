@@ -14,6 +14,16 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.3] — 2026-07-31
+
+### Fixed
+
+- **Small links are easier to hit.** The footer, the "back" links, the
+  not-found page, the supported-products list and the About page's link list
+  were all about 20px tall — under the accessibility guideline of 24px. They now
+  clear it, and none of them looks any different: the clickable area grew, the
+  text did not.
+
 ## [0.44.2] — 2026-07-31
 
 ### Fixed

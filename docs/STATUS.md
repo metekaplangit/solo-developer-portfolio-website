@@ -66,7 +66,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **50** (`STEP-0001`..`STEP-0051`; STEP-0033 is
+- Completed **feature** steps: **51** (`STEP-0001`..`STEP-0052`; STEP-0033 is
   trigger-armed and unstarted).
 - Current product tag: **v0.39.3**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -85,11 +85,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0051 (One chip, one definition; product release v0.44.2)
-next_step: STEP-0052 (Every target reaches 24px) — UI polish phase, STEP-0050..0053
+current_step: STEP-0052 (Every target reaches 24px; product release v0.44.3)
+next_step: STEP-0053 (The hero image loads first, at the right size) — UI polish phase, STEP-0050..0053
 branch: main
 head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.44.2
+product_tag: v0.44.3
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

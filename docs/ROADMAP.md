@@ -523,7 +523,16 @@ a measured conformance fix rather than a design change.
   by the STEP-0045 swap. Padding moved to the space scale (4px 12px). The
   counter's live update is recorded **unproven**: it runs on an
   IntersectionObserver, which does not fire in the harness available here.
-- **STEP-0052 — Every target reaches 24px** *(planned).*
+- **STEP-0052 — Every target reaches 24px** *(COMPLETE — merged, tagged
+  `v0.44.3`, 2026-07-31).* Five standalone link groups measured 19–21px tall
+  against the WCAG 2.2 SC 2.5.8 (AA) minimum of 24×24: the footer row, the
+  back/breadcrumb links, the 404 destinations, the supported-products list and
+  the About "elsewhere" list. One shared rule in `global.css` rather than five
+  copies (the lesson STEP-0051 had just paid for). Height comes from block
+  padding on an inline-flex box, so type, colour and the underline are
+  untouched. **406 targets measured across 8 routes × 3 widths, 0 failures**;
+  the 38 still under 24px are all inline in a sentence, where the exception
+  applies.
 - **STEP-0053 — The hero image loads first, at the right size** *(planned).*
 
 ## Review-0002 dispositions (external design review, 2026-07-17)
