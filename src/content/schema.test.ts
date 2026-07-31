@@ -48,6 +48,26 @@ describe('productSchema', () => {
     const r = productSchema.parse({ ...validProduct, releaseDate: '2026-03-14' });
     expect(r.releaseDate).toBeInstanceOf(Date);
   });
+
+  it('accepts a six-digit hex hue', () => {
+    const r = productSchema.parse({ ...validProduct, hue: '#ff9245' });
+    expect(r.hue).toBe('#ff9245');
+  });
+
+  it('leaves hue undefined when the product does not author one', () => {
+    const r = productSchema.parse(validProduct);
+    expect(r.hue).toBeUndefined();
+  });
+
+  // The hue is interpolated straight into a CSS custom property, so anything
+  // the regex would have to normalise is rejected at build time instead.
+  it.each(['#fff', 'ff9245', 'orange', '#ff92455', 'rgb(255,146,69)'])(
+    'rejects %s as a hue',
+    (hue) => {
+      const r = productSchema.safeParse({ ...validProduct, hue });
+      expect(r.success).toBe(false);
+    },
+  );
 });
 
 describe('mediaAssetSchema', () => {

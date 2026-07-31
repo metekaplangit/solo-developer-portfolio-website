@@ -13,6 +13,10 @@ storeLinks:
     status: available
 price: "0"
 privacyFacts: "Works offline — no account, no cloud, no tracking"
+# Identity colour for this product's band. Taken from the app's own icon (the
+# orange clock rim), so the site is coloured by the software rather than by a
+# palette chosen for the site.
+hue: "#ff9245"
 fitFor: "You want a calm, native Mac timer that lives in your menu bar, works offline, and never asks for an account."
 fitNotFor: "You need a website blocker, team tracking, or cross-device sync — Sole Focus deliberately does none of those."
 makerNote:
