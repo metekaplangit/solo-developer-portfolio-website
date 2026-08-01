@@ -729,6 +729,23 @@ The motion phase is complete.
   #2 and #4 are real and stay. AUDIT-0009 and AUDIT-0010 recorded in the ledger;
   AUDIT-0009's run had never reached it.
 
+- **STEP-0067 — The policy's legal prose belongs to the content** *(COMPLETE —
+  merged, internal, no tag, 2026-08-01).* Five sections of `PolicyArticle.astro`
+  held legal text as literal strings, some behind ternaries on `storedLocally` /
+  `dataCollected`, so a product whose wording had to differ meant editing a
+  component every product renders through. The wording moved to
+  `src/lib/policy-text.ts` as pure functions of the policy's own facts, and
+  `privacyPolicyEntrySchema` gained an optional `sections` object a content file
+  can override. Optional on purpose: the defaults are correct for the common
+  case, and five more required fields would mean every future product
+  hand-writing legal prose it has no reason to change. The contact address is
+  appended by the component rather than carried in the prose, so an override
+  cannot drop the route Apple 5.1.1(i) requires. Proved by writing a real
+  override into `sole-focus.md` and measuring both pages: one section, one
+  policy, nothing else. Two incidental improvements — four sections now get the
+  wrapping rule they were exempt from, and a space that JSX had been swallowing
+  between "deletion requests —" and the support address is now present.
+
 - **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
   **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
   was built on the first gallery slide and measured against the current WebP at

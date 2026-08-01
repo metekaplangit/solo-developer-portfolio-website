@@ -188,5 +188,42 @@ export const privacyPolicyEntrySchema = z.object({
   contact: z.string().min(1),
   effectiveScope: z.string().min(1),
   reviewStatus: z.enum(['draft', 'reviewed', 'published']).default('draft'),
+
+  /**
+   * Per-section prose overrides (STEP-0067).
+   *
+   * Five of this document's sections used to be literal strings inside
+   * `PolicyArticle.astro`, some behind ternaries on `dataCollected` /
+   * `storedLocally`. That made the component the owner of legal text, so a
+   * product whose wording had to differ — anything with accounts, anything
+   * collecting data — meant editing a component every product shares. Legal
+   * text is the worst possible thing to have to change in a shared place.
+   *
+   * Optional on purpose, and NOT required fields. The generated defaults
+   * (`src/lib/policy-text.ts`) are correct for the common case, and `retention`
+   * already fails the build when missing — adding five more required fields
+   * would mean every future product hand-writing legal prose it has no reason
+   * to change, which is how a policy ends up wrong. Absent means "the default
+   * is right for this product", which is a true statement rather than a gap.
+   *
+   * These replace the PROSE only. The component still appends the contact link
+   * where it does today, so an override cannot accidentally drop the address
+   * Apple 5.1.1(i) requires the page to carry.
+   */
+  sections: z
+    .object({
+      /** "How your data is protected". */
+      protection: z.string().min(1).optional(),
+      /** "Children's privacy". */
+      children: z.string().min(1).optional(),
+      /** "Your rights" — the sentence before the contact address. */
+      rights: z.string().min(1).optional(),
+      /** "Contact & requests" — the sentence before the contact address. */
+      contactRequests: z.string().min(1).optional(),
+      /** "Changes to this policy". */
+      changes: z.string().min(1).optional(),
+    })
+    .default({}),
 });
 export type PrivacyPolicyEntry = z.infer<typeof privacyPolicyEntrySchema>;
+export type PolicySections = PrivacyPolicyEntry['sections'];
