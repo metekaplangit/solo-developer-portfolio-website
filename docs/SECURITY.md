@@ -42,6 +42,25 @@ takeover, and accidental secret exposure.
 - **Content is trusted-authored** (developer-owned) but treated carefully:
   external store/social links carry explicit review status; no third-party
   script embeds; no copied brand/store assets without confirmed rights.
+- **Content-Security-Policy (STEP-0065):** every built page carries one, via
+  Astro's `security.csp` (`astro.config.mjs`), which emits real sha256 hashes
+  for every bundled script and style — no `unsafe-inline` on scripts. This is
+  what enforces "no third-party script embeds" rather than merely stating it:
+  AUDIT-0009 found Cloudflare injecting a beacon into every **live** page at the
+  edge, where nothing in this repository could see it. Proved by reproducing
+  that injection against a built page — it runs with the policy stripped out and
+  is refused with it in place.
+  - **`style-src-attr 'unsafe-inline'` is deliberate.** `--hue` is set per band
+    as a style attribute, which is how the Spectrum identity works; the spec
+    excludes style attributes from hash matching. It is a separate directive and
+    weakens nothing about scripts.
+  - **Two limits, accepted.** GitHub Pages cannot set headers, so the policy is
+    a `<meta http-equiv>`: `frame-ancestors` and `report-uri` are ignored inside
+    one, and `Content-Security-Policy-Report-Only` cannot be used, so it ships
+    enforcing or not at all. Real headers — HSTS, `referrer-policy`,
+    `x-content-type-options`, a working `frame-ancestors` — are available
+    through Cloudflare Transform Rules. That is a dashboard setting and belongs
+    to the account holder, not to this repository.
 - **Domain takeover avoidance (DEPLOYMENT):** verify the custom domain before
   adding it to Pages; no wildcard DNS; enforce HTTPS; remove mixed `http://`
   content.
