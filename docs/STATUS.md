@@ -13,7 +13,19 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0060..0063** shipped as **v0.45.0** — seven
+- **Latest product state:** **STEP-0064..0066** followed v0.45.0 as internal
+  work, from the AUDIT-0010 whole-project evaluation (overall 84; security was
+  the lowest area at 62). STEP-0064 declared `@astrojs/markdown-satteri` and
+  `satteri`, which `astro.config.mjs` and `src/lib/satteri-tie.ts` imported
+  while resolving only as dependencies *of* astro — an astro release dropping
+  either would have broken the build with no warning, and a variant of that
+  failure stops the wrapping rule reaching Markdown silently. STEP-0065 added a
+  Content-Security-Policy to every page, which is what turns the stated control
+  "no third-party script embeds" into an enforced one; its probe caught a defect
+  the card would otherwise have shipped, because `--hue` is set as a style
+  attribute and the first policy blocked every product colour on the site.
+  STEP-0066 is this file. No visual change shipped in any of the three.
+  Previously **STEP-0060..0063** shipped as **v0.45.0** — seven
   pieces of owner feedback from a hands-on pass over the live site, worked as
   four packets and measured on the built pages before and after. Every page now
   starts 48px below the header (it was 170 / 96 / 49 / 32 across seven pages);
@@ -43,13 +55,15 @@
   rejected (see `Nav.astro`), and fitting four items needs either sub-ramp type
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
-- **Next action:** **one decision is yours.** AUDIT-0009 found Cloudflare Web
-  Analytics injecting `static.cloudflareinsights.com/beacon.min.js` into every
-  live page — against this project's stated "no analytics, no third-party
-  runtime services" boundary and against the no-tracking claim published in
-  `src/content/policies/global.md`. It is a Cloudflare dashboard setting, not
-  code, so it needs the account holder. Turn it off, or amend every document
-  that claims otherwise. Then: **STEP-0058** (AVIF for the LCP screenshot)
+- **Next action:** **nothing is blocked on you.** The AUDIT-0009 blocker is
+  resolved: Cloudflare Web Analytics no longer injects
+  `static.cloudflareinsights.com/beacon.min.js`. Verified 2026-08-01 —
+  `curl -s https://metkapstudio.com/` returns exactly one `<script>` element,
+  `type="application/ld+json"`, and zero matches for `cloudflare|beacon|
+  analytics`. **STEP-0065** now enforces that boundary instead of merely
+  stating it: every page carries a Content-Security-Policy, proved against a
+  replay of the same injection. Should the setting ever be turned back on, the
+  page breaks visibly rather than silently. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
   photographs. Nothing shipped; WebP-only stays. Next is the owner's own
@@ -57,17 +71,25 @@
   in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
-  1. **Duplication.** The home spotlight and the catalog lead-row are the same
-     component built twice (6 byte-identical CSS rule bodies under different
-     selector names); the contact panel is built twice with its CSS written
-     three times. One `ProductLead` extraction would close both.
-  2. **`PolicyArticle.astro` holds hardcoded legal prose** (4 of 12 sections)
-     that the content schema is supposed to own. A product cannot vary that
-     text without editing a shared component.
-  3. **About/Support pages lack the animated in-content link underline** other
-     reading surfaces have — the rules targeted `.about`/`.support`, which no
-     element carries. Dead rules removed; applying the treatment for real is a
-     visual change and needs a preview before it ships.
+  1. ~~**Duplication** — the home spotlight and the catalog lead-row built
+     twice.~~ **Closed by STEP-0047**, which extracted `ProductBand.astro` as
+     the one definition of a product at band scale; the component's own header
+     records it. Listed as open here until AUDIT-0010 checked it (2026-08-01).
+  2. **`PolicyArticle.astro` holds hardcoded legal prose** — five of its
+     sections ("How your data is protected", "Children's privacy", "Your
+     rights", "Contact & requests", "Changes to this policy") are literal
+     strings in the component, some behind ternaries on `collectsData` /
+     `storesLocally`, when the content schema is supposed to own them. A product
+     whose legal text differs — anything with accounts, anything collecting
+     data — means editing a component every product shares. Confirmed still open
+     by AUDIT-0010, which ranked it the highest-value refactor in the codebase.
+  3. ~~**About/Support pages lack the in-content link underline.**~~ **Moot, not
+     fixed — there was nothing to fix.** Checked against the built pages
+     2026-08-01: every in-content link on both sits inside `.elsewhere`,
+     `.products` or `.privacy-ref`, and all three ARE in the global underline
+     selector list (`src/styles/global.css`). Neither page has a bare unclassed
+     prose link. The original note misread the removal of dead `.about` /
+     `.support` rules as a gap in coverage.
   4. **`noUncheckedIndexedAccess` is off** (`astro/tsconfigs/strict` sets only
      `strict: true`; the flag lives in `strictest`). `showcase[0]` types as
      non-optional while the pages correctly guard for undefined — so deleting a
@@ -84,12 +106,17 @@
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
-- Blockers: **one, and it is yours** — SMOOTH-0009-2, whether Cloudflare Web
-  Analytics may run. Due checkpoints: **none**.
+- Blockers: **none.** SMOOTH-0009-2 is resolved — the beacon is off the live
+  site, and STEP-0065 makes its return break visibly. Due checkpoints: **none**.
 - Open GitHub issues: **none** — #3 resolved in v0.39.3.
-- Dependency note: the lockfile remains on Astro 7.0.5 and Vitest 4.1.9; patch
-  updates 7.1.1/4.1.10 are available but were intentionally not mixed into this
-  governance-only wrap-up. `npm audit --omit=dev` is clean.
+- Dependency note: **STEP-0064** declared `@astrojs/markdown-satteri` and
+  `satteri`, which the build imported while resolving only as dependencies *of*
+  astro. Adding them made npm re-resolve, so the lockfile moved to Astro 7.1.6
+  inside the existing `^7.0.0` range — kept deliberately and proved: all 8
+  routes rebuilt identically except astro's own `generator` meta string.
+  `npm audit --omit=dev` is clean (3 production advisories cleared); 5 dev-only
+  advisories remain under `@lhci/cli` and are named with their reason in
+  `docs/SECURITY.md`.
 
 ## Machine-readable state
 
@@ -98,8 +125,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0063 (the full-row rule; last of the four packets draining the 2026-08-01 feedback pass). Live release v0.45.0.
-next_step: BLOCKED ON OWNER — AUDIT-0009 SMOOTH-0009-2: Cloudflare Web Analytics injects a beacon on every live page against the stated no-analytics boundary; dashboard setting, needs the account holder. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
+current_step: STEP-0066 (retiring three stale claims in this file; last of the three packets from AUDIT-0010). Live release v0.45.0.
+next_step: NOT BLOCKED — STEP-0067 (PolicyArticle's hardcoded legal prose into the content schema) and STEP-0068 (a build-output test suite over dist/) are planned by AUDIT-0010 and not yet created. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.45.0
@@ -110,7 +137,7 @@ dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
-blockers: SMOOTH-0009-2 needs an owner decision (Cloudflare Web Analytics on or off)
+blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
