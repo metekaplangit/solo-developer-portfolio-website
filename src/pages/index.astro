@@ -16,7 +16,7 @@ import {
 } from '../lib/products';
 import { organizationSchema, websiteSchema } from '../lib/schema';
 import { resolveScreenshot, screenshotTitle } from '../lib/screenshots';
-import { bodySections } from '../lib/prose';
+import { bodySections, firstSentence } from '../lib/prose';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
@@ -48,8 +48,17 @@ const heroOwnsHue = featured.length === 1 && spotlight != null;
 
 // Three statements from the product's own approved prose — the FAQ is a
 // different surface and the closing sign-off is not body copy.
+//
+// Opening sentence only (STEP-0062). The full sections run 7, 7 and 4 lines,
+// so side by side the third column stopped 74px short of the other two. The
+// sections stay long where length belongs — the product page — and the three
+// opening sentences are written to a matching length, so these columns are
+// three lines each and end level. Truncating with an ellipsis would have
+// matched the heights too, and read as a page that ran out of room.
 const statements = spotlightEntry
-  ? bodySections(spotlightEntry.body ?? '', ['Common questions']).slice(0, 3)
+  ? bodySections(spotlightEntry.body ?? '', ['Common questions'])
+      .slice(0, 3)
+      .map((s) => ({ ...s, text: firstSentence(s.text) }))
   : [];
 
 const makerLines = spotlight?.makerNote ?? [];

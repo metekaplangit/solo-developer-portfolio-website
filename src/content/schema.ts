@@ -5,6 +5,21 @@
 // any Astro runtime — so they can be imported and unit-tested in isolation.
 // See docs/DATA_STORAGE.md (owner) and docs/ARCHITECTURE.md.
 import { z } from 'astro/zod';
+import { tie } from '../lib/typography';
+
+/**
+ * The wrapping rule (STEP-0062), applied where prose enters the site.
+ *
+ * Doing this in the schema rather than at each render point is what makes it a
+ * rule instead of a habit: every surface that reads a product's summary — the
+ * home band, the catalog, the card, the detail page, a future one — gets the
+ * same tied text, and a new prose field opts in by adding `.transform(tie)`
+ * here rather than by every consumer remembering to call it.
+ *
+ * Applied AFTER the length constraints, so `max(200)` still measures the
+ * author's own characters and is not quietly loosened by the rule.
+ */
+const prose = (s: z.ZodString) => s.transform(tie);
 
 /** A link to a product on an external store or platform. */
 export const storeLinkSchema = z.object({
@@ -30,7 +45,9 @@ export const mediaAssetSchema = z.object({
   productId: z.string().min(1),
   type: z.enum(['icon', 'screenshot', 'hero', 'logo', 'press']),
   path: z.string().min(1),
-  altText: z.string().min(1, 'every media asset requires alt text'),
+  // Tied like other prose: this string is not only an `alt` attribute — the
+  // gallery renders every one of them as visible text in its transcript.
+  altText: prose(z.string().min(1, 'every media asset requires alt text')),
   /**
    * Meaningful text rendered INSIDE the image itself (marketing headline,
    * caption), as distinct from `altText`, which describes what the image shows.
@@ -85,14 +102,14 @@ export const productSchema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slug must be lowercase kebab-case'),
   type: z.enum(['app', 'game']),
   status: z.enum(PRODUCT_STATUSES),
-  summary: z.string().min(1).max(200),
+  summary: prose(z.string().min(1).max(200)),
   platforms: z.array(z.enum(PLATFORMS)).min(1),
   storeLinks: z.array(storeLinkSchema).default([]),
   supportUrl: z.string().default('/support/'),
   privacyPolicyUrl: z.string().optional(),
   screenshots: z.array(mediaAssetSchema).default([]),
   icon: mediaAssetSchema.optional(),
-  features: z.array(z.string()).default([]),
+  features: z.array(prose(z.string())).default([]),
   // Store price as a plain decimal string (e.g. "0", "4.99"), USD. Only set once
   // the product is actually purchasable/downloadable — it drives the truthful
   // `offers` JSON-LD emitted for released products (see lib/schema.ts).
@@ -107,11 +124,11 @@ export const productSchema = z.object({
   // "For you if / Not for you if" pair (taste-round T2). Both must be present
   // to render; claims must restate existing truthful content (e.g. the
   // not-a-blocker FAQ answer), never introduce new capabilities.
-  fitFor: z.string().min(1).optional(),
-  fitNotFor: z.string().min(1).optional(),
+  fitFor: prose(z.string().min(1)).optional(),
+  fitNotFor: prose(z.string().min(1)).optional(),
   // First-person maker's note paragraphs opening the description (taste-round
   // T5). Published only with the maker's explicit approval of the exact copy.
-  makerNote: z.array(z.string().min(1)).default([]),
+  makerNote: z.array(prose(z.string().min(1))).default([]),
   // One short, truthful privacy line for the first-glance facts row (e.g.
   // "Works offline — no account, no cloud, no tracking"). Must restate claims
   // already made (and tested) in the product's policy/content — never new ones.

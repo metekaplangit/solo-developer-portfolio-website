@@ -5,6 +5,7 @@ import { site } from '../../lib/site';
 import SupportEmail from '../../components/SupportEmail.astro';
 import { sortProducts } from '../../lib/products';
 import { withBase } from '../../lib/url';
+import { tie } from '../../lib/typography';
 
 const products = sortProducts((await getCollection('products')).map((e) => e.data));
 const subject = encodeURIComponent('Support request');
@@ -15,7 +16,7 @@ const include = [
   { title: 'Which product', body: 'The app or game name, and the platform you’re on.' },
   { title: 'Which version', body: 'The version number, if you can find it. Not essential.' },
   { title: 'What happened', body: 'What you did, what happened, and what you expected instead.' },
-];
+].map((i) => ({ ...i, body: tie(i.body) }));
 ---
 
 <BaseLayout
@@ -26,8 +27,7 @@ const include = [
     <p class="eyebrow">Support</p>
     <h1 id="support-h" class="page-title support-title">A real person answers.</h1>
     <p class="lede measure">
-      Need help with an app or game? Email me directly — there&rsquo;s no form,
-      no ticket number, and nothing is tracked.
+      {tie('Need help with an app or game? Email me directly — there\u2019s no form, no ticket number, and nothing is tracked.')}
     </p>
   </section>
 

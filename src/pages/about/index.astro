@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../lib/site';
 import { withBase } from '../../lib/url';
 import SupportEmail from '../../components/SupportEmail.astro';
+import { tie } from '../../lib/typography';
 
 /* Values — a presentational rewrap of the three commitments this page has
    always carried, plus the support promise that already ships site-wide in the
@@ -29,7 +30,7 @@ const values = [
     body:
       'Support goes straight to me. If something breaks you hear back — usually within 2–3 business days.',
   },
-];
+].map((v) => ({ ...v, body: tie(v.body) }));
 ---
 
 <BaseLayout
