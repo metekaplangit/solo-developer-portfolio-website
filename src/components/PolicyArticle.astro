@@ -33,9 +33,9 @@ const chips: { label: string; ok: boolean }[] = [
 ---
 
 <article class="policy">
-  <header class="policy-head">
-    {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={72} alt={icon.altText} href={iconHref} />}
-    <div class="policy-head-text">
+  <header class="policy-head identity">
+    {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={56} alt={icon.altText} href={iconHref} />}
+    <div class="policy-head-text identity-text">
       <h1 class="page-title">{policy.title}</h1>
       <p class="policy-meta">
         Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{policy.effectiveScope}
@@ -239,19 +239,11 @@ const chips: { label: string; ok: boolean }[] = [
   .policy {
     padding-block: var(--page-top) var(--band-y);
   }
-  /* Stacked, not side-by-side — same measurement and same reason as the
-     product detail head: with the avatar beside it the policy title started
-     108px (390) / 147px (1024) / 195px (1440) from the edge while every other
-     heading on the site started on the shared rail. */
-  .policy-head {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-5);
-  }
-  .policy-head-text {
-    min-width: 0;
-  }
+  /* Icon beside the title, not above it (STEP-0061). Shape comes from the
+     shared `.identity` lockup in global.css so this header and the product
+     detail header cannot drift apart; the icon drops 72px → 56px because at
+     56 it clears the title's two-line block without towering over it. The
+     rail argument that put this on its own row is answered in `.identity`. */
   /* Fluid rather than a flat `--text-3xl`. Policy titles are the longest
      headings on the site — "MetKap Studio Website Privacy Policy" is 36
      characters — and at a fixed 44px that measured three lines and 139px of
