@@ -14,6 +14,63 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.45.0] — 2026-08-01
+
+Seven pieces of owner feedback from a hands-on pass over the live site, worked
+as four Step Packets. Every claim below was measured on the built pages by a
+headless probe, before and after.
+
+### Changed
+
+- **Every page now starts the same distance below the header, and that distance
+  is half what it was.** It used to be four different distances across seven
+  pages — 170px on the home page, 96px on Apps & Games, About, Support, Privacy
+  and 404, 49px on a policy page and 32px on a product page. All eight now
+  measure 48px. The home hero also stops padding itself out to 82% of the
+  window: it was centring its text inside that height, which inserted 74px of
+  nothing above the opening line and another 74px below the buttons. The hero is
+  738px → 542px tall at 1440. (STEP-0060)
+
+- **An app's icon now sits beside its name, on one line.** On both the product
+  page and the privacy page the icon was on its own row with the name well
+  below it, so the two did not read as one thing. The header blocks are 23-32%
+  shorter as a result. The product page's chips also moved below the name — they
+  were above it, so the first thing read on the page was "App · Released ·
+  macOS" rather than the product. (STEP-0061)
+
+- **A back link is now in the same place on every page that has one.** The
+  privacy policy's "← All privacy policies" sat 370px from the left edge at
+  1440 while the product page's identical-purpose link sat at 98px, because the
+  privacy one had inherited the reading column's centring. Both are now on the
+  page's shared left rail at every width. (STEP-0061)
+
+- **The three feature columns on the home page are the same length.** They ran
+  7, 7 and 4 lines, so the third stopped well short of the other two. Each now
+  shows its section's opening sentence, and the three openings were rewritten to
+  match — three lines each, ending level. The full sections are unchanged on the
+  product page, where the detail belongs. (STEP-0062)
+
+- **The "What it does" grid has no empty slot.** Seven feature cards laid out
+  four wide left the last row short. There are now eight — the new one restates
+  the appearance options already described in the app's own copy — and the grid
+  chooses a column count that divides its items evenly, so no row is ever
+  partial at any width. (STEP-0063)
+
+### Fixed
+
+- **No line of text ends on a stray short word.** Lines were breaking after
+  "a", "and", "the", "of", "has" — "…a plain privacy page and a" with "real
+  person answering support." beneath it. 22 paragraphs across the eight pages
+  did this; now none do. Worth recording that the obvious fix was already in
+  place and did not work: `text-wrap: pretty` was applied site-wide the whole
+  time, and it only rescues a paragraph's last line. Short words are now bound
+  to the word they point at, everywhere, by one rule the build applies rather
+  than by editing sentences. (STEP-0062)
+
+- **Dead CSS on the product page.** An unclosed comment had been silently
+  swallowing two rules. Nothing looked different, which is why it survived.
+  (STEP-0061)
+
 ## [0.44.11] — 2026-08-01
 
 ### Fixed

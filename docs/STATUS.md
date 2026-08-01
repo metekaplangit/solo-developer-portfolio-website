@@ -13,24 +13,24 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0059** shipped as **v0.44.11** — the support
-  address is served as readable text again. Cloudflare's Email Address
-  Obfuscation had been rewriting it at the edge into a `__cf_email__` span
-  decoded only by an injected script, so with JavaScript off the site's one
-  support contact did not render at all. Found by AUDIT-0009, which measured the
-  live site rather than the build. Verified live after deploy: zero
-  `__cf_email__` spans on any page. Previously **STEP-0057** as **v0.44.10** — the
-  scroll-reveal rises again instead of dropping 22px first. It undoes the
-  `animation-fill-mode: none` of v0.44.9, which was set on the strength of a
-  headless probe whose viewport had no height; a scroll axis with no scrollbar
-  makes a ViewTimeline inactive by spec, so "progress stuck at 0 at every scroll
-  position" was what that probe had to report. See ENH-0007 Finding 1. The
-  Spectrum identity phase (STEP-0044..0049) and the motion phase
-  (STEP-0054..0056) are both complete. *(Keep a Step ID in this bullet: the
-  validator resolves the active step from the first `STEP-XXXX` token in this
-  file, and without one here the scan falls through to the trigger-armed
-  STEP-0033 template and the validator fails locally. CI is retired, so nothing
-  catches this remotely.)*
+- **Latest product state:** **STEP-0060..0063** shipped as **v0.45.0** — seven
+  pieces of owner feedback from a hands-on pass over the live site, worked as
+  four packets and measured on the built pages before and after. Every page now
+  starts 48px below the header (it was 170 / 96 / 49 / 32 across seven pages);
+  an app icon sits beside its name on one line and both back links share the
+  page rail; no line of body text ends on a stray short word (22 → 0); the home
+  page's three feature columns are 3 lines each and end level (they were 7/7/4);
+  and the "What it does" grid has no empty slot at any width. Four rules are now
+  named in `DESIGN.md` — Page-Top, Identity Lockup, Wrapping, Full-Row — each
+  recording what it replaced, because two of them reverse earlier decisions that
+  had good reasons at the time. Previously **STEP-0059** as **v0.44.11** — the
+  support address is served as readable text again after Cloudflare's Email
+  Address Obfuscation rewrote it at the edge. The Spectrum identity phase
+  (STEP-0044..0049) and the motion phase (STEP-0054..0056) are both complete.
+  *(Keep a Step ID in this bullet: the validator resolves the active step from
+  the first `STEP-XXXX` token in this file, and without one here the scan falls
+  through to the trigger-armed STEP-0033 template and the validator fails
+  locally. CI is retired, so nothing catches this remotely.)*
 - **Governance:** the feature-42 catch-up is complete: **MC-0019, DISC-0013,
   AUDIT-0008, and ENH-0006** clear every checkpoint due through feature step 42.
   The catch-up repaired stale live-state, milestone, schema, testing, issue, and
@@ -78,9 +78,9 @@
 
 ## Current facts
 
-- Completed **feature** steps: **57** (`STEP-0001`..`STEP-0059`; STEP-0033 is
+- Completed **feature** steps: **61** (`STEP-0001`..`STEP-0063`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
-- Current product tag: **v0.44.11**. `[Unreleased]` is empty.
+- Current product tag: **v0.45.0**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -98,11 +98,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0059 (support address wrapped in Cloudflare's `email_off` opt-out so the edge cannot rewrite it). Live release v0.44.11.
+current_step: STEP-0063 (the full-row rule; last of the four packets draining the 2026-08-01 feedback pass). Live release v0.45.0.
 next_step: BLOCKED ON OWNER — AUDIT-0009 SMOOTH-0009-2: Cloudflare Web Analytics injects a beacon on every live page against the stated no-analytics boundary; dashboard setting, needs the account holder. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.44.11
+product_tag: v0.45.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

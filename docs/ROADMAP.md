@@ -627,6 +627,62 @@ The motion phase is complete.
   `application/ld+json` addresses untouched. All 8 built pages are
   byte-identical to the previous release once the markers are stripped.
 
+- **STEP-0060 — One page-top distance, halved** *(COMPLETE — merged, tagged
+  `v0.45.0`, 2026-08-01).* Two owner reports about arriving on a page and
+  reading nothing. Measured before: the gap from the header's bottom edge to the
+  first ink was 170px on home, 96px on apps/about/support/privacy-index/404,
+  49px on a policy page and 32px on a product page — four answers to one
+  question. New `--page-top` token (half `--band-y-lg` by construction) on the
+  first band of every route; all eight now measure 48px. The home hero also
+  loses `min-height` and vertical centring: with `align-items: center` the slack
+  was inserted equally above the eyebrow and below the buttons, which is exactly
+  the two bands the owner boxed. Hero band 738 → 542px at 1440.
+
+- **STEP-0061 — One identity lockup, one back-link placement** *(COMPLETE —
+  merged, tagged `v0.45.0`, 2026-08-01).* The product and policy headers put the
+  app icon on its own row above the title, and the policy back link inherited
+  the prose column's centring — 370.5px from the edge at 1440 against the
+  product page's 98.5px, the same link in two places. Two shared rules:
+  `.page-back` (placement, matching NN/G's navigation guidance) and `.identity`
+  (icon left, name right, one line). Header blocks 23-32% shorter; both back
+  links now on the shared rail at 390/1024/1440. **This reverses the stacking
+  decision of 2026-07-31 knowingly** — that decision existed so a product `h1`
+  would start on the shared rail, and it no longer does. The owner asked for the
+  lockup explicitly after seeing the stacked version live twice; the old
+  reasoning is kept in the `.identity` comment so it is not rediscovered and
+  reverted. Also fixed an unclosed CSS comment that had been silently swallowing
+  `.head-body` and `.tags`.
+
+- **STEP-0062 — The wrapping rule, and three columns that match** *(COMPLETE —
+  merged, tagged `v0.45.0`, 2026-08-01).* 22 paragraphs across the eight routes
+  ended a line on a stray article, preposition or auxiliary; now 0. **CSS was
+  not the fix and had already been tried** — `text-wrap: pretty` was applied
+  site-wide and every defect was still present, because `pretty` only rescues a
+  paragraph's last line. `tie()` in `src/lib/typography.ts` binds the short word
+  to the next with a non-breaking space, reaching Markdown through a Sätteri
+  hast plugin, content prose through one `.transform()` in the schema, and the
+  site's own strings at their definition points. Two things only measuring
+  found: Markdown's hard-wrapped source newlines (real wrap points once HTML
+  collapses them) and element boundaries ("…and `<strong>`Study mode`</strong>`").
+  Separately the home page's three feature columns ran 7/7/4 lines; they now
+  show each section's opening sentence, written to a matching length — 3 lines
+  each, ending on the same pixel — while the sections keep their full length on
+  the product page. **A caching trap worth remembering: a schema change to a
+  content collection is not picked up by a plain `npm run build`;** `.astro/`
+  and `node_modules/.astro/` both have to go.
+
+- **STEP-0063 — The full-row rule** *(COMPLETE — merged, tagged `v0.45.0`,
+  2026-08-01).* The "What it does" grid held 7 features and laid them 4 + 3.
+  Measured at six widths, only 390px was ever full. `repeat(auto-fit, …)` cannot
+  fix it — it sizes by width and never sees the item count — so `evenColumns()`
+  picks the widest column count that divides the items evenly and `.grid-even`
+  reads it. An eighth feature was added as asked, restating appearance options
+  already in the approved prose rather than making a new claim. Full at all six
+  widths. Also repaired two defects from the packets above, both found by
+  re-measuring: `.identity > :first-child` nudging the text block on the
+  icon-less policy, and the back link's WCAG tap-target padding offsetting its
+  text.
+
 - **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
   **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
   was built on the first gallery slide and measured against the current WebP at
