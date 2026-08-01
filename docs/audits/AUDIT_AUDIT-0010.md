@@ -140,6 +140,42 @@ Direction only, ranked by what they unblock rather than by lines touched.
 
 ---
 
+## What happened next
+
+Recorded so a later session re-planning from this file does not re-propose work
+that is already done. Everything above was written before any fix started; this
+section was appended after.
+
+| Card | Became | State |
+|---|---|---|
+| Declare the satteri packages | STEP-0064 | Merged, pushed |
+| Content-Security-Policy | STEP-0065 | Merged, pushed, live |
+| Retire three stale STATUS claims | STEP-0066 | Merged, pushed |
+| Policy prose into the content schema | STEP-0067 | Merged, pushed |
+| Build-output test suite | STEP-0068 | Merged, pushed |
+
+All five closed in one pass, each on its own branch with its own proof and merge
+commit. Final gates on `main`: build 0, check 0/0/0, 96 unit tests, 8
+build-output tests, validator 44 checks, `npm audit --omit=dev` 0. The deploy
+workflow ran the Lighthouse accessibility gate and passed, which is the one check
+that cannot run on this machine — and the live site now serves the CSP.
+
+**Two findings the run produced that the scorecard above could not have:**
+
+1. **The CSP probe caught a defect before it shipped.** The first policy blocked
+   inline style attributes, which is how `--hue` carries the Spectrum identity —
+   every product colour on the site would have silently reverted to the
+   achromatic default. Scoring found the missing control; only driving it found
+   what enforcing it would break.
+2. **The validator caught a gap the run had left.** Three internal packets had
+   cards and commits but no ROADMAP entries. The project's own tooling named it.
+
+**Left open, unchanged:** STATUS follow-up #4 — `noUncheckedIndexedAccess` is
+off, and enabling it surfaces exactly 7 errors (measured 2026-07-18). It
+describes a latent runtime crash behind a green typecheck, it is a contained
+packet, and it did not make the five only because the cap is five. It is the
+strongest candidate for the next run.
+
 ## Sources consulted
 
 - [Astro Best Practices 2026](https://agnitestudio.com/blog/astro-best-practices/) — confirmed this project already follows the static-first / no-global-third-party-scripts guidance; nothing new to add to the area list.
