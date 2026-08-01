@@ -19,9 +19,26 @@ takeover, and accidental secret exposure.
 - **Secrets:** none in the repo or build output. `.env*` gitignored. No API keys,
   certificates, signing keys, or developer-account data (explicit product
   non-goal). Any detected secret → stop, remove, rotate, document.
-- **Dependencies:** `npm audit` must be clean at merge; `package-lock.json`
-  committed; `yaml` pinned via `overrides` (GHSA-48c2-rrv3-qjmp cleared). Review
-  new deps for maintenance + license before adding.
+- **Dependencies:** `npm audit --omit=dev` must be clean at merge — that is the
+  gate, and it is the one that matters: nothing dev-only reaches a visitor.
+  `package-lock.json` committed; `yaml` pinned via `overrides`
+  (GHSA-48c2-rrv3-qjmp cleared). Review new deps for maintenance + license
+  before adding.
+- **Every package the build imports must be declared** in `package.json`, never
+  reached transitively. `@astrojs/markdown-satteri` and `satteri` were imported
+  by `astro.config.mjs` and `src/lib/satteri-tie.ts` while resolving only as
+  dependencies *of* astro, so any astro release dropping them would have broken
+  the build — and silently stopped applying the wrapping rule to Markdown
+  (STEP-0064).
+- **Accepted dev-only residue (2026-08-01, STEP-0064):** 5 advisories, all
+  reached through `@lhci/cli` — `tmp` (GHSA-ph9p-34f9-6g65 high,
+  GHSA-52f5-9888-hmc6 low) via `external-editor` → `inquirer`, and `uuid`
+  (GHSA-w5hq-g745-h8pq moderate). Clearing them needs `npm audit fix --force`,
+  which installs `@lhci/cli@0.1.0` and would take out the accessibility gate in
+  `.github/workflows/deploy.yml` — a worse trade. None of it reaches `dist`, so
+  none of it reaches a visitor; it runs only on this machine and on the deploy
+  runner, against the project's own built output. Re-check when `@lhci/cli`
+  next releases.
 - **Content is trusted-authored** (developer-owned) but treated carefully:
   external store/social links carry explicit review status; no third-party
   script embeds; no copied brand/store assets without confirmed rights.
@@ -76,8 +93,9 @@ with a response expectation.
 
 ## Release gate
 
-No secrets; `npm audit` clean; production output free of debug/verbose internals;
-HTTPS enforced; no broken/misleading links on privacy/support pages.
+No secrets; `npm audit --omit=dev` clean; every build-time import declared in
+`package.json`; production output free of debug/verbose internals; HTTPS
+enforced; no broken/misleading links on privacy/support pages.
 
 ## Sensitive reporting
 
