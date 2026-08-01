@@ -36,6 +36,10 @@ function policy(productId: string): PrivacyPolicyEntry {
     contact: 'support@example.com',
     effectiveScope: 'scope',
     reviewStatus: 'reviewed',
+    // No per-section overrides: this fixture exercises URL resolution, and the
+    // generated defaults are what a policy carries unless it says otherwise
+    // (STEP-0067).
+    sections: {},
   };
 }
 

@@ -1,10 +1,17 @@
 ---
 import type { PrivacyPolicyEntry, MediaAsset } from '../content/schema';
 import { formatDate } from '../lib/format';
-import { GLOBAL_POLICY_ID } from '../lib/privacy';
 import ProductAvatar from './ProductAvatar.astro';
 import SupportEmail from './SupportEmail.astro';
-import { tie } from '../lib/typography';
+import {
+  policyFacts,
+  protectionText,
+  childrenText,
+  rightsText,
+  contactRequestsText,
+  changesText,
+  resolveSection,
+} from '../lib/policy-text';
 
 interface Props {
   policy: PrivacyPolicyEntry;
@@ -19,11 +26,21 @@ const { policy, icon = null, iconHref, iconName } = Astro.props;
 
 const collectsData = policy.dataCollected.length > 0;
 const hasThirdParties = policy.thirdPartyServices.length > 0;
-const storesLocally = policy.storedLocally.length > 0;
-// Natural subject noun so shared sections read correctly for the site-wide
-// policy vs a per-product (app) policy.
-const isSite = policy.productId === GLOBAL_POLICY_ID;
-const subject = isSite ? 'This website' : 'This app';
+
+// Section prose comes from `src/lib/policy-text.ts` — the content file's own
+// override where it set one, the generated default otherwise (STEP-0067). This
+// component decides WHERE text goes and never WHAT it says, so a product whose
+// legal wording has to differ changes its own content file rather than a
+// component every product renders through.
+const facts = policyFacts(policy);
+const o = policy.sections;
+const text = {
+  protection: resolveSection(o.protection, protectionText(facts)),
+  children: resolveSection(o.children, childrenText(facts)),
+  rights: resolveSection(o.rights, rightsText(facts)),
+  contactRequests: resolveSection(o.contactRequests, contactRequestsText()),
+  changes: resolveSection(o.changes, changesText(facts)),
+};
 
 // At-a-glance chips — the gist in one scan. Each: label + tone.
 const chips: { label: string; ok: boolean }[] = [
@@ -132,15 +149,7 @@ const chips: { label: string; ok: boolean }[] = [
     <section class="card">
       <h2 class="card-title">How your data is protected</h2>
       <div class="sec-body">
-      <p class="sec-plain">
-        {
-          storesLocally
-            ? "Everything above stays on your device. Because nothing is uploaded to a server, there's no central copy to be breached, leaked, or handed over to anyone."
-            : collectsData
-              ? 'We protect the limited data we hold with commercially reasonable safeguards, and keep the amount we hold — and the risk — as small as possible. No method of transmission or storage is ever completely secure.'
-              : `${subject} keeps nothing about you on any server, so there's nothing to breach, leak, or hand over.`
-        }
-      </p>
+      <p class="sec-plain">{text.protection}</p>
       </div>
     </section>
 
@@ -172,33 +181,19 @@ const chips: { label: string; ok: boolean }[] = [
     <section class="card">
       <h2 class="card-title">Children's privacy</h2>
       <div class="sec-body">
-      <p class="sec-plain">
-        {
-          collectsData
-            ? `${subject} isn't directed at children under 13, and we don't knowingly collect their personal data. If you believe a child has given us data, contact us and we'll delete it.`
-            : `${subject} isn't directed at children, and because it collects no personal data, it holds nothing about children either.`
-        }
-      </p>
+      <p class="sec-plain">{text.children}</p>
       </div>
     </section>
 
     <section class="card">
       <h2 class="card-title">Your rights</h2>
       <div class="sec-body">
+      {/* The address is appended here, not carried in the prose: an override
+          must not be able to drop the contact route Apple 5.1.1(i) requires
+          this page to offer. */}
       <p class="sec-plain">
-        {
-          collectsData ? (
-            <>
-              {tie("You can ask us to access, correct, delete, or export your personal data, or object to how it's used — email ")}
-              <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail> and we'll respond.
-            </>
-          ) : (
-            <>
-              {tie("You have the right to access, correct, or delete any personal data we hold. Because we hold none, there's nothing to retrieve or erase — but if you'd like to confirm that, or make any request, email ")}
-              <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
-            </>
-          )
-        }
+        {text.rights}
+        <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>{collectsData ? " and we'll respond." : '.'}
       </p>
       </div>
     </section>
@@ -207,8 +202,7 @@ const chips: { label: string; ok: boolean }[] = [
       <h2 class="card-title">Contact &amp; requests</h2>
       <div class="sec-body">
       <p class="sec-plain">
-        Questions, consent changes, or deletion requests —
-        <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
+        {text.contactRequests}<SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
       </p>
       </div>
     </section>
@@ -216,11 +210,7 @@ const chips: { label: string; ok: boolean }[] = [
     <section class="card">
       <h2 class="card-title">Changes to this policy</h2>
       <div class="sec-body">
-      <p class="sec-plain">
-        We may update this policy as {subject.toLowerCase()} or the law changes. The
-        “Updated” date at the top always reflects the current version, and we'll note
-        anything significant here.
-      </p>
+      <p class="sec-plain">{text.changes}</p>
       </div>
     </section>
   </div>
