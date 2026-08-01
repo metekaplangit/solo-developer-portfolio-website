@@ -143,6 +143,20 @@
   --band-y: clamp(3rem, 5.5vw, 4.5rem);
   --band-y-loose: clamp(5rem, 9vw, 7.5rem);
   --band-y-lg: clamp(4rem, 8vw, 6rem);
+
+  /* The page-top rule (STEP-0060). ONE distance from the header's bottom edge
+     to the first ink on the page, identical on every route. Measured before
+     this token existed, the gap was 170px on home, 96px on apps/about/support/
+     privacy-index/404, 49px on a policy page and 32px on a product page — four
+     different answers to the same question, so arriving anywhere felt like
+     arriving somewhere else. Half of `--band-y-lg` by construction: the old
+     96px band was the complaint, and 48px is what "cut it at least in half"
+     resolves to at desktop width.
+
+     A page's FIRST band uses this and nothing else. `--band-y-lg` stays, and
+     stays what it was, for bands further down that genuinely open a new
+     movement — it is no longer the page-top value. */
+  --page-top: clamp(2rem, 4vw, 3rem);
   --measure: 35rem;
   --measure-mid: 47rem;
 
@@ -375,8 +389,9 @@ img {
 .band + .band-loose {
   margin-top: var(--band-y-loose);
 }
+/* The first band on a page. One value site-wide — see `--page-top`. */
 .band-lead {
-  padding-top: var(--band-y-lg);
+  padding-top: var(--page-top);
 }
 /* The tail closes the page, it does not need to out-space every real
    separation on it. Footer adds its own `--band-y` on top; the two together

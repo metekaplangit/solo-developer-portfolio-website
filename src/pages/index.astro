@@ -205,14 +205,19 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   }
 
   /* BAND 1 — hero */
+  /* No `min-height`, and no vertical centring (STEP-0060). The hero used to be
+     `min-height: min(82vh, 900px)` with `align-items: center`, which at 1440
+     made the band 738px tall around 590px of content — so 74px of nothing was
+     inserted ABOVE the eyebrow and another 74px BELOW the buttons, purely to
+     centre the block. Those are the two bands the owner boxed in red. The hero
+     is now exactly its content plus the shared page-top and one band gap, and
+     it starts at the same distance from the header as every other page. Poster
+     scale is carried by `--display-1`, which is untouched — it was never the
+     height that made this a poster. */
   .band-hero {
     position: relative;
     display: flex;
-    align-items: center;
-    /* Capped: 82vh is right up to a ~1100px-tall window, above which a hero
-       taller than 900px is a wall of nothing rather than a poster. */
-    min-height: min(82vh, 900px);
-    padding-block: var(--band-y-lg) var(--band-y);
+    padding-block: var(--page-top) var(--band-y);
     overflow: hidden;
   }
   .band-hero h1 {
@@ -327,9 +332,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     .product-in {
       grid-template-columns: 1fr;
     }
-    .band-hero {
-      min-height: 0;
-    }
+    /* (The `min-height: 0` override is gone with the `min-height` it undid.) */
   }
 
   /* Hero entrance. It used to animate `transform` only, so the text appeared at

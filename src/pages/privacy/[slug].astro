@@ -35,10 +35,15 @@ const iconHref = product ? `/apps/${product.data.slug}/` : undefined;
 </BaseLayout>
 
 <style>
+  /* `margin-block: 0` is load-bearing, not tidying: this back link is a `<p>`,
+     so the UA's default 1em top margin stacked on top of `--page-top` and made
+     this the one page arriving 17px lower than every other (measured 65 against
+     48, STEP-0060). */
   .back {
     max-width: var(--maxw-prose);
+    margin-block: 0;
     margin-inline: auto;
-    padding-top: var(--space-8);
+    padding-top: var(--page-top);
   }
   .back a {
     font-size: var(--text-sm);
