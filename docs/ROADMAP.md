@@ -683,6 +683,52 @@ The motion phase is complete.
   icon-less policy, and the back link's WCAG tap-target padding offsetting its
   text.
 
+- **STEP-0064 — Declare the satteri packages, and a gate that is actually met**
+  *(COMPLETE — merged, internal, no tag, 2026-08-01).* `astro.config.mjs` and
+  `src/lib/satteri-tie.ts` imported `@astrojs/markdown-satteri` and `satteri`
+  while neither was in `package.json` — both resolved only as dependencies *of*
+  astro, so any astro release dropping or renaming them breaks the build with no
+  warning, and a variant of that failure stops the wrapping rule (STEP-0062)
+  reaching Markdown silently. Both declared, plus the plain `npm audit fix`:
+  production advisories 3 → 0, total 11 → 5, all remaining dev-only under
+  `@lhci/cli`, which stays at 0.15.1 so the accessibility gate survives.
+  `SECURITY.md`'s "npm audit clean at merge" could not be met without breaking
+  that gate, so it was being ignored — rewritten to `npm audit --omit=dev`,
+  which is true, enforceable, and the one that matters. Adding a dependency
+  makes npm re-resolve, so astro moved 7.0.5 → 7.1.6 inside the existing range;
+  kept deliberately and proved by rebuilding all 8 routes and comparing
+  character by character — 16 changed chunks, two per page, every one of them
+  astro's own `generator` meta string. Assets byte-identical.
+
+- **STEP-0065 — A Content-Security-Policy, so edge injection breaks loudly**
+  *(COMPLETE — merged, internal, no tag, 2026-08-01).* `SECURITY.md` stated the
+  control "no third-party script embeds"; AUDIT-0009 found Cloudflare injecting
+  a beacon into every **live** page against exactly that control, where nothing
+  in this repository could see it. Astro's stable `security.csp` now emits the
+  meta element with real sha256 hashes for every bundled script and style. The
+  probe caught a defect the card would otherwise have shipped: the first run
+  failed 4 of 8 routes on `style-src-attr`, and what was blocked is how the
+  Spectrum identity works — `--hue` is a style attribute, so every product
+  colour would have silently reverted to the achromatic default. The spec
+  excludes style attributes from hash matching, so the fix is the narrowest
+  allowance available, scoped to attributes alone and touching nothing about
+  scripts. Proved with a control: the same injection **runs** with the policy
+  stripped out and is refused with it in place. `frame-ancestors`, `report-uri`
+  and report-only mode are unavailable in a meta element and GitHub Pages cannot
+  set headers — recorded, with Cloudflare Transform Rules named as the owner's
+  route to real ones.
+
+- **STEP-0066 — Retire three stale claims in STATUS** *(COMPLETE — merged,
+  internal, no tag, 2026-08-01).* STATUS is the first document every session
+  reads, and three of its claims were false. The AUDIT-0009 blocker was still
+  listed as the pending next action, but the beacon is gone from the live site
+  (one `<script>`, JSON-LD, zero analytics matches). Follow-up #1 asked for a
+  `ProductLead` extraction that STEP-0047 had already done. Follow-up #3 was
+  moot rather than open — every in-content link on About and Support already
+  sits in a class the global underline rule covers, so there was nothing to fix.
+  #2 and #4 are real and stay. AUDIT-0009 and AUDIT-0010 recorded in the ledger;
+  AUDIT-0009's run had never reached it.
+
 - **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
   **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
   was built on the first gallery slide and measured against the current WebP at
