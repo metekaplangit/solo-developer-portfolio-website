@@ -23,9 +23,9 @@ See `ROADMAP.md` for the rationale.
 
 ## Counters
 
-- Completed **feature** Steps: **61** (STEP-0001..STEP-0063; 0033 deferred/unstarted and 0058 measured-and-rejected do not count).
+- Completed **feature** Steps: **66** (STEP-0001..STEP-0068; 0033 deferred/unstarted and 0058 measured-and-rejected do not count).
 - Calibration status: **completed** (2026-07-02).
-- Next feature step: **STEP-0059** (or STEP-0033 when its trigger fires). STEP-0058 closed measured-and-rejected; it shipped nothing and does not advance the counter.
+- Next feature step: **STEP-0069** (or STEP-0033 when its trigger fires). STEP-0058 closed measured-and-rejected; it shipped nothing and does not advance the counter.
 - The 2026-07-18 catch-up (MC-0019, DISC-0013, AUDIT-0008, ENH-0006) cleared the
   last scheduled backlog. Non-feature baselines/fixes/refactors/docs/checkpoints
   do **not** advance the feature counter.
@@ -108,7 +108,7 @@ that allowed the backlog to coexist with `due_checkpoints: none`.
 | AUDIT-0008 | Catch-up through STEP-0043 (feature #42; due at 40) | Audit | Done | `docs/audits/AUDIT_AUDIT-0008.md` | All release-critical areas Pass; governance followability repaired; 8-route build, 45 tests, dependency/security/Git checks green. |
 | ENH-0006 | Catch-up through STEP-0043 (feature #42) | Enhancement | Done | `docs/enhancements/ENHANCEMENT_ENH-0006.md` | Retired FAQ rich-result packet after Google's May-2026 removal; #3 recommended next small fix; real product remains highest product-value work. |
 | AUDIT-0009 | On-demand smoothness run (`/smooth-project`) | Audit (on-demand) | Done | `docs/audits/AUDIT_AUDIT-0009.md` | Measured local and live, cold and warm, over headless Chrome. Found Cloudflare Web Analytics injecting a beacon on every live page against the stated no-analytics boundary (SMOOTH-0009-2). Recorded retroactively by AUDIT-0010 — the run happened but never reached this ledger. |
-| AUDIT-0010 | On-demand whole-project evaluation (`/evaluate-project`) | Audit (on-demand) | Done | `docs/audits/AUDIT_AUDIT-0010.md` | 18 areas scored, overall **84**; code reads as **senior**, uneven only in that the operational layer trails the application layer. Lowest: security 62 (no CSP anywhere), dependencies 68 (11 advisories, 2 undeclared transitive imports), tests 72 (no rendering coverage). Three stale STATUS claims found and retired. Worked as STEP-0064/0065/0066; STEP-0067/0068 planned and not yet created. |
+| AUDIT-0010 | On-demand whole-project evaluation (`/evaluate-project`) | Audit (on-demand) | Done | `docs/audits/AUDIT_AUDIT-0010.md` | 18 areas scored, overall **84**; code reads as **senior**, uneven only in that the operational layer trails the application layer. Lowest: security 62 (no CSP anywhere), dependencies 68 (11 advisories, 2 undeclared transitive imports), tests 72 (no rendering coverage). Three stale STATUS claims found and retired. Worked out in full as STEP-0064..0068, all merged: the two undeclared packages declared, a CSP on every page, the stale claims retired, the policy prose moved into the content schema, and a build-output suite over `dist/`. |
 
 Immediate **event** review is required (regardless of cadence) for: profile/
 overlay change, adding auth/payments/forms/analytics, public untrusted content,

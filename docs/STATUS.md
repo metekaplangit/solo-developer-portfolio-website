@@ -13,7 +13,21 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0064..0066** followed v0.45.0 as internal
+- **Latest product state:** **STEP-0067..0068** are the last two packets from
+  the AUDIT-0010 evaluation, both internal and both shipped after v0.45.0.
+  STEP-0067 moved `PolicyArticle.astro`'s five hardcoded legal sections into the
+  content schema, where an optional `sections` field lets one product override
+  one section without touching a component every product shares. The published
+  text is unchanged bar one genuinely missing space, and four sections that were
+  raw JSX now go through the wrapping rule — they were the last body copy on the
+  site exempt from it. STEP-0068 added a second vitest suite that reads the built
+  `dist/**/*.html` directly, under its own config and its own script
+  (`npm run test:dist`), because nothing between a broken page and production
+  noticed a wrong canonical URL, malformed JSON-LD, a third-party script, a
+  missing CSP, or the wrapping rule silently not reaching rendered Markdown.
+  Each of its assertions was seen red against deliberately broken output first.
+  No visual change shipped in either. Before them, **STEP-0064..0066** followed
+  v0.45.0 as internal
   work, from the AUDIT-0010 whole-project evaluation (overall 84; security was
   the lowest area at 62). STEP-0064 declared `@astrojs/markdown-satteri` and
   `satteri`, which `astro.config.mjs` and `src/lib/satteri-tie.ts` imported
@@ -75,14 +89,12 @@
      twice.~~ **Closed by STEP-0047**, which extracted `ProductBand.astro` as
      the one definition of a product at band scale; the component's own header
      records it. Listed as open here until AUDIT-0010 checked it (2026-08-01).
-  2. **`PolicyArticle.astro` holds hardcoded legal prose** — five of its
-     sections ("How your data is protected", "Children's privacy", "Your
-     rights", "Contact & requests", "Changes to this policy") are literal
-     strings in the component, some behind ternaries on `collectsData` /
-     `storesLocally`, when the content schema is supposed to own them. A product
-     whose legal text differs — anything with accounts, anything collecting
-     data — means editing a component every product shares. Confirmed still open
-     by AUDIT-0010, which ranked it the highest-value refactor in the codebase.
+  2. ~~**`PolicyArticle.astro` holds hardcoded legal prose** — five of its
+     sections are literal strings in the component when the content schema is
+     supposed to own them.~~ **Closed by STEP-0067**, which moved all five into
+     an optional `sections` field on the policy schema. AUDIT-0010 had ranked it
+     the highest-value refactor in the codebase; a product whose legal text
+     differs now overrides one section in its own content file.
   3. ~~**About/Support pages lack the in-content link underline.**~~ **Moot, not
      fixed — there was nothing to fix.** Checked against the built pages
      2026-08-01: every in-content link on both sits inside `.elsewhere`,
@@ -96,11 +108,13 @@
      "redundant" `?.` would crash at runtime with a green typecheck. Measured
      2026-07-18: enabling it surfaces **exactly 7 errors** — `index.astro:158`,
      `apps/index.astro:74`, `ScreenshotShowcase.astro:354`, and 4 in tests. A
-     contained packet, not an open-ended migration.
+     contained packet, not an open-ended migration. The three source-side
+     entries still stand; the test-side count predates STEP-0067/0068, which
+     took the suite from 45 tests to 96 + 8, so re-measure before scoping.
 
 ## Current facts
 
-- Completed **feature** steps: **61** (`STEP-0001`..`STEP-0063`; STEP-0033 is
+- Completed **feature** steps: **66** (`STEP-0001`..`STEP-0068`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Current product tag: **v0.45.0**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
@@ -125,8 +139,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0066 (retiring three stale claims in this file; last of the three packets from AUDIT-0010). Live release v0.45.0.
-next_step: NOT BLOCKED — STEP-0067 (PolicyArticle's hardcoded legal prose into the content schema) and STEP-0068 (a build-output test suite over dist/) are planned by AUDIT-0010 and not yet created. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
+current_step: STEP-0068 (a build-output test suite over dist/; last of the five packets from AUDIT-0010, all merged). Live release v0.45.0.
+next_step: NOT BLOCKED — every AUDIT-0010 packet (STEP-0064..0068) is done and merged. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.45.0
@@ -139,7 +153,7 @@ remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
 blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
-required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
+required_checks: [npm run build, npm run check, npm test, npm run test:dist, scripts/validate-governance.py]
 calibration: completed
 updated_at: 2026-08-01
 ```
@@ -158,6 +172,11 @@ state with `git status --porcelain --branch` and `git rev-parse HEAD`.
 | Governance validator | Pass | 44/44 (now advisory, not merge-critical) |
 | Git integrity | Pass | `git fsck`, `git diff --check`, no tracked secret-pattern hits |
 | Remote automation | Pass | Deploy workflow green (builds, passes the a11y gate, publishes) |
+
+Re-run on 2026-08-01 against `main` at STEP-0068, all by exit code: build 0
+(8 routes), `npm run check` 0 errors / 0 warnings / 0 hints, `npm test` 96/96,
+`npm run test:dist` 8/8, validator 44/44. The table above is the 2026-07-18
+snapshot and its 45-test figure predates STEP-0067/0068.
 
 The Lighthouse accessibility threshold remains enforced in `deploy.yml` — after
 merge, blocking the live publish rather than the merge itself. The
