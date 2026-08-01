@@ -393,6 +393,72 @@ img {
 .band-lead {
   padding-top: var(--page-top);
 }
+
+/* Universal link placement (STEP-0061) -------------------------------------
+   A link of a given category sits in the same place on every page that has
+   one, so moving between pages never means hunting for it. The first of those
+   categories is the "back up one level" link.
+
+   `.page-back` is that placement, and it is the ONLY correct way to render a
+   back link here. It sits on the shared rail, left-aligned, immediately under
+   the header and above the page title — which is where NN/G's navigation
+   guidance puts a "you are here" control, and it is also simply where the
+   reader's eye already is. The policy page previously inherited the prose
+   column's `max-width: 43rem; margin-inline: auto`, which pushed its back link
+   272px inboard of the product page's; that is the "floating in the middle of
+   the screen" the owner reported.
+
+   `padding-top` rather than margin: this is a page's first band, so it carries
+   `--page-top` like every other, and a margin here would collapse. */
+.page-back {
+  margin-block: 0;
+  padding-top: var(--page-top);
+  font-size: var(--text-sm);
+}
+.page-back a {
+  color: var(--muted);
+}
+.page-back a:hover {
+  color: var(--text-strong);
+}
+
+/* Universal identity lockup (STEP-0061) ------------------------------------
+   Wherever a product's icon appears beside its name, it is ONE unit on ONE
+   line: icon left, name and its supporting text right. Never the icon on its
+   own row with the name below it.
+
+   This reverses the stacking decision of 2026-07-31, and the reason that
+   decision existed is worth keeping in view rather than deleting: stacking
+   was chosen so the product's `h1` would start on the same rail as the nav
+   brand and every other heading. It does not, in this layout — the title now
+   starts one icon-width inboard. That was the owner's explicit instruction
+   ("it should be on the left side of the text of the headline, not on two
+   different lines wasting space"), given after seeing the stacked version
+   live, twice. The rail is a smaller loss than the two rows of dead space,
+   and the lockup's own left edge IS on the rail, so the block still reads as
+   aligned with the page.
+
+   `align-items: center` on a two-row text block would optically float the
+   icon; `start` plus a small nudge keeps its top edge on the title's cap
+   height rather than its line box. */
+.identity {
+  display: flex;
+  align-items: start;
+  gap: var(--space-4);
+}
+.identity > :first-child {
+  margin-top: 0.15em;
+}
+.identity-text {
+  min-width: 0;
+}
+/* Below ~30rem an icon plus a long product name cannot share a line without
+   either overflowing or crushing the name to two characters per line. */
+@media (max-width: 30rem) {
+  .identity {
+    gap: var(--space-3);
+  }
+}
 /* The tail closes the page, it does not need to out-space every real
    separation on it. Footer adds its own `--band-y` on top; the two together
    used to stack 166-182px of nothing after the least important line on the

@@ -70,24 +70,30 @@ const schema = [
       hue with no component knowing anything about hues. One Voice Per Band,
       DESIGN.md §2. */}
   <div class="product-page" style={`--hue: ${productHue(product)};`}>
-  <nav class="band back" aria-label="Breadcrumb">
+  <nav class="band page-back" aria-label="Breadcrumb">
     <a href={withBase('/apps/')}>← Apps &amp; Games</a>
   </nav>
 
-  <!-- Header band: identity and the primary action, nothing else. -->
+  <!-- Header band: identity and the primary action, nothing else.
+       One lockup, not three stacked blocks (STEP-0061). The icon, the name and
+       the chips that qualify the name are one unit on one line; the summary
+       and the action row follow it. What changed is the ORDER as much as the
+       geometry — the chips used to sit above the name, so the first thing read
+       on a product page was "App · Released · macOS" rather than the product. -->
   <section class="band detail-head" aria-labelledby="product-h">
-    <div class="head-grid">
-      <ProductAvatar icon={product.icon} name={product.name} size={96} />
-      <div class="head-body">
+    <div class="identity">
+      <ProductAvatar icon={product.icon} name={product.name} size={72} />
+      <div class="identity-text head-body">
+        <h1 id="product-h" class="product-title product-name">{product.name}</h1>
         <div class="tags">
           <Badge label={product.type === 'game' ? 'Game' : 'App'} tone="accent" />
           <Badge label={statusLabel(product.status)} />
           {product.platforms.map((p) => <Badge label={platformLabel(p)} tone="muted" />)}
         </div>
-        <h1 id="product-h" class="product-title product-name">{product.name}</h1>
-        <p class="summary measure-mid">{product.summary}</p>
       </div>
     </div>
+
+    <p class="summary measure-mid">{product.summary}</p>
 
     <div class="action-row">
       <DownloadButton product={product} />
@@ -230,38 +236,18 @@ const schema = [
     --accent-glow: var(--hue-wash);
   }
 
-  .back {
-    padding-top: var(--page-top);
-    font-size: var(--text-sm);
-  }
-  .back a {
-    color: var(--muted);
-  }
-  .back a:hover {
-    color: var(--text-strong);
-  }
+  /* Placement and colour for the back link come from the shared `.page-back`
+     rule in global.css — the same rule the policy page uses, so the two cannot
+     drift. Nothing local is left. */
 
   /* Header — icon beside identity. No panel: the page's first band should feel
      open, not boxed. The old header put the icon, name, badges, summary, CTA,
      facts and trust line inside one 43rem card, which is what read as cramped. */
   .detail-head {
-    margin-top: var(--space-6);
+    margin-top: var(--space-4);
   }
-  /* Stacked, not side-by-side. Measured 2026-07-31: with the avatar in a left
-     column the product name started 173px (1024) / 227px (1440) from the
-     viewport edge while the nav brand, the footer and every other h1 on the
-     site started at 51 / 99 — the product's own name was the one heading that
-     did not sit on the shared rail. Stacking puts it back and costs one row of
-     vertical space. */
-  .head-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-5);
-    align-items: start;
-    justify-items: start;
-  }
-  /* (The old narrow-screen stacking rule is gone: the head stacks at every
-     width now, so the 320px overflow it guarded against cannot occur.)
+  /* Layout comes from the shared `.identity` lockup. Only the gap below it is
+     local: the summary is a continuation of the identity, not a new idea. */
   .head-body {
     min-width: 0;
   }
@@ -269,10 +255,9 @@ const schema = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin-bottom: var(--space-4);
   }
   .product-name {
-    margin: 0 0 var(--space-4);
+    margin: 0 0 var(--space-3);
     /* Clamped, and allowed to break: `--text-3xl` is a flat 2.75rem, so an
        unbreakable long name at 44px overflowed a 149px track. */
     /* Size, weight, line-height and tracking come from the global
@@ -283,7 +268,7 @@ const schema = [
     line-height: 1.05;
   }
   .summary {
-    margin: 0;
+    margin: var(--space-5) 0 0;
     color: var(--muted);
     font-size: var(--text-lg);
     line-height: 1.55;
@@ -292,7 +277,7 @@ const schema = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
-    margin-top: var(--space-8);
+    margin-top: var(--space-6);
   }
   .trust-line {
     margin: var(--space-2) 0 0;
