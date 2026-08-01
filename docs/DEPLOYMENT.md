@@ -21,9 +21,17 @@ Live on **metkapstudio.com** (Cloudflare Registrar/DNS + GitHub Pages), root-ser
 - **Config:** `astro.config.mjs` `site: 'https://metkapstudio.com'`, `base: '/'`.
   `withBase()` (`src/lib/url.ts`) is a no-op at root but stays in the code so a
   future sub-path move needs no rewrite. `public/CNAME` = `metkapstudio.com`.
-- **Workflow:** `.github/workflows/deploy.yml` — `withastro/action@v3` build +
-  `actions/deploy-pages@v4`, on push to `main`. The `CNAME` file ships in the
-  build artifact so Pages keeps the custom domain on each deploy.
+- **Workflow:** `.github/workflows/deploy.yml` — one job on `ubuntu-latest`:
+  checkout, Node from `.nvmrc`, `npm ci`, `npm run build`, the Lighthouse
+  accessibility gate (`npm run lhci`, ≥0.95, blocking), then
+  `actions/configure-pages` → `upload-pages-artifact` → `deploy-pages`. The
+  `CNAME` file ships in the build artifact so Pages keeps the custom domain on
+  each deploy.
+- **Trigger:** push to `main`, with `paths-ignore: ['docs/**']`. A commit
+  touching only `docs/` produces **no workflow run at all** — that absence is
+  the design, not a failed deploy. Files under `src/content/` are build input
+  and are not exempt. `workflow_dispatch` is available to publish a docs-only
+  change by hand.
 
 ### Cloudflare DNS (dashboard → metkapstudio.com → DNS → Records)
 

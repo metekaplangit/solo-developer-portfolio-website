@@ -226,3 +226,17 @@ returned.
 enforces the Lighthouse accessibility gate at ≥0.95, and publishes to GitHub
 Pages. A genuine regression — a broken build or an accessibility failure — still
 blocks the deploy.
+
+**It does not run on every push.** `deploy.yml` carries
+`paths-ignore: ['docs/**']`, so a commit touching only `docs/` publishes
+nothing and produces no workflow run at all — deliberate, since governance
+prose does not change the built site. Two consequences worth holding:
+
+- **No run is the expected result of a docs-only push, not a failed deploy.**
+  Looking for a green run after one and finding nothing is the design working.
+- **Content Markdown is not exempt.** Files under `src/content/` are build
+  input, so a product fact, policy text or JSON-LD field edited there deploys
+  normally. Only `docs/` is ignored.
+
+Where a docs-only change must reach the live site anyway, run the workflow by
+hand — it also carries `workflow_dispatch`.
