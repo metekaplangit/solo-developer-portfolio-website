@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { satteri } from '@astrojs/markdown-satteri';
+import satteriTie from './src/lib/satteri-tie.ts';
 
 // Zero-cost, fully static configuration.
 // Guardrails (see docs/ARCHITECTURE.md, docs/DEPLOYMENT.md):
@@ -22,6 +24,14 @@ export default defineConfig({
   trailingSlash: 'ignore',
   build: {
     format: 'directory',
+  },
+  // The wrapping rule (STEP-0062), applied to every Markdown body at build
+  // time through Sätteri's own hast hook — Astro's default pipeline here.
+  // Naming the processor explicitly rather than using the deprecated
+  // `markdown.rehypePlugins`, which would pull in `@astrojs/markdown-remark`
+  // and swap the whole site's Markdown processor back to unified.
+  markdown: {
+    processor: satteri({ hastPlugins: [satteriTie] }),
   },
   // Build-time only; @astrojs/sitemap emits static XML (no runtime service).
   integrations: [sitemap()],

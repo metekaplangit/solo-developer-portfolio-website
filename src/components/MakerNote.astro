@@ -13,6 +13,7 @@
 import type { Product } from '../content/schema';
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
+import { tie } from '../lib/typography';
 
 interface Props {
   product: Product;
@@ -50,8 +51,7 @@ const isLead = tone === 'lead';
           ))}
           <li class="maker-cell">
             <span class="cell-sig">— {site.person}, {site.name}</span>
-            <a href={withBase('/support/')}>Support goes straight to me</a> — usually
-            answered in 2–3 business days.
+            <a href={withBase('/support/')}>Support goes straight to me</a>{tie(' — usually answered in 2–3 business days.')}
           </li>
         </ul>
       ) : (
@@ -64,8 +64,7 @@ const isLead = tone === 'lead';
           </p>
           {isLead && (
             <p class="sig-support">
-              <a href={withBase('/support/')}>Support goes straight to me</a> — usually
-              answered in 2–3 business days.
+              <a href={withBase('/support/')}>Support goes straight to me</a>{tie(' — usually answered in 2–3 business days.')}
             </p>
           )}
         </div>

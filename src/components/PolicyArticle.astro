@@ -4,6 +4,7 @@ import { formatDate } from '../lib/format';
 import { GLOBAL_POLICY_ID } from '../lib/privacy';
 import ProductAvatar from './ProductAvatar.astro';
 import SupportEmail from './SupportEmail.astro';
+import { tie } from '../lib/typography';
 
 interface Props {
   policy: PrivacyPolicyEntry;
@@ -188,15 +189,12 @@ const chips: { label: string; ok: boolean }[] = [
         {
           collectsData ? (
             <>
-              You can ask us to access, correct, delete, or export your personal
-              data, or object to how it's used — email{' '}
+              {tie("You can ask us to access, correct, delete, or export your personal data, or object to how it's used — email ")}
               <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail> and we'll respond.
             </>
           ) : (
             <>
-              You have the right to access, correct, or delete any personal data we
-              hold. Because we hold none, there's nothing to retrieve or erase — but
-              if you'd like to confirm that, or make any request, email{' '}
+              {tie("You have the right to access, correct, or delete any personal data we hold. Because we hold none, there's nothing to retrieve or erase — but if you'd like to confirm that, or make any request, email ")}
               <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
             </>
           )

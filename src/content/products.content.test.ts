@@ -63,7 +63,9 @@ describe('Sole Focus product content', () => {
 
   it('carries the approved maker note', () => {
     expect(product.makerNote).toHaveLength(2);
-    expect(product.makerNote[0]).toContain('I built Sole Focus');
+    // "I" is bound to "built" by the wrapping rule (STEP-0062) — the schema
+    // ties every prose field as it is read.
+    expect(product.makerNote[0]?.replace(/ /g, ' ')).toContain('I built Sole Focus');
   });
 
   it('carries the first-glance facts fields', () => {

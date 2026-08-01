@@ -93,25 +93,31 @@ opens straight to a usable timer — then gets out of your way.
 
 ## Two ways to work
 
-Run structured **Pomodoro** sessions with adjustable focus, short-break, and
-long-break lengths, and choose how many sessions lead to a long break — or drop
-to a plain countdown. When the work is open-ended, switch to **Chrono**, a
-count-up stopwatch with milestone markers. Save the timers you reach for as named
-**Tasks** and start them in a single click.
+Run structured **Pomodoro** sessions with adjustable lengths, or switch to
+**Chrono**, a count-up stopwatch for work with no fixed end.
+
+Focus, short-break and long-break lengths are all adjustable, and you choose how
+many sessions lead to a long break — or drop to a plain countdown. Chrono adds
+milestone markers as it climbs. Save the timers you reach for as named **Tasks**
+and start them in a single click.
 
 ## Calm, and always in reach
 
-A glanceable menu-bar timer keeps pause, skip, and finish a click away. **Zen
-mode** shrinks everything to a small, always-on-top window sized to sit beside
-your work, and **Study mode** leaves a slim strip with a single focus quote. Five
-soothing completion sounds, light and dark themes, accent colors, and adjustable
-sizing let you make it yours.
+A glanceable menu-bar timer keeps pause, skip and finish a click away, wherever
+you happen to be working.
+
+**Zen mode** shrinks everything to a small, always-on-top window sized to sit
+beside your work, and **Study mode** leaves a slim strip with a single focus
+quote. Five soothing completion sounds, light and dark themes, accent colors, and
+adjustable sizing let you make it yours.
 
 ## See your progress
 
-Statistics track your focus time as it adds up, and a light leveling system turns
-focused minutes into visible progress — a gentle nudge to keep going, never a
-chore.
+Statistics track your focus time as it adds up, and a light leveling system
+turns focused minutes into visible progress.
+
+It is a gentle nudge to keep going, never a chore, and never a streak that
+punishes you for resting.
 
 ## Private, offline, yours
 
