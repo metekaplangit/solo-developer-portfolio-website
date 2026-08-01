@@ -187,6 +187,20 @@ confined to that product's band, where `--hue` has been re-declared from that
 product's own field. Referencing `--hue` outside a band a product owns is the
 bug this rule exists to name.
 
+**The Page-Top Rule.** *(Added 2026-08-01, STEP-0060.)* Every page begins the
+same distance below the header: `--page-top`, and nothing else. Before it there
+were four different answers across seven pages (170 / 96 / 49 / 32px), so
+arriving anywhere felt like arriving somewhere else. `--band-y-lg` still exists
+and is unchanged, for bands further down that open a new movement — it is no
+longer the page-top value.
+
+**The Identity Lockup Rule.** *(Added 2026-08-01, STEP-0061.)* Wherever a
+product's icon appears beside its name, it is one unit on one line: icon left,
+name and its supporting text right (`.identity`). Never the icon on its own row
+with the name below it. This replaces the stacked heads of 2026-07-31, which
+existed so a product `h1` would start on the shared rail; it no longer does, and
+that was a deliberate trade made on the owner's instruction.
+
 **The Near-Black Floor Rule.** *(Replaces the Never-Black Rule, 2026-07-31.)*
 The ground is `#08090c` and nothing on the site goes below linear value ~5,
 which is where white-on-black halation and OLED black crush begin — the real
@@ -232,6 +246,20 @@ that phones out to a font CDN would contradict itself.
 **The Balanced-Heading Rule.** `text-wrap: balance` on h1–h3, `text-wrap: pretty`
 on prose. Headings never leave one orphan word alone on a line.
 
+**The Wrapping Rule.** *(Added 2026-08-01, STEP-0062.)* No line of body text
+ends on a word that points forward — an article, a conjunction, a preposition,
+an auxiliary. The short word is bound to the word after it with a non-breaking
+space, by `tie()` in `src/lib/typography.ts`, which reaches Markdown through a
+Sätteri hast plugin and content prose through one `.transform()` in the schema.
+
+CSS does not solve this and was already tried: `text-wrap: pretty` was in place
+site-wide while 22 paragraphs across the eight routes still broke this way,
+because `pretty` only rescues a paragraph's LAST line. Never "fix" a stray
+break by adding a CSS property — measure first, then tie the words.
+
+Headings are excluded on purpose: they get `balance`, and a heading that is one
+bound unit cannot balance.
+
 ## 4. Elevation
 
 The system is **near-flat and tonally layered**. Depth comes primarily from
@@ -248,6 +276,14 @@ few millimetres; they never simulate a dramatic drop.
   that float *over* content — gallery arrows, the featured spotlight.
 
 ### Named Rules
+
+**The Full-Row Rule.** *(Added 2026-08-01, STEP-0063.)* A grid that IS the
+composition never ends on a short row. `repeat(auto-fit, …)` cannot promise
+this — it picks a column count from the available width and never sees how many
+items follow — so `.grid-even` takes its count from the items instead, via
+`evenColumns()` in `src/lib/grid.ts`: the widest column count that divides them
+evenly. `.card-grid` keeps `auto-fit` and stays correct where the cards are a
+list that happens to wrap rather than a shape the reader is meant to see.
 
 **The Single-Cue Rule.** A surface is separated from its background by *one*
 device: an elevated tone with a soft shadow, **or** a hairline border — never
@@ -345,6 +381,13 @@ inside a set. A one-off height on a single button is the failure this names.
 - **Don't** stack a border on top of a shadowed card.
 - **Don't** add decorative glassmorphism; blur is reserved for the sticky header
   and gallery controls where content genuinely passes beneath.
+- **Don't** let a line of prose end on "a", "and", "the", "of", "has" — see the
+  Wrapping Rule. And don't reach for a CSS property to fix it; the property is
+  already there.
+- **Don't** leave a hole in the last row of a composed grid — see the Full-Row
+  Rule.
+- **Don't** put a back link, or any other repeated navigational link, anywhere
+  but the one place its category lives on every page — see `.page-back`.
 - **Don't** put a tiny uppercase tracked eyebrow above every section — a single
   deliberate kicker is voice, one per section is scaffolding.
 - **Don't** ship motion without a `prefers-reduced-motion` alternative, and never

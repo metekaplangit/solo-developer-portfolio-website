@@ -33,6 +33,10 @@ features:
   - Zen and Study modes for distraction-free, always-in-reach focus
   - Statistics and a light leveling system that make progress visible
   - Private and offline — no account, no cloud, no tracking, no subscription
+  # Restates the appearance options already described in "Calm, and always in
+  # reach" below — no new claim (DESIGN.md §6: never fabricate proof). Added to
+  # make the grid's last row full; see docs/tasks/STEP-0063.md.
+  - Five completion sounds, light and dark themes, accent colors, adjustable sizing
 icon:
   id: sole-focus-icon
   productId: sole-focus
