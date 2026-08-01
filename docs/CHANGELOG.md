@@ -14,6 +14,22 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.11] — 2026-08-01
+
+### Fixed
+
+- **The support address is served as text again.** Cloudflare's Email Address
+  Obfuscation was rewriting `support@metkapstudio.com` at the edge into a
+  `__cf_email__` span and a `/cdn-cgi/l/email-protection` link that only an
+  injected script decoded — so with JavaScript off, the site's only support
+  contact did not render at all. Every place the address reaches HTML now goes
+  through a `SupportEmail` wrapper carrying Cloudflare's documented
+  `<!--email_off-->` opt-out. Verified live after deploy: 2 occurrences on
+  `/support/` and `/about/`, 5 on `/privacy/`, 4 on `/privacy/sole-focus/`,
+  2 on `/`, and zero `__cf_email__` spans anywhere. Nothing visual changed —
+  all 8 built pages are byte-identical once the markers are stripped.
+  (STEP-0059, AUDIT-0009.)
+
 ## [0.44.10] — 2026-08-01
 
 ### Fixed

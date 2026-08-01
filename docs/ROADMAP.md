@@ -609,6 +609,24 @@ The motion phase is complete.
   worst case is a 22px offset and never a hidden element. The fade stays
   deleted — `DESIGN.md` §6 is right regardless of the bad measurement.
 
+- **STEP-0059 — The support email survives the edge** *(COMPLETE — merged,
+  tagged `v0.44.11`, 2026-08-01).* Cloudflare's Email Address Obfuscation was
+  rewriting `support@metkapstudio.com` at the edge into a `__cf_email__` span
+  and a `/cdn-cgi/l/email-protection` link that only an injected script decoded,
+  so with JavaScript off the site's only support contact did not render at all.
+  Measured by AUDIT-0009, which drove the **live site** rather than the build —
+  `dist` had the address twice, the served page had it zero times. A
+  `SupportEmail` component now wraps a slot in Cloudflare's documented
+  `<!--email_off-->` opt-out at all seven places the address reaches HTML. The
+  markers are inert comments when the feature is off, so this holds whatever the
+  zone is set to, and unlike the dashboard toggle it is something this
+  repository can prove. Wrapping a **slot** rather than rendering the link is
+  deliberate: the first version emitted the `<a>` via `set:html`, which dropped
+  the caller's `data-astro-cid` scope and turned the About-page link white
+  against its muted siblings. JSON-LD needs no wrapper — the edge serves
+  `application/ld+json` addresses untouched. All 8 built pages are
+  byte-identical to the previous release once the markers are stripped.
+
 - **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
   **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
   was built on the first gallery slide and measured against the current WebP at

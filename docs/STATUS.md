@@ -13,7 +13,13 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0057** shipped as **v0.44.10** — the
+- **Latest product state:** **STEP-0059** shipped as **v0.44.11** — the support
+  address is served as readable text again. Cloudflare's Email Address
+  Obfuscation had been rewriting it at the edge into a `__cf_email__` span
+  decoded only by an injected script, so with JavaScript off the site's one
+  support contact did not render at all. Found by AUDIT-0009, which measured the
+  live site rather than the build. Verified live after deploy: zero
+  `__cf_email__` spans on any page. Previously **STEP-0057** as **v0.44.10** — the
   scroll-reveal rises again instead of dropping 22px first. It undoes the
   `animation-fill-mode: none` of v0.44.9, which was set on the strength of a
   headless probe whose viewport had no height; a scroll axis with no scrollbar
@@ -37,7 +43,13 @@
   rejected (see `Nav.astro`), and fitting four items needs either sub-ramp type
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
-- **Next action:** nothing queued. **STEP-0058** (AVIF for the LCP screenshot)
+- **Next action:** **one decision is yours.** AUDIT-0009 found Cloudflare Web
+  Analytics injecting `static.cloudflareinsights.com/beacon.min.js` into every
+  live page — against this project's stated "no analytics, no third-party
+  runtime services" boundary and against the no-tracking claim published in
+  `src/content/policies/global.md`. It is a Cloudflare dashboard setting, not
+  code, so it needs the account holder. Turn it off, or amend every document
+  that claims otherwise. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
   photographs. Nothing shipped; WebP-only stays. Next is the owner's own
@@ -66,13 +78,14 @@
 
 ## Current facts
 
-- Completed **feature** steps: **56** (`STEP-0001`..`STEP-0057`; STEP-0033 is
-  trigger-armed and unstarted).
-- Current product tag: **v0.44.10**. `[Unreleased]` is empty.
+- Completed **feature** steps: **57** (`STEP-0001`..`STEP-0059`; STEP-0033 is
+  trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
+- Current product tag: **v0.44.11**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
-- Blockers: **none**. Due checkpoints: **none**.
+- Blockers: **one, and it is yours** — SMOOTH-0009-2, whether Cloudflare Web
+  Analytics may run. Due checkpoints: **none**.
 - Open GitHub issues: **none** — #3 resolved in v0.39.3.
 - Dependency note: the lockfile remains on Astro 7.0.5 and Vitest 4.1.9; patch
   updates 7.1.1/4.1.10 are available but were intentionally not mixed into this
@@ -85,11 +98,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0057 (scroll-reveal fill mode restored to `both`; the reveal rises instead of dropping first). Live release v0.44.10.
-next_step: none queued. STEP-0058 (AVIF for the LCP screenshot) closed measured-and-rejected 2026-08-01 — AVIF is 14-31% larger than WebP for these UI screenshots. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
+current_step: STEP-0059 (support address wrapped in Cloudflare's `email_off` opt-out so the edge cannot rewrite it). Live release v0.44.11.
+next_step: BLOCKED ON OWNER — AUDIT-0009 SMOOTH-0009-2: Cloudflare Web Analytics injects a beacon on every live page against the stated no-analytics boundary; dashboard setting, needs the account holder. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.44.10
+product_tag: v0.44.11
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)
@@ -97,7 +110,7 @@ dirty: false
 dirty_paths: []
 remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
-blockers: none
+blockers: SMOOTH-0009-2 needs an owner decision (Cloudflare Web Analytics on or off)
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
