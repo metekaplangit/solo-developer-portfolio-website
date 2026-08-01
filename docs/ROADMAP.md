@@ -746,6 +746,22 @@ The motion phase is complete.
   wrapping rule they were exempt from, and a space that JSX had been swallowing
   between "deletion requests —" and the support address is now present.
 
+- **STEP-0068 — Assert what only the built output can prove** *(COMPLETE —
+  merged, internal, no tag, 2026-08-01).* Every unit test here proved a pure
+  function, leaving 14 components and 8 pages covered only by `astro build`,
+  `astro check` and the deploy-time a11y gate — none of which notices a wrong
+  canonical URL, malformed JSON-LD, a third-party script, a missing CSP, or the
+  wrapping rule silently not reaching rendered Markdown. That last one is why
+  the suite exists in this shape: STEP-0064 found the packages applying that
+  rule were reachable only as transitive dependencies, so it could have stopped
+  working with nothing going red. `tests/dist.test.ts` reads `dist/` directly —
+  no component harness, no new dependency — behind its own config and its own
+  `npm run test:dist`, so the sub-second unit loop never waits on a build. Every
+  assertion was seen red against deliberately broken output first: a localhost
+  canonical, malformed JSON-LD, a stripped CSP, an injected beacon, non-breaking
+  spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
+  0.90 s.
+
 - **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
   **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
   was built on the first gallery slide and measured against the current WebP at
