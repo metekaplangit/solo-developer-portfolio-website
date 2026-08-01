@@ -3,6 +3,7 @@ import type { PrivacyPolicyEntry, MediaAsset } from '../content/schema';
 import { formatDate } from '../lib/format';
 import { GLOBAL_POLICY_ID } from '../lib/privacy';
 import ProductAvatar from './ProductAvatar.astro';
+import SupportEmail from './SupportEmail.astro';
 
 interface Props {
   policy: PrivacyPolicyEntry;
@@ -120,7 +121,10 @@ const chips: { label: string; ok: boolean }[] = [
           </>
         )
       }
-      <p class="sec-plain">{policy.retention}</p>
+      {/* The retention statement is free prose from the content file and may
+          name the support address, so it needs the same edge protection as the
+          links below. */}
+      <p class="sec-plain"><SupportEmail>{policy.retention}</SupportEmail></p>
       </div>
     </section>
 
@@ -157,7 +161,7 @@ const chips: { label: string; ok: boolean }[] = [
           <div class="sec-body">
           <p class="sec-plain">
             Delete your account and its data from within the app, or email{' '}
-            <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+            <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
           </p>
           </div>
         </section>
@@ -186,14 +190,14 @@ const chips: { label: string; ok: boolean }[] = [
             <>
               You can ask us to access, correct, delete, or export your personal
               data, or object to how it's used — email{' '}
-              <a href={`mailto:${policy.contact}`}>{policy.contact}</a> and we'll respond.
+              <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail> and we'll respond.
             </>
           ) : (
             <>
               You have the right to access, correct, or delete any personal data we
               hold. Because we hold none, there's nothing to retrieve or erase — but
               if you'd like to confirm that, or make any request, email{' '}
-              <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+              <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
             </>
           )
         }
@@ -206,7 +210,7 @@ const chips: { label: string; ok: boolean }[] = [
       <div class="sec-body">
       <p class="sec-plain">
         Questions, consent changes, or deletion requests —
-        <a href={`mailto:${policy.contact}`}>{policy.contact}</a>.
+        <SupportEmail><a href={`mailto:${policy.contact}`}>{policy.contact}</a></SupportEmail>.
       </p>
       </div>
     </section>

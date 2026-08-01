@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../lib/site';
+import SupportEmail from '../../components/SupportEmail.astro';
 import { sortProducts } from '../../lib/products';
 import { withBase } from '../../lib/url';
 
@@ -33,13 +34,17 @@ const include = [
   <section class="band band-tight contact-band" aria-labelledby="contact-h">
     <div class="panel panel-accent contact reveal">
       <div class="contact-copy">
-        <h2 id="contact-h" class="contact-title">{site.supportEmail}</h2>
+        <h2 id="contact-h" class="contact-title">
+          <SupportEmail>{site.supportEmail}</SupportEmail>
+        </h2>
         <p>I usually reply within 2–3 business days.</p>
       </div>
       <div class="contact-actions">
-        <a class="btn btn-primary" href={`mailto:${site.supportEmail}?subject=${subject}`}>
-          Email support
-        </a>
+        <SupportEmail>
+          <a class="btn btn-primary" href={`mailto:${site.supportEmail}?subject=${subject}`}>
+            Email support
+          </a>
+        </SupportEmail>
       </div>
     </div>
   </section>

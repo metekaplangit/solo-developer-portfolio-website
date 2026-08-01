@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../lib/site';
 import { withBase } from '../../lib/url';
+import SupportEmail from '../../components/SupportEmail.astro';
 
 /* Values — a presentational rewrap of the three commitments this page has
    always carried, plus the support promise that already ships site-wide in the
@@ -78,7 +79,7 @@ const values = [
     </div>
 
     <ul class="elsewhere" role="list">
-      <li><a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></li>
+      <li><SupportEmail><a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></SupportEmail></li>
       <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
       <li><a href={withBase('/privacy/')}>Privacy</a></li>
     </ul>
