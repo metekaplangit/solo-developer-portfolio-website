@@ -609,14 +609,17 @@ The motion phase is complete.
   worst case is a 22px offset and never a hidden element. The fade stays
   deleted — `DESIGN.md` §6 is right regardless of the bad measurement.
 
-- **STEP-0058 — AVIF for the LCP screenshot** *(next).* Astro `<Picture>` with
-  `formats={['avif','webp']}` on the first gallery slide only, keeping the
-  existing widths, sizes, quality and priority hints. Reported saving is 20-30%
-  over WebP; measured before-state is a 41-66 KB first-slide variant band and a
-  1.4 MB `dist/_astro`. Scoped to one element deliberately: a site-wide swap
-  lengthens every build and Astro issue #8866 records `<Picture>` emitting
-  unused variants. **If the measured saving lands under 10 KB the card closes as
-  measured-and-rejected**, which is an acceptable outcome.
+- **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
+  **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
+  was built on the first gallery slide and measured against the current WebP at
+  the same four widths and the same `quality={78}`. **AVIF came back larger at
+  every width** — 720: 12,094 → 15,823 B (+31%); 1080: 20,582 → 25,440 B (+24%);
+  1440: 28,614 → 34,412 B (+20%); 1920: 40,112 → 45,881 B (+14%). The field's
+  20-30% saving is drawn from photographic content; these are UI screenshots —
+  flat fills, hard edges, small rendered text — which WebP's encoder handles
+  well, and a `quality` number is not comparable between codecs. The change was
+  reverted before commit. **WebP-only stays; do not re-litigate without a new
+  measurement.**
 
 - **Considered and not taken.** Scroll snap events (`scrollsnapchange`) for the
   gallery's active-slide state: Chrome 129+ and Safari 18.2+, **Firefox has

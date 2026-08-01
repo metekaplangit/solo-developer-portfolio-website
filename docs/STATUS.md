@@ -37,8 +37,10 @@
   rejected (see `Nav.astro`), and fitting four items needs either sub-ramp type
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
-- **Next action:** **STEP-0058** — the LCP screenshot ships AVIF with a WebP
-  fallback (ENH-0007 Finding 4). After that, nothing is queued: the owner's next
+- **Next action:** nothing queued. **STEP-0058** (AVIF for the LCP screenshot)
+  was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
+  current WebP at every width, because these are UI screenshots rather than
+  photographs. Nothing shipped; WebP-only stays. Next is the owner's own
   instruction, or the deferred view-transition morph. Do not invent
   in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
@@ -84,7 +86,7 @@ profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
 current_step: STEP-0057 (scroll-reveal fill mode restored to `both`; the reveal rises instead of dropping first). Live release v0.44.10.
-next_step: STEP-0058 (AVIF + WebP for the LCP screenshot, ENH-0007 Finding 4); then owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
+next_step: none queued. STEP-0058 (AVIF for the LCP screenshot) closed measured-and-rejected 2026-08-01 — AVIF is 14-31% larger than WebP for these UI screenshots. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.44.10

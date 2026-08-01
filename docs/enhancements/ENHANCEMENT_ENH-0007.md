@@ -201,6 +201,28 @@ That is real but small on a static site already this light, and it is the one
 finding here whose gain the owner may not feel. It is recorded, and it is ranked
 below the two above deliberately.
 
+### Tested 2026-08-01 — and the finding is wrong
+
+Built as STEP-0058 and measured. Same source, same four widths, same
+`quality={78}`, one build:
+
+| Width | WebP | AVIF | AVIF vs WebP |
+|---|---|---|---|
+| 720 | 12,094 B | 15,823 B | **+30.8%** |
+| 1080 | 20,582 B | 25,440 B | **+23.6%** |
+| 1440 | 28,614 B | 34,412 B | **+20.3%** |
+| 1920 | 40,112 B | 45,881 B | **+14.4%** |
+
+AVIF is larger at every width. The 20-30% figure every source repeats is drawn
+from photographic content; these are application screenshots — flat fills, hard
+edges, small rendered text — which WebP's lossy encoder handles well, and a
+`quality` number is not comparable between the two codecs. The change was
+reverted before commit and nothing shipped.
+
+**Corrected score: 90/100.** WebP-only at quality 78 is the right call for this
+material. This is what the field does; the field's *headline* was about
+different pictures. See `docs/tasks/STEP-0058.md`.
+
 Sources: [Astro Docs — Images](https://docs.astro.build/en/guides/images/) (official), [Astro Docs — Image and Assets API reference](https://docs.astro.build/en/reference/modules/astro-assets/) (official), [Astro issue #8866 — Picture component generates unused images](https://github.com/withastro/astro/issues/8866) (the cost side: build output growth), [PageSpeedFix — Astro image optimization](https://www.pagespeedfix.com/blog/astro-image-optimization/), [eastondev — Astro image optimization guide](https://eastondev.com/blog/en/posts/dev/20251203-astro-image-optimization-guide/).
 
 ---
