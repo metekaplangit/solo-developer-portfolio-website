@@ -14,6 +14,15 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.44.10] — 2026-08-01
+
+### Fixed
+
+- **The fade-in effect rises again instead of dropping first.** Since v0.44.9 an
+  element sat in its final place, jumped 22px down the moment the effect
+  started, then climbed back. It now simply rises. Nothing can be hidden by it:
+  the effect still moves content only.
+
 ## [0.44.9] — 2026-08-01
 
 ### Fixed

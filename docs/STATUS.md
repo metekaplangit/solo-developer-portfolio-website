@@ -13,16 +13,14 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** the **Spectrum makeover** is three packets in
-  (option E of the 2026-07-31 mockup round). **STEP-0045** shipped the identity
-  as v0.40.0 — near-black stage, achromatic studio chrome, colour scoped to a
-  product's own band, and three named `DESIGN.md` rules deliberately replaced
-  (Never-Black → Near-Black Floor, One Voice → One Voice Per Band, One Height →
-  One Height Per Set). **STEP-0046** shipped the home page as the poster in
-  v0.41.0, putting all five real screenshots on it. Route *structure* elsewhere
-  is still the pre-makeover layout: STEP-0047 and 0048 rebuild the product and
-  reading routes, and STEP-0049 closes the phase with a cross-route alignment
-  sweep. *(Keep a Step ID in this bullet: the
+- **Latest product state:** **STEP-0057** shipped as **v0.44.10** — the
+  scroll-reveal rises again instead of dropping 22px first. It undoes the
+  `animation-fill-mode: none` of v0.44.9, which was set on the strength of a
+  headless probe whose viewport had no height; a scroll axis with no scrollbar
+  makes a ViewTimeline inactive by spec, so "progress stuck at 0 at every scroll
+  position" was what that probe had to report. See ENH-0007 Finding 1. The
+  Spectrum identity phase (STEP-0044..0049) and the motion phase
+  (STEP-0054..0056) are both complete. *(Keep a Step ID in this bullet: the
   validator resolves the active step from the first `STEP-XXXX` token in this
   file, and without one here the scan falls through to the trigger-armed
   STEP-0033 template and the validator fails locally. CI is retired, so nothing
@@ -39,10 +37,10 @@
   rejected (see `Nav.astro`), and fitting four items needs either sub-ramp type
   or 2px pill padding. Shortening the label to "Apps" below ~360px is the one
   clean fix and is an owner naming decision, not a defect.
-- **Next action:** continue the **Spectrum identity phase** (owner-selected
-  mockup option E, 2026-07-31): **STEP-0049** — the harmony sweep that closes the phase.
-  Six packets, STEP-0044..0049, listed in ROADMAP; 0044–0048 are complete
-  and 0048 released as **v0.43.0**. Do not invent in-development products.
+- **Next action:** **STEP-0058** — the LCP screenshot ships AVIF with a WebP
+  fallback (ENH-0007 Finding 4). After that, nothing is queued: the owner's next
+  instruction, or the deferred view-transition morph. Do not invent
+  in-development products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
   1. **Duplication.** The home spotlight and the catalog lead-row are the same
@@ -66,9 +64,9 @@
 
 ## Current facts
 
-- Completed **feature** steps: **55** (`STEP-0001`..`STEP-0056`; STEP-0033 is
+- Completed **feature** steps: **56** (`STEP-0001`..`STEP-0057`; STEP-0033 is
   trigger-armed and unstarted).
-- Current product tag: **v0.39.3**. `[Unreleased]` is empty.
+- Current product tag: **v0.44.10**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -85,11 +83,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0056 (Page transitions; motion phase complete). Two hotfixes on top: v0.44.8 restored content the repaired scroll-reveal was hiding, v0.44.9 removed its leftover 22px offset. Live release v0.44.9.
-next_step: owner-supplied real product; or trigger-armed STEP-0033; or the brand-mark refresh (STEP-0045); or the deferred view-transition morph (STEP-0056)
+current_step: STEP-0057 (scroll-reveal fill mode restored to `both`; the reveal rises instead of dropping first). Live release v0.44.10.
+next_step: STEP-0058 (AVIF + WebP for the LCP screenshot, ENH-0007 Finding 4); then owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph
 branch: main
-head: regenerate live with git rev-parse HEAD; product release is v0.39.3 and later commits are internal-only governance
-product_tag: v0.44.9
+head: regenerate live with git rev-parse HEAD
+product_tag: v0.44.10
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)
@@ -101,7 +99,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-07-18
+updated_at: 2026-08-01
 ```
 
 Live commands override this snapshot. At startup regenerate branch/HEAD/dirty

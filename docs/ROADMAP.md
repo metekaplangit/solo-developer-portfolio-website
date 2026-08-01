@@ -595,6 +595,38 @@ software), loading skeletons (nothing here is async), and parallax / typing text
 
 The motion phase is complete.
 
+## Follow-ups from ENH-0007 (logic review against the field, 2026-08-01)
+
+- **STEP-0057 — The reveal rises instead of dropping first** *(COMPLETE —
+  merged, tagged `v0.44.10`, 2026-08-01).* `animation-fill-mode` back to `both`
+  from the `none` of v0.44.9. With `none` the animation contributes nothing
+  before `entry 5%`, so an element renders at its final position and then jumps
+  22px down the instant the range opens — a drop-then-rise on every reveal. The
+  reading that argued for `none` came from a probe whose viewport had no height,
+  and a scroll axis with no scrollbar makes a ViewTimeline inactive by spec, so
+  "progress stuck at 0" was the only thing it could report. `both` is safe here
+  because v0.44.8's real win is kept: the keyframes carry no `opacity`, so the
+  worst case is a 22px offset and never a hidden element. The fade stays
+  deleted — `DESIGN.md` §6 is right regardless of the bad measurement.
+
+- **STEP-0058 — AVIF for the LCP screenshot** *(next).* Astro `<Picture>` with
+  `formats={['avif','webp']}` on the first gallery slide only, keeping the
+  existing widths, sizes, quality and priority hints. Reported saving is 20-30%
+  over WebP; measured before-state is a 41-66 KB first-slide variant band and a
+  1.4 MB `dist/_astro`. Scoped to one element deliberately: a site-wide swap
+  lengthens every build and Astro issue #8866 records `<Picture>` emitting
+  unused variants. **If the measured saving lands under 10 KB the card closes as
+  measured-and-rejected**, which is an acceptable outcome.
+
+- **Considered and not taken.** Scroll snap events (`scrollsnapchange`) for the
+  gallery's active-slide state: Chrome 129+ and Safari 18.2+, **Firefox has
+  neither**, so the `IntersectionObserver` stays as a fallback and the change
+  buys a second code path for behaviour nobody can tell apart. CSS carousels
+  (`::scroll-marker`, `::scroll-button()`) would delete the site's last script
+  and fit `ARCHITECTURE.md` exactly, but are explicitly not Baseline — a watch
+  item, not work. `sibling-index()` for the stagger: same shape, less code,
+  support not there yet.
+
 ## Review-0002 dispositions (external design review, 2026-07-17)
 
 Source: `project-designer` design-library, review-0002 (30 ideas). Recorded so
