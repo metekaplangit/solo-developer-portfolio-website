@@ -6,6 +6,7 @@ import ProductCard from '../components/ProductCard.astro';
 import ProductBand from '../components/ProductBand.astro';
 import DownloadButton from '../components/DownloadButton.astro';
 import MakerNote from '../components/MakerNote.astro';
+import SupportEmail from '../components/SupportEmail.astro';
 import { site } from '../lib/site';
 import {
   getFeatured,
@@ -164,7 +165,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
       <ul role="list">
         <li>Free. No in-app purchases, no subscription.</li>
         <li>Offline. No account, no cloud, no tracking.</li>
-        <li>Answered. A real person reads {site.supportEmail}.</li>
+        <li>Answered. A real person reads <SupportEmail>{site.supportEmail}</SupportEmail>.</li>
       </ul>
     </div>
   </section>

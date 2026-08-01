@@ -1,0 +1,29 @@
+---
+// Wraps an email address so the edge leaves it alone.
+//
+// Cloudflare's Email Address Obfuscation rewrites any plain-text address, and
+// any `mailto:` href, into `<span class="__cf_email__">` plus a
+// `/cdn-cgi/l/email-protection#…` link that only an injected script decodes.
+// Measured 2026-08-01 (AUDIT-0009): the live site served zero occurrences of
+// `support@metkapstudio.com` while `dist` contained it twice, so with
+// JavaScript off the only support contact on the site did not render at all.
+//
+// `<!--email_off-->` is Cloudflare's documented per-element opt-out (WAF docs,
+// *Email Address Obfuscation*). It is an inert HTML comment when the feature is
+// off, so this stays correct whatever the zone is set to — which is why it
+// lives here rather than only in the dashboard, where no check in this project
+// could ever prove it.
+//
+// This wraps a slot rather than rendering the link itself, deliberately: an
+// `<a>` emitted from inside this component via `set:html` would not carry the
+// caller's `data-astro-cid-*` scope attribute, so page-scoped rules like
+// `.elsewhere a { color: var(--muted) }` would stop matching it. Caught on the
+// About page, where the link went white against its muted siblings.
+//
+// The markers must wrap the whole element, not just the text: the href is
+// rewritten too. Addresses inside `application/ld+json` are left alone by the
+// edge (verified against the live site on the same date), so `lib/schema.ts`
+// needs no wrapper.
+---
+
+<Fragment set:html="<!--email_off-->" /><slot /><Fragment set:html="<!--/email_off-->" />
