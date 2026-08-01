@@ -22,6 +22,7 @@ import DownloadButton from '../../components/DownloadButton.astro';
 import FactsLine from '../../components/FactsLine.astro';
 import FitStatement from '../../components/FitStatement.astro';
 import MakerNote from '../../components/MakerNote.astro';
+import { evenColumns } from '../../lib/grid';
 
 export async function getStaticPaths() {
   const entries = await getCollection('products');
@@ -118,7 +119,15 @@ const schema = [
     product.features.length > 0 && (
       <section class="band band-tight features-band" aria-labelledby="features-h">
         <h2 id="features-h" class="band-title">What it does</h2>
-        <ul class="feature-grid card-grid" role="list">
+        {/* Column counts come from the ITEM COUNT, not from the available
+            width — see src/lib/grid.ts. `auto-fit` cannot know how many items
+            follow it, which is why this grid ended on a short row at every
+            width above 390px. */}
+        <ul
+          class="feature-grid grid-even"
+          role="list"
+          style={`--cols-mid: ${evenColumns(product.features.length, 2)}; --cols-wide: ${evenColumns(product.features.length, 4)};`}
+        >
           {product.features.map((f) => (
             <li class="card feature reveal">{f}</li>
           ))}
@@ -293,11 +302,11 @@ const schema = [
   }
 
 
-  /* One claim per cell. Track floor only; padding/radius/type come from the
-     shared `.card` system. */
-  .feature-grid {
-    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
-  }
+  /* One claim per cell. The track COUNT now comes from `.grid-even` and the
+     `--cols-*` values set on the element (the full-row rule, STEP-0063); the
+     local `repeat(auto-fit, …)` that used to live here is what produced the
+     short last row, since auto-fit sizes by width and never sees the count.
+     Padding, radius and type still come from the shared `.card` system. */
   .feature {
     color: var(--muted);
     font-size: var(--text-sm);

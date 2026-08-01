@@ -412,7 +412,14 @@ img {
    `--page-top` like every other, and a margin here would collapse. */
 .page-back {
   margin-block: 0;
-  padding-top: var(--page-top);
+  /* Minus the link's own tap-target padding, so the TEXT lands on `--page-top`
+     rather than the invisible box around it. A standalone link carries
+     `--space-1` of block padding to reach the 24px WCAG 2.2 target (STEP-0051);
+     without this subtraction the two pages that open with a back link measured
+     51px of gap against everyone else's 48, and with it they measure 47. The
+     last pixel is the line box's own half-leading and is not worth chasing —
+     shrinking the target to win it would have been the wrong trade. */
+  padding-top: calc(var(--page-top) - var(--space-1));
   font-size: var(--text-sm);
 }
 .page-back a {
@@ -446,7 +453,13 @@ img {
   align-items: start;
   gap: var(--space-4);
 }
-.identity > :first-child {
+/* The nudge is for the ICON, not for whatever happens to come first. Written
+   as `:first-child` it also hit the text block on the site-wide policy, which
+   has no icon — measured 50.4px against 48 everywhere else, i.e. this rule
+   quietly became the one thing breaking the page-top rule it shares a file
+   with. */
+.identity > .avatar,
+.identity > .avatar-link {
   margin-top: 0.15em;
 }
 .identity-text {
@@ -628,6 +641,46 @@ img {
   gap: var(--space-4);
   grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
   /* align-items defaults to `stretch` — do not override. */
+}
+
+/* The full-row rule (STEP-0063) -------------------------------------------
+   A grid whose last row must never have a hole in it.
+
+   `.card-grid` above chooses its column count from the available WIDTH, which
+   is right when a short last row is invisible (one or two cards) and wrong
+   when it is the whole shape of the block: seven feature cards laid out four
+   wide is 4 + 3, and the missing fourth reads as something failed to load.
+   `auto-fit` cannot help, because it has no idea how many items follow it.
+
+   So the count comes from the ITEMS instead — `evenColumns()` in
+   src/lib/grid.ts picks the widest column count that divides them evenly, and
+   passes it in as `--cols-mid` / `--cols-wide`. Both default to 1, so a grid
+   that forgets to set them degrades to a single readable column rather than to
+   a broken `repeat(, …)`.
+
+   Use this where the grid IS the composition. Keep `.card-grid` where the
+   cards are a list that happens to wrap. */
+.grid-even {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(var(--cols-narrow, 1), minmax(0, 1fr));
+}
+/* One column below ~34rem: two cards of body text in 320px is neither. */
+@media (min-width: 34rem) {
+  .grid-even {
+    grid-template-columns: repeat(var(--cols-mid, 1), minmax(0, 1fr));
+  }
+}
+/* Four columns only once each track still holds a readable line — at 78rem a
+   quarter track is ~263px, which is where `.card-grid`'s own 18rem floor sits.
+   Below that the grid stays at `--cols-mid` rather than cramming. */
+@media (min-width: 78rem) {
+  .grid-even {
+    grid-template-columns: repeat(var(--cols-wide, 1), minmax(0, 1fr));
+  }
 }
 .card {
   display: flex;
