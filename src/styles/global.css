@@ -754,14 +754,28 @@ img {
     .reveal {
       animation-name: reveal-rise;
       animation-timing-function: linear;
-      /* `none`, not `both`. With `both`, an element whose timeline never
-         advances holds the `from` state permanently — which put five elements
-         on the live home page at `opacity: 0` on 2026-08-01, and then, once the
-         opacity was removed, left them sitting 22px low forever. With `none`
-         the animation contributes nothing outside its active range, so an
-         inactive timeline means the element simply renders normally. The effect
-         is a bonus where it runs and invisible where it does not. */
-      animation-fill-mode: none;
+      /* `both`, which is what a view timeline wants. Outside the active range
+         the element holds the nearer keyframe, so it sits 22px low until its
+         range opens and stays put after it closes — a rise.
+
+         This was briefly `none` (v0.44.9). With `none` the animation
+         contributes nothing before `entry 5%`, so the element renders at its
+         FINAL position, then jumps 22px down the instant the range opens and
+         rises back: a drop-then-rise on every reveal, on every page.
+
+         The reading that argued for `none` — five elements stuck at progress 0
+         "at every scroll position" — came from a probe whose viewport had no
+         height. A scroll axis with no scrollbar makes a ViewTimeline inactive
+         by spec (MDN, `animation-timeline: view()`; CSS Scroll-Driven
+         Animations L1), so progress 0 everywhere is what that probe must
+         report, and its `scrollTo` calls moved nothing. Re-measured
+         2026-08-01: `innerHeight: 0`, `scrollY` frozen at 0 across six scroll
+         attempts, `timeline.currentTime` null on all five elements.
+
+         What makes `both` safe here is v0.44.8's real win, kept: the keyframes
+         carry NO opacity. The worst an inactive timeline can now do is leave an
+         element 22px low. It can never hide one. */
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 5% cover 22%;
     }
