@@ -13,7 +13,22 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0067..0068** are the last two packets from
+- **Latest product state:** **STEP-0069** put a second product on the site.
+  Magic Notes — a finished but unreleased macOS notebook that answers arithmetic
+  written as plain sentences — now has `/apps/magic-notes/` and
+  `/privacy/magic-notes/`, built from two content files and no code change. It
+  exists because the app's own store submission draft already names that privacy
+  URL, which until now returned a 404: Apple 5.1.1(i) needs it live at review
+  time, and a URL baked into a shipped build cannot be corrected quietly. The
+  page claims no download, no price and no release date, because none of those
+  is verified — the app has no purchase code anywhere in its source. Its hue,
+  `#B2BBC5`, is read from the app's own Graphite accent in dark appearance
+  rather than picked for the site; the app's first-run orange was rejected for
+  sitting two points from Sole Focus's. The policy ships as `reviewStatus:
+  draft` — truthful to the app's documented controls, not yet read against the
+  shipped build. Still the owner's alone, and not blocked on this site: the
+  trademark search for the name, the price, and the App Store category.
+  Before it, **STEP-0067..0068** were the last two packets from
   the AUDIT-0010 evaluation, both internal and both shipped after v0.45.0.
   STEP-0067 moved `PolicyArticle.astro`'s five hardcoded legal sections into the
   content schema, where an optional `sections` field lets one product override
@@ -114,9 +129,12 @@
 
 ## Current facts
 
-- Completed **feature** steps: **66** (`STEP-0001`..`STEP-0068`; STEP-0033 is
+- Completed **feature** steps: **67** (`STEP-0001`..`STEP-0069`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
-- Current product tag: **v0.45.0**. `[Unreleased]` is empty.
+- Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
+  Notes (in development, no store link). The catalogue lists both; the home page
+  still leads with Sole Focus alone, because only it is `featured`.
+- Current product tag: **v0.46.0**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -139,11 +157,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0068 (a build-output test suite over dist/; last of the five packets from AUDIT-0010, all merged). Live release v0.45.0.
-next_step: NOT BLOCKED — every AUDIT-0010 packet (STEP-0064..0068) is done and merged. Then: owner-supplied real product; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0069 (Magic Notes product + privacy pages, so the URLs its store submission names resolve before the app ships). Live release v0.46.0.
+next_step: NOT BLOCKED — STEP-0069 merged. Then: Magic Notes icon and screenshots when the owner supplies them; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.45.0
+product_tag: v0.46.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)
@@ -155,7 +173,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, npm run test:dist, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-08-01
+updated_at: 2026-08-02
 ```
 
 Live commands override this snapshot. At startup regenerate branch/HEAD/dirty

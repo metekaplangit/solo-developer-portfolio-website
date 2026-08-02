@@ -762,6 +762,32 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0069 — Magic Notes gets its pages before it gets its release**
+  *(COMPLETE — merged and shipped as **v0.46.0**, 2026-08-02).* Versionable
+  rather than internal: `VERSION_CONTROL.md` puts generated route URLs inside
+  the public contract, and this adds two. The site's second
+  product. Magic Notes is a finished macOS notebook that answers arithmetic
+  written as plain sentences; it is not released, and its store submission draft
+  already quotes `https://metkapstudio.com/privacy/magic-notes/` as the privacy
+  policy URL — a page that until now did not exist. Apple 5.1.1(i) requires it
+  live at review time, and a URL inside a shipped build cannot be corrected
+  afterwards, so the pages had to come first. Two content files and no code
+  change: `status: in-development` with empty `storeLinks` already renders "Not
+  yet available", and `ProductAvatar` already draws a monogram without an icon.
+  **Nothing unverified is claimed** — no price (there is no purchase code in the
+  app at all), no store link, no release date, no screenshot. Copy is taken from
+  the owner-approved, fact-checked pack in the app's own repository rather than
+  written here; no `makerNote`, which needs the maker's explicit approval of the
+  exact words. The policy ships `reviewStatus: draft`, which is the honest state
+  of a page not yet read against the shipped build. **The hue was the one real
+  decision:** the Magic Notes icon is deliberately achromatic, and the app's
+  first-run accent is a burnt orange two points from Sole Focus's, which would
+  have made the catalogue read as one product twice — so the band takes
+  `#B2BBC5`, the app's own Graphite accent as it renders in dark appearance.
+  Both new dist assertions were seen red against deliberately broken output
+  first. 102 unit tests (96 before; 6 added), 10 dist tests (8 before; 2 added),
+  10 routes.
+
 - **STEP-0058 — AVIF for the LCP screenshot** *(CLOSED 2026-08-01 — measured and
   **rejected**; nothing shipped).* Astro `<Picture formats={['avif','webp']}>`
   was built on the first gallery slide and measured against the current WebP at
