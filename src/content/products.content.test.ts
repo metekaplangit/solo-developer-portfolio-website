@@ -7,7 +7,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, basename } from 'node:path';
 import { parse } from 'yaml';
-import { productSchema } from './schema';
+import { productSchema, privacyPolicyEntrySchema } from './schema';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
@@ -77,5 +77,56 @@ describe('Sole Focus product content', () => {
     // Verified against the live Mac App Store listing (macOS 10.15+). Update
     // deliberately if the app's requirement changes.
     expect(product.requirements).toBe('macOS 10.15 or later');
+  });
+});
+
+// Magic Notes (STEP-0069) is the opposite case to Sole Focus: a finished app
+// that has NOT been released. Its pages exist so the URLs already written into
+// its store submission draft resolve. The risk here is the reverse of a broken
+// image — it is a claim the product cannot yet support (a download, a price, a
+// release date), or a privacy URL that drifts from the one being submitted.
+describe('Magic Notes product content', () => {
+  const product = productSchema.parse(frontmatter('src/content/products/magic-notes.md'));
+  const policy = privacyPolicyEntrySchema.parse(
+    frontmatter('src/content/policies/magic-notes.md'),
+  );
+
+  it('claims no release: no store link, no price, no release date', () => {
+    expect(product.status).toBe('in-development');
+    expect(product.storeLinks).toHaveLength(0);
+    expect(product.price).toBeUndefined();
+    expect(product.releaseDate).toBeUndefined();
+  });
+
+  it('promises no images it does not have', () => {
+    expect(product.screenshots).toHaveLength(0);
+    expect(product.icon).toBeUndefined();
+  });
+
+  // The URL below is quoted verbatim in the app's submission sheet. Once a
+  // build carrying it is accepted, the link cannot be corrected quietly — so
+  // the page it points at is pinned here rather than left to a rename.
+  it('serves the privacy URL the store submission names', () => {
+    expect(product.privacyPolicyUrl).toBe('/privacy/magic-notes/');
+    expect(policy.productId).toBe('magic-notes');
+    expect(policy.contact).toBe('support@metkapstudio.com');
+  });
+
+  it('states the deletion route Apple 5.1.1(i) requires, with no account to delete', () => {
+    expect(policy.hasAccounts).toBe(false);
+    expect(policy.dataCollected).toHaveLength(0);
+    expect(policy.retention).toMatch(/delete/i);
+  });
+
+  it('carries its own hue so the catalogue reads as two products', () => {
+    // Read from the app's own Graphite accent in dark appearance, not chosen
+    // for the site (DESIGN.md §2). Must differ from Sole Focus's orange.
+    expect(product.hue).toBe('#B2BBC5');
+  });
+
+  it('lays its feature grid out in full rows', () => {
+    // The full-row rule (STEP-0063): a count with no divisor <= 4 collapses the
+    // grid to one column. 12 gives 4 wide and 2 mid, both full.
+    expect(product.features.length % 4).toBe(0);
   });
 });

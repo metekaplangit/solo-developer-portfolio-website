@@ -14,6 +14,19 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.46.0] — 2026-08-02
+
+### Added
+
+- **Magic Notes has a product page and a privacy page**, at `/apps/magic-notes/`
+  and `/privacy/magic-notes/`. It is a finished but unreleased macOS notebook
+  that answers arithmetic written as plain sentences. The pages exist ahead of
+  the app because its store submission already quotes the privacy URL, and Apple
+  requires that URL to serve a policy at review time — a link inside a shipped
+  build cannot be corrected afterwards. The page carries no download, no price
+  and no release date: none of them is verified yet. The catalogue now lists two
+  products; the home page still leads with Sole Focus alone. (STEP-0069)
+
 ## [0.45.0] — 2026-08-01
 
 Seven pieces of owner feedback from a hands-on pass over the live site, worked

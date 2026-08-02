@@ -53,17 +53,39 @@ beforeAll(() => {
 });
 
 describe('every built page', () => {
-  it('builds the 8 routes this site has', () => {
+  it('builds the 10 routes this site has', () => {
     expect(built.map(([r]) => r)).toEqual([
       '/',
       '/404',
       '/about/',
       '/apps/',
+      '/apps/magic-notes/',
       '/apps/sole-focus/',
       '/privacy/',
+      '/privacy/magic-notes/',
       '/privacy/sole-focus/',
       '/support/',
     ]);
+  });
+
+  // The Magic Notes submission draft already names
+  // `https://metkapstudio.com/privacy/magic-notes/` as its privacy policy URL,
+  // and a URL baked into a store listing cannot be corrected quietly. The route
+  // assertion above proves the page exists; this proves it is the page Apple
+  // will be sent to, spelled exactly as the submission sheet spells it.
+  it('serves the exact privacy URL the Magic Notes submission names (STEP-0069)', () => {
+    const [, policy] = built.find(([r]) => r === '/privacy/magic-notes/')!;
+    expect(policy).toContain('<link rel="canonical" href="https://metkapstudio.com/privacy/magic-notes/"');
+    expect(policy).toContain('support@metkapstudio.com');
+  });
+
+  // An unreleased product must not advertise a purchase. `offers` is emitted
+  // from `price`, which Magic Notes deliberately does not set — there is no
+  // purchase code in the app and no listing to read a price from.
+  it('emits no offer for the unreleased product (STEP-0069)', () => {
+    const [, product] = built.find(([r]) => r === '/apps/magic-notes/')!;
+    expect(product).not.toContain('"offers"');
+    expect(product).toContain('Not yet available');
   });
 
   it('carries exactly one canonical URL, and it matches the route', () => {
