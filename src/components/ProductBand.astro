@@ -13,7 +13,8 @@
 import { Image } from 'astro:assets';
 import type { Product } from '../content/schema';
 import DownloadButton from './DownloadButton.astro';
-import { statusLabel, productHue } from '../lib/products';
+import { statusLabel, productHue, productSummary } from '../lib/products';
+import { tie } from '../lib/typography';
 import { canonicalPrivacyUrl } from '../lib/privacy';
 import { withBase } from '../lib/url';
 import { resolveScreenshot } from '../lib/screenshots';
@@ -53,7 +54,13 @@ const alt = shot
     ? [shot.bakedInText, shot.altText].filter(Boolean).join(' ')
     : shot.altText
   : '';
-const facts = [product.requirements, product.privacyFacts].filter(Boolean).join(' · ');
+// Tied per fact, not across the whole line: the middot between two facts is a
+// good place for the row to break, and binding across it would make one
+// unbreakable run of both (CHECKLIST T1, T4).
+const facts = [product.requirements, product.privacyFacts]
+  .filter(Boolean)
+  .map((f) => tie(f as string))
+  .join(' · ');
 ---
 
 <div class="product-band" style={`--hue: ${productHue(product)};`}>
@@ -66,7 +73,7 @@ const facts = [product.requirements, product.privacyFacts].filter(Boolean).join(
       <h2 id={headingId} class="product-title band-name">
         <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
       </h2>
-      <p class="band-summary">{product.summary}</p>
+      <p class="band-summary">{productSummary(product)}</p>
       <div class="band-actions">
         <DownloadButton product={product} tone="hue" label="Mac App Store" />
         <a class="btn btn-lg btn-secondary" href={withBase(`/apps/${product.slug}/`)}>

@@ -12,6 +12,7 @@ import {
   changesText,
   resolveSection,
 } from '../lib/policy-text';
+import { tie } from '../lib/typography';
 
 interface Props {
   policy: PrivacyPolicyEntry;
@@ -42,6 +43,21 @@ const text = {
   changes: resolveSection(o.changes, changesText(facts)),
 };
 
+// The list prose comes straight out of the content file and was the largest
+// body of untied text left on the site — 65 forward-pointing pairs on the Magic
+// Notes policy alone, because only the five `resolveSection` bodies above ever
+// met the wrapping rule (CHECKLIST T1). Tied once here, at the point the
+// content is read, rather than at each of the seven places it is rendered.
+const list = {
+  dataCollected: policy.dataCollected.map(tie),
+  dataUse: policy.dataUse.map(tie),
+  dataNotCollected: policy.dataNotCollected.map(tie),
+  thirdPartyServices: policy.thirdPartyServices.map(tie),
+  storedLocally: policy.storedLocally.map(tie),
+  permissions: policy.permissions.map(tie),
+  retention: tie(policy.retention),
+};
+
 // At-a-glance chips — the gist in one scan. Each: label + tone.
 const chips: { label: string; ok: boolean }[] = [
   { label: collectsData ? 'Minimal data collected' : 'No data collected', ok: !collectsData },
@@ -56,7 +72,7 @@ const chips: { label: string; ok: boolean }[] = [
     <div class="policy-head-text identity-text">
       <h1 class="page-title">{policy.title}</h1>
       <p class="policy-meta">
-        Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{policy.effectiveScope}
+        Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{tie(policy.effectiveScope)}
       </p>
     </div>
   </header>
@@ -73,9 +89,9 @@ const chips: { label: string; ok: boolean }[] = [
       <div class="sec-body">
       {
         collectsData ? (
-          <ul>{policy.dataCollected.map((d) => <li>{d}</li>)}</ul>
+          <ul>{list.dataCollected.map((d) => <li>{d}</li>)}</ul>
         ) : (
-          <p class="sec-plain">Nothing. This product doesn't collect personal data.</p>
+          <p class="sec-plain">{tie("Nothing. This product doesn't collect personal data.")}</p>
         )
       }
       </div>
@@ -86,10 +102,10 @@ const chips: { label: string; ok: boolean }[] = [
         <section class="card">
           <h2 class="card-title">How we use it</h2>
           <div class="sec-body">
-          {policy.dataUse.length > 0 ? (
-            <ul>{policy.dataUse.map((d) => <li>{d}</li>)}</ul>
+          {list.dataUse.length > 0 ? (
+            <ul>{list.dataUse.map((d) => <li>{d}</li>)}</ul>
           ) : (
-            <p class="sec-plain">Only as described above — never for advertising, profiling, or tracking.</p>
+            <p class="sec-plain">{tie('Only as described above — never for advertising, profiling, or tracking.')}</p>
           )}
           </div>
         </section>
@@ -97,11 +113,11 @@ const chips: { label: string; ok: boolean }[] = [
     }
 
     {
-      policy.dataNotCollected.length > 0 && (
+      list.dataNotCollected.length > 0 && (
         <section class="card">
           <h2 class="card-title">What we never collect</h2>
           <div class="sec-body">
-          <ul>{policy.dataNotCollected.map((d) => <li>{d}</li>)}</ul>
+          <ul>{list.dataNotCollected.map((d) => <li>{d}</li>)}</ul>
           </div>
         </section>
       )
@@ -113,15 +129,14 @@ const chips: { label: string; ok: boolean }[] = [
       {
         hasThirdParties ? (
           <>
-            <ul>{policy.thirdPartyServices.map((d) => <li>{d}</li>)}</ul>
+            <ul>{list.thirdPartyServices.map((d) => <li>{d}</li>)}</ul>
             <p class="sec-note">
-              Any third party that touches this data must protect it the same way this
-              policy describes. It is never shared with third-party AI services.
+              {tie('Any third party that touches this data must protect it the same way this policy describes. It is never shared with third-party AI services.')}
             </p>
           </>
         ) : (
           <p class="sec-plain">
-            None. Your data isn't shared with anyone — including third-party AI services.
+            {tie("None. Your data isn't shared with anyone — including third-party AI services.")}
           </p>
         )
       }
@@ -132,17 +147,17 @@ const chips: { label: string; ok: boolean }[] = [
       <h2 class="card-title">Keeping &amp; deleting your data</h2>
       <div class="sec-body">
       {
-        policy.storedLocally.length > 0 && (
+        list.storedLocally.length > 0 && (
           <>
             <p class="sec-label">Stored only on your device:</p>
-            <ul>{policy.storedLocally.map((d) => <li>{d}</li>)}</ul>
+            <ul>{list.storedLocally.map((d) => <li>{d}</li>)}</ul>
           </>
         )
       }
       {/* The retention statement is free prose from the content file and may
           name the support address, so it needs the same edge protection as the
           links below. */}
-      <p class="sec-plain"><SupportEmail>{policy.retention}</SupportEmail></p>
+      <p class="sec-plain"><SupportEmail>{list.retention}</SupportEmail></p>
       </div>
     </section>
 
@@ -154,11 +169,11 @@ const chips: { label: string; ok: boolean }[] = [
     </section>
 
     {
-      policy.permissions.length > 0 && (
+      list.permissions.length > 0 && (
         <section class="card">
           <h2 class="card-title">Permissions</h2>
           <div class="sec-body">
-          <ul>{policy.permissions.map((d) => <li>{d}</li>)}</ul>
+          <ul>{list.permissions.map((d) => <li>{d}</li>)}</ul>
           </div>
         </section>
       )

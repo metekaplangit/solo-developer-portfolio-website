@@ -11,6 +11,7 @@ import {
   statusLabel,
   platformLabel,
   relatedProducts,
+  productSummary,
 } from '../../lib/products';
 import { canonicalPrivacyUrl } from '../../lib/privacy';
 import { formatDate } from '../../lib/format';
@@ -94,7 +95,7 @@ const schema = [
       </div>
     </div>
 
-    <p class="summary measure-mid">{product.summary}</p>
+    <p class="summary measure-mid">{productSummary(product)}</p>
 
     <div class="action-row">
       <DownloadButton product={product} />

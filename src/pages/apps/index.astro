@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductBand from '../../components/ProductBand.astro';
 import { sortProducts } from '../../lib/products';
 import { withBase } from '../../lib/url';
+import { tie } from '../../lib/typography';
 import { breadcrumbSchema, itemListSchema } from '../../lib/schema';
 
 const entries = await getCollection('products');
@@ -29,8 +30,7 @@ const schema = [
       <p class="over">{products.length} {products.length === 1 ? 'product' : 'products'}</p>
       <h1 id="catalog-h" class="page-title">Apps &amp; Games</h1>
       <p class="lede">
-        Everything the studio has shipped. Each product has its own privacy page
-        and its own support page — no shared boilerplate.
+        {tie('Everything the studio has shipped. Each product has its own privacy page and its own support page — no shared boilerplate.')}
       </p>
     </div>
   </section>
@@ -49,9 +49,8 @@ const schema = [
   <section class="tail">
     <div class="rail">
       <p class="prose">
-        More is in progress. Nothing gets announced here until it&rsquo;s ready to
-        install — <a href={withBase('/support/')}>get in touch</a> if you want to
-        hear when it is.
+        {tie('More is in progress. Nothing gets announced here until it’s ready to install — ')}<a
+          href={withBase('/support/')}>get in touch</a>{tie(' if you want to hear when it is.')}
       </p>
     </div>
   </section>

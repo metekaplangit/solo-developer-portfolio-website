@@ -9,6 +9,7 @@ import {
   storeLabel,
   statusLabel,
   platformLabel,
+  productSummary,
 } from '../lib/products';
 import { canonicalPrivacyUrl } from '../lib/privacy';
 import { withBase } from '../lib/url';
@@ -34,7 +35,7 @@ const stores = visibleStoreLinks(product);
     </div>
   </div>
 
-  <p class="card-summary">{product.summary}</p>
+  <p class="card-summary">{productSummary(product)}</p>
 
   <ul class="platforms" aria-label="Platforms">
     {product.platforms.map((p) => <li><Badge label={platformLabel(p)} tone="muted" /></li>)}

@@ -23,7 +23,7 @@ See `ROADMAP.md` for the rationale.
 
 ## Counters
 
-- Completed **feature** Steps: **70** (STEP-0001..STEP-0072; 0033 deferred/unstarted and 0058 measured-and-rejected do not count).
+- Completed **feature** Steps: **71** (STEP-0001..STEP-0073; 0033 deferred/unstarted and 0058 measured-and-rejected do not count).
 - Calibration status: **completed** (2026-07-02).
 - Next feature step: **STEP-0072** (or STEP-0033 when its trigger fires). STEP-0058 closed measured-and-rejected; it shipped nothing and does not advance the counter.
 - The 2026-07-18 catch-up (MC-0019, DISC-0013, AUDIT-0008, ENH-0006) cleared the

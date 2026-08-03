@@ -70,6 +70,44 @@ function isTieWord(word: string): boolean {
 }
 
 /**
+ * Named things a reader holds as one word (CHECKLIST T2).
+ *
+ * A product name split across two lines is the same defect as a stray article,
+ * and worse: "Sole" at the end of one line and "Focus" at the start of the next
+ * reads as two things. These are the site's own vocabulary — never a generic
+ * "any two capitalised words" rule, which would bind ordinary sentences.
+ *
+ * Longest first, so "Mac App Store" is matched before the "App Store" inside it.
+ */
+export const PHRASES: readonly string[] = [
+  'count-up stopwatch',
+  'Mac App Store',
+  'Pomodoro timer',
+  'MetKap Studio',
+  'Apple Silicon',
+  'business days',
+  'Magic Notes',
+  'Sole Focus',
+  'App Store',
+].filter((p) => p.length <= MAX_PAIR); // T4: a phrase is a pair by another name
+
+/**
+ * Replace the ordinary spaces inside a named thing with non-breaking ones.
+ *
+ * Idempotent: it looks for the plain-space spelling, so a phrase already bound
+ * is left alone. Applied inside `tie()` rather than beside it, so every surface
+ * that already ties gets phrase protection with no new call site to forget.
+ */
+export function bindPhrases(text: string): string {
+  let out = text;
+  for (const phrase of PHRASES) {
+    if (!out.includes(phrase)) continue;
+    out = out.split(phrase).join(phrase.replace(/ /g, NBSP));
+  }
+  return out;
+}
+
+/**
  * Bind every stray short word to the word that follows it.
  *
  * The match consumes only the left word and the gap, with the right word behind
@@ -83,6 +121,12 @@ function isTieWord(word: string): boolean {
  */
 export function tie(text: string): string {
   if (!text) return text;
+
+  // Named things first. Binding them creates tokens the pair rule then treats
+  // as one word, so "a Pomodoro timer" becomes a single unbreakable phrase
+  // rather than "a Pomodoro" with "timer" dropped to the next line — the exact
+  // break the owner reported on /apps/.
+  text = bindPhrases(text);
 
   // `[ \t]` rather than `\s`: a newline is a wrap the author chose, and
   // replacing one would reflow their paragraph. `[^\s]` on the left excludes

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { tie, NBSP } from './typography';
+import { tie, bindPhrases, NBSP, PHRASES } from './typography';
 
 describe('tie', () => {
   it('binds the stray article the owner actually reported', () => {
@@ -56,5 +56,52 @@ describe('tie — proof the check can fail', () => {
     expect(raw).not.toContain(NBSP);
     expect(tie(raw)).toContain(NBSP);
     expect(tie(raw)).not.toBe(raw);
+  });
+});
+
+describe('bindPhrases — named things wrap as one thing (CHECKLIST T2)', () => {
+  it('binds a product name', () => {
+    expect(bindPhrases('I built Sole Focus because')).toBe(
+      `I built Sole${NBSP}Focus because`,
+    );
+  });
+
+  it('prefers the longest match, so the store name does not lose its Mac', () => {
+    // 'App Store' is a substring of 'Mac App Store'. Bound shortest-first, the
+    // inner match would consume the space and leave "Mac" free to break away —
+    // the exact defect, one word to the left.
+    expect(bindPhrases('on the Mac App Store today')).toBe(
+      `on the Mac${NBSP}App${NBSP}Store today`,
+    );
+  });
+
+  it('is idempotent', () => {
+    const once = bindPhrases('Sole Focus and Magic Notes');
+    expect(bindPhrases(once)).toBe(once);
+  });
+
+  it('leaves text holding no named thing alone', () => {
+    expect(bindPhrases('a calm private timer')).toBe('a calm private timer');
+  });
+
+  it('never publishes a phrase too long for the narrowest column (T4)', () => {
+    for (const p of PHRASES) expect(p.length).toBeLessThanOrEqual(22);
+  });
+});
+
+describe('tie binds the phrase before the pair rule sees it', () => {
+  it('keeps "a Pomodoro timer" whole — the break the owner reported', () => {
+    // Before this, the pair rule bound "a" to "Pomodoro" and stopped, so the
+    // line ended on "a Pomodoro" and "timer" dropped alone to the next one.
+    expect(tie('a Pomodoro timer and a stopwatch')).toContain(
+      `a${NBSP}Pomodoro${NBSP}timer`,
+    );
+  });
+
+  it('is not silently a no-op on phrases', () => {
+    const raw = 'Sole Focus is on the Mac App Store';
+    expect(raw).not.toContain(NBSP);
+    expect(tie(raw)).toContain(`Sole${NBSP}Focus`);
+    expect(tie(raw)).toContain(`Mac${NBSP}App${NBSP}Store`);
   });
 });

@@ -762,6 +762,18 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0073 — The text the wrapping rule never reached**
+  *(ACTIVE, 2026-08-03).* Internal. The rule has existed since STEP-0062 and
+  most of the site bypassed it: `product.summary` rendered raw on three
+  surfaces — the very copy the owner pointed at, breaking as "…a Pomodoro" with
+  "timer" alone below — seven policy lists read straight from the content file,
+  and every page's own lede written as literal JSX. Fixed where the content is
+  READ rather than where it is rendered, so a fourth surface cannot forget.
+  Named things now bind as units too, matched longest first, because "Pomodoro"
+  is not a function word and the old rule guaranteed the break fell before
+  "timer". Measured 156 → 0 untied pairs and 46 → 0 splittable names; three new
+  dist assertions hold it, each seen red first.
+
 - **STEP-0072 — The page checklist**
   *(ACTIVE, 2026-08-03).* Internal. The owner reported three defects in one
   sitting — text cut mid-phrase, two policy cards with no harmony, a large void

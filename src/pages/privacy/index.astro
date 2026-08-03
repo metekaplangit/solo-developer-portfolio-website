@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PolicyArticle from '../../components/PolicyArticle.astro';
 import { formatDate } from '../../lib/format';
 import { withBase } from '../../lib/url';
+import { tie } from '../../lib/typography';
 import { GLOBAL_POLICY_ID, productPolicyEntries } from '../../lib/privacy';
 
 const entries = await getCollection('policies');
@@ -29,8 +30,7 @@ const { Content } = await render(globalEntry);
   <section class="band band-loose band-tail per-product" aria-labelledby="per-product-h">
     <h2 id="per-product-h" class="band-title">App &amp; game privacy policies</h2>
     <p class="per-product-lead measure">
-      These are separate from the website policy above. Some apps collect data
-      the website doesn&rsquo;t — open a policy for the details.
+      {tie('These are separate from the website policy above. Some apps collect data the website doesn’t — open a policy for the details.')}
     </p>
     <ul class="policy-list" role="list">
       {

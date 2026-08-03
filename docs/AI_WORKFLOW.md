@@ -88,6 +88,13 @@ machine — kept here so they are not rediscovered the hard way:
   Produce it with `npm run preview` on the built `dist/`, then a browser/Preview
   screenshot per route. This is `needs-human-runtime`/`manual-runtime` evidence
   for visual polish; automated build/route/a11y checks are machine-verifiable.
+- **A build can silently use the old module (STEP-0073).** Anything imported
+  through `astro.config.mjs` — the satteri plugin, and `src/lib/typography.ts`
+  behind it — can be served from a stale `node_modules/.vite` cache. The build
+  exits 0, `npm test` passes on the NEW code, and `dist/` is produced by the
+  OLD code. It reads exactly like a logic bug. Before trusting a built page
+  after changing anything the config loads:
+  `rm -rf node_modules/.vite node_modules/.astro .astro`.
 - **Editor integration.** `.vscode/extensions.json` recommends the Astro +
   MDX extensions for content-collection type hints (optional; Claude Code edits
   files directly regardless).

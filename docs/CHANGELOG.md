@@ -14,6 +14,15 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Text no longer breaks mid-phrase anywhere on the site.** The wrapping rule
+  has existed since STEP-0062 and most of the site bypassed it — product
+  summaries, seven policy lists, and every page's own lede. Applied now where
+  the content is read, so a new surface cannot forget. Product and store names
+  bind as units too, so "Sole Focus" and "a Pomodoro timer" cannot split.
+  Measured 156 → 0 untied pairs and 46 → 0 splittable names. (STEP-0073)
+
 ### Added
 
 - **A page checklist, `docs/CHECKLIST.md`.** The rules a page must satisfy, in
