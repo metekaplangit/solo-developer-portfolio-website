@@ -14,6 +14,15 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.47.1] — 2026-08-03
+
+### Fixed
+
+- **A privacy policy's opening paragraphs now read as paragraphs.** Every policy
+  on the site opened with a single sentence until Magic Notes arrived with
+  three, and they ran together into one block with no separation — the first
+  thing anyone reads on that page. Sole Focus is unchanged. (STEP-0071)
+
 ## [0.47.0] — 2026-08-03
 
 ### Added
