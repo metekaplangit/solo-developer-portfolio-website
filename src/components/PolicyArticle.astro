@@ -278,6 +278,14 @@ const chips: { label: string; ok: boolean }[] = [
   .policy-lead :global(p) {
     margin: 0;
   }
+  /* Every policy lead had exactly one paragraph until Magic Notes shipped three
+     (STEP-0070), and `margin: 0` ran them together into one grey block — the
+     opening a store reviewer reads first. Spacing between siblings only, so the
+     single-paragraph case is laid out byte-for-byte as before and the block
+     still sits flush against the chips above and the sections below. */
+  .policy-lead :global(p + p) {
+    margin-top: var(--space-4);
+  }
 
   /* One block per line, full width, heading rail on the left (STEP-0042).
      These were a 3-column card grid with `align-items: start`, which produced

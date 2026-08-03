@@ -13,7 +13,14 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0070** filled the two Magic Notes pages for
+- **Latest product state:** **STEP-0071** fixed the one inconsistency a
+  page-by-page comparison found: a privacy policy's opening paragraphs ran
+  together, because `margin: 0` was right for the single-sentence lead every
+  policy had until Magic Notes shipped a three-paragraph one. The app icon the
+  owner asked for on that page was already being served — `PolicyArticle`
+  renders it from the product's own `icon`, so STEP-0070 put it there — and
+  nothing was changed for it. Shipped as **v0.47.1**. Before it, **STEP-0070**
+  filled the two Magic Notes pages for
   real, because the app is being published and both of its URLs are hard-coded
   inside the shipped build. The product page now carries the shipped app icon
   and six real captures of the running application — the owner's own, nothing
@@ -142,7 +149,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **68** (`STEP-0001`..`STEP-0070`; STEP-0033 is
+- Completed **feature** steps: **69** (`STEP-0001`..`STEP-0071`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -170,11 +177,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0070 (Magic Notes pages filled for real — shipped icon, six real screenshots, policy reviewed against the app's source — before the app is published). Live release v0.47.0.
-next_step: NOT BLOCKED — STEP-0070 merged. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0071 (a policy lead with more than one paragraph no longer runs together; the icon the owner asked for was already served). Live release v0.47.1.
+next_step: NOT BLOCKED — STEP-0071 merged. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.47.0
+product_tag: v0.47.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

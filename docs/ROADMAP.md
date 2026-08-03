@@ -762,6 +762,23 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0071 — A policy lead with more than one paragraph**
+  *(COMPLETE — merged and shipped as **v0.47.1**, 2026-08-03).* The owner asked
+  for the app icon on the Magic Notes privacy page, as Sole Focus has, and for
+  any inconsistency between the pages to be found and fixed. **The icon was
+  already there** — `PolicyArticle` renders `ProductAvatar` from the product's
+  own `icon`, so STEP-0070 put it on both pages in one pass; both were fetched
+  live and compared before anything was edited, and nothing was changed for it.
+  The comparison found one real defect instead: `.policy-lead :global(p)` set
+  `margin: 0`, which is right for the one-paragraph lead every policy had until
+  Magic Notes shipped a three-paragraph one, and wrong the moment there were
+  three — they ran together into a single grey block at the top of the page.
+  Fixed with `p + p` only, so a lone paragraph renders exactly as before and
+  both edges of the block stay where they were. Everything else compared clean
+  and is recorded on the card so it is not re-checked: identical section and
+  chip sets, identical frontmatter fields, JSON-LD differing only by `offers`,
+  and matching social-preview tags on all four pages.
+
 - **STEP-0070 — The Magic Notes pages stop being placeholders**
   *(COMPLETE — merged and shipped as **v0.47.0**, 2026-08-03).* Versionable:
   user-facing content on two published pages. STEP-0069 built these pages thin
