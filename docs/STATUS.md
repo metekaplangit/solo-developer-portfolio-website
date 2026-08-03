@@ -13,7 +13,15 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0076** made the two privacy cards read as
+- **Latest product state:** **STEP-0077** put an app icon beside its name in
+  the catalog, the last of the five items the owner reported on 2026-08-03. The
+  product page and both policy pages already used the shared identity lockup;
+  the product band was the one surface that named a product without showing it,
+  so `/apps/` and the home page were where a visitor met a product with no
+  icon. The same lockup is reused at 56px, the over-line kept above it so the
+  icon aligns with the name, and the icon link marked redundant so it adds no
+  keyboard stop. Verified from the rendered DOM at 1440px and 390px.
+  Internal, no tag. Before it, **STEP-0076** made the two privacy cards read as
   one set. They measured **96px against 66px** at 1440px with different bottom
   edges, because the card was a flex row that put the date beside the name when
   it fitted and beneath it when it did not — one component rendering two
@@ -153,9 +161,8 @@
   page breaks visibly rather than silently. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
-  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0077**, the app
-  icons beside the names on `/apps/` — the last of the five items reported on
-  2026-08-03. Do not invent in-development
+  photographs. Nothing shipped; WebP-only stays. All five items the owner reported on
+  2026-08-03 are worked and closed. Next is the owner's own instruction. Do not invent in-development
   products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
@@ -188,7 +195,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **74** (`STEP-0001`..`STEP-0076`; STEP-0033 is
+- Completed **feature** steps: **75** (`STEP-0001`..`STEP-0077`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -218,8 +225,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0076 (the two privacy cards are the same height and carry the same treatment). Live release v0.47.1.
-next_step: STEP-0077 puts app icons beside the names on /apps/ — the last of the five items the owner reported on 2026-08-03
+current_step: STEP-0077 (an app icon sits beside its name on /apps/ and the home page). Live release v0.47.1.
+next_step: NOT BLOCKED — all five items from the owner's 2026-08-03 pass are worked. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.47.1

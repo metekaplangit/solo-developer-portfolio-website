@@ -14,6 +14,18 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+### Added
+
+- **An app icon beside its name on the Apps & Games page and the home page.**
+  The product bands were the one surface that named a product without showing
+  it; they now use the same identity lockup as the product and policy pages.
+  (STEP-0077)
+
+- **A page checklist, `docs/CHECKLIST.md`.** The rules a page must satisfy, in
+  three groups — Text, Layout, Whitespace — each opening with the owner's own
+  words. Every rule names the failure it catches and says whether a machine or a
+  person checks it. Internal; nothing a visitor sees changed. (STEP-0072)
+
 ### Removed
 
 - **The "Screenshot transcript" disclosure under the product galleries.** It
@@ -36,13 +48,6 @@ commits and does **not** consume a product version.
   the content is read, so a new surface cannot forget. Product and store names
   bind as units too, so "Sole Focus" and "a Pomodoro timer" cannot split.
   Measured 156 → 0 untied pairs and 46 → 0 splittable names. (STEP-0073)
-
-### Added
-
-- **A page checklist, `docs/CHECKLIST.md`.** The rules a page must satisfy, in
-  three groups — Text, Layout, Whitespace — each opening with the owner's own
-  words. Every rule names the failure it catches and says whether a machine or a
-  person checks it. Internal; nothing a visitor sees changed. (STEP-0072)
 
 ## [0.47.1] — 2026-08-03
 
