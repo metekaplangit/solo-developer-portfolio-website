@@ -13,7 +13,17 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0071** fixed the one inconsistency a
+- **Latest product state:** **STEP-0072** wrote the site's rules down.
+  `docs/CHECKLIST.md` holds them in three groups — Text, Layout, Whitespace —
+  each opening with the owner's own words, because the owner reported three
+  defects of these three kinds in one sitting and ended each report asking for a
+  checklist rather than a fix. Every rule names the failure it catches and says
+  whether a machine or a person checks it; a table at the end lists exactly
+  which suites enforce which rule, so no rule can be believed enforced when it
+  is not. It is a document **and** an automated check, the owner's own choice at
+  planning; STEP-0073 adds the enforcement, kept separate so a deliberately red
+  suite never sits on `main`. Internal, no tag. Before it, **STEP-0071** fixed
+  the one inconsistency a
   page-by-page comparison found: a privacy policy's opening paragraphs ran
   together, because `margin: 0` was right for the single-sentence lead every
   policy had until Magic Notes shipped a three-paragraph one. The app icon the
@@ -115,9 +125,10 @@
   page breaks visibly rather than silently. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
-  photographs. Nothing shipped; WebP-only stays. Next is the owner's own
-  instruction, or the deferred view-transition morph. Do not invent
-  in-development products.
+  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0073**, which
+  enforces the text rules `docs/CHECKLIST.md` now states, then STEP-0074..0077
+  for the four visual defects reported with them. Do not invent in-development
+  products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
   1. ~~**Duplication** — the home spotlight and the catalog lead-row built
@@ -149,12 +160,14 @@
 
 ## Current facts
 
-- Completed **feature** steps: **69** (`STEP-0001`..`STEP-0071`; STEP-0033 is
+- Completed **feature** steps: **70** (`STEP-0001`..`STEP-0072`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
   still leads with Sole Focus alone, because only it is `featured`.
-- Current product tag: **v0.46.0**. `[Unreleased]` is empty.
+- Current product tag: **v0.47.1**. `[Unreleased]` holds the internal packets
+  since it. (This line read **v0.46.0** until STEP-0072 — stale by two releases,
+  and contradicted by `product_tag` in the same file.)
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -177,8 +190,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0071 (a policy lead with more than one paragraph no longer runs together; the icon the owner asked for was already served). Live release v0.47.1.
-next_step: NOT BLOCKED — STEP-0071 merged. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0072 (the page checklist — the rules a page must satisfy, written down in the owner's own words). Live release v0.47.1.
+next_step: STEP-0073 enforces the text rules the checklist states; then STEP-0074..0077 work the four visual defects reported alongside it
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.47.1

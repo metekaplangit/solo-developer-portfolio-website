@@ -18,6 +18,7 @@
 | `docs/ARCHITECTURE.md` | Boundaries, dependency direction, zero-cost guardrails | Structural changes |
 | `docs/DATA_STORAGE.md` | Content model + Zod schemas | Content/schema changes |
 | `docs/UI_DESIGN.md` | Visual system + accessibility | UI work |
+| `docs/CHECKLIST.md` | Text/layout/whitespace rules every page must satisfy | Any visible change |
 | `docs/TESTING.md` | Test commands + gates | Adding tests / Done |
 | `docs/SECURITY.md` | Threat model, secrets, privacy | Deps/input/data |
 | `docs/VERSION_CONTROL.md` | Branch/commit/tag/remote/rollback | Git operations |

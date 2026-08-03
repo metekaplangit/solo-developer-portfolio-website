@@ -762,6 +762,20 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0072 — The page checklist**
+  *(ACTIVE, 2026-08-03).* Internal. The owner reported three defects in one
+  sitting — text cut mid-phrase, two policy cards with no harmony, a large void
+  on a product page — and ended each report with the same instruction: write
+  this down as a checklist so it stops coming back. `docs/CHECKLIST.md` holds
+  the rules in three groups, Text, Layout and Whitespace, each opening with the
+  owner's own words, each rule naming the failure it catches and saying whether
+  a machine or a person checks it. The owner chose a document **and** an
+  automated check; this packet is the document, STEP-0073 the enforcement,
+  because a check landing before the site passes it would put a deliberately red
+  suite on `main`. Scope was measured rather than estimated: 925 non-breaking
+  spaces already in the built output, 156 forward-pointing pairs still untied in
+  runs long enough to wrap, 46 places a protected phrase can still split.
+
 - **STEP-0071 — A policy lead with more than one paragraph**
   *(COMPLETE — merged and shipped as **v0.47.1**, 2026-08-03).* The owner asked
   for the app icon on the Magic Notes privacy page, as Sole Focus has, and for

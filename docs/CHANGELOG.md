@@ -14,6 +14,13 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+### Added
+
+- **A page checklist, `docs/CHECKLIST.md`.** The rules a page must satisfy, in
+  three groups — Text, Layout, Whitespace — each opening with the owner's own
+  words. Every rule names the failure it catches and says whether a machine or a
+  person checks it. Internal; nothing a visitor sees changed. (STEP-0072)
+
 ## [0.47.1] — 2026-08-03
 
 ### Fixed
