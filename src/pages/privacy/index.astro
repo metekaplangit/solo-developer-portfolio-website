@@ -68,12 +68,22 @@ const { Content } = await render(globalEntry);
     grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 26rem));
     justify-content: start;
   }
+  /* Every card is a row of the grid, so it stretches to the tallest one in its
+     row. Without this the box was only as tall as its own text and the two
+     cards ended on different bottom edges — 96px against 66px at 1440px,
+     purely because one product's name wrapped and the other's did not
+     (CHECKLIST L1). */
+  .policy-list > li {
+    display: grid;
+  }
   .policy-link {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    align-items: baseline;
-    justify-content: space-between;
+    /* Grid, not flex with `space-between`. The flex version put the date beside
+       the name when both fitted and underneath it when they did not, so the
+       same component rendered two different designs depending on how long a
+       product is called (CHECKLIST L2). Name above, date below, always. */
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
     padding: var(--space-5);
     border-radius: var(--radius);
     background: linear-gradient(180deg, var(--surface), var(--surface-2));

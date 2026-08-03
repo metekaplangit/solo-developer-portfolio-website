@@ -22,6 +22,10 @@ commits and does **not** consume a product version.
 
 ### Fixed
 
+- **The two privacy policy cards are the same height and the same shape.** They
+  were 96px and 66px, because the card put its date beside the name when it
+  fitted and beneath it when it did not — one component, two designs, chosen by
+  how long a product is called. (STEP-0076)
 - **The empty band above the product galleries is closed.** It measured 144px
   against 80px below, because the band around the gallery and the gallery's own
   padding each claimed the same space. Now 72px, and every value comes from a
