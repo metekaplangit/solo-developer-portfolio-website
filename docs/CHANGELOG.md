@@ -14,6 +14,12 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+### Removed
+
+- **The "Screenshot transcript" disclosure under the product galleries.** It
+  duplicated each image's own alt text, which every gallery image still
+  carries — a visible duplicate went, not a text alternative. (STEP-0074)
+
 ### Fixed
 
 - **Text no longer breaks mid-phrase anywhere on the site.** The wrapping rule
