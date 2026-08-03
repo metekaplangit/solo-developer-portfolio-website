@@ -762,6 +762,18 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0077 — An app icon beside its name in the catalog**
+  *(ACTIVE, 2026-08-03).* The owner boxed the "Sole Focus" heading on `/apps/`
+  and labelled it NAME — "I want icon and names in the apps/games page. Not
+  just names." The product page and both policy pages already used the shared
+  `.identity` lockup; `ProductBand` was the one surface that named a product
+  without ever showing it, which made the catalog and the home page the two
+  places a visitor met a product with no icon. Same lockup reused rather than a
+  second one invented: `ProductAvatar` at 56px, the over-line kept above it so
+  the icon aligns with the name rather than a 12px label, and the icon link
+  marked `redundant` so it adds no keyboard stop. Verified from the rendered
+  DOM at 1440px and 390px on both pages.
+
 - **STEP-0076 — The two privacy cards read as one set**
   *(ACTIVE, 2026-08-03).* Internal. The owner boxed the per-product policy
   block on `/privacy/` — "obviously has no harmony at all. Their heights are

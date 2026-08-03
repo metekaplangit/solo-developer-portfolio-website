@@ -13,6 +13,7 @@
 import { Image } from 'astro:assets';
 import type { Product } from '../content/schema';
 import DownloadButton from './DownloadButton.astro';
+import ProductAvatar from './ProductAvatar.astro';
 import { statusLabel, productHue, productSummary } from '../lib/products';
 import { tie } from '../lib/typography';
 import { canonicalPrivacyUrl } from '../lib/privacy';
@@ -70,9 +71,32 @@ const facts = [product.requirements, product.privacyFacts]
         {String(index).padStart(2, '0')} — {product.type === 'game' ? 'Game' : 'App'} ·{' '}
         {statusLabel(product.status)}
       </p>
-      <h2 id={headingId} class="product-title band-name">
-        <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
-      </h2>
+      {/* The same identity lockup the product page and the policy page use
+          (DESIGN.md, Identity Lockup) — icon beside the name, on one line. The
+          catalog was the one surface that named a product without showing it,
+          which is what the owner reported: "I want icon and names in the
+          apps/games page. Not just names."
+
+          The over-line stays ABOVE the lockup rather than inside it, so the
+          icon aligns with the name it belongs to instead of with a 12px label.
+          The icon links to the same page as the title, so it is marked
+          `redundant`: mouse-clickable, but out of the tab order and the
+          accessibility tree rather than a second stop announcing the same
+          destination. */}
+      <div class="identity band-identity">
+        <ProductAvatar
+          icon={product.icon}
+          name={product.name}
+          size={56}
+          href={withBase(`/apps/${product.slug}/`)}
+          redundant
+        />
+        <div class="identity-text">
+          <h2 id={headingId} class="product-title band-name">
+            <a href={withBase(`/apps/${product.slug}/`)}>{product.name}</a>
+          </h2>
+        </div>
+      </div>
       <p class="band-summary">{productSummary(product)}</p>
       <div class="band-actions">
         <DownloadButton product={product} tone="hue" label="Mac App Store" />
@@ -137,8 +161,15 @@ const facts = [product.requirements, product.privacyFacts]
     color: var(--faint);
   }
   /* Size comes from the global `.product-title`. */
-  .band-name {
+  /* The lockup carries the space below the name, not the name itself. Left on
+     `.band-name` it sat INSIDE the flex row, so the icon's own box grew by
+     that margin and the gap under the block came from two places at once
+     (CHECKLIST W2). */
+  .band-identity {
     margin: 0 0 var(--space-4);
+  }
+  .band-name {
+    margin: 0;
   }
   .band-name a {
     color: var(--text-strong);
