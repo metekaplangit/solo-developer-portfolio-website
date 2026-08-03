@@ -762,6 +762,17 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0075 — The void above the gallery**
+  *(ACTIVE, 2026-08-03).* Internal. The owner boxed an empty band on
+  `/apps/magic-notes/` and asked for the space to be reduced on the product
+  pages. Measured at **144px**, against 80px below the gallery and 8–24px
+  inside the header block: two rhythms stacked, the band contributing
+  `--band-y-loose` and the gallery `padding-block` of its own. Both duplicates
+  removed rather than a pixel value invented — the gallery keeps no padding of
+  its own, and the band drops `loose` for the neutral step, because a gallery
+  of the product just named is not a new argument. 144 → 72px, balanced against
+  80px below. The two 120px loose breaks lower down are deliberately left.
+
 - **STEP-0074 — The screenshot transcript goes**
   *(ACTIVE, 2026-08-03).* Internal. The owner boxed the "▸ Screenshot
   transcript" toggle under the Magic Notes gallery and asked for it to go. It

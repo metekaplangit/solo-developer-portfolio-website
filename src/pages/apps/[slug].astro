@@ -107,7 +107,11 @@ const schema = [
     </p>
   </section>
 
-  <div class="band band-loose gallery-band">
+  {/* `band`, not `band-loose`. Loose means "a new argument starts here", and
+      the gallery is not one — it shows the product the header just named. With
+      loose it opened 120px below the trust line and closed 80px above the
+      panels, the widest gap on the page and lopsided with it. */}
+  <div class="band gallery-band">
     <ScreenshotShowcase shots={shots} label={`${product.name} screenshots`} />
   </div>
 
