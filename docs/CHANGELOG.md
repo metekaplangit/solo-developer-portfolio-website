@@ -14,6 +14,14 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.48.0] — 2026-08-03
+
+One release for four packets, not four releases. STEP-0074..0077 were worked as
+a single batch of owner feedback from one hands-on pass over the live site, and
+none of them was published on its own. STEP-0072 and STEP-0073 are internal and
+carry no user-facing change; they are listed because the checklist is what the
+other four are measured against.
+
 ### Added
 
 - **An app icon beside its name on the Apps & Games page and the home page.**
