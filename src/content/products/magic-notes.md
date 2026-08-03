@@ -23,6 +23,68 @@ fitNotFor: "You want a programmable calculator, a spreadsheet, or a computer-alg
 requirements: macOS 15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/magic-notes/
+# The shipped app icon, taken from the app's own icon batch of 2026-08-02
+# (store-assets/icons/icons-2026-08-02-1357-shipped-core-ring). Deliberately
+# achromatic — the #4F5963 mark the hue above is read from.
+icon:
+  id: magic-notes-icon
+  productId: magic-notes
+  type: icon
+  path: /media/magic-notes/icon.svg
+  altText: Magic Notes app icon — a grey open-cube outline with a small ring at its centre, on a pale silver tile
+  licenseOrOwnership: owned
+# Real capture from the running app, supplied by the owner on 2026-08-03. The
+# window chrome in these frames reads v0.309.0 — they were taken before the
+# version bump, and no claim on this page depends on the number shown.
+screenshots:
+  - id: magic-notes-shot-kitchen-quote
+    productId: magic-notes
+    type: screenshot
+    path: 01-words-in-answers-out.png
+    altText: A Magic Notes sheet called Kitchen Quote in the dark theme, with a folder sidebar on the left and every material and labour line answered in a column on the right, ending in subtotals and a total.
+    bakedInText: "Words in, answers out."
+    dimensions: { width: 2880, height: 1800 }
+    licenseOrOwnership: owned
+  - id: magic-notes-shot-statistics-and-recipe
+    productId: magic-notes
+    type: screenshot
+    path: 02-a-notebook-that-counts.png
+    altText: The Magic Notes Statistics window showing a breakdown of 276 lines by kind and the biggest sheets in the library, beside a recipe sheet scaling grams, cups, litres and oven temperatures.
+    bakedInText: "276 lines, and it counts them."
+    dimensions: { width: 2880, height: 1800 }
+    licenseOrOwnership: owned
+  - id: magic-notes-shot-themes
+    productId: magic-notes
+    type: screenshot
+    path: 03-themes-that-read-all-day.png
+    altText: Three Magic Notes windows fanned out in the light theme, the front one a Japan Trip Budget sheet where named costs add up to a trip total and a split between two people.
+    bakedInText: "Themes that read all day."
+    dimensions: { width: 2880, height: 1800 }
+    licenseOrOwnership: owned
+  - id: magic-notes-shot-skills
+    productId: magic-notes
+    type: screenshot
+    path: 04-inside-your-notebook.png
+    altText: Two light-themed Magic Notes Statistics windows side by side — an Overview counting line types and the biggest sheets, and a Skills tab showing level 18 of 100, an eight-day streak, and the hundred named ranks.
+    bakedInText: "See what your notebook is made of."
+    dimensions: { width: 2880, height: 1800 }
+    licenseOrOwnership: owned
+  - id: magic-notes-shot-dependencies
+    productId: magic-notes
+    type: screenshot
+    path: 05-change-one-line.png
+    altText: A Magic Notes sheet called Running the Car where five named monthly costs feed a monthly total, a yearly total, an increase of six per cent, and a weekly figure, each answered on its own line.
+    bakedInText: "Change one line. Everything follows."
+    dimensions: { width: 2880, height: 1800 }
+    licenseOrOwnership: owned
+  - id: magic-notes-shot-dates-and-times
+    productId: magic-notes
+    type: screenshot
+    path: 06-what-time-is-it-there.png
+    altText: A Magic Notes sheet called Flying to Tokyo answering the time in Tokyo and London, the difference between them, days until a date, workdays added to a date, and time arithmetic in minutes.
+    bakedInText: "What time is it there, exactly?"
+    dimensions: { width: 2880, height: 1800 }
+    licenseOrOwnership: owned
 features:
   - Answers in a column beside your writing, live as you type
   - Plain sentences rather than a calculator syntax
@@ -36,7 +98,7 @@ features:
   - A revision timeline per sheet, guarded backup restore, and unlimited undo
   - Export to plain text, Markdown, print, PDF, or a portable library bundle
   - Zen mode, Shortcuts actions, and Spotlight indexing that is off until you ask
-lastUpdated: 2026-08-02
+lastUpdated: 2026-08-03
 seo:
   title: Magic Notes — Write the Sum, Read the Answer
   description: A Mac notebook that answers arithmetic written in plain sentences — exact where it can be, and openly approximate where it cannot. Offline, no account, no tracking.
@@ -98,5 +160,23 @@ use one.
 Spotlight indexing is off until you turn it on, and covers only sheet titles and
 the text you wrote, on this Mac.
 
-_Magic Notes is finished but not yet released. It is not on the Mac App Store
-today, and this page carries no download._
+## Common questions
+
+**Does it need the internet?** No. There is no networking code in the
+application at all — no account, no sync, no analytics, no advertising.
+
+**Where do my notebooks live?** In a folder on your own Mac, backed up locally
+and restorable under a guard that checks before it replaces anything. Export to
+plain text, Markdown, print, PDF, or a bundle of the whole library at any time.
+
+**What if it cannot answer a line?** It refuses that line where you wrote it and
+tells you why, rather than rounding quietly or returning a number that only
+looks right.
+
+**Which languages does it read?** English or Turkish, whichever you pick in
+Settings. The choice is never guessed from your region, and changing it never
+rewrites what you have already written.
+
+_Magic Notes 1.0.0 is finished and on its way to release. This page carries no
+download link until it is available; the support address answers in the
+meantime._

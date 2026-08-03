@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"
+     viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Magic Notes AX — Core Ring static preview</title>
+  <desc id="desc">The Core Ring artwork clipped to a rounded Mac preview container.</desc>
+  <defs>
+    <clipPath id="platform-mask"><rect width="1024" height="1024" rx="224"/></clipPath>
+    <linearGradient id="field-gradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F1F3F5"/>
+      <stop offset=".55" stop-color="#E3E6EA"/>
+      <stop offset="1" stop-color="#D8DCE1"/>
+    </linearGradient>
+    <filter id="static-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22"
+                    flood-color="#223044" flood-opacity=".15"/>
+    </filter>
+  </defs>
+  <g clip-path="url(#platform-mask)">
+    <rect width="1024" height="1024" fill="url(#field-gradient)"/>
+    <g id="mark" transform="translate(512 512) scale(1.188) translate(-512 -512)">
+      <g fill="none" stroke="#4F5963" stroke-width="72"
+         stroke-linecap="round" stroke-linejoin="round"
+         filter="url(#static-shadow)">
+        <path d="M512 224 L768 368 L768 656 L512 800 L256 656 L256 368 Z"/>
+        <path d="M256 368 L512 512 L768 368 M512 512 V800"/>
+      </g>
+      <g id="core-ring">
+        <circle cx="512" cy="512" r="112" fill="#F1F3F5"
+                stroke="#E3E6EA" stroke-width="16"/>
+        <circle cx="512" cy="512" r="80" fill="none"
+                stroke="#4F5963" stroke-width="34"/>
+        <circle cx="512" cy="512" r="34" fill="#D8DCE1"/>
+      </g>
+    </g>
+  </g>
+</svg>
