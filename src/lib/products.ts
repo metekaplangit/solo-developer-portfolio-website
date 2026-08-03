@@ -1,6 +1,19 @@
 // Pure product/domain helpers. Operate on plain schema types (not Astro entries)
 // so they are decoupled and unit-testable. See docs/ARCHITECTURE.md.
 import type { Product, StoreLink } from '../content/schema';
+import { tie } from './typography';
+
+/**
+ * A product's summary, with the wrapping rule applied (CHECKLIST T1/T2).
+ *
+ * Read through here by every surface that shows it — the card, the band and the
+ * product page all rendered `product.summary` raw, which is why the Sole Focus
+ * lead on `/apps/` broke as "…a Pomodoro" with "timer" on the next line. One
+ * accessor rather than three call sites: a fourth surface cannot forget.
+ */
+export function productSummary(product: Product): string {
+  return tie(product.summary);
+}
 
 const STATUS_RANK: Record<Product['status'], number> = {
   released: 0,

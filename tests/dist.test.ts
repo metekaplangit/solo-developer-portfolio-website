@@ -172,3 +172,123 @@ describe('the wrapping rule reaches rendered Markdown (STEP-0062)', () => {
     expect(policy.includes(NBSP), 'policy prose is tied').toBe(true);
   });
 });
+
+// The checklist's text rules, enforced against the page a visitor gets
+// (docs/CHECKLIST.md, T1 and T2).
+//
+// These exist because the mechanism was in place and most of the site still
+// bypassed it: product summaries rendered raw on three surfaces, seven policy
+// lists read straight from the content file, and every page's own lede written
+// as literal JSX. A rule nothing checks is a rule that quietly stops applying.
+describe('the checklist text rules (STEP-0073)', () => {
+  const NB = String.fromCharCode(0x00a0);
+  const MARK = String.fromCharCode(0x0001); // cannot occur in HTML
+
+  /** Words that must never end a line: they point at a word not yet arrived. */
+  const TIE_WORDS = new Set([
+    'a', 'an', 'the',
+    'and', 'or', 'nor', 'but', 'so', 'yet', 'if', 'as', 'than', 'that',
+    'of', 'to', 'in', 'on', 'at', 'by', 'for', 'from', 'with', 'into', 'onto',
+    'over', 'under', 'via', 'per',
+    'is', 'are', 'was', 'were', 'be', 'been', 'no', 'not',
+    'has', 'have', 'had', 'can', 'will', 'do', 'does', 'did',
+    'it', 'its', 'my', 'your', 'our', 'their', 'his', 'her', 'this', 'these',
+    'you', 'we', 'they', 'i',
+  ]);
+
+  const PROTECTED = [
+    'count-up stopwatch', 'Mac App Store', 'Pomodoro timer', 'MetKap Studio',
+    'Apple Silicon', 'business days', 'Magic Notes', 'Sole Focus', 'App Store',
+  ];
+
+  /**
+   * A run of visible text with no element boundary in it. A tag ENDS a run:
+   * text either side of one can wrap freely, so treating "and <strong>Study"
+   * as one run would report a break no reader ever sees.
+   *
+   * `<head>` is excluded: a <title> is one line in a browser tab and a meta
+   * description is a search snippet. Neither wraps in the page.
+   *
+   * Runs shorter than 60 characters are excluded: a chip, a nav item or a
+   * button has no second line to fall to, so a line-ending rule cannot apply.
+   */
+  function wrappableRuns(html: string): string[] {
+    const bodyAt = html.indexOf('<body');
+    return (bodyAt === -1 ? html : html.slice(bodyAt))
+      .replace(/<script[\s\S]*?<\/script>/gi, MARK)
+      .replace(/<style[\s\S]*?<\/style>/gi, MARK)
+      .replace(/<[^>]+>/g, MARK)
+      .replace(/&nbsp;/g, NB)
+      .replace(/&amp;/g, '&')
+      .split(MARK)
+      .map((s) => s.replace(/[\n\r\t ]+/g, ' ').trim())
+      .filter((s) => s.length >= 60);
+  }
+
+  it('T1 — no line of body copy can end on a word that points forward', () => {
+    const offenders: string[] = [];
+    for (const [route, html] of built) {
+      for (const run of wrappableRuns(html)) {
+        for (const m of run.matchAll(/([\p{L}\p{N}’'-]+) (?=[\p{L}\p{N}])/gu)) {
+          if (TIE_WORDS.has(m[1]!.toLowerCase())) {
+            offenders.push(`${route}: "${m[1]} …" in "${run.slice(0, 70)}"`);
+          }
+        }
+      }
+    }
+    expect(offenders, offenders.slice(0, 8).join('\n')).toHaveLength(0);
+  });
+
+  it('T2 — no named thing can split across two lines', () => {
+    const offenders: string[] = [];
+    for (const [route, html] of built) {
+      for (const run of wrappableRuns(html)) {
+        for (const p of PROTECTED) {
+          if (run.includes(p)) offenders.push(`${route}: "${p}" in "${run.slice(0, 70)}"`);
+        }
+      }
+    }
+    expect(offenders, offenders.slice(0, 8).join('\n')).toHaveLength(0);
+  });
+
+  it('T4 — binding never builds a run too wide for the 320px column', () => {
+    // A non-breaking space removes a wrap opportunity. Enough of them in a row
+    // overflows the narrowest column — the one defect this site never accepts.
+    // 30 characters is the measured budget at the small body size.
+    const tooLong: string[] = [];
+    for (const [route, html] of built) {
+      const bodyAt = html.indexOf('<body');
+      const text = (bodyAt === -1 ? html : html.slice(bodyAt))
+        .replace(/<script[\s\S]*?<\/script>/gi, MARK)
+        .replace(/<style[\s\S]*?<\/style>/gi, MARK)
+        .replace(/<[^>]+>/g, MARK)
+        .replace(/&nbsp;/g, NB);
+      for (const run of text.split(new RegExp(`[ \\t\\n\\r${MARK}]`))) {
+        // Only runs the rule actually built — an unbroken URL or a code span is
+        // long for reasons this rule did not cause and cannot fix.
+        if (run.includes(NB) && run.length > 30) tooLong.push(`${route}: ${run}`);
+      }
+    }
+    expect(tooLong, tooLong.join('\n')).toHaveLength(0);
+  });
+
+  it('proof the three checks above can fail', () => {
+    // Every assertion here was seen red against deliberately broken output.
+    // This keeps that property: strip the non-breaking spaces out of a real
+    // page and all three rules must report it, or they are checking nothing.
+    const [, real] = built.find(([r]) => r === '/apps/sole-focus/')!;
+    const broken = real.split(NB).join(' ');
+
+    const brokenTie = wrappableRuns(broken).flatMap((run) =>
+      [...run.matchAll(/([\p{L}\p{N}’'-]+) (?=[\p{L}\p{N}])/gu)].filter((m) =>
+        TIE_WORDS.has(m[1]!.toLowerCase()),
+      ),
+    );
+    expect(brokenTie.length, 'T1 must report untied prose').toBeGreaterThan(0);
+
+    const brokenPhrase = wrappableRuns(broken).filter((run) =>
+      PROTECTED.some((p) => run.includes(p)),
+    );
+    expect(brokenPhrase.length, 'T2 must report a split name').toBeGreaterThan(0);
+  });
+});

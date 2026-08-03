@@ -13,7 +13,17 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0072** wrote the site's rules down.
+- **Latest product state:** **STEP-0073** made the wrapping rule actually reach
+  the page. It has existed since STEP-0062 and most of the site bypassed it:
+  product summaries rendered raw on three surfaces — the exact copy the owner
+  pointed at, breaking as "…a Pomodoro" with "timer" alone on the next line —
+  seven policy lists read straight from the content file, and every page's own
+  lede written as literal JSX. Applied now where the content is read rather than
+  where it is rendered. Named things bind as units too, longest match first, so
+  a product name cannot split. Measured 156 → 0 untied pairs, 46 → 0 splittable
+  names, and no bound run wider than 25 characters. Three dist assertions hold
+  it, each seen red first. Internal, no tag. Before it, **STEP-0072** wrote the
+  site's rules down.
   `docs/CHECKLIST.md` holds them in three groups — Text, Layout, Whitespace —
   each opening with the owner's own words, because the owner reported three
   defects of these three kinds in one sitting and ended each report asking for a
@@ -125,9 +135,9 @@
   page breaks visibly rather than silently. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
-  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0073**, which
-  enforces the text rules `docs/CHECKLIST.md` now states, then STEP-0074..0077
-  for the four visual defects reported with them. Do not invent in-development
+  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0074**, which
+  removes the screenshot transcript the owner asked to drop, then STEP-0075..0077
+  for the three remaining visual defects reported with it. Do not invent in-development
   products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
@@ -160,7 +170,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **70** (`STEP-0001`..`STEP-0072`; STEP-0033 is
+- Completed **feature** steps: **71** (`STEP-0001`..`STEP-0073`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -190,8 +200,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0072 (the page checklist — the rules a page must satisfy, written down in the owner's own words). Live release v0.47.1.
-next_step: STEP-0073 enforces the text rules the checklist states; then STEP-0074..0077 work the four visual defects reported alongside it
+current_step: STEP-0073 (the wrapping rule now reaches every page; named things bind as units). Live release v0.47.1.
+next_step: STEP-0074 removes the screenshot transcript; then STEP-0075..0077 work the three remaining visual defects the owner reported
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.47.1

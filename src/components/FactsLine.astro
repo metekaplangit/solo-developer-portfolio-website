@@ -6,6 +6,7 @@
 // content that is already verified elsewhere — this component presents truth, it
 // never creates it. Renders nothing when a product has no facts yet.
 import type { Product } from '../content/schema';
+import { tie } from '../lib/typography';
 
 interface Props {
   product: Product;
@@ -23,7 +24,11 @@ if (product.privacyFacts) facts.push(product.privacyFacts);
   facts.length > 0 && (
     <p class="facts-line">
       {facts.map((f) => (
-        <span class="fact">{f}</span>
+        // Each fact is its own flex item, so the row breaks between facts — but
+        // a single fact is long enough to wrap inside itself ("macOS 14 or
+        // later", "no account, no cloud, no tracking"), and those endings were
+        // untied (CHECKLIST T1).
+        <span class="fact">{tie(f)}</span>
       ))}
     </p>
   )
