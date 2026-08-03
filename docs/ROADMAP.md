@@ -762,6 +762,16 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0074 — The screenshot transcript goes**
+  *(ACTIVE, 2026-08-03).* Internal. The owner boxed the "▸ Screenshot
+  transcript" toggle under the Magic Notes gallery and asked for it to go. It
+  was added in STEP-0032 as a text alternative, so removing it was checked
+  rather than assumed: it rendered nothing but each shot's `alt` string, and
+  every gallery `<img>` still carries that exact string. Nothing a screen
+  reader could reach was lost; a visible duplicate went. 36 lines of CSS only
+  it used went with it. `shot.title` now renders nowhere but stays in the
+  schema, because the content files author it.
+
 - **STEP-0073 — The text the wrapping rule never reached**
   *(ACTIVE, 2026-08-03).* Internal. The rule has existed since STEP-0062 and
   most of the site bypassed it: `product.summary` rendered raw on three

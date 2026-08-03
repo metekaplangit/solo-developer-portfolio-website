@@ -13,7 +13,12 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0073** made the wrapping rule actually reach
+- **Latest product state:** **STEP-0074** removed the "Screenshot transcript"
+  disclosure from under the gallery, as the owner asked. It was added as an
+  accessibility affordance, so it was checked rather than assumed: it rendered
+  nothing but each shot's `alt` string, and all 11 gallery images still carry
+  theirs. A visible duplicate went, not a text alternative. Internal, no tag.
+  Before it, **STEP-0073** made the wrapping rule actually reach
   the page. It has existed since STEP-0062 and most of the site bypassed it:
   product summaries rendered raw on three surfaces — the exact copy the owner
   pointed at, breaking as "…a Pomodoro" with "timer" alone on the next line —
@@ -135,9 +140,9 @@
   page breaks visibly rather than silently. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
-  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0074**, which
-  removes the screenshot transcript the owner asked to drop, then STEP-0075..0077
-  for the three remaining visual defects reported with it. Do not invent in-development
+  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0075**, which
+  closes the empty band on the product pages, then STEP-0076 for the privacy
+  cards and STEP-0077 for the app icons on `/apps/`. Do not invent in-development
   products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
@@ -170,7 +175,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **71** (`STEP-0001`..`STEP-0073`; STEP-0033 is
+- Completed **feature** steps: **72** (`STEP-0001`..`STEP-0074`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -200,8 +205,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0073 (the wrapping rule now reaches every page; named things bind as units). Live release v0.47.1.
-next_step: STEP-0074 removes the screenshot transcript; then STEP-0075..0077 work the three remaining visual defects the owner reported
+current_step: STEP-0074 (the screenshot transcript is gone; every gallery image keeps its alt text). Live release v0.47.1.
+next_step: STEP-0075 closes the empty band on the product pages; then STEP-0076 the privacy cards and STEP-0077 the app icons on /apps/
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.47.1
