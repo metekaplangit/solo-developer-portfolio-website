@@ -762,6 +762,18 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0076 — The two privacy cards read as one set**
+  *(ACTIVE, 2026-08-03).* Internal. The owner boxed the per-product policy
+  block on `/privacy/` — "obviously has no harmony at all. Their heights are
+  not equal." Measured at **96px against 66px** at 1440px, with different
+  bottom edges. Two causes in one rule set: `.policy-link` was a flex row with
+  `space-between`, so the date sat beside the name when it fitted and beneath
+  it when it did not — one component, two designs, chosen by how long a product
+  is called; and each card was only as tall as its own text while the `<li>`
+  around it stretched. Both are now grids: name above date always, and the link
+  fills its row. 96 / 96 at every width, sharing a bottom edge side by side. No
+  fixed height, so a third product cannot reintroduce it.
+
 - **STEP-0075 — The void above the gallery**
   *(ACTIVE, 2026-08-03).* Internal. The owner boxed an empty band on
   `/apps/magic-notes/` and asked for the space to be reduced on the product
