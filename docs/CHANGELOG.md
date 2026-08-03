@@ -22,6 +22,10 @@ commits and does **not** consume a product version.
 
 ### Fixed
 
+- **The empty band above the product galleries is closed.** It measured 144px
+  against 80px below, because the band around the gallery and the gallery's own
+  padding each claimed the same space. Now 72px, and every value comes from a
+  token. (STEP-0075)
 - **Text no longer breaks mid-phrase anywhere on the site.** The wrapping rule
   has existed since STEP-0062 and most of the site bypassed it — product
   summaries, seven policy lists, and every page's own lede. Applied now where

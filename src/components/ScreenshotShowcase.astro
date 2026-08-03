@@ -115,7 +115,10 @@ const many = shots.length > 1;
        prominent element on the page (STEP-0036). Centered on the same axis. */
     max-width: 72rem;
     margin-inline: auto;
-    padding-block: var(--space-6);
+    /* No padding-block. The band around this gallery already owns the space
+       above and below it, and setting both made one gap out of two rhythms —
+       120px of band plus 24px of padding, a 144px void the owner boxed on the
+       live page. Space belongs to one owner (CHECKLIST W2). */
   }
   .frame {
     position: relative;

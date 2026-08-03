@@ -13,7 +13,13 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0074** removed the "Screenshot transcript"
+- **Latest product state:** **STEP-0075** closed the void the owner boxed on
+  the product pages. It measured **144px** against 80px below the gallery — two
+  rhythms stacked, the band around the gallery and the gallery's own padding
+  each claiming the same space. Both duplicates removed rather than a pixel
+  value invented; the page now reads 72 / 80 / 40 / 120 / 120, every value a
+  token. Internal, no tag. Before it, **STEP-0074** removed the "Screenshot
+  transcript"
   disclosure from under the gallery, as the owner asked. It was added as an
   accessibility affordance, so it was checked rather than assumed: it rendered
   nothing but each shot's `alt` string, and all 11 gallery images still carry
@@ -140,9 +146,9 @@
   page breaks visibly rather than silently. Then: **STEP-0058** (AVIF for the LCP screenshot)
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
-  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0075**, which
-  closes the empty band on the product pages, then STEP-0076 for the privacy
-  cards and STEP-0077 for the app icons on `/apps/`. Do not invent in-development
+  photographs. Nothing shipped; WebP-only stays. **Next is STEP-0076**, which
+  makes the two privacy cards read as one set, then STEP-0077 for the app icons
+  on `/apps/`. Do not invent in-development
   products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
@@ -175,7 +181,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **72** (`STEP-0001`..`STEP-0074`; STEP-0033 is
+- Completed **feature** steps: **73** (`STEP-0001`..`STEP-0075`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -205,8 +211,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0074 (the screenshot transcript is gone; every gallery image keeps its alt text). Live release v0.47.1.
-next_step: STEP-0075 closes the empty band on the product pages; then STEP-0076 the privacy cards and STEP-0077 the app icons on /apps/
+current_step: STEP-0075 (the 144px void above the product gallery is 72px, and every value is a token). Live release v0.47.1.
+next_step: STEP-0076 makes the two privacy cards read as one set; then STEP-0077 puts app icons beside the names on /apps/
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.47.1
