@@ -13,7 +13,20 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0069** put a second product on the site.
+- **Latest product state:** **STEP-0070** filled the two Magic Notes pages for
+  real, because the app is being published and both of its URLs are hard-coded
+  inside the shipped build. The product page now carries the shipped app icon
+  and six real captures of the running application — the owner's own, nothing
+  generated or imitated — each with alt text, plus a short set of common
+  questions that restates what the page already says. The privacy policy is no
+  longer marked `draft`: it was read against the application's **source** rather
+  than its documentation (no networking API referenced anywhere, no analytics or
+  advertising SDK linked, Spotlight indexing defaulting to off, four Shortcuts
+  actions as the only system surface), and it now names the exact folder to
+  remove to erase everything, because Magic Notes has no in-app erase-all. Price,
+  store link, release date and maker's note are all still absent, all still
+  unverified, and the "In development" badge stays. Shipped as **v0.47.0**.
+  Before it, **STEP-0069** put a second product on the site.
   Magic Notes — a finished but unreleased macOS notebook that answers arithmetic
   written as plain sentences — now has `/apps/magic-notes/` and
   `/privacy/magic-notes/`, built from two content files and no code change. It
@@ -129,7 +142,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **67** (`STEP-0001`..`STEP-0069`; STEP-0033 is
+- Completed **feature** steps: **68** (`STEP-0001`..`STEP-0070`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -157,11 +170,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0069 (Magic Notes product + privacy pages, so the URLs its store submission names resolve before the app ships). Live release v0.46.0.
-next_step: NOT BLOCKED — STEP-0069 merged. Then: Magic Notes icon and screenshots when the owner supplies them; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0070 (Magic Notes pages filled for real — shipped icon, six real screenshots, policy reviewed against the app's source — before the app is published). Live release v0.47.0.
+next_step: NOT BLOCKED — STEP-0070 merged. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or the deferred view-transition morph; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.46.0
+product_tag: v0.47.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)
@@ -173,7 +186,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, npm run test:dist, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-08-02
+updated_at: 2026-08-03
 ```
 
 Live commands override this snapshot. At startup regenerate branch/HEAD/dirty

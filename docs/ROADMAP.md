@@ -762,6 +762,31 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0070 — The Magic Notes pages stop being placeholders**
+  *(COMPLETE — merged and shipped as **v0.47.0**, 2026-08-03).* Versionable:
+  user-facing content on two published pages. STEP-0069 built these pages thin
+  on purpose — no icon, no screenshots, and a policy marked `draft` because it
+  had been written from the app's documentation rather than read against its
+  source. The app is being published, and the shipped build hard-codes both URLs
+  (`NotebookSettingsView.swift:703-708`), so the one visitor who cannot be asked
+  to come back later is a store reviewer following a link inside a submitted
+  binary. **The imagery is the app's own**: six real captures of the running
+  application supplied by the owner, and the shipped icon from the 2026-08-02
+  batch — nothing generated, mocked up or imitated. Their chrome reads
+  `v0.309.0`, predating the version bump, and no claim depends on the number
+  shown. **The policy is now `reviewed`**, on source-level evidence: no
+  networking API is referenced anywhere in the application, no analytics or
+  advertising SDK is linked, `spotlightIndexingEnabled` defaults to false, and
+  four `AppIntent` types are the only system surface. It also names a concrete
+  deletion route — `~/Library/Application Support/IntelligentWorkingNotebook` —
+  because Magic Notes has no in-app erase-all, unlike Sole Focus. **Still
+  unclaimed:** price, store link, release date, maker's note. The "In
+  development" badge stays, because the status vocabulary has no value for
+  "finished and awaiting release" and `released` without a store link would
+  render a badge the page cannot honour. STEP-0069's "no images" pin was seen
+  red before its replacement was written. 104 unit tests (102 before; one pin
+  removed, three written in its place), 10 dist tests, 10 routes unchanged.
+
 - **STEP-0069 — Magic Notes gets its pages before it gets its release**
   *(COMPLETE — merged and shipped as **v0.46.0**, 2026-08-02).* Versionable
   rather than internal: `VERSION_CONTROL.md` puts generated route URLs inside

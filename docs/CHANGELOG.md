@@ -14,6 +14,32 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.47.0] — 2026-08-03
+
+### Added
+
+- **The Magic Notes product page now shows the app.** Six real captures of the
+  running application and the shipped app icon, replacing the monogram and the
+  empty gallery the page carried since it was created. Each screenshot has its
+  own alt text, and the marketing line baked into each frame is carried as text
+  as well as pixels. A short set of common questions closes the page, restating
+  what is already said above it. (STEP-0070)
+
+### Changed
+
+- **The Magic Notes privacy policy is no longer marked a draft.** It has been
+  read against the application's own source rather than its documentation: no
+  networking API is referenced anywhere in it, no analytics or advertising code
+  is linked, Spotlight indexing defaults to off, and four Shortcuts actions are
+  the only system surface. The page now also names exactly which folder to
+  remove to erase everything, because the app has no in-app erase-all, and says
+  plainly that the only web addresses inside the app are links to this studio's
+  own pages. (STEP-0070)
+
+- The product page still claims no price, no download and no release date. None
+  of the three is verified, and the page says so where a download would be.
+  (STEP-0070)
+
 ## [0.46.0] — 2026-08-02
 
 ### Added

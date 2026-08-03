@@ -98,9 +98,32 @@ describe('Magic Notes product content', () => {
     expect(product.releaseDate).toBeUndefined();
   });
 
-  it('promises no images it does not have', () => {
-    expect(product.screenshots).toHaveLength(0);
-    expect(product.icon).toBeUndefined();
+  // STEP-0070 replaced the "no images" pin: the owner supplied the shipped icon
+  // and six real captures on 2026-08-03, so the risk flips to Sole Focus's —
+  // a broken reference or a missing alt text on a page a store reviewer opens.
+  it('declares six screenshots, each with alt text and an asset that exists', () => {
+    expect(product.screenshots).toHaveLength(6);
+    for (const shot of product.screenshots) {
+      expect(shot.type).toBe('screenshot');
+      expect(shot.altText.trim().length).toBeGreaterThan(0);
+      const assetPath = join(root, 'src/assets/magic-notes/screenshots', basename(shot.path));
+      expect(existsSync(assetPath), `missing asset for "${shot.path}"`).toBe(true);
+    }
+  });
+
+  it('carries the shipped app icon, and the file is there', () => {
+    expect(product.icon).toBeDefined();
+    expect(product.icon?.path).toBe('/media/magic-notes/icon.svg');
+    expect(product.icon?.altText.trim().length).toBeGreaterThan(0);
+    expect(existsSync(join(root, 'public/media/magic-notes/icon.svg'))).toBe(true);
+  });
+
+  // The page a store reviewer lands on must not read as a stub. This pins the
+  // two things that made it one: no imagery, and a policy still marked draft.
+  it('serves a policy that has been read against the shipped app', () => {
+    expect(policy.reviewStatus).toBe('reviewed');
+    expect(policy.permissions.length).toBeGreaterThan(0);
+    expect(policy.thirdPartyServices).toHaveLength(0);
   });
 
   // The URL below is quoted verbatim in the app's submission sheet. Once a
