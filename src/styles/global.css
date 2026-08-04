@@ -316,7 +316,7 @@ img {
 .privacy-ref a,
 .per-product-lead a,
 .footer-links a,
-.back a,
+.page-back a,
 .elsewhere a,
 .products a,
 .section-link {
@@ -338,7 +338,7 @@ img {
 .privacy-ref a:hover,
 .per-product-lead a:hover,
 .footer-links a:hover,
-.back a:hover,
+.page-back a:hover,
 .elsewhere a:hover,
 .products a:hover,
 .section-link:hover {
@@ -491,9 +491,16 @@ img {
    treatment is exactly what STEP-0051 had to undo for chips. Height is bought
    with block padding on an inline-flex box, so type size, colour and the
    underline treatment are all untouched: the target grows, the design does not.
-   `--space-1` either side of a 1.5rem line box is exactly 24px. */
+   `--space-1` either side of a 1.5rem line box is exactly 24px.
+
+   The selector said `.back a` until STEP-0078. Nothing had used `.back` since
+   the back link was renamed `.page-back`, so this rule quietly stopped reaching
+   the two routes that open with one — and `.page-back` had meanwhile been
+   written to SUBTRACT the padding this rule grants, leaving those pages 4px
+   tighter to the header than every other route. A dead selector in a shared
+   rule takes its surface with it and nothing goes red. */
 .footer-links a,
-.back a,
+.page-back a,
 .links a,
 .products a,
 .elsewhere a {

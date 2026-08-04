@@ -226,7 +226,11 @@ const schema = [
       related.length > 0 && (
         <section class="related" aria-labelledby="related-h">
           <h2 id="related-h" class="band-title">More {product.type === 'game' ? 'games' : 'apps'}</h2>
-          <ul role="list">
+          {/* `links` is the shared standalone-destination-list treatment from
+              global.css (STEP-0052) — the same one the 404 destinations use. A
+              bare `ul` here got none of it, so these were the one link row on
+              the site with no minimum target height. */}
+          <ul class="links" role="list">
             {related.map((r) => (
               <li>
                 <a href={withBase(`/apps/${r.slug}/`)}>{r.name}</a>

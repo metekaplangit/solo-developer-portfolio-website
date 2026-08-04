@@ -14,6 +14,14 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The "back" links and the "More apps" row are a comfortable size to tap
+  again.** They rendered 18px tall, because the shared rule that gives every
+  standalone link a 24px minimum still named a class the markup stopped using.
+  Now 32.8px, and the three pages that open with a back link sit the same
+  distance below the header as every other page. (STEP-0078)
+
 ## [0.48.0] — 2026-08-03
 
 One release for four packets, not four releases. STEP-0074..0077 were worked as
