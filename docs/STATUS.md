@@ -252,7 +252,7 @@
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
   still leads with Sole Focus alone, because only it is `featured`.
-- Current product tag: **v0.48.0**. `[Unreleased]` is empty.
+- Current product tag: **v0.48.1**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -275,11 +275,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0081 (one shared indent for a page title that leads with the identity lockup). Live release v0.48.0.
+current_step: STEP-0081 (one shared indent for a page title that leads with the identity lockup). Live release v0.48.1.
 next_step: NOT BLOCKED — the owner's 2026-08-04 UI polish batch (STEP-0078..0081) is complete. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.48.0
+product_tag: v0.48.1
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

@@ -14,6 +14,14 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.48.1] — 2026-08-04
+
+One release for three packets. STEP-0078, STEP-0079 and STEP-0081 came out of
+one measured pass over the whole interface and none was published on its own.
+STEP-0080 is internal and changes nothing a visitor sees; it is the check that
+now holds all three, and it is listed because the other three are measured
+against it.
+
 ### Fixed
 
 - **A product page and a privacy page now start their title in the same
