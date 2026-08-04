@@ -21,24 +21,24 @@
   icon. The same lockup is reused at 56px, the over-line kept above it so the
   icon aligns with the name, and the icon link marked redundant so it adds no
   keyboard stop. Verified from the rendered DOM at 1440px and 390px.
-  Internal, no tag. Before it, **STEP-0076** made the two privacy cards read as
+  Shipped in **v0.48.0**. Before it, **STEP-0076** made the two privacy cards read as
   one set. They measured **96px against 66px** at 1440px with different bottom
   edges, because the card was a flex row that put the date beside the name when
   it fitted and beneath it when it did not — one component rendering two
   designs, chosen by how long a product is called. Both are grids now, name
   above date always, each filling its row: 96 / 96 at 1440, 900 and 390px, and
-  no fixed height, so a third product cannot bring it back. Internal, no tag.
+  no fixed height, so a third product cannot bring it back. Shipped in **v0.48.0**.
   Before it, **STEP-0075** closed the void the owner boxed on
   the product pages. It measured **144px** against 80px below the gallery — two
   rhythms stacked, the band around the gallery and the gallery's own padding
   each claiming the same space. Both duplicates removed rather than a pixel
   value invented; the page now reads 72 / 80 / 40 / 120 / 120, every value a
-  token. Internal, no tag. Before it, **STEP-0074** removed the "Screenshot
+  token. Shipped in **v0.48.0**. Before it, **STEP-0074** removed the "Screenshot
   transcript"
   disclosure from under the gallery, as the owner asked. It was added as an
   accessibility affordance, so it was checked rather than assumed: it rendered
   nothing but each shot's `alt` string, and all 11 gallery images still carry
-  theirs. A visible duplicate went, not a text alternative. Internal, no tag.
+  theirs. A visible duplicate went, not a text alternative. Shipped in **v0.48.0**.
   Before it, **STEP-0073** made the wrapping rule actually reach
   the page. It has existed since STEP-0062 and most of the site bypassed it:
   product summaries rendered raw on three surfaces — the exact copy the owner
