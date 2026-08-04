@@ -84,12 +84,16 @@ const facts = [product.requirements, product.privacyFacts]
           accessibility tree rather than a second stop announcing the same
           destination. */}
       <div class="identity band-identity">
+        {/* The icon follows the band's own above-the-fold flag rather than a
+            second judgement: where the lead shot is eager, the icon beside the
+            name is on the same screen and should not be queued behind it. */}
         <ProductAvatar
           icon={product.icon}
           name={product.name}
           size={56}
           href={withBase(`/apps/${product.slug}/`)}
           redundant
+          eager={eager}
         />
         <div class="identity-text">
           <h2 id={headingId} class="product-title band-name">
