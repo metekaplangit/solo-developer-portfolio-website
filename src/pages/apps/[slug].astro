@@ -84,9 +84,16 @@ const schema = [
        on a product page was "App · Released · macOS" rather than the product. -->
   <section class="band detail-head" aria-labelledby="product-h">
     <div class="identity">
-      {/* Measured at the top of the first screen on every width — 165px down at
+      {/* 56, not 72 (STEP-0081). The lockup pushes the page title in by the
+          icon's width plus the gap, so an icon size is also a title indent:
+          72 here against 56 on the policy header put the same kind of heading
+          88px and 72px off the shared rail, two answers with only one of them
+          written down. 56 is the size the band and the policy header already
+          use, and it is the one the policy header has a recorded reason for.
+
+          Measured at the top of the first screen on every width — 165px down at
           390px, 153px at 1440px — so it is never lazy. */}
-      <ProductAvatar icon={product.icon} name={product.name} size={72} eager />
+      <ProductAvatar icon={product.icon} name={product.name} size={56} eager />
       <div class="identity-text head-body">
         <h1 id="product-h" class="product-title product-name">{product.name}</h1>
         <div class="tags">

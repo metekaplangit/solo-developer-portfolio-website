@@ -38,6 +38,16 @@ contrast, meaningful link text, alt text on all product media,
 with no horizontal overflow, large tap targets on mobile. Accessibility checks
 are merge-critical for user-facing pages (see `TESTING.md`).
 
+### Identity lockup sizes (STEP-0081)
+
+Two sizes, and no surface invents a third: **48px in a card**, **56px wherever a
+product leads a surface** — the product band, the product detail header, the
+policy header. The lockup pushes a page title in by the icon's width plus the
+gap, so an icon size is also a title indent: the product header at 72 and the
+policy header at 56 put the same kind of heading 88px and 72px off the shared
+rail. `tests/geometry.test.ts` now fails when two routes disagree about that
+indent.
+
 ## Design tokens
 
 Spacing, type scale, color, focus/hover/pressed/disabled states live in

@@ -16,6 +16,12 @@ commits and does **not** consume a product version.
 
 ### Fixed
 
+- **A product page and a privacy page now start their title in the same
+  place.** Both lead with the app icon beside the title, but the icon was a
+  different size on each, so the two headings sat 88px and 72px in from the
+  page's left edge. One size now — the same one the catalog already used.
+  (STEP-0081)
+
 - **App icons appear about twice as fast on product and privacy pages.** They
   were told to load lazily, which the browser reads as "not yet needed" even
   when the icon is at the top of the screen. Measured on a slow connection, the

@@ -13,7 +13,18 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0080** made the rendered geometry a check
+- **Latest product state:** **STEP-0081** gave the page title one indent. The
+  wordmark, the first body paragraph and the first footer link share one left
+  edge on all 9 routes; six routes start their `h1` there too. The two that lead
+  with the identity lockup start inboard — which STEP-0061 recorded and the
+  owner asked for — but they disagreed with each other: **+88px** on a product
+  page against **+72px** on a policy page, because the lockup pushes the title
+  in by the icon's width and the two headers used 72 and 56. 56 wins: it has a
+  written reason on the policy component (policy titles are the longest on the
+  site) where 72 had none, and it is what the product band already uses. Two
+  identity sizes now, not three — 48 in a card, 56 wherever a product leads a
+  surface. A new assertion holds it. Internal, no tag. Before it, **STEP-0080**
+  made the rendered geometry a check
   rather than a habit. Seven of the eleven rules in `docs/CHECKLIST.md` said
   "read by a person", and STEP-0078 and STEP-0079 were both defects that
   survived exactly that. `npm run test:ui` serves `dist/` and drives a real
@@ -236,7 +247,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **78** (`STEP-0001`..`STEP-0080`; STEP-0033 is
+- Completed **feature** steps: **79** (`STEP-0001`..`STEP-0081`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -264,8 +275,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0080 (a rendered-geometry gate, `npm run test:ui`). Live release v0.48.0.
-next_step: STEP-0081 (one indent for the page title). Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0081 (one shared indent for a page title that leads with the identity lockup). Live release v0.48.0.
+next_step: NOT BLOCKED — the owner's 2026-08-04 UI polish batch (STEP-0078..0081) is complete. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.48.0
