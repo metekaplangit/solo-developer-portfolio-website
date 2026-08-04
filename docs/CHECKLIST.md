@@ -22,9 +22,16 @@ so it stops coming back.
 - **Some rules are machine-checked and some are read by a person.** Each rule
   says which, and no rule is described as enforced when it is not.
 
-Machine-checked rules live in `tests/dist.test.ts` and run against the built
-output with `npm run test:dist`. They fail the packet, not a report someone has
-to remember to read.
+Machine-checked rules live in two suites, and both run against the built output
+rather than against a component in isolation:
+
+- `tests/dist.test.ts` — what is in the HTML a visitor is sent. `npm run test:dist`.
+- `tests/geometry.test.ts` — what a browser lays that HTML out as: sizes,
+  positions, alignment, spacing. `npm run test:ui`. Added by STEP-0080, because
+  a rule "read by a person" is a rule enforced when someone remembers, and two
+  defects had already survived exactly that.
+
+They fail the packet, not a report someone has to remember to read.
 
 ## T — Text
 
@@ -68,8 +75,11 @@ words. Do not tie heading text. *Read by a person.*
 
 **L1 — Items in a set share a shape.** Cards, tiles and rows that sit side by
 side share their height, their top edge and their bottom edge. One card taller
-than its neighbour reads as a mistake, never as emphasis. *Machine-checked for
-markup parity; the rendered heights are read by a person.*
+than its neighbour reads as a mistake, never as emphasis. *Machine-checked* —
+markup parity in `tests/dist.test.ts`, and since STEP-0080 the rendered heights
+too, in `tests/geometry.test.ts`. A "set" there means members that render the
+same tag and the same class on the same row: a label column beside a content
+column is two different things by design, and this rule was never about those.
 
 **L2 — Items in a set share a treatment.** A field shown on one card is shown
 on all of them, in the same position, or on none. Two cards where one puts its
@@ -79,7 +89,10 @@ date on its own line and the other puts it inline are two designs, not one set.
 **L3 — A new item is placed against what surrounds it.** Its width follows the
 column it sits in, its type follows the scale already on the page, and its
 alignment follows the grid — never a value picked to make one element look
-right on its own. *Read by a person.*
+right on its own. *Partly machine-checked since STEP-0080:* the site keeps ONE
+left rail, and `tests/geometry.test.ts` proves the wordmark, the first body
+paragraph and the first footer link share it on every route at every width. The
+rest of the rule — type scale, column width, judgement — is *read by a person.*
 
 **L4 — Nothing is sized by a number that means nothing.** A measurement exists
 because it comes from the type scale, the spacing scale or the grid. A stray
@@ -93,7 +106,10 @@ because it comes from the type scale, the spacing scale or the grid. A stray
 **W1 — No gap larger than the rhythm the page already keeps.** The space
 between two blocks comes from the section spacing scale. A gap wider than the
 largest step is a void, and a reader crossing it thinks something failed to
-load. *Read by a person.*
+load. *Machine-checked since STEP-0080* — `tests/geometry.test.ts` fails when
+two in-flow siblings sit more than 120px apart, which is `--band-y-loose` at its
+cap. In-flow only: an absolutely-positioned overlay sits where it is told, and
+the distance between two of them means nothing.
 
 **W2 — Empty space belongs to something.** Space above a block is that block's
 space, set on the block. Space that belongs to nothing survives every later
@@ -114,6 +130,20 @@ breakpoint. When an element goes, its spacing goes with it. *Read by a person.*
 | T2 | `tests/dist.test.ts` | a protected phrase appears with an ordinary space inside it |
 | T4 | `src/lib/typography.test.ts` | a bound pair exceeds 22 characters |
 | L1, L2 | `tests/dist.test.ts` | two cards in one set emit a different element set |
+| L1 | `tests/geometry.test.ts` | two members of one set on the same row render more than 1px apart in height |
+| L3 (rail only) | `tests/geometry.test.ts` | the wordmark, the first body paragraph and the first footer link do not share a left edge |
+| W1 | `tests/geometry.test.ts` | two in-flow siblings sit more than 120px apart |
+
+`tests/geometry.test.ts` also holds four site standards that are recorded
+elsewhere rather than in this checklist, because they are not about *placing a
+new item* — they are about the page never being wrong:
+
+| Standard | Fails when | Recorded in |
+| --- | --- | --- |
+| No horizontal overflow | any route scrolls sideways at 320 / 390 / 768 / 1440 | `docs/UI_DESIGN.md`, Accessibility |
+| Target size, WCAG 2.2 SC 2.5.8 | a target is under 24×24 and meets neither the in-sentence nor the spacing exception | `docs/UI_DESIGN.md`, Accessibility |
+| Text size floor | any rendered text is under 13px | the type scale in `src/styles/global.css` |
+| Nothing on screen loads lazily | an image at least a quarter visible in the first screen carries `loading="lazy"` | STEP-0053, STEP-0079 |
 
 Everything else on this page is read by a person, and is written to be read in
 under a minute.

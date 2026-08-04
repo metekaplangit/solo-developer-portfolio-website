@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:dist": "vitest run --config vitest.dist.config.ts",
+    "test:ui": "vitest run --config vitest.ui.config.ts",
     "validate:governance": "python3 scripts/validate-governance.py",
     "lhci": "lhci autorun"
   },
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
     "@lhci/cli": "^0.15.1",
+    "puppeteer-core": "^24.43.1",
     "typescript": "^5.6.0",
     "vitest": "^4.1.9"
   },

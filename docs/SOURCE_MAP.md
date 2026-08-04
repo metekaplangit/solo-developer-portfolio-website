@@ -44,6 +44,9 @@
 | `src/layouts/**` `src/components/**` `src/pages/**` | Presentation + routes |
 | `src/styles/**` | Design tokens |
 | `public/**` | Static assets (icons, screenshots, CNAME at M4) |
+| `tests/dist.test.ts` | Assertions about the HTML a visitor is sent (`npm run test:dist`) |
+| `tests/geometry.test.ts` | Assertions about what the browser lays that HTML out as (`npm run test:ui`) |
+| `vitest.dist.config.ts` / `vitest.ui.config.ts` | The two slow suites' configs, each kept out of `npm test` |
 | `scripts/validate-governance.py` | Governance validator |
 | `.github/workflows/**` | `deploy.yml` only — build + Lighthouse a11y gate + Pages publish |
 | `.github/ISSUE_TEMPLATE/**` | Issue forms + security route |
@@ -53,4 +56,5 @@
 ## Key commands
 
 `npm run dev` · `npm run build` · `npm run check` · `npm test` (STEP-0001+) ·
+`npm run test:dist` (STEP-0068) · `npm run test:ui` (STEP-0080) ·
 `python3 scripts/validate-governance.py`
