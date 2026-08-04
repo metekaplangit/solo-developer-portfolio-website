@@ -84,7 +84,9 @@ const schema = [
        on a product page was "App · Released · macOS" rather than the product. -->
   <section class="band detail-head" aria-labelledby="product-h">
     <div class="identity">
-      <ProductAvatar icon={product.icon} name={product.name} size={72} />
+      {/* Measured at the top of the first screen on every width — 165px down at
+          390px, 153px at 1440px — so it is never lazy. */}
+      <ProductAvatar icon={product.icon} name={product.name} size={72} eager />
       <div class="identity-text head-body">
         <h1 id="product-h" class="product-title product-name">{product.name}</h1>
         <div class="tags">

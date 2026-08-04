@@ -16,6 +16,12 @@ commits and does **not** consume a product version.
 
 ### Fixed
 
+- **App icons appear about twice as fast on product and privacy pages.** They
+  were told to load lazily, which the browser reads as "not yet needed" even
+  when the icon is at the top of the screen. Measured on a slow connection, the
+  icon now arrives in 421ms instead of 800ms on a product page, and 379ms
+  instead of 703ms on a privacy page. (STEP-0079)
+
 - **The "back" links and the "More apps" row are a comfortable size to tap
   again.** They rendered 18px tall, because the shared rule that gives every
   standalone link a 24px minimum still named a class the markup stopped using.

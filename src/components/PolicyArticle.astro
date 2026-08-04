@@ -68,7 +68,9 @@ const chips: { label: string; ok: boolean }[] = [
 
 <article class="policy">
   <header class="policy-head identity">
-    {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={56} alt={icon.altText} href={iconHref} />}
+    {/* The policy header is the first thing on the page — measured 181px down
+        at 390px, 185px at 1440px — so this icon is never lazy. */}
+    {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={56} alt={icon.altText} href={iconHref} eager />}
     <div class="policy-head-text identity-text">
       <h1 class="page-title">{policy.title}</h1>
       <p class="policy-meta">

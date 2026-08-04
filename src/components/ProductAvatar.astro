@@ -21,8 +21,22 @@ interface Props {
    * order and the accessibility tree, so it isn't a redundant keyboard/AT stop.
    */
   redundant?: boolean;
+  /**
+   * Above the fold? Set it wherever this avatar renders inside the first screen
+   * — the product detail header, the policy header, a page's first product
+   * band. A lazy image is skipped by the browser's preload scanner and is not
+   * queued until layout reaches it, so an icon a visitor is already looking at
+   * arrives late for no reason (web.dev, *The performance effects of too much
+   * lazy loading*, checked 2026-08-04).
+   *
+   * Sets `loading` only, never `fetchpriority`. That hint is meaningful on one
+   * image per page and belongs to the LCP element, which STEP-0053 already
+   * claimed for the lead shot; a 56px icon competing for it would take the
+   * priority away from the thing that actually decides the paint.
+   */
+  eager?: boolean;
 }
-const { icon = null, name, size = 48, alt, href, redundant = false } = Astro.props;
+const { icon = null, name, size = 48, alt, href, redundant = false, eager = false } = Astro.props;
 const monogram = name
   .split(/\s+/)
   .map((w) => w[0])
@@ -53,7 +67,7 @@ const wrapperProps = href
         width={size}
         height={size}
         style={sizeStyle}
-        loading="lazy"
+        loading={eager ? 'eager' : 'lazy'}
       />
     ) : (
       <span class:list={['avatar', 'monogram', large && 'avatar-lg']} style={sizeStyle} aria-hidden="true">
