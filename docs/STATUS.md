@@ -13,7 +13,32 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0077** put an app icon beside its name in
+- **Latest product state:** **STEP-0079** stopped the product icon waiting to
+  load when a visitor is already looking at it. `ProductAvatar` hardcoded
+  `loading="lazy"` from the day it was written, when it only ever appeared far
+  down a page — an assumption STEP-0077 made false by putting the icon in the
+  product band. Measured, it renders **165px** down a product page, **181px**
+  down a policy page and **399px** down the catalog at 768px. A lazy image is
+  skipped by the preload scanner, so it is not even queued until layout reaches
+  it. One `eager` prop now, defaulting to lazy, set at the three above-the-fold
+  call sites; the band passes its own flag through so the icon and the lead shot
+  cannot disagree about which screen they are on. On 5 cold throttled runs the
+  icon lands **800 → 421ms** on a product page and **703 → 379ms** on a policy
+  page; on the catalog it does not move, and the card says so. No
+  `fetchpriority` added — that hint belongs to the LCP image. Internal, no tag.
+  Before it, **STEP-0078** put the shared standalone-link rule
+  back in touch with the links it is supposed to govern. `global.css` grants a
+  24px minimum height to a list of selectors, one of which — `.back a` — had
+  matched nothing since the back link was renamed `.page-back`. So the back
+  links on the two product pages and the policy pages rendered **18px** tall,
+  and `.page-back`, which subtracts that padding from its own `padding-top`
+  because it expects the rule to add it, left those routes **47px** from the
+  header against everyone else's 48. The "More apps" row was a bare `<ul>`
+  outside the rule entirely. Measured after: **0** standalone links under 24px
+  on any route, back links **32.8px**, page-top identical everywhere. Not an
+  accessibility fix — measured against SC 2.5.8 those links passed through the
+  spacing exception; it is a shared rule that lost its surface. Internal, no
+  tag. Before it, **STEP-0077** put an app icon beside its name in
   the catalog, the last of the five items the owner reported on 2026-08-03. The
   product page and both policy pages already used the shared identity lockup;
   the product band was the one surface that named a product without showing it,
@@ -195,7 +220,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **75** (`STEP-0001`..`STEP-0077`; STEP-0033 is
+- Completed **feature** steps: **77** (`STEP-0001`..`STEP-0079`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -223,8 +248,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0077 (an app icon sits beside its name on /apps/ and the home page). Live release v0.48.0.
-next_step: NOT BLOCKED — all five items from the owner's 2026-08-03 pass are worked. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0079 (above-the-fold product icons load eagerly). Live release v0.48.0.
+next_step: STEP-0080 (the rendered-geometry gate, code already on branch step-0080-geometry-gate), then STEP-0081 (one indent for the page title). Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.48.0

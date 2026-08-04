@@ -762,6 +762,46 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0079 — An icon a visitor can already see does not wait to load**
+  *(COMPLETE — merged, internal, no tag, 2026-08-04).* `ProductAvatar` set
+  `loading="lazy"` unconditionally, written when the icon only ever appeared far
+  down a page — an assumption STEP-0077 made false the day before by putting it
+  in the product band. Measured, it renders 165px down a product page at 390px,
+  181px down a policy page and 399px down the catalog at 768px: inside the first
+  screen on three surfaces, where a lazy image is skipped by the preload scanner
+  and not queued until layout reaches it. One `eager` prop, defaulting to lazy,
+  set at those three call sites; the band passes its own above-the-fold flag
+  straight through, so the icon and the lead shot beside it cannot disagree
+  about which screen they are on. `ProductCard`, which renders below the fold on
+  the home grid, keeps the default. On 5 cold runs each at 150ms/1.6Mbps/4× CPU,
+  the icon's `responseEnd` moved **800 → 421ms** on `/apps/sole-focus/` and
+  **703 → 379ms** on `/privacy/sole-focus/`. On `/apps/` it did not move at all,
+  which the card records rather than hides: there the icon shares the screen
+  with the lead shot that already holds `fetchpriority="high"`. No
+  `fetchpriority` was added — one image per page may carry it, and STEP-0053
+  gave it to the image that decides the paint.
+
+- **STEP-0078 — The shared standalone-link rule finds its links again**
+  *(COMPLETE — merged, internal, no tag, 2026-08-04).* `global.css` grants a
+  24px minimum height to `.footer-links a, .back a, .links a, .products a,
+  .elsewhere a` (STEP-0052). Nothing had used `.back` since the back link was
+  renamed `.page-back`, so the rule matched nothing on the two product pages
+  and the policy pages: their back links rendered **18px** tall. Worse,
+  `.page-back` subtracts `--space-1` from its own `padding-top` *because* it
+  expects this rule to add it, so those three routes sat **47px** from the
+  header against every other route's 48 — a 1px break in the one distance
+  STEP-0060 exists to keep identical. The "More apps" row at the foot of a
+  product page was a bare `<ul>` with no class, the one standalone link row on
+  the site outside the rule at all. Fixed by pointing the existing selectors at
+  the class that exists and giving that row the shared `links` class, not by
+  writing a second copy of the rule. Measured after: **0** standalone links
+  under 24px on any of the 9 routes at 390px with a coarse pointer, back links
+  18 → **32.8px**, page-top identical everywhere. Deliberately **not** recorded
+  as an accessibility fix: measured against WCAG 2.2 SC 2.5.8 these links
+  passed, through its spacing exception. It is a shared rule that lost its
+  surface, and a dead selector that takes a whole surface with it while nothing
+  goes red is what STEP-0080 exists to catch.
+
 - **STEP-0077 — An app icon beside its name in the catalog**
   *(COMPLETE — merged, tagged `v0.48.0`, 2026-08-03).* The owner boxed the "Sole Focus" heading on `/apps/`
   and labelled it NAME — "I want icon and names in the apps/games page. Not
