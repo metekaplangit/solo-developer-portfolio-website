@@ -128,6 +128,7 @@ type Reading = {
   smallText: Array<{ el: string; fs: number; text: string }>;
   undersizedTargets: Target[];
   rail: { brand: number | null; prose: number | null; footer: number | null };
+  titleIndent: number | null;
   unequalRows: Array<{ parent: string; top: number; heights: number[] }>;
   voids: Array<{ parent: string; after: string; before: string; gap: number }>;
   lazyInFirstView: Array<{ src: string; top: number; left: number }>;
@@ -163,6 +164,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     smallText: [],
     undersizedTargets: [],
     rail: { brand: null, prose: null, footer: null },
+    titleIndent: null,
     unequalRows: [],
     voids: [],
     lazyInFirstView: [],
@@ -242,6 +244,19 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     return round(el.getBoundingClientRect().left);
   };
   out.rail = { brand: leftOf('header a'), prose: leftOf('main p'), footer: leftOf('footer a') };
+
+  // The page title's own indent from that rail. Six routes start their `h1` on
+  // it; the two that lead with the identity lockup start one icon-width plus a
+  // gap inboard, which STEP-0061 recorded and the owner asked for. What must
+  // not happen is TWO different inboard answers — the product header and the
+  // policy header rendering the same lockup at different icon sizes gave 88px
+  // and 72px, and only one of those was ever written down (STEP-0081).
+  out.titleIndent = (() => {
+    const h1 = document.querySelector('main h1');
+    const rail = out.rail.prose;
+    if (!h1 || !visible(h1) || rail === null) return null;
+    return round(h1.getBoundingClientRect().left - rail);
+  })();
 
   // --- Members of a set that share a row share a height (CHECKLIST L1) ------
   // A SET, not any two boxes on one line. L1 is about "cards, tiles and rows
@@ -505,6 +520,25 @@ describe('rendered geometry (docs/CHECKLIST.md)', () => {
       }
       const spread = Math.max(brand, prose, footer) - Math.min(brand, prose, footer);
       if (spread > 1) bad.push(`${route} @${width}: brand ${brand}, prose ${prose}, footer ${footer}`);
+    }
+    expect(bad).toEqual([]);
+  });
+
+  it('a page title starts on the rail, or at the one shared lockup indent', () => {
+    // Per width, because the gap inside the lockup is narrower below 30rem.
+    const byWidth = new Map<string, Map<number, string[]>>();
+    for (const { route, width, r } of each()) {
+      if (r.titleIndent === null || r.titleIndent <= 1) continue;
+      if (!byWidth.has(width)) byWidth.set(width, new Map());
+      const seen = byWidth.get(width)!;
+      seen.set(r.titleIndent, [...(seen.get(r.titleIndent) ?? []), route]);
+    }
+    const bad: string[] = [];
+    for (const [width, seen] of byWidth) {
+      if (seen.size > 1) {
+        const shown = [...seen].map(([indent, routes]) => `${indent}px (${routes.join(', ')})`).join(' vs ');
+        bad.push(`@${width}: ${shown}`);
+      }
     }
     expect(bad).toEqual([]);
   });

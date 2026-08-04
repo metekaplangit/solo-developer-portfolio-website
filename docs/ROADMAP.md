@@ -762,6 +762,26 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0081 — One indent for a page title**
+  *(COMPLETE — merged, internal, no tag, 2026-08-04).* The site keeps one left
+  rail — measured, the wordmark, the first body paragraph and the first footer
+  link share it on all 9 routes at every width — and six routes start their `h1`
+  on it. The two that lead with the identity lockup start inboard, which
+  STEP-0061 recorded and the owner asked for, but they disagreed with each
+  other: **+88px** on the product pages against **+72px** on the policy pages.
+  The lockup pushes the title in by the icon's width plus the gap, so an icon
+  size is a title indent, and the two headers used 72 and 56. Fixed to 56: the
+  policy header's 56 carries a written reason (policy titles are the longest
+  headings on the site, and 72 towered over a two-line block on a phone) where
+  the product header's 72 carried none — when one number has a rationale and
+  the other does not, the one with the rationale wins. The site now has two
+  identity sizes rather than three: 48 in a card, 56 wherever a product leads a
+  surface. The alternative — moving every title onto the rail — was not
+  reopened; STEP-0061 tried it and reversed it on the owner's explicit
+  instruction, and the owner chose the matching indent at planning. A ninth
+  assertion in `tests/geometry.test.ts` now fails when two routes disagree
+  about that indent; it was seen red against the previous build first.
+
 - **STEP-0080 — The geometry the checklist already demands, checked by a machine**
   *(COMPLETE — merged, internal, no tag, 2026-08-04).* Seven of the eleven rules
   in `docs/CHECKLIST.md` said "read by a person" — enforced when someone
