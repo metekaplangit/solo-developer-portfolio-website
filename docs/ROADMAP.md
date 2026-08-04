@@ -763,7 +763,7 @@ The motion phase is complete.
   0.90 s.
 
 - **STEP-0077 — An app icon beside its name in the catalog**
-  *(ACTIVE, 2026-08-03).* The owner boxed the "Sole Focus" heading on `/apps/`
+  *(COMPLETE — merged, tagged `v0.48.0`, 2026-08-03).* The owner boxed the "Sole Focus" heading on `/apps/`
   and labelled it NAME — "I want icon and names in the apps/games page. Not
   just names." The product page and both policy pages already used the shared
   `.identity` lockup; `ProductBand` was the one surface that named a product
@@ -775,7 +775,7 @@ The motion phase is complete.
   DOM at 1440px and 390px on both pages.
 
 - **STEP-0076 — The two privacy cards read as one set**
-  *(ACTIVE, 2026-08-03).* Internal. The owner boxed the per-product policy
+  *(COMPLETE — merged, tagged `v0.48.0`, 2026-08-03).* The owner boxed the per-product policy
   block on `/privacy/` — "obviously has no harmony at all. Their heights are
   not equal." Measured at **96px against 66px** at 1440px, with different
   bottom edges. Two causes in one rule set: `.policy-link` was a flex row with
@@ -787,7 +787,7 @@ The motion phase is complete.
   fixed height, so a third product cannot reintroduce it.
 
 - **STEP-0075 — The void above the gallery**
-  *(ACTIVE, 2026-08-03).* Internal. The owner boxed an empty band on
+  *(COMPLETE — merged, tagged `v0.48.0`, 2026-08-03).* The owner boxed an empty band on
   `/apps/magic-notes/` and asked for the space to be reduced on the product
   pages. Measured at **144px**, against 80px below the gallery and 8–24px
   inside the header block: two rhythms stacked, the band contributing
@@ -798,7 +798,7 @@ The motion phase is complete.
   80px below. The two 120px loose breaks lower down are deliberately left.
 
 - **STEP-0074 — The screenshot transcript goes**
-  *(ACTIVE, 2026-08-03).* Internal. The owner boxed the "▸ Screenshot
+  *(COMPLETE — merged, tagged `v0.48.0`, 2026-08-03).* The owner boxed the "▸ Screenshot
   transcript" toggle under the Magic Notes gallery and asked for it to go. It
   was added in STEP-0032 as a text alternative, so removing it was checked
   rather than assumed: it rendered nothing but each shot's `alt` string, and
@@ -808,7 +808,7 @@ The motion phase is complete.
   schema, because the content files author it.
 
 - **STEP-0073 — The text the wrapping rule never reached**
-  *(ACTIVE, 2026-08-03).* Internal. The rule has existed since STEP-0062 and
+  *(COMPLETE — merged, internal, in `v0.48.0`, 2026-08-03).* The rule has existed since STEP-0062 and
   most of the site bypassed it: `product.summary` rendered raw on three
   surfaces — the very copy the owner pointed at, breaking as "…a Pomodoro" with
   "timer" alone below — seven policy lists read straight from the content file,
@@ -820,7 +820,7 @@ The motion phase is complete.
   dist assertions hold it, each seen red first.
 
 - **STEP-0072 — The page checklist**
-  *(ACTIVE, 2026-08-03).* Internal. The owner reported three defects in one
+  *(COMPLETE — merged, internal, in `v0.48.0`, 2026-08-03).* The owner reported three defects in one
   sitting — text cut mid-phrase, two policy cards with no harmony, a large void
   on a product page — and ended each report with the same instruction: write
   this down as a checklist so it stops coming back. `docs/CHECKLIST.md` holds
