@@ -21,13 +21,36 @@ merge in `deploy.yml`, blocking the live publish rather than the merge.
 | Governance validator | `python3 scripts/validate-governance.py` | Merge-critical | local only |
 | Unit tests (`lib/` + schema) | `npm test` (Vitest — **added in STEP-0001**) | Merge-critical | local only |
 | Build-output tests (`dist/`) | `npm run test:dist` (**added in STEP-0068**; needs a build first) | Merge-critical | local only |
+| Rendered-geometry tests | `npm run test:ui` (**added in STEP-0080**; needs a build first) | Merge-critical for anything visible | local only |
 | Route/link generation | `npm run build` (sitemap + required static routes) | Merge-critical for release | local only |
 | Accessibility check | `npm run lhci` on built pages | Release-critical | **`deploy.yml` — blocks the live deploy** |
 
-**Current baseline (2026-08-01):** 96 unit tests in 11 files, plus 8
-build-output tests, and Lighthouse CI requiring accessibility ≥0.95 on built
-routes. An unavailable, crashed, or skipped merge-critical verifier is
-`Blocked`, never `Pass`.
+**Current baseline (2026-08-04):** 111 unit tests in 11 files, 14 build-output
+tests, 8 rendered-geometry tests, and Lighthouse CI requiring accessibility
+≥0.95 on built routes. An unavailable, crashed, or skipped merge-critical
+verifier is `Blocked`, never `Pass`.
+
+**Rendered-geometry tests** (`tests/geometry.test.ts`, STEP-0080) close the last
+gap: what the browser LAYS OUT. `dist.test.ts` proves what is in the HTML;
+neither it nor `astro check` notices a link that renders 18px tall, a page title
+off the shared rail, a 400px void, or an above-the-fold image left lazy. Seven
+of the eleven rules in `docs/CHECKLIST.md` said "read by a person", and two
+defects had already survived exactly that (STEP-0078, STEP-0079).
+
+It serves `dist/` from a throwaway `node:http` server and drives a real Chrome
+through `puppeteer-core` — declared as a devDependency rather than borrowed from
+`@lhci/cli`'s transitive tree, which is the STEP-0064 lesson. Nine routes at
+320 / 390 / 768 / 1440 plus one coarse-pointer phone pass, ~65 seconds. Kept out
+of `npm test` AND `npm run test:dist` so neither fast loop waits on a browser.
+
+Two things to know before changing it. Headless Chrome detaches the navigating
+frame intermittently (puppeteer/puppeteer#12294, #13397), so every reading
+retries up to four times and replaces the browser on any failure — retrying a
+whole route instead made three attempts fail on the same route. And when
+breaking `dist/` deliberately to watch an assertion go red, use a style
+**attribute**: the site's own CSP (STEP-0065) blocks an injected `<style>`
+element, so the "broken" page renders perfectly and the assertion looks weak
+when it is the CSP doing its job.
 
 ## Portfolio (risk-based)
 

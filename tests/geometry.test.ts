@@ -249,19 +249,36 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
   // beside a content column is two different things by design, and holding it
   // to one height would be asserting a rule the checklist does not make.
   // Members count as one set when they render the same tag and the same class.
+  //
+  // THE CARD, NOT THE CELL. A grid stretches every item in a row to the row's
+  // height, so the list items themselves can never disagree — which is exactly
+  // why the STEP-0076 defect went unnoticed: the two `<li>` were identical at
+  // 96px while the `.policy-link` INSIDE them measured 96 and 66. So each row
+  // is compared at its own level and one level down, where the visible card
+  // actually is.
   for (const parent of Array.from(document.querySelectorAll('ul, ol, [class*="grid"]'))) {
     const kids = Array.from(parent.children).filter(visible);
     if (kids.length < 2) continue;
-    const byRow = new Map<string, number[]>();
+    const byRow = new Map<string, Element[]>();
     for (const k of kids) {
-      const r = k.getBoundingClientRect();
-      const key = Math.round(r.top) + '|' + label(k);
-      byRow.set(key, [...(byRow.get(key) ?? []), round(r.height)]);
+      const key = Math.round(k.getBoundingClientRect().top) + '|' + label(k);
+      byRow.set(key, [...(byRow.get(key) ?? []), k]);
     }
-    for (const [key, heights] of byRow) {
-      if (heights.length < 2) continue;
-      if (Math.max(...heights) - Math.min(...heights) > 1) {
-        out.unequalRows.push({ parent: label(parent), top: Number(key.split('|')[0]), heights });
+    for (const [key, row] of byRow) {
+      if (row.length < 2) continue;
+      const top = Number(key.split('|')[0]);
+      const levels: Array<{ suffix: string; els: Element[] }> = [{ suffix: '', els: row }];
+      // One level down, only when every member wraps exactly one element and
+      // they are all the same kind of thing.
+      const inner = row.map((k) => (k.children.length === 1 ? k.firstElementChild : null));
+      if (inner.every((c) => c && visible(c)) && new Set(inner.map((c) => label(c!))).size === 1) {
+        levels.push({ suffix: ' > ' + label(inner[0]!), els: inner as Element[] });
+      }
+      for (const { suffix, els } of levels) {
+        const heights = els.map((e) => round(e.getBoundingClientRect().height));
+        if (Math.max(...heights) - Math.min(...heights) > 1) {
+          out.unequalRows.push({ parent: label(parent) + suffix, top, heights });
+        }
       }
     }
   }
@@ -289,12 +306,21 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
   walk(document.body);
 
   // --- Nothing already on screen waits to load -----------------------------
-  // Both axes. The gallery's later slides share the first slide's top offset
-  // but sit off to the right inside a horizontal scroller, where lazy is right.
+  // "On screen" means a quarter of the image is on screen, in BOTH axes.
+  //
+  // Both axes, because the gallery's later slides share the first slide's top
+  // offset while sitting off to the right inside a horizontal scroller, where
+  // lazy is exactly right. A quarter, because that scroller deliberately shows
+  // a sliver of the next slide — 150px of an 1150px image at 1440px — and
+  // fetching a full-width screenshot to stop a 13% edge arriving late is a bad
+  // trade. A quarter is the point where an image is something the reader is
+  // looking at rather than a hint that one more exists.
   for (const img of Array.from(document.querySelectorAll('img'))) {
     if (!visible(img)) continue;
     const r = img.getBoundingClientRect();
-    const onScreen = r.top < window.innerHeight && r.bottom > 0 && r.left < window.innerWidth && r.right > 0;
+    const visibleW = Math.max(0, Math.min(r.right, window.innerWidth) - Math.max(r.left, 0));
+    const visibleH = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
+    const onScreen = visibleW >= r.width / 4 && visibleH >= r.height / 4;
     if (onScreen && img.loading === 'lazy') {
       out.lazyInFirstView.push({
         src: (img.currentSrc || img.src).split('/').pop()!.slice(0, 44),

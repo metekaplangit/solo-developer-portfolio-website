@@ -13,7 +13,23 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0079** stopped the product icon waiting to
+- **Latest product state:** **STEP-0080** made the rendered geometry a check
+  rather than a habit. Seven of the eleven rules in `docs/CHECKLIST.md` said
+  "read by a person", and STEP-0078 and STEP-0079 were both defects that
+  survived exactly that. `npm run test:ui` serves `dist/` and drives a real
+  Chrome over 9 routes × 4 widths plus a coarse-pointer phone pass, asserting:
+  no sideways scroll, no text under 13px, every target 24px or exempt under
+  SC 2.5.8, one shared left rail, a set sharing a height on a row, no gap wider
+  than the rhythm, and nothing on screen left lazy. **8 assertions, 65s, and
+  every one seen red first.** `puppeteer-core` is now a declared devDependency
+  rather than borrowed from `@lhci/cli`'s transitive tree — the STEP-0064
+  lesson. Two things the red-first pass taught: the site's own CSP silently
+  defeats an injected `<style>`, so deliberate breaks must use style
+  attributes; and the height rule cannot fail on this markup at all, because a
+  grid stretches every item in a row — it was proved on a synthetic flex row
+  and widened to look one level inside each cell, where the STEP-0076 defect
+  actually lived. Internal, no tag. Before it, **STEP-0079** stopped the
+  product icon waiting to
   load when a visitor is already looking at it. `ProductAvatar` hardcoded
   `loading="lazy"` from the day it was written, when it only ever appeared far
   down a page — an assumption STEP-0077 made false by putting the icon in the
@@ -220,7 +236,7 @@
 
 ## Current facts
 
-- Completed **feature** steps: **77** (`STEP-0001`..`STEP-0079`; STEP-0033 is
+- Completed **feature** steps: **78** (`STEP-0001`..`STEP-0080`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
   Notes (in development, no store link). The catalogue lists both; the home page
@@ -248,8 +264,8 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0079 (above-the-fold product icons load eagerly). Live release v0.48.0.
-next_step: STEP-0080 (the rendered-geometry gate, code already on branch step-0080-geometry-gate), then STEP-0081 (one indent for the page title). Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0080 (a rendered-geometry gate, `npm run test:ui`). Live release v0.48.0.
+next_step: STEP-0081 (one indent for the page title). Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
 branch: main
 head: regenerate live with git rev-parse HEAD
 product_tag: v0.48.0
@@ -262,7 +278,7 @@ remote_sync: origin (github.com/metekaplangit/solo-developer-portfolio-website)
 due_checkpoints: none
 blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
-required_checks: [npm run build, npm run check, npm test, npm run test:dist, scripts/validate-governance.py]
+required_checks: [npm run build, npm run check, npm test, npm run test:dist, npm run test:ui, scripts/validate-governance.py]
 calibration: completed
 updated_at: 2026-08-03
 ```

@@ -762,6 +762,29 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0080 — The geometry the checklist already demands, checked by a machine**
+  *(COMPLETE — merged, internal, no tag, 2026-08-04).* Seven of the eleven rules
+  in `docs/CHECKLIST.md` said "read by a person" — enforced when someone
+  remembers — and STEP-0078 and STEP-0079 were both defects that survived that.
+  `tests/geometry.test.ts` behind `npm run test:ui` serves `dist/` from a
+  throwaway `node:http` server and drives a real Chrome over 9 routes × 4 widths
+  plus a coarse-pointer phone pass: no sideways scroll, no text under 13px,
+  every target 24px or exempt under SC 2.5.8, one shared left rail, a set
+  sharing a height on a row, no gap wider than `--band-y-loose`, nothing on
+  screen left lazy. 8 assertions, ~65s, kept out of both fast suites.
+  `puppeteer-core` declared rather than borrowed from `@lhci/cli`'s transitive
+  tree (STEP-0064). **Facts, not pixels:** the mainstream answer is a
+  screenshot baseline, which would not have caught STEP-0078 at all — six
+  invisible pixels of padding are a diff of nothing — and which fails on every
+  intended change until nobody looks at the diff any more. Every assertion was
+  seen red against deliberately broken output, and that pass returned two
+  things a green run never would: the site's own CSP (STEP-0065) blocks an
+  injected `<style>`, so three "weak" assertions were fine all along and the
+  breaks had to be style attributes; and the height rule cannot fail on this
+  site's markup, because a grid stretches every item in a row — it was proved
+  on a synthetic flex row, and widened to compare one level inside each cell,
+  which is where the STEP-0076 defect actually lived.
+
 - **STEP-0079 — An icon a visitor can already see does not wait to load**
   *(COMPLETE — merged, internal, no tag, 2026-08-04).* `ProductAvatar` set
   `loading="lazy"` unconditionally, written when the icon only ever appeared far
