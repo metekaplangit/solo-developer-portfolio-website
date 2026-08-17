@@ -14,6 +14,26 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.49.0] — 2026-08-17
+
+### Added
+
+- **Magic Notes is on the Mac App Store, and the site now says so.** The app
+  went live on 16 August 2026. Its page carries a Mac App Store button, a
+  "Released" badge, the release date and the price — free — where it used to
+  read "Not yet available — check back soon."
+- Search engines are told the same thing: the page publishes a machine-readable
+  offer naming the price and the listing it points at, which it could not do
+  while there was nothing to buy.
+
+### Notes
+
+- The listing is titled *Magic Notes Calculator*; the site goes on calling the
+  app **Magic Notes**. The extra word is a store search keyword, exactly as with
+  *Sole Focus Pomodoro Timer*.
+- The home page still leads with Sole Focus. Which app takes the spotlight is a
+  design decision rather than a consequence of shipping, and it was left alone.
+
 ## [0.48.1] — 2026-08-04
 
 One release for three packets. STEP-0078, STEP-0079 and STEP-0081 came out of

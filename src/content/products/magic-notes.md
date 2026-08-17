@@ -3,13 +3,26 @@ id: magic-notes
 name: Magic Notes
 slug: magic-notes
 type: app
-# Not released. No store link, no price, no release date — the page says so
-# rather than implying a download that does not exist yet (STEP-0069).
-status: in-development
+# Live on the Mac App Store since 2026-08-16 (STEP-0082). Status, store link,
+# price and release date were held empty by STEP-0069 until the app was
+# accepted; every fact below is read from Apple's own listing for id 6797499171,
+# not from the app's submission draft.
+status: released
+# Deliberately not featured. Sole Focus holds the home spotlight, and the hero
+# carries a product's hue only while exactly ONE product is featured — flipping
+# this would swap the whole home page to a different product. A design decision,
+# not a release fact, and it belongs to the owner.
 featured: false
 summary: A Mac writing pad that does the arithmetic. Write the sum the way you would say it, and the answer lands beside the line — exactly, or not at all.
 platforms: [macos]
-storeLinks: []
+storeLinks:
+  - store: mac-app-store
+    url: https://apps.apple.com/us/app/magic-notes-calculator/id6797499171?mt=12
+    status: available
+# Free, verified from the listing. No "no in-app purchases" claim anywhere on
+# this page: the listing exposes no purchase list either way, and an absent
+# badge is not evidence.
+price: "0"
 privacyFacts: "Works offline — no account, no cloud, no tracking"
 # Identity colour, read from the app rather than chosen for the site. The Magic
 # Notes icon is deliberately achromatic — a #4F5963 frame on near-white — and the
@@ -98,7 +111,8 @@ features:
   - A revision timeline per sheet, guarded backup restore, and unlimited undo
   - Export to plain text, Markdown, print, PDF, or a portable library bundle
   - Zen mode, Shortcuts actions, and Spotlight indexing that is off until you ask
-lastUpdated: 2026-08-03
+releaseDate: 2026-08-16
+lastUpdated: 2026-08-17
 seo:
   title: Magic Notes — Write the Sum, Read the Answer
   description: A Mac notebook that answers arithmetic written in plain sentences — exact where it can be, and openly approximate where it cannot. Offline, no account, no tracking.
@@ -177,6 +191,5 @@ looks right.
 Settings. The choice is never guessed from your region, and changing it never
 rewrites what you have already written.
 
-_Magic Notes 1.0.0 is finished and on its way to release. This page carries no
-download link until it is available; the support address answers in the
-meantime._
+_Free on the Mac App Store. The support address answers if a line does not do
+what you expected._

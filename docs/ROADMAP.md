@@ -762,6 +762,31 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0082 — Magic Notes goes on sale**
+  *(COMPLETE — merged and shipped as **v0.49.0**, 2026-08-17).* Versionable: a
+  completed user-facing feature, and the first thing on the site a visitor can
+  act on that was not there before. The app was accepted and published on
+  **2026-08-16** as *Magic Notes Calculator* — free, version 1.0.2, macOS 15.0
+  or later — which fires the trigger STATUS had been holding since STEP-0070.
+  **Every fact was read from Apple's lookup endpoint for id `6797499171`**, not
+  from the app's own submission draft: the draft is what the studio asked for,
+  the listing is what a visitor gets. Four frontmatter fields changed and **no
+  code did** — `status: released`, the verified store link at `available`,
+  `price: "0"`, `releaseDate: 2026-08-16` — because STEP-0069 built the page to
+  render from exactly those, which is the first time that design was tested by
+  the event it was built for. The three content pins holding the unreleased
+  state were replaced rather than deleted, and the offer-and-store-link
+  assertion in `tests/dist.test.ts` was seen red against the v0.48.1 build
+  first. **Two deliberate silences.** No "no in-app purchases" line, which Sole
+  Focus's sign-off carries: the listing exposes no purchase list either way and
+  the lookup endpoint has no field for it, so an absent badge is not evidence.
+  And `featured` stays false — `index.astro` gives the hero a product's hue only
+  while exactly one product is featured, so flipping it would swap the entire
+  home page to a different product. That is a design decision belonging to the
+  owner, and it is recorded in STATUS as an open decision rather than as work.
+  113 unit tests (111 before), 14 dist tests, 9 rendered-geometry, 10 routes
+  unchanged.
+
 - **STEP-0081 — One indent for a page title**
   *(COMPLETE — merged, internal, no tag, 2026-08-04).* The site keeps one left
   rail — measured, the wordmark, the first body paragraph and the first footer
