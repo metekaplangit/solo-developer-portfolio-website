@@ -18,7 +18,7 @@
     "test:watch": "vitest",
     "test:dist": "vitest run --config vitest.dist.config.ts",
     "test:ui": "vitest run --config vitest.ui.config.ts",
-    "validate:governance": "python3 scripts/validate-governance.py",
+    "headless": "npm run build && npm run check && npm test && npm run test:dist",
     "lhci": "lhci autorun"
   },
   "dependencies": {

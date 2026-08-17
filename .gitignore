@@ -38,3 +38,12 @@ Thumbs.db
 
 # Impeccable tool state (live-mode config, proof assets) — dev-time only.
 .impeccable/
+
+# Python bytecode. The control's own tests write it beside them, and an untracked
+# folder is a dirty tree, which is what `loop.py start` refuses.
+__pycache__/
+
+# A card's pictures are evidence, not history. Git never forgets a blob once it
+# has one, so these are ignored from the day the control landed rather than later.
+control/cards/*/before/
+control/cards/*/after/
