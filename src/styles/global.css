@@ -57,6 +57,13 @@
   --hue-contrast: #1c0d02;
   --hue-soft: color-mix(in oklab, var(--hue) 16%, transparent);
   --hue-wash: color-mix(in oklab, var(--hue) 22%, transparent);
+  /* The two lines above are the FALLBACK only, and they are why the block
+     below exists. A custom property substitutes its `var()` references on the
+     element that DECLARES it, not on the element that uses it — so these two,
+     declared here, bake in the `--hue` default above and hand every band the
+     same orange no matter which product owns it. Measured on the built home
+     page (STEP-0083): the Magic Notes band computed `--hue: #B2BBC5` and
+     painted `oklab(0.7635 0.0960 0.1267 / 0.16)`, which is #ff9245. */
 
   /* Typography */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
@@ -179,6 +186,24 @@
   --dur-fast: 120ms;
   --dur: 220ms;
   --dur-slow: 420ms;
+}
+
+/* Every element that OWNS a hue re-derives the two washes from it (STEP-0083).
+   One rule, in one place, listing the four surfaces that set `--hue` inline:
+   the product band, the product page, the hero when a single product is
+   featured, and the statements band. Anything nested inside them — a
+   `.panel-accent`, a `.hero-glow`, a hue-toned button — inherits the corrected
+   value and needs no entry of its own.
+
+   Add a surface here the moment it sets `--hue`, or it will silently wear the
+   fallback orange instead of its product's colour. That is DESIGN.md §2 (One
+   Voice Per Band) and it is exactly what went wrong before this rule existed. */
+.product-band,
+.product-page,
+.band-hero.owns-hue,
+.band-says {
+  --hue-soft: color-mix(in oklab, var(--hue) 16%, transparent);
+  --hue-wash: color-mix(in oklab, var(--hue) 22%, transparent);
 }
 
 *,

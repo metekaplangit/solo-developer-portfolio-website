@@ -18,6 +18,22 @@ function frontmatter(relPath: string): unknown {
   return parse(match[1]);
 }
 
+// The home page's hero carries a product's colour only while EXACTLY ONE
+// product is featured (`index.astro`: `heroOwnsHue`). Two featured products and
+// the hero silently goes achromatic; none and the spotlight falls back to
+// whatever sorts first. Neither failure shows up in a build, a type check or a
+// route list, so the invariant is pinned here rather than left to a reviewer
+// noticing a second `featured: true` in a file they were not reading.
+describe('the home spotlight', () => {
+  const products = ['sole-focus', 'magic-notes'].map((slug) =>
+    productSchema.parse(frontmatter(`src/content/products/${slug}.md`)),
+  );
+
+  it('is held by exactly one product', () => {
+    expect(products.filter((p) => p.featured).map((p) => p.id)).toEqual(['magic-notes']);
+  });
+});
+
 describe('Sole Focus product content', () => {
   const product = productSchema.parse(frontmatter('src/content/products/sole-focus.md'));
 

@@ -132,6 +132,7 @@ type Reading = {
   unequalRows: Array<{ parent: string; top: number; heights: number[] }>;
   voids: Array<{ parent: string; after: string; before: string; gap: number }>;
   lazyInFirstView: Array<{ src: string; top: number; left: number }>;
+  strayHues: Array<{ el: string; hue: string; derived: string }>;
 };
 
 /**
@@ -168,6 +169,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     unequalRows: [],
     voids: [],
     lazyInFirstView: [],
+    strayHues: [],
   };
 
   // --- Text size -----------------------------------------------------------
@@ -342,6 +344,31 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
         top: Math.round(r.top),
         left: Math.round(r.left),
       });
+    }
+  }
+
+  // --- One voice per band (STEP-0083) --------------------------------------
+  //
+  // `--hue-soft` and `--hue-wash` are made out of `--hue`, and a custom
+  // property substitutes its `var()` references on the element that DECLARES
+  // it — not on the element that uses it. Declared once on `:root`, both baked
+  // in the fallback orange, so every band on the site painted Sole Focus's
+  // colour whichever product owned it. DESIGN.md §2 said the opposite, the
+  // comment above the rule said the opposite, and nothing looked: the two
+  // agreed for eleven months because there was one product.
+  //
+  // Checked here rather than in `dist.test.ts` because the defect is invisible
+  // in the HTML — the band's own `--hue` was right the whole time. Only a
+  // browser resolving the cascade can tell you what got painted.
+  for (const el of Array.from(document.querySelectorAll('[style*="--hue"]'))) {
+    const cs = getComputedStyle(el);
+    const hue = cs.getPropertyValue('--hue').trim();
+    if (!hue) continue;
+    for (const prop of ['--hue-soft', '--hue-wash']) {
+      const derived = cs.getPropertyValue(prop).trim();
+      if (derived && !derived.toLowerCase().includes(hue.toLowerCase())) {
+        out.strayHues.push({ el: label(el), hue, derived: `${prop}: ${derived}` });
+      }
     }
   }
 
@@ -560,6 +587,13 @@ describe('rendered geometry (docs/CHECKLIST.md)', () => {
   it('nothing already on screen is left to load lazily', () => {
     const bad = each().flatMap(({ route, width, r }) =>
       r.lazyInFirstView.map((i) => `${route} @${width}: ${i.src} at ${i.left},${i.top}`),
+    );
+    expect(bad).toEqual([]);
+  });
+
+  it('a surface that owns a hue paints its washes in that hue', () => {
+    const bad = each().flatMap(({ route, width, r }) =>
+      r.strayHues.map((h) => `${route} @${width}: ${h.el} owns ${h.hue} but has ${h.derived}`),
     );
     expect(bad).toEqual([]);
   });
