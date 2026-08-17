@@ -8,11 +8,10 @@ type: app
 # accepted; every fact below is read from Apple's own listing for id 6797499171,
 # not from the app's submission draft.
 status: released
-# Deliberately not featured. Sole Focus holds the home spotlight, and the hero
-# carries a product's hue only while exactly ONE product is featured — flipping
-# this would swap the whole home page to a different product. A design decision,
-# not a release fact, and it belongs to the owner.
-featured: false
+# The home spotlight, by the owner's decision on 2026-08-17 (STEP-0083). Exactly
+# ONE product is featured at a time — `index.astro` gives the hero a product's
+# hue only on that condition — so Sole Focus was unfeatured in the same change.
+featured: true
 summary: A Mac writing pad that does the arithmetic. Write the sum the way you would say it, and the answer lands beside the line — exactly, or not at all.
 platforms: [macos]
 storeLinks:
@@ -134,9 +133,10 @@ exact. You are never left holding a confident wrong number.
 
 ## Written in words, not in syntax
 
-Percentages, money, units, cooking measures, dates, times and durations, loans
-and interest, rates such as an amount per week, powers and roots, rounding,
-factors and combinations, number bases, and statistics over the lines above.
+It reads the arithmetic people actually write. Percentages, money, units,
+cooking measures, dates, times and durations, loans and interest, rates such as
+an amount per week, powers and roots, rounding, factors and combinations,
+number bases, and statistics over the lines above.
 
 Name a value and use it further down. Total a section. Ask a question of the
 lines above it. Change one number at the top and watch the whole page follow.

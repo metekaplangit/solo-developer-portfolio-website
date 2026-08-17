@@ -762,6 +762,34 @@ The motion phase is complete.
   spaces removed, and a deleted route. 8 tests; `npm test` unchanged at 96 in
   0.90 s.
 
+- **STEP-0083 — Magic Notes takes the home spotlight**
+  *(COMPLETE — merged and shipped as **v0.50.0**, 2026-08-17).* The owner's
+  answer to the decision STEP-0082 left open. `featured` is one boolean and
+  exactly one product may hold it — the hero carries a hue only while
+  `featured.length === 1` — so Magic Notes took it and Sole Focus gave it up.
+  **The swap was two booleans; what it exposed was the packet.** The home bands
+  had only ever been fed one product, and three things broke when another
+  arrived. **(1) Every band on the site wore Sole Focus's orange.** `--hue-soft`
+  and `--hue-wash` were declared on `:root`, and a custom property substitutes
+  its `var()` on the element that *declares* it — so both baked in the `#ff9245`
+  fallback and no band could ever wear its own colour. Measured: `.product-band`
+  computed `--hue: #B2BBC5` and painted #ff9245. Latent for eleven months
+  because the only product's hue *was* the fallback, and contradicted by
+  DESIGN.md §2 and by the comment directly above `.panel-accent`. Fixed once, in
+  `global.css`, on the four surfaces that set a hue. **(2) A lone screenshot**
+  at the foot of the page: the mosaic is `shots.slice(1)` in a two-column grid,
+  and 6 shots left a fifth figure beside a 604px hole. Rounded down to an even
+  count, so it cannot recur at 7 or 9. **(3) One statement column twice the
+  height of the others** — 105 / 204 / 105px at 1440, because Magic Notes' second
+  section opened with a 34-word list where Sole Focus's three were written to a
+  matching length (STEP-0062). Fixed in copy, with a seven-word lead sentence;
+  **this edits owner-approved copy** and is flagged as such rather than slipped
+  in. **Left undone, deliberately:** the maker-note band is absent while Magic
+  Notes leads, because `makerNote` is published only with the maker's own
+  approved words and Magic Notes has none. The 10th geometry assertion was seen
+  red first — 50 findings across 3 routes at every width. 114 unit tests (113
+  before), 14 dist, 10 rendered-geometry, 10 routes unchanged.
+
 - **STEP-0082 — Magic Notes goes on sale**
   *(COMPLETE — merged and shipped as **v0.49.0**, 2026-08-17).* Versionable: a
   completed user-facing feature, and the first thing on the site a visitor can

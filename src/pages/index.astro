@@ -28,7 +28,13 @@ const spotlightEntry = spotlight ? entries.find((e) => e.data.id === spotlight.i
 const rest = showcase.slice(1);
 
 const shots = spotlight?.screenshots ?? [];
-const mosaic = shots.slice(1);
+/* The mosaic is a two-column grid above 60rem, so an odd count leaves the last
+   shot alone beside an empty cell — the same raggedness STEP-0063 banned in the
+   feature grid, arriving here instead. Sole Focus's 5 shots hid it (1 lead + 4);
+   Magic Notes has 6, and the swap in STEP-0083 put a lone figure at the bottom
+   of the page with a 604px hole next to it. Rounded DOWN, so the band always
+   ends on a full row, and a product that adds a seventh shot cannot reopen it. */
+const mosaic = shots.slice(1, 1 + 2 * Math.floor((shots.length - 1) / 2));
 
 const heroHasDownload =
   spotlight != null && visibleStoreLinks(spotlight).some((l) => l.status === 'available');

@@ -13,7 +13,29 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0082** put Magic Notes on sale. The app was
+- **Latest product state:** **STEP-0083** gave Magic Notes the home spotlight,
+  the owner's answer to the decision STEP-0082 left open. `featured` moved from
+  Sole Focus to Magic Notes — exactly one product may hold it, because the hero
+  carries a hue only while `featured.length === 1`. **The swap was two booleans;
+  what it exposed was the packet.** Three things broke the moment the home bands
+  were fed a different product. **(1) Every band on the site wore Sole Focus's
+  orange.** `--hue-soft` and `--hue-wash` were declared on `:root`, and a custom
+  property substitutes its `var()` on the element that *declares* it — so both
+  baked in the `#ff9245` fallback and no band could wear its own colour.
+  Measured: `.product-band` computed `--hue: #B2BBC5` and painted #ff9245.
+  Latent for eleven months because the only product's hue *was* the fallback,
+  and flatly contradicted by DESIGN.md §2. Fixed once, on the four surfaces that
+  set a hue. **(2) A lone screenshot** at the foot of the page — 6 shots in a
+  two-column mosaic left a fifth figure beside a 604px hole; the mosaic now
+  rounds down to an even count. **(3) One statement column twice the height of
+  the others**, 105 / 204 / 105px at 1440, fixed with a seven-word lead sentence
+  — **which edits owner-approved copy**, flagged rather than slipped in. A 10th
+  geometry assertion holds the colour rule and was seen red first: 50 findings
+  across 3 routes at every width. **Left undone on purpose:** the home page's
+  maker-note band is absent while Magic Notes leads, because `makerNote` is
+  published only with the maker's own approved words. **That is the one thing
+  waiting on the owner.** Shipped as **v0.50.0**. Before it, **STEP-0082** put
+  Magic Notes on sale. The app was
   accepted and went live on the Mac App Store on **2026-08-16** as *Magic Notes
   Calculator*, free, version 1.0.2, macOS 15.0 or later — every one of those
   facts read from Apple's own lookup endpoint for id `6797499171` on 2026-08-17
@@ -267,13 +289,13 @@
 
 ## Current facts
 
-- Completed **feature** steps: **80** (`STEP-0001`..`STEP-0082`; STEP-0033 is
+- Completed **feature** steps: **81** (`STEP-0001`..`STEP-0083`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
 - Products on the site: **2, both released on the Mac App Store.** Sole Focus
   (free, 2026-07-15) and Magic Notes (free, 2026-08-16). The catalogue lists
-  both; the home page still leads with Sole Focus alone, because only it is
-  `featured` — a deliberate hold, see STEP-0082.
-- Current product tag: **v0.49.0**. `[Unreleased]` is empty.
+  both; the home page leads with **Magic Notes**, which holds `featured` since
+  STEP-0083. Exactly one product may hold it, and a test pins that.
+- Current product tag: **v0.50.0**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -296,11 +318,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0082 (Magic Notes live on the Mac App Store — store link, price, release date). Live release v0.49.0.
-next_step: NOT BLOCKED — Magic Notes is released and the site says so. Then: trigger-armed STEP-0033 (updates/release-notes block, needs a SECOND version of a shipped app); or noUncheckedIndexedAccess (health-check follow-up 4); or the owner's own instruction. Open owner decision, not work: whether Magic Notes should be `featured` and take the home spotlight from Sole Focus
+current_step: STEP-0083 (Magic Notes takes the home spotlight; the band washes finally follow the product's own hue). Live release v0.50.0.
+next_step: NOT BLOCKED — Magic Notes is released, on the site, and leading the home page. WAITING ON THE OWNER, not blocking: a maker's note for Magic Notes in their own words, which is the one band the home page no longer renders. Then: trigger-armed STEP-0033 (updates/release-notes block, needs a SECOND version of a shipped app); or noUncheckedIndexedAccess (health-check follow-up 4); or the owner's own instruction
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.49.0
+product_tag: v0.50.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)

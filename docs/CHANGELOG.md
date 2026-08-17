@@ -14,6 +14,34 @@ commits and does **not** consume a product version.
 
 ## [Unreleased]
 
+## [0.50.0] — 2026-08-17
+
+### Changed
+
+- **Magic Notes now leads the home page.** The hero's download button, the big
+  product band, the three statements and the screenshot mosaic are all Magic
+  Notes. Sole Focus keeps its own page and stays in Apps & Games.
+
+### Fixed
+
+- **Every product band was painted the same orange.** The colour wash behind a
+  product was supposed to be that product's own, and the site had one product
+  for eleven months, so nobody could see that it was actually fixed to Sole
+  Focus's orange. Magic Notes' pages now wear Magic Notes' graphite — on its
+  product page as well as the home page. A browser-based check measures it on
+  every page and every screen width, so it cannot come back.
+- **The last screenshot on the home page no longer sits alone** beside an empty
+  space. The mosaic ends on a full row whatever number of shots a product has.
+- **The three statements under the product now end level.** One of them was
+  twice the height of the other two, because it opened with a 34-word list; it
+  gains a short opening line, on the product page as well.
+
+### Notes
+
+- The home page's short first-person note from the maker is absent while Magic
+  Notes leads, because Magic Notes has none. Those words are only ever
+  published as you write them, so nothing was invented to fill the space.
+
 ## [0.49.0] — 2026-08-17
 
 ### Added

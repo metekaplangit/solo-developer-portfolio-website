@@ -71,7 +71,12 @@ the implementation summary.
 - **Colour:** the site has none. `--accent` is white (studio chrome: focus rings,
   current nav pill, neutral action fill). Colour arrives as `--hue`, authored per
   product (`hue` field → `productHue()`) and scoped to that product's band — the
-  **One Voice Per Band Rule**.
+  **One Voice Per Band Rule**. A surface that sets its own `--hue` must also
+  derive `--hue-soft` and `--hue-wash` there, and `global.css` lists the four
+  that do. A custom property resolves its `var()` on the element that *declares*
+  it, so the two washes declared on `:root` — as they were until STEP-0083 —
+  bake in the fallback and paint every band the same colour. Nothing in the HTML
+  shows it, so `tests/geometry.test.ts` measures it in a browser instead.
 - **Depth (Apple "deference/depth"):** hairline borders (`--border`), soft
   shadows (`--shadow-*`), rounded corners (`--radius*` 10/18/24), a **translucent
   sticky header** (backdrop-blur). The page-wide accent glow is gone: the only
