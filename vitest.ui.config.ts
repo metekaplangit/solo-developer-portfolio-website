@@ -10,7 +10,10 @@ import { defineConfig } from 'vitest/config';
 // and a fast suite that waits on a browser stops being run.
 export default defineConfig({
   test: {
-    include: ['tests/geometry.test.ts'],
+    // `tests/screens/` is the folder `control/project.py` names as this
+    // project's screen tests, and `.spec.ts` is the extension the control
+    // globs for. Neither is a preference — see the header of the suite.
+    include: ['tests/screens/*.spec.ts'],
     environment: 'node',
     // A browser per route, four viewports each, with retries for the frame
     // detach described in the suite header. The default 5s would fail on the

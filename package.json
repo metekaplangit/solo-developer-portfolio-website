@@ -19,6 +19,7 @@
     "test:dist": "vitest run --config vitest.dist.config.ts",
     "test:ui": "vitest run --config vitest.ui.config.ts",
     "headless": "npm run build && npm run check && npm test && npm run test:dist",
+    "capture": "node scripts/capture.mjs",
     "lhci": "lhci autorun"
   },
   "dependencies": {

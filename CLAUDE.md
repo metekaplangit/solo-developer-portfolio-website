@@ -51,12 +51,25 @@ the root. `docs/CHANGELOG.md` is live and the control writes to it.
 
 ## What proves a change
 
-`npm run headless` is what the control runs: build, `astro check`, the unit suite
-and the built-output suite, in that order.
+Two tiers, both run by the control.
 
-`npm run test:ui` drives a real Chrome over 9 routes at 4 widths and is **not** in
-that chain — it takes about a minute, and the control has no screen tier here yet
-(`control/project.py` says why). Run it by hand for any change to a page, a
-component or a stylesheet, and put the pictures in the card's `after/`.
+- **Fast checks — `npm run headless`.** Build, `astro check`, the unit suite and
+  the built-output suite, in that order. Every card runs all of it.
+- **Screens — `tests/screens/site.spec.ts`.** A real Chrome over 9 routes at 4
+  widths plus a phone pass, about a minute. One `test()` per route, and the
+  `@tag` at the end of each title is what a card names:
+
+      @home  @apps  @sole-focus  @magic-notes  @about
+      @support  @privacy-index  @privacy-sole-focus  @not-found  @every-route
+
+A card that touches anything under `src/` or `public/` names the screens it
+changed and photographs them:
+
+    node scripts/capture.mjs control/cards/<slug>/before        # before you start
+    node scripts/capture.mjs control/cards/<slug>/after @home   # after the change
+
+Build before photographing — a picture of a stale build reports differences the
+change never made, and the control refuses a picture older than the code it shows.
+A card that touched only a unit test writes one `unrendered:` line instead.
 
 Live command results override every document in this repository.

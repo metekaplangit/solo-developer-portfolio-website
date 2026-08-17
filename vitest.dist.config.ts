@@ -9,12 +9,11 @@ import { defineConfig } from 'vitest/config';
 // run constantly; making it wait on a build is how a fast suite stops being run.
 export default defineConfig({
   test: {
+    // The screen suite lives under `tests/screens/` and is named `*.spec.ts`,
+    // so this pattern cannot reach it. It used to need an explicit `exclude`
+    // when both suites were `*.test.ts` in one folder; the extension does that
+    // job now, and one rule is better than two that must agree.
     include: ['tests/**/*.test.ts'],
-    // The geometry suite lives in the same folder but launches a browser per
-    // route (STEP-0080). It has its own config and its own `npm run test:ui`;
-    // without this line it would be dragged into a suite that runs in
-    // milliseconds and is run constantly.
-    exclude: ['tests/geometry.test.ts'],
     environment: 'node',
   },
 });

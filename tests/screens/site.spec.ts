@@ -14,8 +14,27 @@
 //
 // Run with `npm run test:ui`, AFTER a build. Kept out of `npm test` and out of
 // `npm run test:dist` because it launches a browser per route.
+//
+// THIS IS THE PROJECT'S SCREEN TIER, and the file name and test titles are part
+// of the contract rather than a preference:
+//
+//   - `control/loop.py` finds a screen by reading `*.spec.ts` in the folder
+//     `control/project.py` names, so this is a `.spec.ts` under `tests/screens/`.
+//   - It reads the tag out of a TEST TITLE, and only from a line beginning
+//     `test(` — `it(` is invisible to it. So every route is one `test()` whose
+//     title ends in that route's `@tag`, and `control/loop.py check` will refuse
+//     a card naming a tag that no title here carries.
+//
+// A route is therefore one screen: nine screens, one per published route. The
+// rules that used to be nine separate `it()` blocks spanning every route are now
+// applied per route and collected, so a failure says WHICH PAGE is wrong before
+// it says which rule — and every rule that a route breaks is still listed, not
+// just the first.
+//
+// One rule cannot be per-route by nature: the page title's indent has to agree
+// ACROSS routes, so it is its own test carrying `@every-route`.
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { test, expect, beforeAll, afterAll } from 'vitest';
 import { createServer, type Server } from 'node:http';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
@@ -27,17 +46,24 @@ import puppeteer, { type Browser } from 'puppeteer-core';
 
 const DIST = 'dist';
 
-/** Every route the site publishes, in the order a reader would meet them. */
+/**
+ * Every route the site publishes, in the order a reader would meet them, each
+ * with the name a card writes down.
+ *
+ * No two tags may be a substring of one another: the control matches a card's
+ * tag against a title with `in`, so `@privacy` would silently select the policy
+ * index AND every product policy. Hence `@privacy-index`.
+ */
 const ROUTES = [
-  '/',
-  '/apps/',
-  '/apps/sole-focus/',
-  '/apps/magic-notes/',
-  '/about/',
-  '/support/',
-  '/privacy/',
-  '/privacy/sole-focus/',
-  '/404',
+  { path: '/', tag: '@home', name: 'the home page' },
+  { path: '/apps/', tag: '@apps', name: 'the catalog' },
+  { path: '/apps/sole-focus/', tag: '@sole-focus', name: "Sole Focus's product page" },
+  { path: '/apps/magic-notes/', tag: '@magic-notes', name: "Magic Notes's product page" },
+  { path: '/about/', tag: '@about', name: 'the about page' },
+  { path: '/support/', tag: '@support', name: 'the support page' },
+  { path: '/privacy/', tag: '@privacy-index', name: 'the privacy index' },
+  { path: '/privacy/sole-focus/', tag: '@privacy-sole-focus', name: "Sole Focus's privacy policy" },
+  { path: '/404', tag: '@not-found', name: 'the not-found page' },
 ] as const;
 
 /** 320 is the narrowest width this site supports; 1440 is the owner's desktop. */
@@ -493,8 +519,12 @@ beforeAll(async () => {
   const started = await serveDist();
   server = started.server;
   chrome = new Chrome();
+  // Every route, every run, whichever screens the card named. One rule below
+  // compares routes against each other, and a run that loaded three of them
+  // could not check it — so the tags choose which failures a card is answerable
+  // for, never which pages get loaded. Reading all nine costs about a minute.
   for (const route of ROUTES) {
-    readings.set(route, await readRoute(chrome, started.base, route));
+    readings.set(route.path, await readRoute(chrome, started.base, route.path));
   }
   // Nothing is read after this point, so the browser goes now rather than
   // waiting on the assertions.
@@ -506,95 +536,120 @@ afterAll(async () => {
   server?.close();
 });
 
-describe('rendered geometry (docs/CHECKLIST.md)', () => {
-  it('reads every route at every width', () => {
-    expect(readings.size).toBe(ROUTES.length);
-    for (const widths of readings.values()) {
-      expect(Object.keys(widths).sort()).toEqual([...WIDTHS.map(String), 'phone'].sort());
+/**
+ * Every rule that can be judged from one page's own readings, as one list of
+ * complaints. Each line names the rule before the measurement, because a route's
+ * test now reports all of its broken rules together and a bare number would not
+ * say which one it came from.
+ */
+function faults(width: string, r: Reading): string[] {
+  const bad: string[] = [];
+
+  if (r.overflowPx > 0) bad.push(`@${width} sideways scroll — ${r.overflowPx}px`);
+
+  for (const t of r.smallText) {
+    bad.push(`@${width} text under ${TEXT_MIN}px — ${t.el} ${t.fs}px "${t.text}"`);
+  }
+
+  for (const t of r.undersizedTargets.filter((t) => t.exempt === null)) {
+    bad.push(`@${width} target under ${TARGET_MIN}px — ${t.el} ${t.w}x${t.h} "${t.text}"`);
+  }
+
+  const { brand, prose, footer } = r.rail;
+  if (brand === null || prose === null || footer === null) {
+    bad.push(`@${width} left rail — a role is missing (${brand}/${prose}/${footer})`);
+  } else if (Math.max(brand, prose, footer) - Math.min(brand, prose, footer) > 1) {
+    bad.push(`@${width} left rail — brand ${brand}, prose ${prose}, footer ${footer}`);
+  }
+
+  for (const u of r.unequalRows) {
+    bad.push(`@${width} row heights — ${u.parent} at ${u.top}: ${u.heights.join(' / ')}`);
+  }
+
+  for (const v of r.voids) {
+    bad.push(`@${width} void wider than ${GAP_MAX}px — ${v.gap}px in ${v.parent} (${v.after} -> ${v.before})`);
+  }
+
+  for (const i of r.lazyInFirstView) {
+    bad.push(`@${width} lazy image already on screen — ${i.src} at ${i.left},${i.top}`);
+  }
+
+  for (const h of r.strayHues) {
+    bad.push(`@${width} wrong wash — ${h.el} owns ${h.hue} but has ${h.derived}`);
+  }
+
+  return bad;
+}
+
+/** Every rule one page can answer for itself, for one route. */
+function holdsGeometry(path: string): void {
+  const widths = readings.get(path);
+  expect(widths, `${path} was never read`).toBeDefined();
+  // A route that silently failed to load every width would otherwise pass every
+  // rule below by having nothing to measure.
+  expect(Object.keys(widths!).sort()).toEqual([...WIDTHS.map(String), 'phone'].sort());
+
+  const bad = Object.entries(widths!).flatMap(([width, r]) => faults(width, r));
+  expect(bad).toEqual([]);
+}
+
+// ONE TEST PER ROUTE, WRITTEN OUT RATHER THAN GENERATED IN A LOOP.
+//
+// The tag has to be a literal in the source. `control/loop.py` reads these titles
+// with a regex over the file — it never runs the suite to ask what the titles came
+// out as — so a generated title like `${route.name} ... ${route.tag}` reads to it
+// exactly as written, `@home` appears nowhere, and `check` refuses the card with
+// "no screen test carries @home". That is what happened the first time this was
+// written; nine plain lines are the fix, and they are greppable besides.
+//
+// Keep each title's tag in step with the `ROUTES` table above, and with the same
+// table in `scripts/capture.mjs`.
+test('the home page holds its geometry @home', () => holdsGeometry('/'));
+test('the catalog holds its geometry @apps', () => holdsGeometry('/apps/'));
+test("Sole Focus's product page holds its geometry @sole-focus", () => holdsGeometry('/apps/sole-focus/'));
+test("Magic Notes's product page holds its geometry @magic-notes", () => holdsGeometry('/apps/magic-notes/'));
+test('the about page holds its geometry @about', () => holdsGeometry('/about/'));
+test('the support page holds its geometry @support', () => holdsGeometry('/support/'));
+test('the privacy index holds its geometry @privacy-index', () => holdsGeometry('/privacy/'));
+test("Sole Focus's privacy policy holds its geometry @privacy-sole-focus", () => holdsGeometry('/privacy/sole-focus/'));
+test('the not-found page holds its geometry @not-found', () => holdsGeometry('/404'));
+
+// The titles above are hand-written, so they can drift from the table they are
+// supposed to match — and a tag that quietly stops existing is a screen the
+// control can no longer be asked to run. Carries no `@tag` of its own on purpose:
+// a tag here would become a tenth screen that opens nothing.
+test('every route in the table has a test carrying its tag', () => {
+  // Only lines that open a test count — the same place the control looks. Searching
+  // the whole file would find every tag in the `ROUTES` table itself and pass while
+  // no test carried any of them.
+  const titles = readFileSync(new URL(import.meta.url), 'utf-8')
+    .split('\n')
+    .filter((line) => line.trimStart().startsWith('test('));
+  const missing = ROUTES.filter((route) => !titles.some((line) => line.includes(route.tag)));
+  expect(missing.map((r) => r.tag)).toEqual([]);
+});
+
+// The one rule no single page can answer. Six routes start their `h1` on the
+// rail; the two that lead with the identity lockup start one icon-width plus a
+// gap inboard, which STEP-0061 recorded and the owner asked for. What must not
+// happen is TWO different inboard answers — the product header and the policy
+// header rendering the same lockup at different icon sizes gave 88px and 72px,
+// and only one of those was ever written down (STEP-0081).
+test('every page title starts on the rail or at the one shared lockup indent @every-route', () => {
+  // Per width, because the gap inside the lockup is narrower below 30rem.
+  const byWidth = new Map<string, Map<number, string[]>>();
+  for (const { route, width, r } of each()) {
+    if (r.titleIndent === null || r.titleIndent <= 1) continue;
+    if (!byWidth.has(width)) byWidth.set(width, new Map());
+    const seen = byWidth.get(width)!;
+    seen.set(r.titleIndent, [...(seen.get(r.titleIndent) ?? []), route]);
+  }
+  const bad: string[] = [];
+  for (const [width, seen] of byWidth) {
+    if (seen.size > 1) {
+      const shown = [...seen].map(([indent, routes]) => `${indent}px (${routes.join(', ')})`).join(' vs ');
+      bad.push(`@${width}: ${shown}`);
     }
-  });
-
-  it('no page scrolls sideways', () => {
-    const bad = each()
-      .filter(({ r }) => r.overflowPx > 0)
-      .map(({ route, width, r }) => `${route} @${width}: ${r.overflowPx}px`);
-    expect(bad).toEqual([]);
-  });
-
-  it('no text is rendered below the size floor', () => {
-    const bad = each().flatMap(({ route, width, r }) =>
-      r.smallText.map((t) => `${route} @${width}: ${t.el} ${t.fs}px "${t.text}"`),
-    );
-    expect(bad).toEqual([]);
-  });
-
-  it('every target reaches 24px or meets an SC 2.5.8 exception', () => {
-    const bad = each().flatMap(({ route, width, r }) =>
-      r.undersizedTargets
-        .filter((t) => t.exempt === null)
-        .map((t) => `${route} @${width}: ${t.el} ${t.w}x${t.h} "${t.text}"`),
-    );
-    expect(bad).toEqual([]);
-  });
-
-  it('the wordmark, the prose and the footer share one left rail', () => {
-    const bad: string[] = [];
-    for (const { route, width, r } of each()) {
-      const { brand, prose, footer } = r.rail;
-      if (brand === null || prose === null || footer === null) {
-        bad.push(`${route} @${width}: a rail role is missing (${brand}/${prose}/${footer})`);
-        continue;
-      }
-      const spread = Math.max(brand, prose, footer) - Math.min(brand, prose, footer);
-      if (spread > 1) bad.push(`${route} @${width}: brand ${brand}, prose ${prose}, footer ${footer}`);
-    }
-    expect(bad).toEqual([]);
-  });
-
-  it('a page title starts on the rail, or at the one shared lockup indent', () => {
-    // Per width, because the gap inside the lockup is narrower below 30rem.
-    const byWidth = new Map<string, Map<number, string[]>>();
-    for (const { route, width, r } of each()) {
-      if (r.titleIndent === null || r.titleIndent <= 1) continue;
-      if (!byWidth.has(width)) byWidth.set(width, new Map());
-      const seen = byWidth.get(width)!;
-      seen.set(r.titleIndent, [...(seen.get(r.titleIndent) ?? []), route]);
-    }
-    const bad: string[] = [];
-    for (const [width, seen] of byWidth) {
-      if (seen.size > 1) {
-        const shown = [...seen].map(([indent, routes]) => `${indent}px (${routes.join(', ')})`).join(' vs ');
-        bad.push(`@${width}: ${shown}`);
-      }
-    }
-    expect(bad).toEqual([]);
-  });
-
-  it('members of a set that share a row share a height', () => {
-    const bad = each().flatMap(({ route, width, r }) =>
-      r.unequalRows.map((u) => `${route} @${width}: ${u.parent} row at ${u.top} — ${u.heights.join(' / ')}`),
-    );
-    expect(bad).toEqual([]);
-  });
-
-  it('no gap between in-flow siblings is wider than the rhythm', () => {
-    const bad = each().flatMap(({ route, width, r }) =>
-      r.voids.map((v) => `${route} @${width}: ${v.gap}px in ${v.parent} (${v.after} -> ${v.before})`),
-    );
-    expect(bad).toEqual([]);
-  });
-
-  it('nothing already on screen is left to load lazily', () => {
-    const bad = each().flatMap(({ route, width, r }) =>
-      r.lazyInFirstView.map((i) => `${route} @${width}: ${i.src} at ${i.left},${i.top}`),
-    );
-    expect(bad).toEqual([]);
-  });
-
-  it('a surface that owns a hue paints its washes in that hue', () => {
-    const bad = each().flatMap(({ route, width, r }) =>
-      r.strayHues.map((h) => `${route} @${width}: ${h.el} owns ${h.hue} but has ${h.derived}`),
-    );
-    expect(bad).toEqual([]);
-  });
+  }
+  expect(bad).toEqual([]);
 });

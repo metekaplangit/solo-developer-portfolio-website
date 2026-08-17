@@ -21,41 +21,60 @@ ROOT = Path(__file__).resolve().parent.parent
 #    list somebody has to keep in step.
 HEADLESS = ["npm", "run", "headless"]
 
-# 2. No screen tier yet, deliberately, and this is the one gap worth knowing about.
-#    `npm run test:ui` does drive a real Chrome over 9 routes at 4 widths — but the
-#    control finds a named screen by reading `*.spec.ts` files for an `@tag` inside a
-#    test title, and this project's suites are `*.test.ts` with no tags in them. So a
-#    tag named on a card could not be resolved, and answering these would refuse every
-#    card that touched a screen. Left empty until a card gives the geometry suite
-#    per-route tags; `check` says out loud that no Scoped tier runs.
-RENDERED: list[str] = []
-RENDERED_TESTS = None
+# 2. One named screen test, driven in a real Chrome against the built site. Every
+#    argument after these is one screen tag from the card.
+#
+#    The runner loads every route whatever it is given: one rule in the suite
+#    compares the page-title indent of each route against all the others, so a run
+#    that loaded three of them could not check it. About a minute, paid only by a
+#    card that touched something a visitor can see. The tags choose which screens
+#    the card is answerable for, never which pages load — `scripts/rendered.mjs`
+#    says the same thing at the top of the file.
+RENDERED = ["node", "scripts/rendered.mjs"]
 
-# 3. Empty for exactly as long as RENDERED is. A project naming screens it cannot
-#    render refuses every card that touches one.
-INTERFACE: tuple[str, ...] = ()
+# 3. Where those tests live, so a tag can be found by reading rather than by running
+#    the suite. The control globs `*.spec.ts` directly inside this folder and reads
+#    `@tags` out of titles on lines beginning `test(` — which is why the suite uses
+#    `test(` and not `it(`, and why it is a `.spec.ts`.
+RENDERED_TESTS = ROOT / "tests" / "screens"
+
+# 4. What a visitor can see. Every route is built out of `src/`, and `public/` is
+#    served untouched, so both count.
+#
+#    The unit tests sit beside the code they test, at `src/**/*.test.ts`, and this is
+#    a prefix match rather than a glob, so there is no way to spell them out here.
+#    They are therefore counted as screen files, which over-asks rather than
+#    under-asks: a card that only touched a unit test says `unrendered:` in one line
+#    and closes. That is the field's purpose — a change living among the pixels
+#    without moving any.
+INTERFACE = ("src/", "public/")
 NOT_INTERFACE: tuple[str, ...] = ()
 
-# 4. What a visitor would never notice changing. `docs/` is the whole of the previous
+# 5. What a visitor would never notice changing. `docs/` is the whole of the previous
 #    control — Step Packets, STATUS, ROADMAP, CHECKPOINTS and the rest — kept as the
 #    record of work that was really done. It is read, never edited, and nothing in it
-#    is product. `scripts/` holds only that system's retired validator.
+#    is product.
+#
+#    `scripts/` as a whole is NOT here, and that is on purpose: it holds the screen
+#    runner and the capture script, and a card that changes how screens are proved
+#    should still run the fast checks. Only the retired validator underneath it is
+#    paperwork.
 PAPERWORK = (
     "control/",
     "docs/",
-    "scripts/",
+    "scripts/retired/",
     ".github/",
     ".claude/",
     ".impeccable/",
     ".vscode/",
 )
 
-# 5. The trunk, and where product-facing history is kept. The changelog is not at the
+# 6. The trunk, and where product-facing history is kept. The changelog is not at the
 #    root here; it has lived under `docs/` since the project was created.
 TRUNK = "main"
 CHANGELOG = ROOT / "docs" / "CHANGELOG.md"
 
-# 6. `SIBLINGS` is deliberately NOT answered, and this project pays for it. Read this
+# 7. `SIBLINGS` is deliberately NOT answered, and this project pays for it. Read this
 #    before answering it.
 #
 #    The walk that finds the other copies goes up two folders and down two, because a
@@ -77,6 +96,6 @@ CHANGELOG = ROOT / "docs" / "CHANGELOG.md"
 #    Until then: before changing anything in `control/`, ask another project whether
 #    it is ahead rather than asking this one.
 
-# 7. Nothing stamps a version into a file here. The site is published from the tag by
+# 8. Nothing stamps a version into a file here. The site is published from the tag by
 #    `.github/workflows/deploy.yml`, and `package.json` carries `0.0.0` on purpose —
 #    it is a private package that is never published to a registry.
