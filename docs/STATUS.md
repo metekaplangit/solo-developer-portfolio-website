@@ -13,7 +13,25 @@
   **https://metkapstudio.com/** over HTTPS. Static Astro output is hosted by
   GitHub Pages behind the Cloudflare proxy. Sole Focus is live on the Mac App
   Store; the support mailbox and published privacy pages are operational.
-- **Latest product state:** **STEP-0081** gave the page title one indent. The
+- **Latest product state:** **STEP-0082** put Magic Notes on sale. The app was
+  accepted and went live on the Mac App Store on **2026-08-16** as *Magic Notes
+  Calculator*, free, version 1.0.2, macOS 15.0 or later — every one of those
+  facts read from Apple's own lookup endpoint for id `6797499171` on 2026-08-17
+  rather than from the app's submission draft. `/apps/magic-notes/` now renders
+  a Mac App Store button, a `Released` badge, a release date and a truthful
+  `offers` block; the "Not yet available — check back soon." line is gone. **No
+  code changed** — STEP-0069 built the page to read all of this from four
+  frontmatter fields, and it did. The three content pins that held the
+  unreleased state were replaced rather than deleted, and the new
+  offer-and-store-link assertion was seen red against the v0.48.1 build first.
+  Two things deliberately **not** claimed: no "no in-app purchases" line, since
+  the listing exposes no purchase list either way and an absent badge is not
+  evidence; and `featured` stays false, so Sole Focus keeps the home spotlight —
+  the hero carries a hue only while exactly one product is featured, so flipping
+  it would swap the whole home page, which is the owner's call and not a release
+  fact. The site keeps calling the product **Magic Notes**; *Calculator* is the
+  listing's search keyword, the same split Sole Focus already lives with.
+  Shipped as **v0.49.0**. Before it, **STEP-0081** gave the page title one indent. The
   wordmark, the first body paragraph and the first footer link share one left
   edge on all 9 routes; six routes start their `h1` there too. The two that lead
   with the identity lockup start inboard — which STEP-0061 recorded and the
@@ -214,7 +232,9 @@
   was built, measured and **rejected** — AVIF came back 14-31% *larger* than the
   current WebP at every width, because these are UI screenshots rather than
   photographs. Nothing shipped; WebP-only stays. All five items the owner reported on
-  2026-08-03 are worked and closed. Next is the owner's own instruction. Do not invent in-development
+  2026-08-03 are worked and closed. **STEP-0082** then fired the one trigger this
+  file had been holding: Magic Notes is live, and its store link, price and
+  release date are on the site. Next is the owner's own instruction. Do not invent in-development
   products.
 - **Open follow-ups from the 2026-07-18 system health check** (none are defects;
   all are deliberate, unscheduled debt):
@@ -247,12 +267,13 @@
 
 ## Current facts
 
-- Completed **feature** steps: **79** (`STEP-0001`..`STEP-0081`; STEP-0033 is
+- Completed **feature** steps: **80** (`STEP-0001`..`STEP-0082`; STEP-0033 is
   trigger-armed and unstarted, STEP-0058 closed measured-and-rejected).
-- Products on the site: **2.** Sole Focus (released, Mac App Store) and Magic
-  Notes (in development, no store link). The catalogue lists both; the home page
-  still leads with Sole Focus alone, because only it is `featured`.
-- Current product tag: **v0.48.1**. `[Unreleased]` is empty.
+- Products on the site: **2, both released on the Mac App Store.** Sole Focus
+  (free, 2026-07-15) and Magic Notes (free, 2026-08-16). The catalogue lists
+  both; the home page still leads with Sole Focus alone, because only it is
+  `featured` — a deliberate hold, see STEP-0082.
+- Current product tag: **v0.49.0**. `[Unreleased]` is empty.
 - Branch policy: `main`; non-destructive feature/checkpoint branches and
   `--no-ff` merge commits; no history rewriting or force-push.
 - Remote: `origin` = `metekaplangit/solo-developer-portfolio-website`.
@@ -275,11 +296,11 @@ schema_version: 1
 profile: standard
 active_overlays: [commercial-compliance-armed]
 active_step: none
-current_step: STEP-0081 (one shared indent for a page title that leads with the identity lockup). Live release v0.48.1.
-next_step: NOT BLOCKED — the owner's 2026-08-04 UI polish batch (STEP-0078..0081) is complete. Then: the Magic Notes store link, price and release date once the app is accepted; or trigger-armed STEP-0033; or noUncheckedIndexedAccess (health-check follow-up 4)
+current_step: STEP-0082 (Magic Notes live on the Mac App Store — store link, price, release date). Live release v0.49.0.
+next_step: NOT BLOCKED — Magic Notes is released and the site says so. Then: trigger-armed STEP-0033 (updates/release-notes block, needs a SECOND version of a shipped app); or noUncheckedIndexedAccess (health-check follow-up 4); or the owner's own instruction. Open owner decision, not work: whether Magic Notes should be `featured` and take the home spotlight from Sole Focus
 branch: main
 head: regenerate live with git rev-parse HEAD
-product_tag: v0.48.1
+product_tag: v0.49.0
 live_url: https://metkapstudio.com/ (live, HTTPS enforced)
 brand: MetKap Studio
 domain: metkapstudio.com (live; Cloudflare proxy; https_enforced: true)
@@ -291,7 +312,7 @@ blockers: none
 required_reads: [STATUS.md, ROADMAP.md, CHECKPOINTS.md, SECURITY.md, DATA_STORAGE.md]
 required_checks: [npm run build, npm run check, npm test, npm run test:dist, npm run test:ui, scripts/validate-governance.py]
 calibration: completed
-updated_at: 2026-08-03
+updated_at: 2026-08-17
 ```
 
 Live commands override this snapshot. At startup regenerate branch/HEAD/dirty

@@ -80,22 +80,46 @@ describe('Sole Focus product content', () => {
   });
 });
 
-// Magic Notes (STEP-0069) is the opposite case to Sole Focus: a finished app
-// that has NOT been released. Its pages exist so the URLs already written into
-// its store submission draft resolve. The risk here is the reverse of a broken
-// image — it is a claim the product cannot yet support (a download, a price, a
-// release date), or a privacy URL that drifts from the one being submitted.
+// Magic Notes went live on the Mac App Store on 2026-08-16 (STEP-0082), which
+// closes the case STEP-0069 opened: its pages were built ahead of the release
+// so the URLs inside the submitted binary would resolve, and everything the
+// product could not yet support — a download, a price, a release date — was
+// pinned empty. Those three pins now assert the opposite of the truth, so they
+// are replaced rather than deleted: the risk simply flipped from claiming a
+// release that had not happened to failing to show one that has.
 describe('Magic Notes product content', () => {
   const product = productSchema.parse(frontmatter('src/content/products/magic-notes.md'));
   const policy = privacyPolicyEntrySchema.parse(
     frontmatter('src/content/policies/magic-notes.md'),
   );
 
-  it('claims no release: no store link, no price, no release date', () => {
-    expect(product.status).toBe('in-development');
-    expect(product.storeLinks).toHaveLength(0);
-    expect(product.price).toBeUndefined();
-    expect(product.releaseDate).toBeUndefined();
+  // Every value here was read from Apple's lookup endpoint for id 6797499171 on
+  // 2026-08-17, not from the app's own submission draft — the draft is what the
+  // studio asked for, the listing is what visitors can actually act on.
+  it('is released, free, and links the verified Mac App Store listing', () => {
+    expect(product.status).toBe('released');
+    const mas = product.storeLinks.find((l) => l.store === 'mac-app-store');
+    expect(mas).toBeDefined();
+    expect(mas?.status).toBe('available');
+    expect(mas?.url).toBe(
+      'https://apps.apple.com/us/app/magic-notes-calculator/id6797499171?mt=12',
+    );
+    expect(product.price).toBe('0');
+    expect(product.releaseDate?.toISOString().slice(0, 10)).toBe('2026-08-16');
+  });
+
+  // The listing is titled "Magic Notes Calculator"; the product is called Magic
+  // Notes. The same split Sole Focus already lives with ("Sole Focus Pomodoro
+  // Timer"), and it is deliberate — a store title carries search keywords, a
+  // product name does not. Pinned so a later sync with the listing cannot drag
+  // the keyword suffix onto the site.
+  it('keeps the product name, not the store listing title', () => {
+    expect(product.name).toBe('Magic Notes');
+  });
+
+  it('pins the verified system requirement shown beside the download button', () => {
+    // Verified against the live listing: macOS 15.0 or later.
+    expect(product.requirements).toBe('macOS 15 or later');
   });
 
   // STEP-0070 replaced the "no images" pin: the owner supplied the shipped icon

@@ -79,13 +79,18 @@ describe('every built page', () => {
     expect(policy).toContain('support@metkapstudio.com');
   });
 
-  // An unreleased product must not advertise a purchase. `offers` is emitted
-  // from `price`, which Magic Notes deliberately does not set — there is no
-  // purchase code in the app and no listing to read a price from.
-  it('emits no offer for the unreleased product (STEP-0069)', () => {
+  // The reverse of STEP-0069's pin: Magic Notes went live on 2026-08-16, so the
+  // page must now advertise the download it withheld for six weeks. `offers` is
+  // emitted only when `released`, a `price` and an available store link are ALL
+  // present, so this one assertion catches any of the three being left behind —
+  // a price without a link, or a link without the status, silently emits
+  // nothing and the page would go on reading as unreleased.
+  it('emits the offer and the store link for the released product (STEP-0082)', () => {
     const [, product] = built.find(([r]) => r === '/apps/magic-notes/')!;
-    expect(product).not.toContain('"offers"');
-    expect(product).toContain('Not yet available');
+    expect(product).toContain(
+      '"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://apps.apple.com/us/app/magic-notes-calculator/id6797499171?mt=12"}',
+    );
+    expect(product).not.toContain('Not yet available');
   });
 
   it('carries exactly one canonical URL, and it matches the route', () => {
