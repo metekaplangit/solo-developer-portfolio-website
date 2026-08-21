@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.50.2
+
+- Ship with a dependency tree the security doc's own gate would pass
+
 ## v0.50.1
 
 - A card that changes a page cannot close without a browser proving it
