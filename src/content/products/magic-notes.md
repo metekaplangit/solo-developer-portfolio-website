@@ -18,11 +18,11 @@ storeLinks:
   - store: mac-app-store
     url: https://apps.apple.com/us/app/magic-notes-calculator/id6797499171?mt=12
     status: available
-# Free, verified from the listing. No "no in-app purchases" claim anywhere on
-# this page: the listing exposes no purchase list either way, and an absent
-# badge is not evidence.
+# Free, verified from the listing. The price is what the listing says today and
+# nothing more: this page carries no claim about advertising, in-app purchases,
+# subscriptions or networking, in either direction, because those are decisions
+# the studio keeps open. What the app does with data belongs on its privacy page.
 price: "0"
-privacyFacts: "Works offline — no account, no cloud, no tracking"
 # Identity colour, read from the app rather than chosen for the site. The Magic
 # Notes icon is deliberately achromatic — a #4F5963 frame on near-white — and the
 # app's own accent palette calls that family Graphite. This is the exact value
@@ -114,7 +114,7 @@ releaseDate: 2026-08-16
 lastUpdated: 2026-08-17
 seo:
   title: Magic Notes — Write the Sum, Read the Answer
-  description: A Mac notebook that answers arithmetic written in plain sentences — exact where it can be, and openly approximate where it cannot. Offline, no account, no tracking.
+  description: A Mac notebook that answers arithmetic written in plain sentences — exact where it can be, and openly approximate where it cannot.
 ---
 
 Write "rent 1,450 a month" and the year appears beside it. Write "12% of that"
@@ -151,8 +151,8 @@ the guide teaches a form the app does not have.
 Exchange rates are yours. You enter them, each with the date it was true, and a
 conversion names the exact snapshot it used.
 
-Nothing is downloaded, interpolated or invented — so a figure you show someone
-else is a figure you can account for.
+Nothing is interpolated or invented — so a figure you show someone else is a
+figure you can account for.
 
 ## A notebook, not a scratchpad
 
@@ -165,19 +165,16 @@ and backups restore under a guard that checks before it replaces anything. Take
 the work with you as plain text, Markdown, print, PDF, or a portable bundle of
 the whole library.
 
-## Nothing leaves this Mac
-
-No account. No sync. No cloud. No analytics, no tracking identifiers, no
-advertising. The app does not need the network to do its job, and it does not
-use one.
+## Your notebooks, and what is done with them
 
 Spotlight indexing is off until you turn it on, and covers only sheet titles and
-the text you wrote, on this Mac.
+the text you wrote.
+
+What the app stores, and what it does with it, is set out on the Magic Notes
+privacy page linked from this one. That page carries a date and is revised with
+the release that changes it.
 
 ## Common questions
-
-**Does it need the internet?** No. There is no networking code in the
-application at all — no account, no sync, no analytics, no advertising.
 
 **Where do my notebooks live?** In a folder on your own Mac, backed up locally
 and restorable under a guard that checks before it replaces anything. Export to

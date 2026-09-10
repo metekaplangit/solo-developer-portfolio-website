@@ -44,13 +44,18 @@ platform requirements (e.g. "macOS 10.15 or later").
 - **Secondary fallback:** not yet decided — open question for the owner
   (candidates: open the product page, or read the privacy/support pages).
 - **The line a visitor should remember after ten seconds:** *a one-person Mac
-  studio making calm, private software — free, no account, no tracking, no
-  subscription.* Derived from the confirmed positioning and product facts;
-  owner has not yet ratified this exact wording.
+  studio making calm, native software that does one thing well, with a real
+  person answering support.* Derived from the confirmed positioning and product
+  facts; owner has not yet ratified this exact wording. It read "free, no
+  account, no tracking, no subscription" until 2026-09-10, when every claim of
+  that kind came off the site: they are promises about what the studio will never
+  do, and the studio keeps the option to add advertising, in-app purchases,
+  subscriptions and network features to any future release.
 - **Belief ladder** (derived, pending owner confirmation) — before the download a
   visitor must believe, in order: this is a real studio and not an abandoned
-  hobby page → the app does one thing genuinely well → it costs nothing and takes
-  nothing from me → if it breaks, a real person answers.
+  hobby page → the app does one thing genuinely well → what it costs and what it
+  does with my data are stated plainly and kept current → if it breaks, a real
+  person answers.
 - **Proof on hand: none.** Sole Focus launched 2026-07-15 and there are no
   ratings, reviews, press, or partner logos yet. Trust must therefore be carried
   by craft, transparency, and verifiable specifics. Inventing reviews, ratings,

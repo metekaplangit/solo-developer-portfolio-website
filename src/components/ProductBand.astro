@@ -58,7 +58,7 @@ const alt = shot
 // Tied per fact, not across the whole line: the middot between two facts is a
 // good place for the row to break, and binding across it would make one
 // unbreakable run of both (CHECKLIST T1, T4).
-const facts = [product.requirements, product.privacyFacts]
+const facts = [product.requirements]
   .filter(Boolean)
   .map((f) => tie(f as string))
   .join(' · ');

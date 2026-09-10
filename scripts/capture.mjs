@@ -108,33 +108,64 @@ if (!wanted.length) {
 mkdirSync(into, { recursive: true });
 
 const { server, base } = await serveDist();
-const browser = await puppeteer.launch({
-  executablePath: chrome,
-  headless: true,
-  protocolTimeout: 120_000,
-  args: ['--no-sandbox', '--disable-dev-shm-usage', '--force-device-scale-factor=1'],
-});
+
+const launch = () =>
+  puppeteer.launch({
+    executablePath: chrome,
+    headless: true,
+    protocolTimeout: 120_000,
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--force-device-scale-factor=1'],
+  });
+
+// ONE BROWSER PER ROUTE, and a fresh one on a failed picture. Measured
+// 2026-09-10: a single browser driven across all nine routes dies part way
+// through — `Page.captureScreenshot` comes back "Session closed", and the next
+// `newPage` fails with "Failed to open a new tab", so the process itself has
+// gone. It is not one page being too big: `/apps/magic-notes/` at 390 is the
+// tallest at 7059px and photographs fine on its own, while `/apps/sole-focus/`
+// at 5833px died as the seventh picture of a run. What kills it is the
+// accumulation — nine routes at two widths is eighteen full-page captures of
+// pages carrying 2880×1800 screenshots, and Chrome does not survive that many
+// in one process on this machine.
+//
+// So a browser's life is two pictures, and a picture that still fails is retried
+// once in a brand-new browser before the run gives up. Relaunching costs about
+// half a second a route, against a capture run that cannot finish otherwise.
+async function shoot(route, width, browser) {
+  const page = await browser.newPage();
+  try {
+    await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
+    await page.goto(base + route.path, { waitUntil: 'load', timeout: 60_000 });
+    await new Promise((r) => setTimeout(r, 400));
+    const path = join(into, `${route.file}-${width}.png`);
+    await page.screenshot({ path, fullPage: true });
+    console.log(`  • ${path}`);
+  } finally {
+    await page.close().catch(() => {});
+  }
+}
 
 let taken = 0;
 try {
   for (const route of wanted) {
-    for (const width of WIDTHS) {
-      const page = await browser.newPage();
-      try {
-        await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
-        await page.goto(base + route.path, { waitUntil: 'load', timeout: 60_000 });
-        await new Promise((r) => setTimeout(r, 400));
-        const path = join(into, `${route.file}-${width}.png`);
-        await page.screenshot({ path, fullPage: true });
-        console.log(`  • ${path}`);
+    let browser = await launch();
+    try {
+      for (const width of WIDTHS) {
+        try {
+          await shoot(route, width, browser);
+        } catch (first) {
+          console.log(`  • retrying ${route.file}-${width} in a fresh browser — ${first.message.split('\n')[0]}`);
+          await browser.close().catch(() => {});
+          browser = await launch();
+          await shoot(route, width, browser);
+        }
         taken += 1;
-      } finally {
-        await page.close().catch(() => {});
       }
+    } finally {
+      await browser.close().catch(() => {});
     }
   }
 } finally {
-  await browser.close().catch(() => {});
   server.close();
 }
 

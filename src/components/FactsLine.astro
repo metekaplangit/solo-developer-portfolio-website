@@ -1,10 +1,16 @@
 ---
 // First-glance facts (STEP-0031, review-0002 COMP-01/USER-02/USER-05; wrapping
 // polished in STEP-0037). One quiet middot-separated line of the decision facts
-// a visitor needs before clicking through to the store: price, system
-// requirement, privacy stance. Every fact is derived from structured product
-// content that is already verified elsewhere — this component presents truth, it
-// never creates it. Renders nothing when a product has no facts yet.
+// a visitor needs before clicking through to the store: price today, and the
+// system requirement. Every fact is derived from structured product content that
+// is already verified elsewhere — this component presents truth, it never
+// creates it. Renders nothing when a product has no facts yet.
+//
+// It carried a third fact until 2026-09-10 — a privacy line reading "Works
+// offline — no account, no cloud, no tracking" — and the price fact went on to
+// say "no in-app purchases, no subscription". Both were promises about what the
+// studio would never do rather than facts about the product, and both are gone.
+// Price and requirement stay because they are what the store listing says today.
 import type { Product } from '../content/schema';
 import { tie } from '../lib/typography';
 
@@ -14,10 +20,9 @@ interface Props {
 const { product } = Astro.props;
 
 const facts: string[] = [];
-if (product.price === '0') facts.push('Free — no in-app purchases, no subscription');
+if (product.price === '0') facts.push('Free');
 else if (product.price != null) facts.push(`$${product.price} (one-time)`);
 if (product.requirements) facts.push(product.requirements);
-if (product.privacyFacts) facts.push(product.privacyFacts);
 ---
 
 {
@@ -25,9 +30,8 @@ if (product.privacyFacts) facts.push(product.privacyFacts);
     <p class="facts-line">
       {facts.map((f) => (
         // Each fact is its own flex item, so the row breaks between facts — but
-        // a single fact is long enough to wrap inside itself ("macOS 14 or
-        // later", "no account, no cloud, no tracking"), and those endings were
-        // untied (CHECKLIST T1).
+        // a single fact is long enough to wrap inside itself ("macOS 10.15 or
+        // later"), and those endings were untied (CHECKLIST T1).
         <span class="fact">{tie(f)}</span>
       ))}
     </p>

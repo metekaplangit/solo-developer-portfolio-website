@@ -19,7 +19,7 @@ export const site = {
    *  like one; this is the same substance written for a person. Platform
    *  neutral for the same reason as `headline`. */
   lede: tie(
-    'The apps and games of a one-person studio — each with a plain privacy page and a real person answering support. No hype, no tracking, no subscription.',
+    'The apps and games of a one-person studio — small, native Mac software, each with a plain privacy page and a real person answering support.',
   ),
   description:
     'MetKap Studio — the apps and games of an independent studio, with clear privacy and support pages for every product.',

@@ -1,6 +1,11 @@
 {
-  "@about": "v0.50.1",
-  "@apps": "v0.50.1",
+  "@about": "v0.51.0",
+  "@apps": "v0.51.0",
   "@every-route": "v0.50.1",
-  "@home": "v0.50.1"
+  "@home": "v0.51.0",
+  "@magic-notes": "v0.51.0",
+  "@not-found": "v0.51.0",
+  "@privacy-index": "v0.51.0",
+  "@privacy-sole-focus": "v0.51.0",
+  "@sole-focus": "v0.51.0"
 }

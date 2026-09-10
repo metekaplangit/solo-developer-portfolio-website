@@ -15,6 +15,7 @@ import {
   productHue,
 } from '../lib/products';
 import { organizationSchema, websiteSchema } from '../lib/schema';
+import { tie } from '../lib/typography';
 import { resolveScreenshot, screenshotTitle } from '../lib/screenshots';
 import { bodySections, firstSentence } from '../lib/prose';
 
@@ -173,13 +174,19 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     )
   }
 
-  <!-- BAND 5 — the deal, stated as checkable facts -->
+  <!-- BAND 5 — the deal, stated as checkable facts. It said "Free. No in-app
+       purchases, no subscription." and "Offline. No account, no cloud, no
+       tracking." until 2026-09-10. Those were not facts about the products, they
+       were promises about what the studio would never do, and the studio keeps
+       the option to add advertising, purchases, subscriptions and network
+       features to a future release. What replaced them is checkable and stays
+       true whatever the business model becomes. -->
   <section class="band-promise" aria-labelledby="promise-h">
     <div class="rail">
       <h2 id="promise-h" class="over">The deal</h2>
       <ul role="list">
-        <li>Free. No in-app purchases, no subscription.</li>
-        <li>Offline. No account, no cloud, no tracking.</li>
+        <li>{tie('Native. Built for the Mac, not wrapped from something else.')}</li>
+        <li>{tie('Documented. Every product has its own privacy page, kept current.')}</li>
         <li>Answered. A real person reads <SupportEmail>{site.supportEmail}</SupportEmail>.</li>
       </ul>
     </div>

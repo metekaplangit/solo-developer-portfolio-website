@@ -68,8 +68,7 @@ describe('Sole Focus product content', () => {
     expect(product.releaseDate).toBeDefined();
   });
 
-  // First-glance facts (STEP-0031): the facts line renders from these fields;
-  // privacyFacts must only restate the already-tested policy claims.
+  // First-glance facts (STEP-0031): the facts line renders from these fields.
   // Taste-round T2/T5 (STEP-0034/0035): both render only from these fields and
   // the copy was explicitly user-approved — pin it so changes are deliberate.
   it('carries the approved fit statement', () => {
@@ -86,7 +85,6 @@ describe('Sole Focus product content', () => {
 
   it('carries the first-glance facts fields', () => {
     expect(product.requirements).toBe('macOS 10.15 or later');
-    expect(product.privacyFacts).toBe('Works offline — no account, no cloud, no tracking');
   });
 
   it('pins the verified system requirement shown beside the download button', () => {

@@ -5,10 +5,14 @@ import { withBase } from '../../lib/url';
 import SupportEmail from '../../components/SupportEmail.astro';
 import { tie } from '../../lib/typography';
 
-/* Values — a presentational rewrap of the three commitments this page has
-   always carried, plus the support promise that already ships site-wide in the
-   trust line. Every claim below is restated from somewhere it is already
-   published (privacy pages, support page, product content); none is new. */
+/* Values — how the studio works, not what it promises never to do. Two of these
+   said something different until 2026-09-10: "Offline and fast" promised that
+   software would not need a network, and "No dark patterns" opened with "No ads,
+   no tracking, no engagement traps". Both were commitments about advertising and
+   networking, and the studio keeps those decisions open, so both were rewritten
+   to the thing underneath them that does not change. Nothing here is a claim
+   about a product's business model; what a given app does with data is on that
+   app's own privacy page. */
 const values = [
   {
     title: 'Privacy first',
@@ -16,14 +20,14 @@ const values = [
       'Collect as little as possible, and say so plainly. Every product has its own privacy page in language you can actually read.',
   },
   {
-    title: 'Offline and fast',
+    title: 'Quick to hand',
     body:
-      'Offline-friendly and quick wherever it makes sense. Software should not need a network round-trip to show you a timer.',
+      'Open it and it is ready. Software should not make you wait to do the one thing you opened it for.',
   },
   {
     title: 'No dark patterns',
     body:
-      'No ads, no tracking, no engagement traps. Nothing on screen is trying to talk you into anything.',
+      'Nothing on screen is trying to trick you. No guilt streaks, no manufactured urgency, no interface that hides the way out.',
   },
   {
     title: 'A real person answers',

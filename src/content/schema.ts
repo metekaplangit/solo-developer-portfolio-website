@@ -129,10 +129,15 @@ export const productSchema = z.object({
   // First-person maker's note paragraphs opening the description (taste-round
   // T5). Published only with the maker's explicit approval of the exact copy.
   makerNote: z.array(prose(z.string().min(1))).default([]),
-  // One short, truthful privacy line for the first-glance facts row (e.g.
-  // "Works offline — no account, no cloud, no tracking"). Must restate claims
-  // already made (and tested) in the product's policy/content — never new ones.
-  privacyFacts: z.string().min(1).optional(),
+  // There is deliberately no field here for a privacy or business-model line.
+  // One existed — `privacyFacts`, carrying "Works offline — no account, no
+  // cloud, no tracking" onto every facts row — and it was removed on 2026-09-10
+  // along with every claim of its kind. A sentence like that is not a fact about
+  // a product, it is a commitment about what the studio will never do, and the
+  // studio keeps the option to add advertising, in-app purchases, subscriptions
+  // and network features to any future release. What each app does with data
+  // today belongs on its privacy page, which carries a date and is revised with
+  // the release that changes it. Never reintroduce this field.
   // The product's own identity colour, used to paint its band on any surface
   // that presents it (One Voice Per Band, DESIGN.md §2). Authored per product
   // rather than per site so a catalogue of several products reads as several

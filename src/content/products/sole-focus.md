@@ -10,23 +10,26 @@ status: released
 # Sole Focus keeps its own page, the catalog row on the home page, and the
 # catalogue.
 featured: false
-summary: A calm, private focus timer for Mac — a Pomodoro timer and a real count-up stopwatch, with nothing tracked and no subscription.
+summary: A calm focus timer for Mac — a Pomodoro timer and a real count-up stopwatch, in one small window that gets out of your way.
 platforms: [macos]
 storeLinks:
   - store: mac-app-store
     url: https://apps.apple.com/us/app/sole-focus-pomodoro-timer/id6788789811?mt=12
     status: available
+# The price is what the listing says today and nothing more. This page carries no
+# claim about advertising, in-app purchases, subscriptions or networking, in
+# either direction, because those are decisions the studio keeps open. What the
+# app does with data belongs on its privacy page, which is dated and revised.
 price: "0"
-privacyFacts: "Works offline — no account, no cloud, no tracking"
 # Identity colour for this product's band. Taken from the app's own icon (the
 # orange clock rim), so the site is coloured by the software rather than by a
 # palette chosen for the site.
 hue: "#ff9245"
-fitFor: "You want a calm, native Mac timer that lives in your menu bar, works offline, and never asks for an account."
+fitFor: "You want a calm, native Mac timer that lives in your menu bar and opens straight to a usable timer."
 fitNotFor: "You need a website blocker, team tracking, or cross-device sync — Sole Focus deliberately does none of those."
 makerNote:
-  - "I built Sole Focus because every timer I tried wanted to be more than a timer — accounts, subscriptions, streaks that punish you for resting."
-  - "So this one stays small on purpose: a quiet window, your minutes, nothing tracked. It will never become a blocker or a productivity dashboard."
+  - "I built Sole Focus because every timer I tried wanted to be more than a timer — a dashboard, a setup screen, streaks that punish you for resting."
+  - "So this one stays small on purpose: a quiet window, your minutes, and a timer that is already running two seconds after you open it."
 requirements: macOS 10.15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/sole-focus/
@@ -37,7 +40,7 @@ features:
   - Lives in your menu bar with pause, skip, and finish controls
   - Zen and Study modes for distraction-free, always-in-reach focus
   - Statistics and a light leveling system that make progress visible
-  - Private and offline — no account, no cloud, no tracking, no subscription
+  - Erase every setting, session and preset whenever you like, from Settings
   # Restates the appearance options already described in "Calm, and always in
   # reach" below — no new claim (DESIGN.md §6: never fabricate proof). Added to
   # make the grid's last row full; see docs/tasks/STEP-0063.md.
@@ -90,15 +93,15 @@ releaseDate: 2026-07-15
 lastUpdated: 2026-07-15
 seo:
   title: Sole Focus — Pomodoro & Stopwatch Timer for Mac
-  description: A calm, private Pomodoro and stopwatch timer for macOS. Menu-bar focus sessions, tasks, and stats — no account, no subscription, works fully offline.
+  description: A calm Pomodoro and stopwatch timer for macOS. Menu-bar focus sessions, named task presets, statistics, and a light rank ladder.
 ---
 
 Sole Focus is a calm, distraction-free focus timer for your Mac. It pairs a
 classic Pomodoro timer with a free count-up stopwatch, so whether you work in
 fixed sessions or open-ended sprints, the right timer is always ready.
 
-No sign-up, no setup, no subscription. Sole Focus lives in your menu bar and
-opens straight to a usable timer — then gets out of your way.
+No setup screen to get through. Sole Focus lives in your menu bar and opens
+straight to a usable timer — then gets out of your way.
 
 ## Two ways to work
 
@@ -128,21 +131,21 @@ turns focused minutes into visible progress.
 It is a gentle nudge to keep going, never a chore, and never a streak that
 punishes you for resting.
 
-## Private, offline, yours
+## Yours to erase
 
-No accounts. No cloud. No ads. No tracking. No subscription. Sole Focus makes
-zero network requests — everything stays on your Mac, and your settings,
-sessions, and presets can be erased anytime.
+Your settings, sessions and presets are yours, and every one of them can be
+erased at any time from Settings ▸ General ▸ Danger zone.
+
+What the app stores, and what it does with it, is set out on the Sole Focus
+privacy page linked from this one. That page carries a date and is revised with
+the release that changes it.
 
 ## Common questions
 
-**Is it really free?** Yes. Sole Focus is free, with no in-app purchases and no
-subscription.
-
-**Does it work offline?** Completely. It makes no network requests — everything
-stays on your Mac.
+**Is it free?** Yes. Sole Focus is free on the Mac App Store.
 
 **Does it block apps or websites?** No. Sole Focus is a calm timer, not a
 blocker; it keeps you focused with gentle cues, not lockouts.
 
-_Free on the Mac App Store — no in-app purchases, no subscription._
+_Free on the Mac App Store. The support address answers if something does not
+do what you expected._
