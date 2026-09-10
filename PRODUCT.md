@@ -81,11 +81,13 @@ This is the explicit thing to design against.
 ## Design Principles
 
 1. **Practice what you preach.** The site should behave like the software it
-   sells: calm, fast, nothing tracked, nothing that shouts. A page that violates
-   the product's own values undermines the claim.
+   sells: calm, fast, quiet, nothing that shouts. A page that violates the
+   product's own values undermines the claim.
 2. **Earn trust with evidence, not adjectives.** Prefer verifiable specifics
-   (free, macOS 10.15+, zero network requests) over marketing language. The
-   audience checks.
+   (free today, macOS 10.15+, a dated privacy page) over marketing language. The
+   audience checks. A specific must be a fact with a date on it, never a promise
+   about what the studio will never do — "zero network requests" stood here as an
+   example until 2026-09-10, and it is exactly the shape that is now banned.
 3. **Craft is the argument.** For visitors who judge execution closely, the
    quality of the interface *is* the credibility case for the studio.
 4. **Never fabricate proof.** No invented reviews, ratings, testimonials, or
