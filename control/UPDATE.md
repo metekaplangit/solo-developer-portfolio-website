@@ -57,22 +57,39 @@ adoption, and it belongs in the same commit.
 
 ## A. An older version of this control
 
-One command, run from the project that has the newer control:
+**Open the project that is behind, and run this from inside it.** The path is to
+the newer control's `loop.py`; the `.` is this project, the one being updated:
 
 ```bash
-python3 control/loop.py update /path/to/the/older/project
+python3 /path/to/the/newer/project/control/loop.py update .
 ```
 
-It refuses if a card is open there or the tree is dirty, copies the four files,
-runs their tests in that project, and asks the new control to read that project's
-answers. If either fails it puts the old files back and says why.
+It refuses if a card is open here or the tree is dirty, copies the four files,
+runs their tests here, and asks the new control to read this project's answers.
+If either fails it puts the old files back and says why.
 
 Then go to [the root files](#the-root-files-the-step-everybody-forgets).
 
-**Push from the newest copy, always.** This control belongs to no project — it is
-worked on wherever the work is, and the highest `CONTROL_VERSION` anywhere is the
-real one. An update is a copy rather than a merge, so carrying an older copy over
-a newer one throws that project's work away without a word. A project that is
+**A project is updated from inside itself, and `update` enforces it.** Point it
+at a project you are not standing in and it refuses, naming the command to run
+there instead.
+
+That is a rule about who does the work rather than about which copy is newer.
+The command takes a path, so it reads as an errand — and an agent that has just
+improved the control goes round every other project and runs it, which is a
+sweep through repositories nobody is watching. Each one is left with four
+modified files and no commit, and `start` refuses a dirty tree, so the next
+person to open any of them meets a refusal they did not cause. Three agents have
+tried it; one got a project in before it was stopped by hand.
+
+So each project adopts when somebody opens it and decides to. `start` says when
+a newer copy exists and prints the command above with the paths filled in, so
+there is nothing to look up and no reason to go round.
+
+**The newest copy is still the real one.** This control belongs to no project —
+it is worked on wherever the work is, and the highest `CONTROL_VERSION` anywhere
+wins. An update is a copy rather than a merge, so carrying an older copy over a
+newer one throws that project's work away without a word. A project that is
 behind adopts first and changes the control afterwards; `control/README.md` has
 the whole rule, and a card that changes a system file from behind is refused.
 

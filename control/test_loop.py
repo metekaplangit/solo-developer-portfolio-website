@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import ast
 import importlib.util
+import argparse
 import os
 import re
 import shutil
@@ -1643,6 +1644,113 @@ class TheContractPointsAtRealTests(unittest.TestCase):
         self.assertEqual(missing, [], "the contract in loop.py names tests that do not exist")
 
 
+class AProjectIsUpdatedFromInsideItself(unittest.TestCase):
+    """The errand an agent keeps trying to run, removed rather than discouraged.
+
+    `update` takes a path, so any project can be named, and a session that has
+    just improved the control reads that as a round to make. It leaves four
+    modified files and no commit in each repository it visits, `start` refuses a
+    dirty tree, and the next session to open any of them meets a refusal it did
+    not cause. Three agents have tried it; the third got one project in before it
+    was stopped by hand.
+    """
+
+    #: Newer than this one, always, and that is not decoration.
+    #:
+    #: Past the guard, `update` copies the four files in and runs their tests
+    #: there — and those tests would include these, which perform updates, which
+    #: run tests that perform updates. It hung the machine the first time this
+    #: was written. A target that is already ahead stops at "nothing to do",
+    #: which is far enough to prove everything these tests are about.
+    NEWER = "99"
+
+    def a_project_holding_a_control(self, version: str) -> Path:
+        room = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, room, ignore_errors=True)
+        control = room / "Somewhere" / "control"
+        control.mkdir(parents=True)
+        for system in loop.SYSTEM_FILES:
+            body = (Path(loop.__file__).with_name(system)).read_bytes()
+            if system == "loop.py":
+                body = re.sub(rb'(?m)^CONTROL_VERSION = "[^"]+"', f'CONTROL_VERSION = "{version}"'.encode(), body)
+            control.joinpath(system).write_bytes(body)
+        return room / "Somewhere"
+
+    def updating(self, there: Path, *, standing_in: Path) -> str:
+        was = Path.cwd()
+        os.chdir(standing_in)
+        try:
+            loop.command_update(argparse.Namespace(project=str(there)))
+        except loop.Stop as stopped:
+            return str(stopped)
+        finally:
+            os.chdir(was)
+        return ""
+
+    def test_a_project_you_are_not_standing_in_is_refused(self) -> None:
+        there = self.a_project_holding_a_control(self.NEWER)
+        elsewhere = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, elsewhere, ignore_errors=True)
+        said = self.updating(there, standing_in=elsewhere)
+        self.assertIn("standing in", said, "update reached into a project nobody was working in")
+
+    def test_and_the_refusal_says_the_command_that_works(self) -> None:
+        there = self.a_project_holding_a_control(self.NEWER)
+        elsewhere = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, elsewhere, ignore_errors=True)
+        said = self.updating(there, standing_in=elsewhere)
+        self.assertIn("update .", said, "the refusal does not say what to run instead")
+
+    def test_standing_in_the_project_is_allowed_through(self) -> None:
+        """The guard lets your own adoption past; what stops it after is Git's business."""
+        there = self.a_project_holding_a_control(self.NEWER)
+        said = self.updating(there, standing_in=there)
+        self.assertNotIn("standing in", said, "the guard refused a project the session was working in")
+
+    def test_a_folder_inside_the_project_counts_as_standing_in_it(self) -> None:
+        there = self.a_project_holding_a_control(self.NEWER)
+        inside = there / "src" / "deep"
+        inside.mkdir(parents=True)
+        said = self.updating(there, standing_in=inside)
+        self.assertNotIn("standing in", said, "a session working in a subfolder was told it was elsewhere")
+
+
+class ACardSaysWhenTheControlIsBehind(unittest.TestCase):
+    """Being behind used to surface only when it was already too late.
+
+    It was said on a card that changed a control file — the one moment the choice
+    has narrowed to adopt-first or fork. A project that never touched the control
+    was told nothing, and one sat four versions behind for three weeks with every
+    command reporting itself healthy.
+    """
+
+    def test_starting_a_card_looks_for_a_newer_copy(self) -> None:
+        source = Path(loop.__file__).read_text(encoding="utf-8")
+        start = source[source.index("def command_start") : source.index("SYSTEM_FILES = (")]
+        self.assertIn("ahead_of_here()", start, "starting a card no longer says when the control is behind")
+
+    def test_and_a_broken_search_cannot_stop_a_card_starting(self) -> None:
+        source = Path(loop.__file__).read_text(encoding="utf-8")
+        start = source[source.index("def command_start") : source.index("SYSTEM_FILES = (")]
+        self.assertIn("except Exception", start, "a courtesy sweep can now refuse to let a card start")
+
+    def test_the_notice_can_print_a_command_that_runs(self) -> None:
+        """A path, not just a name — a notice somebody has to decode is one they ignore."""
+        room = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, room, ignore_errors=True)
+        control = room / "Newer" / "control"
+        control.mkdir(parents=True)
+        (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
+
+        found = loop.controls_elsewhere(here=room / "Mine")
+        self.assertTrue(found, "the search found nothing to report")
+        folder = found[0][3]
+        # Resolved on both sides: the search resolves what it walks, and a temp
+        # folder on this platform is reached through a symlink.
+        self.assertEqual(folder, (room / "Newer").resolve(), "the search does not carry where the newer copy is")
+        self.assertTrue((folder / "control" / "loop.py").is_file(), "the path the notice would print does not exist")
+
+
 class TellingSomebodyWhatToDoNext(unittest.TestCase):
     """The two places this control used to leave somebody at a dead end."""
 
@@ -1844,9 +1952,9 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
     def test_it_finds_the_other_copies_and_says_which_is_ahead(self) -> None:
         control = self.looking_at(self.elsewhere(("Older", "2"), ("Newer", "99")))
         self.assertEqual(
-            {name for name, _, _ in control.controls_elsewhere()}, {"Older", "Newer"}
+            {name for name, *_ in control.controls_elsewhere()}, {"Older", "Newer"}
         )
-        self.assertEqual([name for name, _, _ in control.ahead_of_here()], ["Newer"])
+        self.assertEqual([name for name, *_ in control.ahead_of_here()], ["Newer"])
 
     def test_a_card_that_changes_the_control_from_behind_is_refused(self) -> None:
         control = self.looking_at(self.elsewhere(("Newer", "99")))
@@ -1942,7 +2050,7 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
             control.mkdir(parents=True)
             (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
 
-        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        found = {name for name, *_ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
         self.assertEqual(
             found,
             {"Beside", "UnderAnother", "AtTheTop"},
@@ -1965,7 +2073,7 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
             control.mkdir(parents=True)
             (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
 
-        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        found = {name for name, *_ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
         self.assertEqual(
             found,
             {"Beside", "the-repository"},
@@ -1986,7 +2094,7 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
         buried.mkdir(parents=True)
         (buried / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
 
-        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        found = {name for name, *_ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
         self.assertEqual(found, set(), "the search opened a repository instead of treating it as one project")
 
     def test_one_copy_reached_twice_by_the_walk_is_counted_once(self) -> None:
@@ -2001,7 +2109,7 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
         control.mkdir(parents=True)
         (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
 
-        found = [name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")]
+        found = [name for name, *_ in loop.controls_elsewhere(here=room / "Games" / "Mine")]
         self.assertEqual(found, ["Beside"], "one copy was reported more than once")
 
     def test_an_answer_does_not_stop_a_test_pretending_to_sit_elsewhere(self) -> None:
@@ -2021,7 +2129,7 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
         was = loop.SIBLINGS
         loop.SIBLINGS = (str(room / "Nowhere"),)
         self.addCleanup(setattr, loop, "SIBLINGS", was)
-        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        found = {name for name, *_ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
         self.assertEqual(found, {"Beside"}, "an answered SIBLINGS overrode a test pretending to sit elsewhere")
 
     def test_the_default_search_is_not_run_until_it_is_asked_for(self) -> None:

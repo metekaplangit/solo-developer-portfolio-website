@@ -90,7 +90,7 @@ CONTROL = ROOT / "control"
 
 #: Which control this project is on. Bumped when the system itself changes shape,
 #: so any project can be asked what it has and whether it is behind.
-CONTROL_VERSION = "19"
+CONTROL_VERSION = "20"
 CARDS = CONTROL / "cards"
 # When each screen last ran, kept beside the cards because it is this project's
 # history and not part of the control. It never travels with an update.
@@ -987,7 +987,7 @@ def problems(card: Path, text: str, changed: list[str], removed: set[str] | None
         if behind := ahead_of_here():
             found.append(
                 "this card changes the control and "
-                + ", ".join(f"{name} is on {version}" for name, version, _ in behind)
+                + ", ".join(f"{name} is on {version}" for name, version, _, _ in behind)
                 + f" while this project is on {CONTROL_VERSION} — adopt the newer one here first, "
                 "or this change is a fork somebody has to merge by hand"
             )
@@ -1143,6 +1143,25 @@ def command_start(args: argparse.Namespace) -> None:
     say(f"Branch created — {target}")
     say(f"Workshop made — {where(workshop)}/ for the card, its pictures, its notes, anything")
     say(f"Next: write what you did into {where(card)}, then run check as you go")
+    # Said here and nowhere else in an ordinary card's life.
+    #
+    # Being behind used to surface only on a card that changed a control file,
+    # which is the one moment it is already too late — the change is written and
+    # the choice is adopt-first or fork. A project that never touches the control
+    # was told nothing at all, and one sat four versions behind for three weeks.
+    #
+    # It costs one directory sweep per card, which is the thing the rest of this
+    # file works to avoid. Bought deliberately: `start` runs once per card, not
+    # once per check, and a card is already paying for branch, disk and remote.
+    # Anything that goes wrong in the sweep is swallowed — a courtesy line is
+    # never a reason a card cannot be started.
+    try:
+        if behind := ahead_of_here():
+            name, version, _, folder = behind[0]
+            say(f"Control {version} is in {name}; this project is on {CONTROL_VERSION}")
+            say(f"To adopt it, from here: python3 {folder / 'control' / 'loop.py'} update .")
+    except Exception:
+        pass
 
 
 #: The files that are the system. Everything else in `control/` is this project's.
@@ -1227,7 +1246,7 @@ def projects_under(folder: Path) -> list[Path]:
     return found
 
 
-def controls_elsewhere(here: Path | None = None) -> list[tuple[str, str, str | None]]:
+def controls_elsewhere(here: Path | None = None) -> list[tuple[str, str, str | None, Path]]:
     """Every other copy of this control the search can see, newest first.
 
     Cheap on purpose: one listing per folder searched plus one per container
@@ -1242,7 +1261,7 @@ def controls_elsewhere(here: Path | None = None) -> list[tuple[str, str, str | N
     half-copied or is being written to while this runs is not this project's
     problem to report.
     """
-    seen: dict[Path, tuple[str, str, str | None]] = {}
+    seen: dict[Path, tuple[str, str, str | None, Path]] = {}
     for folder in looking_in(here):
         for project_folder in projects_under(Path(folder).expanduser().resolve()):
             target = project_folder / "control"
@@ -1253,12 +1272,16 @@ def controls_elsewhere(here: Path | None = None) -> list[tuple[str, str, str | N
             except OSError:
                 continue
             if found:
-                seen[target] = (project_folder.name, found.group(1), fingerprint(target))
+                seen[target] = (project_folder.name, found.group(1), fingerprint(target), project_folder)
     return sorted(seen.values(), key=lambda one: as_number(one[1]), reverse=True)
 
 
-def ahead_of_here() -> list[tuple[str, str, str | None]]:
-    """The copies that are further along than this one."""
+def ahead_of_here() -> list[tuple[str, str, str | None, Path]]:
+    """The copies that are further along than this one.
+
+    The folder rides along because the only useful thing to say about being
+    behind is the command that fixes it, and that command needs a path.
+    """
     return [one for one in controls_elsewhere() if as_number(one[1]) > as_number(CONTROL_VERSION)]
 
 
@@ -1275,7 +1298,7 @@ def diverged_from_here() -> list[str]:
         return []
     return [
         name
-        for name, version, theirs in controls_elsewhere()
+        for name, version, theirs, _ in controls_elsewhere()
         if version == CONTROL_VERSION and theirs is not None and theirs != mine
     ]
 
@@ -1304,6 +1327,26 @@ def command_update(args: argparse.Namespace) -> None:
         raise Stop(f"{there} does not hold a control — expected {'/'.join(('control', SYSTEM_FILES[0]))} and its two companions")
     if target == CONTROL:
         raise Stop("that is this project's own control; point at another project")
+    # A project is updated by whoever is working in it, and by nobody else.
+    #
+    # The command reads as an errand — one path argument and any project can be
+    # named — so a session that has just improved the control goes round the
+    # others and updates them all, which is a helpful-looking sweep through
+    # repositories nobody is watching. It leaves each one with four modified
+    # files and no commit, and `start` refuses a dirty tree, so the next session
+    # to open any of them meets a refusal it did not cause. It happened here on
+    # 2026-09-10, and it is the third time an agent has tried it.
+    #
+    # So the errand is removed rather than discouraged. Standing in the project
+    # means a person chose to be there: the session that pays for the update is
+    # the session that owns the mess if it goes wrong, and every other project
+    # stays exactly as its own session left it.
+    standing = Path.cwd().resolve()
+    if standing != there and there not in standing.parents:
+        raise Stop(
+            f"you are standing in {where(standing)}, not in {there.name} — a project is updated from "
+            f"inside itself, so open that project and run: python3 {CONTROL / 'loop.py'} update ."
+        )
 
     def theirs(*command: str) -> str:
         done = subprocess.run(["git", *command], cwd=there, text=True, capture_output=True, timeout=120, check=False)

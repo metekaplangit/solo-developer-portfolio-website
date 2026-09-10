@@ -296,8 +296,15 @@ copying either one over the other throws the loser away without saying so.
 So the line is kept straight rather than merged: **be on the newest copy before
 you change anything.** A project that is behind adopts first and then makes its
 change on top, which makes its own copy the newest, which is what the next
-project adopts. Finding out is automatic, and a card that changes a system file
-while another project is ahead is refused with both versions named.
+project adopts. Finding out is automatic: `start` says so when it happens, and a
+card that changes a system file while another project is ahead is refused with
+both versions named.
+
+**Adopting is something a project does to itself.** `update` refuses a project
+you are not standing in, so a copy travels when somebody opens that project and
+decides to take it — never as a round made on their behalf. The reason is in
+`UPDATE.md`; the short of it is that a sweep leaves uncommitted files in
+repositories nobody is watching, and `start` refuses a dirty tree.
 
 **Where it looks is worked out, not written down.** A project sits at
 `<somewhere>/<heading>/<project>`, so the control walks up two and searches
