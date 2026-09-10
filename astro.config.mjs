@@ -105,6 +105,23 @@ export default defineConfig({
       },
     },
   },
+  // This project's own port, 5757, for both `astro dev` and `astro preview`.
+  //
+  // Several projects run a dev server on this machine at once, and Astro's
+  // default 4321 is whichever of them started first. Worse, a taken port makes
+  // Astro slide quietly to the next free one, which is how a session opens the
+  // port it expected, gets the neighbouring project, tests it and reports green.
+  //
+  // So the number is fixed here rather than passed on a command line, where
+  // only the one caller that remembered it would be right, and `strictPort`
+  // makes a collision fail loudly instead of moving.
+  server: {
+    port: 5757,
+  },
+  vite: {
+    server: { strictPort: true },
+    preview: { port: 5757, strictPort: true },
+  },
   // Build-time only; @astrojs/sitemap emits static XML (no runtime service).
   integrations: [sitemap()],
 });

@@ -4,8 +4,12 @@
     {
       "name": "preview",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "preview"],
-      "port": 4321
+      "runtimeArgs": [
+        "run",
+        "preview"
+      ],
+      "port": 5757,
+      "url": "http://127.0.0.1:5757"
     }
   ]
 }
