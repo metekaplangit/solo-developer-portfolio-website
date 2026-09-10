@@ -34,9 +34,10 @@
     "@lhci/cli": "^0.15.1",
     "puppeteer-core": "^24.43.1",
     "typescript": "^5.6.0",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "yaml": "^2.9.0"
   },
   "overrides": {
-    "yaml": "^2.8.3"
+    "yaml": "$yaml"
   }
 }
