@@ -90,7 +90,7 @@ CONTROL = ROOT / "control"
 
 #: Which control this project is on. Bumped when the system itself changes shape,
 #: so any project can be asked what it has and whether it is behind.
-CONTROL_VERSION = "14"
+CONTROL_VERSION = "18"
 CARDS = CONTROL / "cards"
 # When each screen last ran, kept beside the cards because it is this project's
 # history and not part of the control. It never travels with an update.
@@ -319,6 +319,34 @@ def git(*args: str) -> str:
     # and may be blank — so the first changed file in every list silently lost its
     # first character — a path beginning `app/` was read as `pp/`, matching nothing.
     return result.stdout.rstrip("\n")
+
+
+def collapse_onto_trunk() -> str:
+    """Puts everything a card committed as it went back into the index.
+
+    A session can be cut off at any moment — a lost connection, a crashed
+    application, a machine that slept — and until this, the only commit a card
+    ever made was the one `finish` makes at the end. Everything else lived in the
+    working tree, so a cut cost the work and, worse, left the next session a tree
+    of edits with nothing saying what they were for.
+
+    So a card may commit as it goes. Nothing else had to change for that:
+    `changed_files` already reads `TRUNK...HEAD` as well as the working tree, so
+    committed work has always been counted. What did have to change is this — the
+    log's own promise is one card, one commit, one version, one tag, and several
+    half-written commits arriving on the trunk would break it.
+
+    Soft, and that is the whole of it: HEAD moves back to the trunk while the
+    index and the working tree stay exactly as they are, so every commit the card
+    made arrives at the close as staged content rather than as history to rewrite.
+    Nothing is rebased, nothing is squashed after the fact, and the commit that
+    follows carries the card's title and its proof like any other.
+
+    Returns the tip it moved from, so a close that fails can put it back.
+    """
+    tip = git("rev-parse", "HEAD")
+    git("reset", "--soft", TRUNK)
+    return tip
 
 
 def trunk_from_git() -> str:
@@ -649,7 +677,9 @@ def tests_carrying(tag: str) -> list[str]:
             found_title
             for _, found_title in re.findall(TEST_TITLE, spec.read_text(encoding="utf-8"))
         ]
-        found += [f"{spec.name}: {title}" for title in titles if tag in title]
+        # A tag is a whole word: `@settings` must not match `@settings-erase`, which
+        # the runner already reads that way.
+        found += [f"{spec.name}: {title}" for title in titles if tag in title.split()]
     return found
 
 
@@ -1710,6 +1740,9 @@ def command_finish(_args: argparse.Namespace) -> None:
     if prune_before(card.parent):
         say("Dropped before/ — every screen came out identical, so it was two copies of one picture")
     saved = snapshot(card, CHANGELOG, index, LEDGER, *STAMPED)
+    # Read before anything that can fail, so the failure path below always has
+    # somewhere to put the branch back to.
+    tip = git("rev-parse", "HEAD")
     try:
         stamp(version)
         lagging, waiting = remember_screens(named + swept, version)
@@ -1717,6 +1750,9 @@ def command_finish(_args: argparse.Namespace) -> None:
             say(neglect_line(lagging, waiting))
         if product:
             write_changelog(version, title)
+        # Every commit this card made as it went, back into the index, so what
+        # follows is one commit however many times the work was saved.
+        collapse_onto_trunk()
         git("add", "-A", "--", ".")
         # Carried onto the commit beside the tier, because a green close otherwise
         # reads as everything proven — and the seams no tier here can reach are
@@ -1733,6 +1769,9 @@ def command_finish(_args: argparse.Namespace) -> None:
         git("commit", "-m", title, "-m", f"Proof: {tier}" + (f" — {', '.join(named)}" if named else "") + unproven)
     except (OSError, Stop) as exc:
         survived = restore(saved)
+        # And the branch itself, which the collapse above may have moved. Soft, so
+        # the files this just restored are left exactly as they are.
+        git("reset", "--soft", tip)
         left = f"; could not put back: {', '.join(survived)}" if survived else ""
         raise Stop(f"finish put everything back: {exc}{left}") from exc
     git("switch", TRUNK)

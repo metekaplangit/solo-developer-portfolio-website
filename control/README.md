@@ -17,6 +17,32 @@ card closing, in under a second, writing nothing. `finish` runs the tests, works
 out the version, commits, merges, tags and pushes — or puts everything back
 exactly as it was.
 
+**Run every step that needs no earlier result in 1 call.** Reading the files,
+editing them, the fast lane, `check`, `finish` — a session re-reads its whole
+conversation on every call it makes, so a card worked as 18 single steps costs
+18 re-reads and the same card worked as 8 bundled ones costs 8. Bundle what is
+independent, wait only for what is not, and read every output whole: a chained
+command still says everything a lone one said. Measured on one project: `check`
+and `finish` in 1 call, 1 turn saved per card, nothing else different.
+
+**The card's prose is written after its outputs are read, never in the same
+call.** The one thing bundling cannot carry is a claim about a result that has
+not arrived yet: a card that said "nothing remains" was written in the call
+whose grep showed 1 remaining, and it closed green with a false sentence. So a
+card is 2 calls at least — the work with every check, then the card, `check`
+and `finish` once the outputs are in front of you. A claim in a card names
+something already read, or it is not written.
+
+**Commit as you go, as often as you like.** A session can be cut off at any
+moment, and work that was only ever in the working tree costs the session and
+leaves whoever comes next a tree of edits with nothing saying what they were for.
+Saving part-way changes nothing about the close: committed work has always been
+counted — `check` and `finish` both read the whole branch, not just the tree — and
+`finish` puts every one of those commits back into the index before it makes its
+own, so a card still arrives on the trunk as one commit, one version, one tag.
+Nothing needs unpicking afterwards, and a card that saved nothing part-way closes
+exactly as it always did.
+
 There is a fourth, and it runs once in a project's life:
 
 ```bash
@@ -155,6 +181,11 @@ Three things to know about that file:
   card from closing.
 - **It is prose, not a queue.** Order and reasoning are the point. A list of
   titles is something you already have — it is called `control/cards/`.
+- **Give each one the title its card will carry, word for word.** That one habit
+  is what makes a batch survive a session being cut off part-way through it:
+  whoever comes next greps the changelog for each title and learns in a second
+  which are done, instead of reading a plan of descriptions and guessing. It costs
+  nothing, and nothing enforces it, because nothing here reads the plan.
 
 **Why cards are not written ahead.** A card is a folder, and `start` refuses a
 folder that already exists — deliberately. A planned card and an open card would
@@ -177,6 +208,16 @@ Two rules are worth knowing before you take them:
   never made.
 - **Take it after the code it shows.** A picture older than the code is refused
   as stale, by name, and you will have to take it again.
+- **A picture has to repeat before it can be compared.** Take the same screen
+  twice with nothing changed: the two must match. If they do not, something on
+  that screen moves on its own — weather, particles, a clock, a blinking cursor,
+  a live number, a random tip — and every difference between `before/` and
+  `after/` is then noise you cannot tell a real break from. Pin that motion in
+  your capture first — a fixed seed, a frozen clock, a fixture — and only then
+  compare. Nothing here checks this, because nothing here takes pictures; it is
+  the one thing about a picture you are trusted to have done. A card whose point
+  *is* the motion leaves the pin off, so the motion is still what its pictures
+  show.
 
 A screen your project has no way of reaching is a screen nobody can photograph,
 so wherever this project keeps the list of what a screen is and how to get to

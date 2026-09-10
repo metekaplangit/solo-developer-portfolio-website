@@ -830,6 +830,25 @@ class TheScreenLedger(unittest.TestCase):
                 loop.RENDERED_TESTS = kept
 
 
+    def test_a_tag_that_starts_another_tag_names_only_its_own_test(self) -> None:
+        """`@settings` used to match `@settings-erase` too, so a card could never
+        name the settings screen while the erase dialog had a test. Tags are
+        whole words, as the runner reads them."""
+        with tempfile.TemporaryDirectory() as folder:
+            spec = Path(folder) / "a.spec.ts"
+            spec.write_text(
+                "test('the settings screen @settings', async () => {})\n"
+                "test('the erase confirmation @settings-erase', async () => {})\n",
+                encoding="utf-8",
+            )
+            kept, loop.RENDERED_TESTS = loop.RENDERED_TESTS, Path(folder)
+            try:
+                self.assertEqual(loop.tests_carrying("@settings"), ["a.spec.ts: the settings screen @settings"])
+                self.assertEqual(loop.tests_carrying("@settings-erase"), ["a.spec.ts: the erase confirmation @settings-erase"])
+            finally:
+                loop.RENDERED_TESTS = kept
+
+
 class TheNeglectLine(unittest.TestCase):
     """5 names must never stand in for an unknown number of screens."""
 
@@ -995,7 +1014,7 @@ class ThePagesAgreeWithTheSystem(unittest.TestCase):
         """
         readme = self.page("README.md")
         self.assertIn("## The bar for changing this", readme, "the bar is gone from the page")
-        for promise in ("simpler, leaner, faster", "Do not volunteer imperfections"):
+        for promise in ("simpler, leaner, faster", "Do not volunteer imperfections", "in 1 call", "after its outputs are read"):
             self.assertIn(promise, readme, f"the page no longer says: {promise}")
 
     def test_the_adoption_page_says_an_adoption_changes_nothing_else(self) -> None:
@@ -1099,6 +1118,126 @@ class ChangingTheControlIsNotPaperwork(unittest.TestCase):
 # having skipped most of itself is worse than one that will not run at all.
 if __name__ == "__main__":
     unittest.main()
+
+
+class ACardThatCommittedAsItWent(unittest.TestCase):
+    """Work saved part-way through a card, and the one commit it still closes as.
+
+    A real repository rather than a stub, for the reason `TheWorkshopPrune` gives:
+    what is worth proving here — that several commits become one, that no work is
+    lost doing it, and that a failed close puts the branch back — are facts about
+    Git and cannot be proved against a fake.
+    """
+
+    def setUp(self) -> None:
+        self.folder = tempfile.TemporaryDirectory()
+        self.root = Path(self.folder.name)
+        self.kept = (loop.ROOT, loop.TRUNK)
+        loop.ROOT, loop.TRUNK = self.root, "main"
+        self.here("init", "-q", "-b", "main")
+        self.here("config", "user.email", "a@b.c")
+        self.here("config", "user.name", "Test")
+        self.write("README.md", "a project")
+        self.here("add", "-A")
+        self.here("commit", "-qm", "the project before the card")
+        self.here("switch", "-qc", "card/a-thing")
+
+    def tearDown(self) -> None:
+        loop.ROOT, loop.TRUNK = self.kept
+        self.folder.cleanup()
+
+    def here(self, *args: str) -> None:
+        subprocess.run(["git", *args], cwd=self.root, check=True, capture_output=True, text=True)
+
+    def write(self, name: str, text: str) -> None:
+        path = self.root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+
+    def ask(self, *args: str) -> str:
+        return subprocess.run(["git", *args], cwd=self.root, check=True,
+                              capture_output=True, text=True).stdout.strip()
+
+    def commits_ahead(self) -> int:
+        return len(self.ask("rev-list", "main..HEAD").splitlines())
+
+    def save(self, name: str, text: str, message: str) -> None:
+        """One save part-way through the card, the way a session would make it."""
+        self.write(name, text)
+        self.here("add", "-A")
+        self.here("commit", "-qm", message)
+
+    def test_three_saves_become_one_commit(self) -> None:
+        self.save("one.txt", "first", "part way")
+        self.save("two.txt", "second", "part way again")
+        self.save("three.txt", "third", "nearly there")
+        self.assertEqual(self.commits_ahead(), 3)
+
+        loop.collapse_onto_trunk()
+        self.here("commit", "-qm", "The card's own title")
+
+        # One commit on top of the trunk, carrying the card's title — which is what
+        # the log promises and what the version tag is about to name.
+        self.assertEqual(self.commits_ahead(), 1)
+        self.assertEqual(self.ask("log", "-1", "--format=%s"), "The card's own title")
+
+    def test_not_one_line_of_the_work_is_lost(self) -> None:
+        self.save("one.txt", "first", "part way")
+        self.save("two.txt", "second", "part way again")
+        # And something still uncommitted when the close arrives, because that is
+        # the ordinary case: the last few minutes are never saved yet.
+        self.write("three.txt", "third")
+
+        loop.collapse_onto_trunk()
+        self.here("add", "-A")
+        self.here("commit", "-qm", "The card's own title")
+
+        for name, text in (("one.txt", "first"), ("two.txt", "second"), ("three.txt", "third")):
+            self.assertEqual((self.root / name).read_text(encoding="utf-8"), text, name)
+        self.assertEqual(
+            sorted(self.ask("diff", "--name-only", "main...HEAD").splitlines()),
+            ["one.txt", "three.txt", "two.txt"],
+        )
+        # Nothing left behind in the index or the tree either: the close is clean.
+        self.assertEqual(self.ask("status", "--porcelain"), "")
+
+    def test_a_card_that_saved_nothing_is_unaffected(self) -> None:
+        # The ordinary card, which commits once at the end. The collapse has to be
+        # a no-op there rather than a step that only works when there is something
+        # to collapse.
+        self.write("one.txt", "first")
+        self.assertEqual(self.commits_ahead(), 0)
+
+        loop.collapse_onto_trunk()
+        self.here("add", "-A")
+        self.here("commit", "-qm", "The card's own title")
+
+        self.assertEqual(self.commits_ahead(), 1)
+        self.assertEqual((self.root / "one.txt").read_text(encoding="utf-8"), "first")
+
+    def test_a_close_that_fails_puts_the_branch_back(self) -> None:
+        # The promise the whole close is built on: everything back where it was.
+        # The collapse moves a ref, so it is the one part `restore` cannot undo.
+        self.save("one.txt", "first", "part way")
+        self.save("two.txt", "second", "part way again")
+        before = self.ask("rev-parse", "HEAD")
+
+        tip = loop.collapse_onto_trunk()
+        self.assertEqual(self.commits_ahead(), 0)
+        loop.git("reset", "--soft", tip)
+
+        self.assertEqual(self.ask("rev-parse", "HEAD"), before)
+        self.assertEqual(self.commits_ahead(), 2)
+        self.assertEqual(self.ask("log", "-1", "--format=%s"), "part way again")
+        # The work is still on disk, and still committed, exactly as it was.
+        self.assertEqual((self.root / "two.txt").read_text(encoding="utf-8"), "second")
+
+    def test_the_saved_commits_are_what_the_close_counts_as_changed(self) -> None:
+        # Why nothing else in the close had to change: committed work was already
+        # counted, so a card that saves as it goes still gets the tier its files
+        # deserve rather than "no tier ran".
+        self.save("src/thing.ts", "// saved part way", "part way")
+        self.assertIn("src/thing.ts", loop.changed_files())
 
 
 class TheWorkshopPrune(unittest.TestCase):
@@ -1884,6 +2023,21 @@ class ACardCanSayTheChangeIsNotOneYouCanSee(WithAnswers):
     def test_the_page_explains_it(self) -> None:
         readme = (Path(loop.__file__).with_name("README.md")).read_text(encoding="utf-8")
         self.assertIn("unrendered:", readme, "README.md never mentions the field")
+
+    def test_the_page_says_a_picture_has_to_repeat_before_it_is_compared(self) -> None:
+        """A game grew an ambient sky over every screen, seeded from the wall
+        clock, and from that day two captures of one unchanged screen were two
+        different pictures. Nothing said so: `before/` against `after/` went on
+        being read as if every difference were a change, and a missing button
+        would have sat among the raindrops.
+
+        The control cannot check it — it takes no pictures — so the page has to
+        say it, in words a model reads before its first card in every project:
+        capture twice, must match, pin the motion first. This pins the sentence.
+        """
+        readme = (Path(loop.__file__).with_name("README.md")).read_text(encoding="utf-8")
+        self.assertIn("has to repeat before it can be compared", readme)
+        self.assertIn("twice", readme)
 
 
 def a_bare_project(room: Path) -> Path:
