@@ -1707,6 +1707,17 @@ class AProjectIsUpdatedFromInsideItself(unittest.TestCase):
         said = self.updating(there, standing_in=there)
         self.assertNotIn("standing in", said, "the guard refused a project the session was working in")
 
+    def test_the_refusal_names_this_project_rather_than_a_dot(self) -> None:
+        """`where` is relative to this project, so its own root came out as ".".
+
+        "you are standing in ., not in Somewhere" names one of the two projects
+        in a message whose whole job is telling them apart. Seen live once.
+        """
+        there = self.a_project_holding_a_control(self.NEWER)
+        said = self.updating(there, standing_in=Path(loop.ROOT))
+        self.assertNotIn("standing in .,", said, "the refusal calls this project a dot")
+        self.assertIn(f"standing in {Path(loop.ROOT).name}", said, "the refusal does not name this project")
+
     def test_a_folder_inside_the_project_counts_as_standing_in_it(self) -> None:
         there = self.a_project_holding_a_control(self.NEWER)
         inside = there / "src" / "deep"

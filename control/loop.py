@@ -90,7 +90,7 @@ CONTROL = ROOT / "control"
 
 #: Which control this project is on. Bumped when the system itself changes shape,
 #: so any project can be asked what it has and whether it is behind.
-CONTROL_VERSION = "20"
+CONTROL_VERSION = "21"
 CARDS = CONTROL / "cards"
 # When each screen last ran, kept beside the cards because it is this project's
 # history and not part of the control. It never travels with an update.
@@ -1343,8 +1343,13 @@ def command_update(args: argparse.Namespace) -> None:
     # stays exactly as its own session left it.
     standing = Path.cwd().resolve()
     if standing != there and there not in standing.parents:
+        # `where` is relative to this project, so standing at its root gives ".",
+        # and "you are standing in ." names nothing to somebody reading a refusal.
+        # The root is said by name; a subfolder keeps the relative path, which is
+        # the more useful of the two when that is where you actually are.
+        here_is = ROOT.name if standing == ROOT else where(standing)
         raise Stop(
-            f"you are standing in {where(standing)}, not in {there.name} — a project is updated from "
+            f"you are standing in {here_is}, not in {there.name} — a project is updated from "
             f"inside itself, so open that project and run: python3 {CONTROL / 'loop.py'} update ."
         )
 
