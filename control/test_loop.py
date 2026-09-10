@@ -1949,6 +1949,81 @@ class AControlThatIsBehindWillNotBeChanged(unittest.TestCase):
             "the default search did not reach every depth a project is kept at",
         )
 
+    def test_a_project_kept_inside_a_folder_named_after_the_product_is_found(self) -> None:
+        """A repository one level deeper than the rest is still a project.
+
+        Most projects sit directly under a heading. One kept in a folder named
+        after the product — `Sites/PortfolioSite/the-repository` — sits one
+        deeper, and the walk used to stop at `PortfolioSite` and see nothing.
+        The blindness was mutual, so a version travelled between six projects
+        for weeks without ever reaching the seventh.
+        """
+        room = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, room, ignore_errors=True)
+        for where in ("Games/Beside", "Sites/TheProduct/the-repository"):
+            control = room / where / "control"
+            control.mkdir(parents=True)
+            (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
+
+        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        self.assertEqual(
+            found,
+            {"Beside", "the-repository"},
+            "a project kept inside a folder named after the product was walked past",
+        )
+
+    def test_a_repository_is_looked_at_rather_than_opened(self) -> None:
+        """A container is a folder that is neither a project nor a repository.
+
+        Without that line the search would descend into every source tree it
+        passes — one listing each, to find a `control/` that a repository would
+        have carried at its own root if it had one.
+        """
+        room = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, room, ignore_errors=True)
+        (room / "Games" / "Plain" / ".git").mkdir(parents=True)
+        buried = room / "Games" / "Plain" / "vendor" / "Copy" / "control"
+        buried.mkdir(parents=True)
+        (buried / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
+
+        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        self.assertEqual(found, set(), "the search opened a repository instead of treating it as one project")
+
+    def test_one_copy_reached_twice_by_the_walk_is_counted_once(self) -> None:
+        """The place and its headings are both searched, so arrivals overlap.
+
+        Before the descent this could not happen; with it, a heading is reached
+        both as a child of the place and as a folder of its own.
+        """
+        room = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, room, ignore_errors=True)
+        control = room / "Games" / "Beside" / "control"
+        control.mkdir(parents=True)
+        (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
+
+        found = [name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")]
+        self.assertEqual(found, ["Beside"], "one copy was reported more than once")
+
+    def test_an_answer_does_not_stop_a_test_pretending_to_sit_elsewhere(self) -> None:
+        """`here` beats `SIBLINGS`, so answering it cannot redden this suite.
+
+        The guard used to return the answer before it looked at `here` at all.
+        A project that answered `SIBLINGS` turned these tests red, so the one
+        project that needed the answer carried a written note saying it could
+        not afford to give it.
+        """
+        room = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, room, ignore_errors=True)
+        control = room / "Games" / "Beside" / "control"
+        control.mkdir(parents=True)
+        (control / "loop.py").write_text('CONTROL_VERSION = "99"\n', encoding="utf-8")
+
+        was = loop.SIBLINGS
+        loop.SIBLINGS = (str(room / "Nowhere"),)
+        self.addCleanup(setattr, loop, "SIBLINGS", was)
+        found = {name for name, _, _ in loop.controls_elsewhere(here=room / "Games" / "Mine")}
+        self.assertEqual(found, {"Beside"}, "an answered SIBLINGS overrode a test pretending to sit elsewhere")
+
     def test_the_default_search_is_not_run_until_it_is_asked_for(self) -> None:
         """Import must not touch the disk for this.
 

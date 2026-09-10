@@ -90,7 +90,7 @@ CONTROL = ROOT / "control"
 
 #: Which control this project is on. Bumped when the system itself changes shape,
 #: so any project can be asked what it has and whether it is behind.
-CONTROL_VERSION = "18"
+CONTROL_VERSION = "19"
 CARDS = CONTROL / "cards"
 # When each screen last ran, kept beside the cards because it is this project's
 # history and not part of the control. It never travels with an update.
@@ -204,13 +204,21 @@ def looking_in(here: Path | None = None) -> tuple[Path, ...]:
     because it starts from where this project actually is rather than from
     somebody's memory of the layout.
 
+    **`here` beats the answer, and only the tests pass it.** The guard used to
+    return `SIBLINGS` before it looked at `here` at all, so a project that
+    answered it turned this control's own suite red — the tests could no longer
+    pretend to sit anywhere. That cost is why one project carried a written note
+    saying the answer was not worth giving, on a walk that could not reach its
+    copies. An answer is about where this project really is; `here` is a test
+    pretending, and pretending wins.
+
     **And it is a function rather than a constant on purpose.** The whole reason
     this check is affordable is that a card leaving the control alone never pays
     for it. Worked out while the module loads, it would be a directory sweep on
     every `start`, every `check` and every `finish` — paid by every card, to
     answer a question almost none of them ask.
     """
-    if SIBLINGS is not None:
+    if SIBLINGS is not None and here is None:
         return tuple(Path(one) for one in SIBLINGS)
     home = (here or ROOT).parent
     try:
@@ -1180,11 +1188,51 @@ def fingerprint(folder: Path) -> str | None:
     return hashlib.sha256(b"\0".join(parts)).hexdigest()[:12]
 
 
+def projects_under(folder: Path) -> list[Path]:
+    """The folders under `folder` that could hold a control, one container deep.
+
+    Most projects sit directly under a heading, and for those this is the plain
+    listing it always was. But a project kept in a folder named after the product
+    — `Sites/PortfolioSite/the-repository` — sits one level deeper, and a search
+    that stops at the heading's children walks straight past it. That blindness
+    is mutual, which is what made it worth fixing: the nested project cannot see
+    the others either, so neither side can tell the other is ahead, and a version
+    can travel between six projects without ever reaching the seventh.
+
+    So a child that is neither a project nor a repository is treated as a folder
+    that names a product, and opened. A child holding its own `control/loop.py`
+    is a project, and a child holding `.git` is a repository — both are the thing
+    being looked for rather than a container of it, and neither is descended
+    into. That is what keeps this to one extra listing per container instead of a
+    sweep of every source tree in the way.
+
+    Hidden folders are skipped outright. No project is named `.git` or `.venv`,
+    and descending into one costs a listing to find nothing.
+    """
+    found: list[Path] = []
+    try:
+        children = sorted(one for one in folder.iterdir() if one.is_dir() and not one.name.startswith("."))
+    except OSError:
+        return found
+    for child in children:
+        found.append(child)
+        if (child / "control" / "loop.py").is_file() or (child / ".git").exists():
+            continue
+        try:
+            found.extend(
+                one for one in sorted(child.iterdir()) if one.is_dir() and not one.name.startswith(".")
+            )
+        except OSError:
+            continue
+    return found
+
+
 def controls_elsewhere(here: Path | None = None) -> list[tuple[str, str, str | None]]:
     """Every other copy of this control the search can see, newest first.
 
-    Cheap on purpose: one listing per folder searched, and a regex over one file
-    per project found. It is only ever called when a card has actually changed a
+    Cheap on purpose: one listing per folder searched plus one per container
+    found, a regex over one file per project, and each copy read once however
+    many times the walk arrives at it. It is only ever called when a card has actually changed a
     system file, so a project that never touches the control never pays for it.
 
     `here` is where to pretend this project sits, and only the tests pass it.
@@ -1194,23 +1242,19 @@ def controls_elsewhere(here: Path | None = None) -> list[tuple[str, str, str | N
     half-copied or is being written to while this runs is not this project's
     problem to report.
     """
-    seen: list[tuple[str, str, str | None]] = []
+    seen: dict[Path, tuple[str, str, str | None]] = {}
     for folder in looking_in(here):
-        try:
-            beside = sorted(Path(folder).expanduser().resolve().iterdir())
-        except OSError:
-            continue
-        for project_folder in beside:
+        for project_folder in projects_under(Path(folder).expanduser().resolve()):
             target = project_folder / "control"
-            if target == CONTROL or not (target / "loop.py").is_file():
+            if target == CONTROL or target in seen or not (target / "loop.py").is_file():
                 continue
             try:
                 found = re.search(r'(?m)^CONTROL_VERSION = "([^"]+)"', (target / "loop.py").read_text(encoding="utf-8"))
             except OSError:
                 continue
             if found:
-                seen.append((project_folder.name, found.group(1), fingerprint(target)))
-    return sorted(seen, key=lambda one: as_number(one[1]), reverse=True)
+                seen[target] = (project_folder.name, found.group(1), fingerprint(target))
+    return sorted(seen.values(), key=lambda one: as_number(one[1]), reverse=True)
 
 
 def ahead_of_here() -> list[tuple[str, str, str | None]]:

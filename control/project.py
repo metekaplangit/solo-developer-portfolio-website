@@ -74,27 +74,23 @@ PAPERWORK = (
 TRUNK = "main"
 CHANGELOG = ROOT / "docs" / "CHANGELOG.md"
 
-# 7. `SIBLINGS` is deliberately NOT answered, and this project pays for it. Read this
-#    before answering it.
+# 7. Where the other projects are, because the walk cannot reach them from here.
 #
-#    The walk that finds the other copies goes up two folders and down two, because a
-#    project normally sits at `<somewhere>/<heading>/<project>`. This one sits at
+#    The default walks up two folders and down two, because a project normally sits
+#    at `<somewhere>/<heading>/<project>`. This one sits at
 #    `VibeCoding/Sites/PortfolioSite/solo-dev-portfolio-website` — one folder deeper,
 #    because the repository is a child of the folder that names the product. So the
-#    walk searches `Sites/` alone and finds nothing, and the blindness is mutual: the
-#    other projects walk down two from `VibeCoding/` and stop one short of this one.
-#    Neither side can tell the other is ahead.
+#    walk anchored on `Sites/` and saw no other copy at all, and this project sat on
+#    control 14 for three weeks while six others ran 18, with nothing to say so.
 #
-#    Answering it here was tried on 2026-08-17 and backed out the same hour. The guard
-#    in `looking_in` returns the answer before it looks at the `here` argument, so a
-#    project that answers `SIBLINGS` turns
-#    `test_a_project_that_answers_nothing_looks_two_levels_wide` red — a permanently
-#    failing control suite, bought to fix a courtesy check. Not worth it, and fixing
-#    the guard is a change to the system files, which is a card of its own started
-#    from the newest copy rather than something an adoption does.
+#    Control 19 fixed the half of that which is everybody's problem: the search now
+#    opens a folder that is neither a project nor a repository, so every other
+#    project can see this one. The other half is this project's own — its anchor is
+#    still one level too low — and this is the answer the control provides for it.
 #
-#    Until then: before changing anything in `control/`, ask another project whether
-#    it is ahead rather than asking this one.
+#    Computed rather than written out, so moving the whole tree changes nothing:
+#    up three from the repository is the folder all the headings sit under.
+SIBLINGS = (ROOT.parent.parent.parent,)
 
 # 8. Nothing stamps a version into a file here. The site is published from the tag by
 #    `.github/workflows/deploy.yml`, and `package.json` carries `0.0.0` on purpose —
