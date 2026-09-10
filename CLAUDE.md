@@ -51,10 +51,11 @@ the root. `docs/CHANGELOG.md` is live and the control writes to it.
 
 ## What proves a change
 
-Two tiers, both run by the control.
+Two tiers run by the control, and a third you run by hand.
 
-- **Fast checks — `npm run headless`.** Build, `astro check`, the unit suite and
-  the built-output suite, in that order. Every card runs all of it.
+- **Fast checks — `npm run headless`.** `npm audit --omit=dev`, the build,
+  `astro check`, the unit suite and the built-output suite, in that order.
+  Every card runs all of it.
 - **Screens — `tests/screens/site.spec.ts`.** A real Chrome over 9 routes at 4
   widths plus a phone pass, about a minute. One `test()` per route, and the
   `@tag` at the end of each title is what a card names:
@@ -71,5 +72,22 @@ changed and photographs them:
 Build before photographing — a picture of a stale build reports differences the
 change never made, and the control refuses a picture older than the code it shows.
 A card that touched only a unit test writes one `unrendered:` line instead.
+
+- **The live tier — `npm run test:live`.** Fetches every route from
+  `https://metkapstudio.com` and holds the served HTML against `dist/`: any
+  `<script>` the build never wrote, any third-party origin, any missing CSP.
+  Point it elsewhere with `npm run test:live -- <url>`.
+
+  It is deliberately **not** in `npm run headless` and no card is required to
+  run it. Everything else here reads `dist/`, and nothing between `dist/` and a
+  visitor belongs to this repository — on 2026-09-10 Cloudflare Web Analytics
+  was injecting a beacon into every live page, against the no-analytics control
+  below, while every gate was green. Run it after a deploy, and whenever
+  something in front of the site might have changed.
+
+  **It is red today, and that is correct.** It stays red until Cloudflare Web
+  Analytics is switched off in the Cloudflare dashboard; nothing in this
+  repository can turn it off. The page's CSP blocks the beacon, so nothing is
+  being tracked, but the setting is on.
 
 Live command results override every document in this repository.

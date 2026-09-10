@@ -21,7 +21,8 @@
     "audit": "npm audit --omit=dev",
     "headless": "npm run audit && npm run build && npm run check && npm test && npm run test:dist",
     "capture": "node scripts/capture.mjs",
-    "lhci": "lhci autorun"
+    "lhci": "lhci autorun",
+    "test:live": "node scripts/live.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.1",
