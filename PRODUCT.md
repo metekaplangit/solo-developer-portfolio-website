@@ -22,7 +22,8 @@ No secondary audience is claimed; this is deliberately a single-audience site.
 ## Product Purpose
 
 The public home of MetKap Studio: it presents the studio's shipped software —
-currently Sole Focus, a free Pomodoro and count-up focus timer — together with
+currently Magic Notes, a Mac notebook that answers arithmetic written in plain
+sentences, and Sole Focus, a free Pomodoro and count-up focus timer — together with
 per-product privacy information and a direct support route.
 
 Success is **credibility**. A visitor should leave believing a careful,
@@ -40,7 +41,9 @@ platform requirements (e.g. "macOS 10.15 or later").
 
 ## Conversion & proof
 
-- **Primary CTA:** Download Sole Focus on the Mac App Store.
+- **Primary CTA:** Download the featured product on the Mac App Store — Magic
+  Notes since 2026-08-17, Sole Focus before that. Exactly one product is featured
+  at a time (`featured` in its content file).
 - **Secondary fallback:** not yet decided — open question for the owner
   (candidates: open the product page, or read the privacy/support pages).
 - **The line a visitor should remember after ten seconds:** *a one-person Mac
@@ -98,8 +101,8 @@ This is the explicit thing to design against.
 ## Accessibility & Inclusion
 
 Accessibility is enforced mechanically rather than aspirationally: the deploy
-pipeline runs a Lighthouse accessibility gate at **≥0.95** as a merge-critical
-check, so an accessibility regression blocks release. Reduced-motion alternatives
+pipeline runs a Lighthouse accessibility gate at **≥0.95** before it publishes,
+so an accessibility regression blocks the deploy. Reduced-motion alternatives
 are honored site-wide, focus states are visible, a skip link is present, and the
 content schema makes alt text mandatory for every image.
 
