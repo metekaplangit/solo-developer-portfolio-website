@@ -92,6 +92,7 @@ CHANGELOG = ROOT / "docs" / "CHANGELOG.md"
 #    up three from the repository is the folder all the headings sit under.
 SIBLINGS = (ROOT.parent.parent.parent,)
 
-# 8. Nothing stamps a version into a file here. The site is published from the tag by
-#    `.github/workflows/deploy.yml`, and `package.json` carries `0.0.0` on purpose —
+# 8. Nothing stamps a version into a file here. The version lives in the Git tag, the
+#    site is published by `.github/workflows/deploy.yml` on every push to `main` that
+#    touches more than `docs/`, and `package.json` carries `0.0.0` on purpose —
 #    it is a private package that is never published to a registry.
