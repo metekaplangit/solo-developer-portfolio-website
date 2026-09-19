@@ -43,6 +43,15 @@ own, so a card still arrives on the trunk as one commit, one version, one tag.
 Nothing needs unpicking afterwards, and a card that saved nothing part-way closes
 exactly as it always did.
 
+**A close that dies after the commit is picked up by the next one.** Everything
+after that commit — the switch, the merge, the tag — sits outside the rollback,
+so a trunk somebody else is holding (a worktree, most often) leaves the card
+fully committed on its branch with the trunk untouched. Run `finish` again and
+it says so, then carries on from the merge: the tree has not moved since the
+first run tested it, so nothing is tested twice and the proof on the commit is
+read back rather than worked out again. `check` says the same thing without
+doing anything about it.
+
 There is a fourth, and it runs once in a project's life:
 
 ```bash

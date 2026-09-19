@@ -2573,3 +2573,135 @@ class WhatAProjectCanProve(unittest.TestCase):
         for name in ("README.md", "UPDATE.md"):
             page = (Path(loop.__file__).with_name(name)).read_text(encoding="utf-8")
             self.assertIn("detect", page, f"{name} never mentions it")
+
+
+class AHalfClosedCard(unittest.TestCase):
+    """Everything after the commit sits outside the rollback: the switch, the
+    merge, the tag, the branch. A failure there — anything holding the trunk,
+    a worktree being the ordinary case — left the card committed on its branch
+    with the changelog written and the trunk untouched, and a second `finish`
+    could not get past `write_changelog`, which raises on a version it already
+    records. There was no resume and no command that finished what the first
+    run started. Issue 0033."""
+
+    def test_a_branch_carrying_its_own_close_commit_is_seen_as_half_closed(self) -> None:
+        self.assertTrue(hasattr(loop, "closed_already"),
+                        "finish has no way to see a close it already committed")
+
+    def test_the_version_comes_from_the_changelog_the_first_run_wrote(self) -> None:
+        text = "# Changelog\n## v0.9.0\n\n- the title\n\n## v0.8.0\n\n- older\n"
+        self.assertEqual(loop.newest_recorded(text), "v0.9.0")
+        self.assertEqual(loop.newest_recorded("# Changelog\n"), "")
+
+    def test_the_proof_is_read_back_from_the_commit_rather_than_run_again(self) -> None:
+        body = "Proof: Headless Suite Testing\nUnproven: the seam nobody drives\n"
+        self.assertEqual(loop.proof_recorded(body), "Headless Suite Testing")
+        self.assertEqual(loop.proof_recorded("no proof line here"), "")
+
+    def half_closed(self, room: Path) -> tuple[Path, str]:
+        """A project in the exact state a `finish` leaves when it dies at the merge.
+
+        Built by hand rather than by sabotaging a real close, because the ways to
+        make the merge fail — a worktree holding the trunk, a hook, a lock — are
+        each somebody's particular Tuesday, and none of them is the thing under
+        test. What every one of them leaves behind is this: the card committed on
+        its branch under its own title, the changelog carrying the version, the
+        tree clean, the trunk where it was, and no tag anywhere.
+        """
+        home = a_bare_project(room)
+        started = loop_in(home, "start", "A half closed card")
+        self.assertEqual(started.returncode, 0, started.stdout + started.stderr)
+        card = home / "control" / "cards" / "a-half-closed-card" / "card.md"
+        card.write_text("# A half closed card\n\nbump: patch\n\nA body.\n", encoding="utf-8")
+        (home / "src" / "thing.py").write_text("VALUE = 2\n", encoding="utf-8")
+        (home / "CHANGELOG.md").write_text(
+            "# Changelog\n\n## v0.0.1\n\n- A half closed card\n\n", encoding="utf-8")
+        for command in (
+            ["git", "add", "-A"],
+            ["git", "commit", "--quiet", "-m", "A half closed card",
+             "-m", "Proof: Headless Suite Testing"],
+        ):
+            subprocess.run(command, cwd=home, check=True, capture_output=True, text=True)
+        return home, "v0.0.1"
+
+    def test_a_second_finish_merges_and_tags_what_the_first_one_committed(self) -> None:
+        with tempfile.TemporaryDirectory() as room:
+            home, version = self.half_closed(Path(room))
+            closed = loop_in(home, "finish")
+            self.assertEqual(closed.returncode, 0, closed.stdout + closed.stderr)
+            tags = subprocess.run(["git", "tag", "--list"], cwd=home,
+                                  capture_output=True, text=True, check=True)
+            self.assertIn(version, tags.stdout, "the resume never tagged")
+            on_trunk = subprocess.run(["git", "log", "-1", "--format=%s", "main"], cwd=home,
+                                      capture_output=True, text=True, check=True)
+            self.assertEqual(on_trunk.stdout.strip(), "A half closed card",
+                             "the commit never reached the trunk")
+
+    def test_it_reads_the_proof_back_instead_of_running_the_suite_again(self) -> None:
+        # The tree has not moved since the first run tested it, so a resume that
+        # re-ran the checks would print a tier this run never chose against work
+        # somebody already proved.
+        with tempfile.TemporaryDirectory() as room:
+            home, version = self.half_closed(Path(room))
+            said = loop_in(home, "finish").stdout
+            self.assertIn("Picking up where the last finish stopped", said, said)
+            self.assertIn("Headless Suite Testing", said, said)
+
+    def test_the_reproduction_in_the_issue_recovers_on_the_second_run(self) -> None:
+        """Issue 0033's own steps, verbatim: a worktree holding the trunk makes
+        the switch fail after the commit, and the second `finish` finishes it."""
+        with tempfile.TemporaryDirectory() as room:
+            home = a_bare_project(Path(room))
+            loop_in(home, "start", "A worktree holds the trunk")
+            (home / "control" / "cards" / "a-worktree-holds-the-trunk" / "card.md").write_text(
+                "# A worktree holds the trunk\n\nbump: patch\n\nA body.\n", encoding="utf-8")
+            (home / "src" / "thing.py").write_text("VALUE = 2\n", encoding="utf-8")
+            held = Path(room) / "trunk"
+            subprocess.run(["git", "worktree", "add", "-q", str(held), "main"],
+                           cwd=home, check=True, capture_output=True, text=True)
+            first = loop_in(home, "finish")
+            self.assertEqual(first.returncode, 1, "the switch was supposed to fail")
+            self.assertIn("Committed", first.stdout, first.stdout)
+            subprocess.run(["git", "worktree", "remove", str(held)],
+                           cwd=home, check=True, capture_output=True, text=True)
+            second = loop_in(home, "finish")
+            self.assertEqual(second.returncode, 0, second.stdout + second.stderr)
+            tags = subprocess.run(["git", "tag", "--list"], cwd=home,
+                                  capture_output=True, text=True, check=True)
+            self.assertIn("v0.0.1", tags.stdout, "the half-closed card never got its tag")
+
+    def test_a_card_that_wrote_no_changelog_line_is_picked_up_too(self) -> None:
+        """A card touching only paperwork writes nothing into the changelog, so
+        the version cannot be read from there. The close commit carries it."""
+        with tempfile.TemporaryDirectory() as room:
+            home = a_bare_project(Path(room))
+            loop_in(home, "start", "A paperwork only card")
+            (home / "control" / "cards" / "a-paperwork-only-card" / "card.md").write_text(
+                "# A paperwork only card\n\nbump: patch\n\nA body, and nothing a person can see.\n",
+                encoding="utf-8")
+            held = Path(room) / "trunk"
+            subprocess.run(["git", "worktree", "add", "-q", str(held), "main"],
+                           cwd=home, check=True, capture_output=True, text=True)
+            first = loop_in(home, "finish")
+            self.assertEqual(first.returncode, 1, first.stdout + first.stderr)
+            self.assertIn("Committed", first.stdout, first.stdout)
+            self.assertFalse((home / "CHANGELOG.md").exists(),
+                             "paperwork wrote a changelog line after all")
+            subprocess.run(["git", "worktree", "remove", str(held)],
+                           cwd=home, check=True, capture_output=True, text=True)
+            second = loop_in(home, "finish")
+            self.assertEqual(second.returncode, 0, second.stdout + second.stderr)
+            self.assertIn("Picking up where the last finish stopped", second.stdout, second.stdout)
+
+    def test_an_ordinary_card_is_not_mistaken_for_a_half_closed_one(self) -> None:
+        # The branch tip is `start`'s own commit, not the card's close, so nothing
+        # here may be picked up: the work has not been tested or committed yet.
+        with tempfile.TemporaryDirectory() as room:
+            home = a_bare_project(Path(room))
+            loop_in(home, "start", "A first card here")
+            (home / "control" / "cards" / "a-first-card-here" / "card.md").write_text(
+                "# A first card here\n\nbump: patch\n\nA body.\n", encoding="utf-8")
+            (home / "src" / "thing.py").write_text("VALUE = 2\n", encoding="utf-8")
+            said = loop_in(home, "finish")
+            self.assertEqual(said.returncode, 0, said.stdout + said.stderr)
+            self.assertNotIn("Picking up where the last finish stopped", said.stdout, said.stdout)

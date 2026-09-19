@@ -90,7 +90,7 @@ CONTROL = ROOT / "control"
 
 #: Which control this project is on. Bumped when the system itself changes shape,
 #: so any project can be asked what it has and whether it is behind.
-CONTROL_VERSION = "21"
+CONTROL_VERSION = "22"
 CARDS = CONTROL / "cards"
 # When each screen last ran, kept beside the cards because it is this project's
 # history and not part of the control. It never travels with an update.
@@ -1569,10 +1569,18 @@ def command_detect(_args: argparse.Namespace) -> None:
 
 
 def command_check(_args: argparse.Namespace) -> None:
-    card = card_for(branch())
+    target = branch()
+    card = card_for(target)
     if not card.is_file():
         raise Stop(f"no card at {card.relative_to(ROOT)}; this branch has nothing behind it")
     text = card.read_text(encoding="utf-8")
+    # Said, never done: `check` writes nothing, and this is the one state where
+    # what it would otherwise report is beside the point — there is nothing left
+    # to fix here, only a merge and a tag that `finish` will pick up.
+    if version := closed_already(target, text.splitlines()[0].lstrip("# ").strip()):
+        say(f"This card is half closed — {version} is committed here and never merged")
+        say("Run finish and it picks up from the merge; nothing is tested again")
+        return
     changed = changed_files()
     if found := problems(card, text, changed):
         raise Stop(f"{len(found)} thing(s) stand between this card and closing:\n" + "\n".join(f"  - {one}" for one in found))
@@ -1798,12 +1806,90 @@ def say_pruned(dropped: list[str]) -> None:
     say(f"Workshop pruned — dropped {len(dropped)} picture folder(s) past the newest {KEEP} cards: {named}{more}")
 
 
+
+def newest_recorded(text: str) -> str:
+    """The newest version the changelog records, or "" when it records none.
+
+    A `finish` that failed after its commit has already written the version
+    into the changelog on that branch, so this is where the second run reads
+    it from rather than working it out again — the tags have not moved, so
+    `next_version` would hand back the same number and then refuse to write it.
+    """
+    for line in (text or "").splitlines():
+        if line.startswith("## "):
+            return line[3:].strip()
+    return ""
+
+
+def version_recorded(body: str) -> str:
+    """The version the close commit says it was going to be tagged.
+
+    Written onto the commit because the changelog cannot be trusted to hold it:
+    a card that touched only paperwork writes no changelog line at all, so for a
+    whole class of cards there was nothing on the branch saying which version
+    the first run had settled on. The commit is the run's own record rather than
+    an inference from one, and it is there whatever the card touched."""
+    for line in (body or "").splitlines():
+        if line.startswith("Version:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def proof_recorded(body: str) -> str:
+    """What the close commit says proved it. Read back rather than run again:
+    the suite passed on this very tree the first time, and a resume that
+    re-ran it would report a tier this run never chose."""
+    for line in (body or "").splitlines():
+        if line.startswith("Proof:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def closed_already(target: str, title: str) -> str:
+    """The version a previous `finish` committed on this branch and never
+    merged, or "" when there is no such commit.
+
+    Everything after the commit — the switch, the merge, the tag, the branch —
+    sits outside the rollback, so a failure there leaves a card fully committed
+    with the trunk untouched, and the run that made it is gone. Four things
+    have to hold before this run picks it up, and any one of them missing means
+    the branch is somebody else's business: the tip commit is this card's own
+    close, the tree is clean, the changelog on this branch records a version,
+    and no tag carries that version yet. Issue 0033."""
+    if target == TRUNK or dirty():
+        return ""
+    if git("log", "-1", "--format=%s") != title:
+        return ""
+    # The commit first, the changelog only as a fallback: a close committed by an
+    # older control carries no `Version:` line, and somebody who updates the
+    # control to get the resume should still get it for the card they are stuck on.
+    version = (version_recorded(git("log", "-1", "--format=%b"))
+               or newest_recorded(CHANGELOG.read_text(encoding="utf-8") if CHANGELOG.exists() else ""))
+    match = VERSION_RE.fullmatch(version)
+    if not match or tuple(int(part) for part in match.groups()) in versions():
+        return ""
+    return version
+
+
 def command_finish(_args: argparse.Namespace) -> None:
     target = branch()
     card = card_for(target)
     if not card.is_file():
         raise Stop(f"no card at {card.relative_to(ROOT)}")
     text = card.read_text(encoding="utf-8")
+    title = text.splitlines()[0].lstrip("# ").strip()
+    # Before every check, because there is nothing left to check: this branch is
+    # already committed, already tested, already written into the changelog. What
+    # it is missing is the merge and the tag, and running the suite again would
+    # report a tier this run never chose against a tree that has not moved.
+    if version := closed_already(target, title):
+        say(f"Picking up where the last finish stopped — {version} is committed here and never merged")
+        publishing = timed("publish")
+        publishing.__enter__()
+        land(target, card, version, title,
+             proof_recorded(git("log", "-1", "--format=%b")) or "proved by the run that committed it",
+             publishing)
+        return
     changed = changed_files()
     if found := problems(card, text, changed):
         raise Stop(f"{len(found)} thing(s) stand between this card and closing:\n" + "\n".join(f"  - {one}" for one in found))
@@ -1814,7 +1900,6 @@ def command_finish(_args: argparse.Namespace) -> None:
     with timed("checks"):
         remote_ready()
         stamp_targets()
-    title = text.splitlines()[0].lstrip("# ").strip()
     named = screen_tests(text)
     tier = tier_for(changed, named)
     swept = run_tier(tier, named)
@@ -1858,7 +1943,9 @@ def command_finish(_args: argparse.Namespace) -> None:
         # is this control growing for good reasons? — is asked of the log.
         unproven += "".join(f"\nControl: {one}" for one in entries(text, "control") if one)
         say("Committed — one commit, carrying what proved it and what it did not")
-        git("commit", "-m", title, "-m", f"Proof: {tier}" + (f" — {', '.join(named)}" if named else "") + unproven)
+        # `Version:` last, and always: it is what tells a second `finish` which
+        # number the first one settled on, for a card of any kind.
+        git("commit", "-m", title, "-m", f"Proof: {tier}" + (f" — {', '.join(named)}" if named else "") + unproven + f"\nVersion: {version}")
     except (OSError, Stop) as exc:
         survived = restore(saved)
         # And the branch itself, which the collapse above may have moved. Soft, so
@@ -1866,6 +1953,18 @@ def command_finish(_args: argparse.Namespace) -> None:
         git("reset", "--soft", tip)
         left = f"; could not put back: {', '.join(survived)}" if survived else ""
         raise Stop(f"finish put everything back: {exc}{left}") from exc
+    land(target, card, version, title, proved(tier, named), publishing)
+
+
+def land(target: str, card: Path, version: str, title: str, said: str, publishing) -> None:
+    """Everything after the commit: the trunk, the merge, the tag, the push.
+
+    All of it sits outside the rollback above, and that is what made issue 0033:
+    anything holding the trunk here left the card fully committed on its branch
+    with the trunk untouched, and the run that made it gone. So it is one
+    function, reached by both paths — a card closing for the first time, and a
+    `finish` picking up a close an earlier run committed and never merged.
+    """
     git("switch", TRUNK)
     git("merge", "--ff-only", target)
     say(f"Merged into {TRUNK} and tagged {version}")
@@ -1876,7 +1975,7 @@ def command_finish(_args: argparse.Namespace) -> None:
         with timed("tidy"):
             say_if_pictures_were_pushed(card.parent)
             say_pruned(prune_workshops())
-        say(f"Done — {version}, {proved(tier, named)}; no remote, so nothing was pushed")
+        say(f"Done — {version}, {said}; no remote, so nothing was pushed")
         say(f"Took {spent_line()}")
         return
     pushed = run(["git", "push", "--atomic", "origin", TRUNK, version], timeout=300)
@@ -1894,7 +1993,7 @@ def command_finish(_args: argparse.Namespace) -> None:
     with timed("tidy"):
         say_if_pictures_were_pushed(card.parent)
         say_pruned(prune_workshops())
-    say(f"Done — {version}, {proved(tier, named)}")
+    say(f"Done — {version}, {said}")
     say(f"Took {spent_line()}")
 
 
