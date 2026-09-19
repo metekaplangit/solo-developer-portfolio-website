@@ -2,8 +2,8 @@
 
 > **Purpose:** Human-readable version history (Keep a Changelog style).
 > **Read when:** Cutting a release or reviewing history.
-> **Update when:** During versionable packets (finalize Unreleased before tagging).
-> **Synchronize with:** VERSION_CONTROL.md, ROADMAP.md, STATUS.md.
+> **Update when:** Never by hand. `python3 control/loop.py finish` adds one line per
+> card at the top. Entries from `[Unreleased]` down are the retired Step Packet record.
 > **Status:** Active.
 > **Activation:** Standard profile.
 
