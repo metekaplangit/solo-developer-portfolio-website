@@ -81,8 +81,8 @@ A card that touched only a unit test writes one `unrendered:` line instead.
   It is deliberately **not** in `npm run headless` and no card is required to
   run it. Everything else here reads `dist/`, and nothing between `dist/` and a
   visitor belongs to this repository — on 2026-09-10 Cloudflare Web Analytics
-  was injecting a beacon into every live page, against the no-analytics control
-  below, while every gate was green. Run it after a deploy, and whenever
+  was injecting a beacon into every live page, against the no-analytics rule under
+  Non-negotiables above, while every gate was green. Run it after a deploy, and whenever
   something in front of the site might have changed.
 
   **It is red today, and that is correct.** It stays red until Cloudflare Web
