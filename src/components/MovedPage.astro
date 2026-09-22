@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/url';
+import { tie } from '../lib/typography';
+
+interface Props {
+  title: string;
+  to: string;
+}
+const { title, to } = Astro.props;
+---
+
+<BaseLayout title={title} description={`This page is now at ${to}.`} movedTo={to}>
+  <section class="band band-lead band-tail">
+    <h1 class="page-title">{title}</h1>
+    <p>{tie('Wander Words is now called Waypost Words, and this page has moved.')}</p>
+    <p><a href={withBase(to)}>{tie('Go to the new page')}</a></p>
+  </section>
+</BaseLayout>

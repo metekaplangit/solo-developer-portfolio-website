@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.54.0
+
+- The game is Waypost Words on the site, at its own addresses
+
 ## v0.53.1
 
 - The Wander Words privacy policy speaks to a general audience

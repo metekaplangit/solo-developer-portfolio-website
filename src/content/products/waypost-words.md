@@ -1,12 +1,15 @@
 ---
-id: wander-words
-name: Wander Words
-slug: wander-words
+id: waypost-words
+name: Waypost Words
+slug: waypost-words
 type: game
 # Not released. No store link, no price, no release date, no screenshots and no
 # icon — the page says so rather than implying a download that does not exist
 # yet. Built ahead of the release so the addresses written into the game
 # resolve before it ships, exactly as Magic Notes was (STEP-0069).
+# Called Wander Words until 2026-09-22, when another word game was found under
+# that name. The old addresses forward here (src/pages/*/wander-words.astro),
+# because a build of the game already carries them.
 status: in-development
 featured: false
 summary: A crossword word game for iPhone. Trace letters on a wheel to spell words, fill the crossword above it, and travel through three long journeys.
@@ -19,7 +22,7 @@ storeLinks: []
 # purple; the darker purples in it fail contrast as chip text on this stage.
 hue: "#C6B4E8"
 supportUrl: /support/
-privacyPolicyUrl: /privacy/wander-words/
+privacyPolicyUrl: /privacy/waypost-words/
 # Every line restates the game's own README and code as they stand on
 # 2026-09-22. Nothing here is a promise about a future release.
 features:
@@ -31,7 +34,7 @@ features:
   - Made for iPhone, in portrait
 lastUpdated: 2026-09-22
 seo:
-  title: Wander Words — A Crossword Word Game for iPhone
+  title: Waypost Words — A Crossword Word Game for iPhone
   description: A crossword word game for iPhone. Trace letters on a wheel, fill the crossword, and travel through three journeys of five hundred stops each.
 ---
 
@@ -41,7 +44,7 @@ stop.
 
 ## Three long journeys
 
-Wander Words is played as travel: three journeys, each of twenty places and
+Waypost Words is played as travel: three journeys, each of twenty places and
 five hundred stops. The first is open from the start.
 
 ## Every word counts
@@ -53,6 +56,6 @@ the bonus jar, and a full jar pays out.
 
 A daily puzzle, a daily gift, and a few daily goals sit beside the journeys.
 
-_Wander Words is not released yet. This page will carry the store link, the
+_Waypost Words is not released yet. This page will carry the store link, the
 price and screenshots once they are real. The support address answers in the
 meantime._

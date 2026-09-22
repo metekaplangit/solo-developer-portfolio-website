@@ -123,5 +123,6 @@ export default defineConfig({
     preview: { port: 5757, strictPort: true },
   },
   // Build-time only; @astrojs/sitemap emits static XML (no runtime service).
-  integrations: [sitemap()],
+  // The game's old addresses only forward to its new ones, so they stay out.
+  integrations: [sitemap({ filter: (page) => !page.includes('/wander-words/') })],
 });

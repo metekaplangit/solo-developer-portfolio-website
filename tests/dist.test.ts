@@ -21,6 +21,12 @@ import { join, relative, sep } from 'node:path';
 const DIST = 'dist';
 const SITE = 'https://metkapstudio.com';
 
+/** Old addresses that only forward, as [from, to]. Their canonical is `to`. */
+const MOVED: Array<[string, string]> = [
+  ['/apps/wander-words/', '/apps/waypost-words/'],
+  ['/privacy/wander-words/', '/privacy/waypost-words/'],
+];
+
 /** Every built HTML page, as [route, html]. */
 function pages(): Array<[string, string]> {
   const out: Array<[string, string]> = [];
@@ -53,7 +59,7 @@ beforeAll(() => {
 });
 
 describe('every built page', () => {
-  it('builds the 12 routes this site has', () => {
+  it('builds the 12 routes this site has, and the 2 old addresses that forward', () => {
     expect(built.map(([r]) => r)).toEqual([
       '/',
       '/404',
@@ -62,12 +68,30 @@ describe('every built page', () => {
       '/apps/magic-notes/',
       '/apps/sole-focus/',
       '/apps/wander-words/',
+      '/apps/waypost-words/',
       '/privacy/',
       '/privacy/magic-notes/',
       '/privacy/sole-focus/',
       '/privacy/wander-words/',
+      '/privacy/waypost-words/',
       '/support/',
     ]);
+  });
+
+  // The game was Wander Words until 2026-09-22, and a build of it already links
+  // to the old addresses. Each one must send a visitor straight on to the new
+  // page, point search engines there, and stay out of the index and sitemap.
+  it('forwards the old Wander Words addresses to the Waypost Words pages', () => {
+    for (const [from, to] of MOVED) {
+      const [, html] = built.find(([r]) => r === from)!;
+      expect(html, from).toContain(`<meta http-equiv="refresh" content="0; url=${to}">`);
+      expect(html, from).toContain(`<link rel="canonical" href="${SITE}${to}"`);
+      expect(html, from).toContain('<meta name="robots" content="noindex">');
+      expect(html, from).toContain(`href="${to}"`);
+    }
+    const sitemap = readFileSync(join(DIST, 'sitemap-0.xml'), 'utf-8');
+    expect(sitemap).toContain(`${SITE}/apps/waypost-words/`);
+    expect(sitemap).not.toContain('wander-words');
   });
 
   // The Magic Notes submission draft already names
@@ -95,16 +119,16 @@ describe('every built page', () => {
     expect(product).not.toContain('Not yet available');
   });
 
-  // Wander Words is unreleased, and its pages exist so the addresses written
+  // Waypost Words is unreleased, and its pages exist so the addresses written
   // into the game resolve before it ships. The route list above proves both
   // pages exist; this proves they are the addresses the game will carry, and
   // that the product page claims no offer for a download that is not there.
-  it('serves the Wander Words pages the game will link to, with no offer', () => {
-    const [, policy] = built.find(([r]) => r === '/privacy/wander-words/')!;
-    expect(policy).toContain('<link rel="canonical" href="https://metkapstudio.com/privacy/wander-words/"');
+  it('serves the Waypost Words pages the game will link to, with no offer', () => {
+    const [, policy] = built.find(([r]) => r === '/privacy/waypost-words/')!;
+    expect(policy).toContain('<link rel="canonical" href="https://metkapstudio.com/privacy/waypost-words/"');
     expect(policy).toContain('support@metkapstudio.com');
-    const [, product] = built.find(([r]) => r === '/apps/wander-words/')!;
-    expect(product).toContain('<link rel="canonical" href="https://metkapstudio.com/apps/wander-words/"');
+    const [, product] = built.find(([r]) => r === '/apps/waypost-words/')!;
+    expect(product).toContain('<link rel="canonical" href="https://metkapstudio.com/apps/waypost-words/"');
     expect(product).not.toContain('"offers"');
     expect(product).toContain('Not yet available');
   });
@@ -114,7 +138,10 @@ describe('every built page', () => {
       const found = [...html.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map((m) => m[1]);
       expect(found, `${route}: canonical count`).toHaveLength(1);
       // 404 is the one page with no meaningful canonical target of its own.
-      if (route !== '/404') {
+      const moved = MOVED.find(([from]) => from === route);
+      if (moved) {
+        expect(found[0], `${route}: canonical points at the new page`).toBe(SITE + moved[1]);
+      } else if (route !== '/404') {
         expect(found[0], `${route}: canonical target`).toBe(
           SITE + (route === '/' ? '/' : route.replace(/\/$/, '/')),
         );

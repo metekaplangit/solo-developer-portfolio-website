@@ -1,14 +1,14 @@
 {
-  "@about": "v0.53.0",
-  "@apps": "v0.53.0",
-  "@every-route": "v0.53.0",
-  "@home": "v0.53.0",
+  "@about": "v0.54.0",
+  "@apps": "v0.54.0",
+  "@every-route": "v0.54.0",
+  "@home": "v0.54.0",
   "@magic-notes": "v0.53.1",
   "@not-found": "v0.53.1",
   "@privacy-index": "v0.53.0",
   "@privacy-sole-focus": "v0.53.1",
-  "@privacy-wander-words": "v0.53.1",
-  "@sole-focus": "v0.51.0",
+  "@privacy-waypost-words": "v0.54.0",
+  "@sole-focus": "v0.54.0",
   "@support": "v0.53.0",
-  "@wander-words": "v0.53.0"
+  "@waypost-words": "v0.54.0"
 }

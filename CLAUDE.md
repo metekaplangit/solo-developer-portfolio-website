@@ -60,8 +60,8 @@ Two tiers run by the control, and a third you run by hand.
   widths plus a phone pass, about a minute. One `test()` per route, and the
   `@tag` at the end of each title is what a card names:
 
-      @home  @apps  @sole-focus  @magic-notes  @wander-words  @about
-      @support  @privacy-index  @privacy-sole-focus  @privacy-wander-words
+      @home  @apps  @sole-focus  @magic-notes  @waypost-words  @about
+      @support  @privacy-index  @privacy-sole-focus  @privacy-waypost-words
       @not-found  @every-route
 
 A card that touches anything under `src/` or `public/` names the screens it

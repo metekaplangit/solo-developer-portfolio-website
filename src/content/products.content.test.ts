@@ -192,15 +192,15 @@ describe('Magic Notes product content', () => {
   });
 });
 
-// Wander Words is unreleased (2026-09-22). Its two pages exist so the addresses
+// Waypost Words is unreleased (2026-09-22). Its two pages exist so the addresses
 // written into the game resolve before it ships — the case STEP-0069 opened for
 // Magic Notes. Everything it cannot yet support is pinned empty, so a later edit
 // cannot claim a download, a price or a release that has not happened, and the
 // privacy address is pinned because a link inside a shipped build cannot change.
-describe('Wander Words product content', () => {
-  const product = productSchema.parse(frontmatter('src/content/products/wander-words.md'));
+describe('Waypost Words product content', () => {
+  const product = productSchema.parse(frontmatter('src/content/products/waypost-words.md'));
   const policy = privacyPolicyEntrySchema.parse(
-    frontmatter('src/content/policies/wander-words.md'),
+    frontmatter('src/content/policies/waypost-words.md'),
   );
 
   it('is an unreleased iPhone game with nothing to download yet', () => {
@@ -214,9 +214,9 @@ describe('Wander Words product content', () => {
   });
 
   it('serves the privacy URL the game will carry', () => {
-    expect(product.slug).toBe('wander-words');
-    expect(product.privacyPolicyUrl).toBe('/privacy/wander-words/');
-    expect(policy.productId).toBe('wander-words');
+    expect(product.slug).toBe('waypost-words');
+    expect(product.privacyPolicyUrl).toBe('/privacy/waypost-words/');
+    expect(policy.productId).toBe('waypost-words');
     expect(policy.contact).toBe('support@metkapstudio.com');
   });
 

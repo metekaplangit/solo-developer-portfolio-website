@@ -23,10 +23,16 @@ interface Props {
    * thing that is never acceptable here.
    */
   bleed?: boolean;
+  /**
+   * The page has moved to this path. The page then points search engines at
+   * the new address, stays out of the index, and sends a browser on at once.
+   * For an address already written into a shipped build, which cannot change.
+   */
+  movedTo?: string;
 }
-const { title, description = site.description, schema, bleed = false } = Astro.props;
+const { title, description = site.description, schema, bleed = false, movedTo } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const canonical = new URL(movedTo ?? Astro.url.pathname, Astro.site ?? Astro.url).href;
 const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
 ---
 
@@ -44,6 +50,8 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {movedTo && <meta http-equiv="refresh" content={`0; url=${withBase(movedTo)}`} />}
+    {movedTo && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />

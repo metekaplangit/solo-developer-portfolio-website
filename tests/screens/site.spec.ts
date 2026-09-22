@@ -59,12 +59,12 @@ const ROUTES = [
   { path: '/apps/', tag: '@apps', name: 'the catalog' },
   { path: '/apps/sole-focus/', tag: '@sole-focus', name: "Sole Focus's product page" },
   { path: '/apps/magic-notes/', tag: '@magic-notes', name: "Magic Notes's product page" },
-  { path: '/apps/wander-words/', tag: '@wander-words', name: "Wander Words's product page" },
+  { path: '/apps/waypost-words/', tag: '@waypost-words', name: "Waypost Words's product page" },
   { path: '/about/', tag: '@about', name: 'the about page' },
   { path: '/support/', tag: '@support', name: 'the support page' },
   { path: '/privacy/', tag: '@privacy-index', name: 'the privacy index' },
   { path: '/privacy/sole-focus/', tag: '@privacy-sole-focus', name: "Sole Focus's privacy policy" },
-  { path: '/privacy/wander-words/', tag: '@privacy-wander-words', name: "Wander Words's privacy policy" },
+  { path: '/privacy/waypost-words/', tag: '@privacy-waypost-words', name: "Waypost Words's privacy policy" },
   { path: '/404', tag: '@not-found', name: 'the not-found page' },
 ] as const;
 
@@ -610,12 +610,12 @@ test('the home page holds its geometry @home', () => holdsGeometry('/'));
 test('the catalog holds its geometry @apps', () => holdsGeometry('/apps/'));
 test("Sole Focus's product page holds its geometry @sole-focus", () => holdsGeometry('/apps/sole-focus/'));
 test("Magic Notes's product page holds its geometry @magic-notes", () => holdsGeometry('/apps/magic-notes/'));
-test("Wander Words's product page holds its geometry @wander-words", () => holdsGeometry('/apps/wander-words/'));
+test("Waypost Words's product page holds its geometry @waypost-words", () => holdsGeometry('/apps/waypost-words/'));
 test('the about page holds its geometry @about', () => holdsGeometry('/about/'));
 test('the support page holds its geometry @support', () => holdsGeometry('/support/'));
 test('the privacy index holds its geometry @privacy-index', () => holdsGeometry('/privacy/'));
 test("Sole Focus's privacy policy holds its geometry @privacy-sole-focus", () => holdsGeometry('/privacy/sole-focus/'));
-test("Wander Words's privacy policy holds its geometry @privacy-wander-words", () => holdsGeometry('/privacy/wander-words/'));
+test("Waypost Words's privacy policy holds its geometry @privacy-waypost-words", () => holdsGeometry('/privacy/waypost-words/'));
 test('the not-found page holds its geometry @not-found', () => holdsGeometry('/404'));
 
 // The titles above are hand-written, so they can drift from the table they are
