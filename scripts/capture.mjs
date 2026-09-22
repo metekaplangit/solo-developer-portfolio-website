@@ -32,10 +32,12 @@ const ROUTES = [
   { path: '/apps/', tag: '@apps', file: 'apps' },
   { path: '/apps/sole-focus/', tag: '@sole-focus', file: 'sole-focus' },
   { path: '/apps/magic-notes/', tag: '@magic-notes', file: 'magic-notes' },
+  { path: '/apps/wander-words/', tag: '@wander-words', file: 'wander-words' },
   { path: '/about/', tag: '@about', file: 'about' },
   { path: '/support/', tag: '@support', file: 'support' },
   { path: '/privacy/', tag: '@privacy-index', file: 'privacy-index' },
   { path: '/privacy/sole-focus/', tag: '@privacy-sole-focus', file: 'privacy-sole-focus' },
+  { path: '/privacy/wander-words/', tag: '@privacy-wander-words', file: 'privacy-wander-words' },
   { path: '/404', tag: '@not-found', file: 'not-found' },
 ];
 

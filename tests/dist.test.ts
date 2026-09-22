@@ -53,7 +53,7 @@ beforeAll(() => {
 });
 
 describe('every built page', () => {
-  it('builds the 10 routes this site has', () => {
+  it('builds the 12 routes this site has', () => {
     expect(built.map(([r]) => r)).toEqual([
       '/',
       '/404',
@@ -61,9 +61,11 @@ describe('every built page', () => {
       '/apps/',
       '/apps/magic-notes/',
       '/apps/sole-focus/',
+      '/apps/wander-words/',
       '/privacy/',
       '/privacy/magic-notes/',
       '/privacy/sole-focus/',
+      '/privacy/wander-words/',
       '/support/',
     ]);
   });
@@ -91,6 +93,20 @@ describe('every built page', () => {
       '"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://apps.apple.com/us/app/magic-notes-calculator/id6797499171?mt=12"}',
     );
     expect(product).not.toContain('Not yet available');
+  });
+
+  // Wander Words is unreleased, and its pages exist so the addresses written
+  // into the game resolve before it ships. The route list above proves both
+  // pages exist; this proves they are the addresses the game will carry, and
+  // that the product page claims no offer for a download that is not there.
+  it('serves the Wander Words pages the game will link to, with no offer', () => {
+    const [, policy] = built.find(([r]) => r === '/privacy/wander-words/')!;
+    expect(policy).toContain('<link rel="canonical" href="https://metkapstudio.com/privacy/wander-words/"');
+    expect(policy).toContain('support@metkapstudio.com');
+    const [, product] = built.find(([r]) => r === '/apps/wander-words/')!;
+    expect(product).toContain('<link rel="canonical" href="https://metkapstudio.com/apps/wander-words/"');
+    expect(product).not.toContain('"offers"');
+    expect(product).toContain('Not yet available');
   });
 
   it('carries exactly one canonical URL, and it matches the route', () => {

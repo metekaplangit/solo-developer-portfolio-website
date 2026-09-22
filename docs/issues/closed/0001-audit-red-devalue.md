@@ -6,7 +6,7 @@
 - Found by: health-project 0001
 - Filed: 2026-09-19
 - Tried by: —
-- Closed by: —
+- Closed by: card "Wander Words has a product page and a privacy page before it ships", 2026-09-22 — `npm audit fix --omit=dev` moved devalue 5.8.1 to 5.9.4 in the lockfile, and `npm run headless` then exited 0 with 0 vulnerabilities
 
 Doubt: nothing a visitor sees breaks (devalue only runs at build time), but every card's check stops, so it is rounded up to high.
 
