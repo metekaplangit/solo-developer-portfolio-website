@@ -27,7 +27,11 @@ effectiveScope: The Wander Words game for iPhone, as it is built on 2026-09-22, 
 # there is none yet. Revise it with the release that changes any of this.
 reviewStatus: draft
 sections:
-  children: "Wander Words is a word game for players of all ages, children included. It collects no personal data from anyone, so it holds nothing about children either."
+  # General audience, not child-directed (owner's decision, 2026-09-22). "All
+  # ages, children included" would read as a child-directed service under COPPA
+  # once advertising is added, which limits the ads allowed and can require
+  # parental consent. Keep this in step with the App Store age rating answers.
+  children: "Wander Words is a word game made for a general audience, and it isn't directed at children. It collects no personal data from anyone, so it holds nothing about children either."
   changes: "This policy describes Wander Words as it is built today, before its first release. It is revised with any release that changes what the game does with data, and the Updated date at the top always shows the current version."
 ---
 
