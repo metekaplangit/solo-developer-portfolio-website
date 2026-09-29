@@ -59,9 +59,15 @@ const list = {
 };
 
 // At-a-glance chips — the gist in one scan. Each: label + tone.
+//
+// The data and sharing chips answer what Apple asks every policy to state
+// (5.1.1(i): what data, if any, and who it is shared with). An account is
+// named only when there is one: "No account needed" was a statement of what a
+// product lacks, which the studio never makes because a later release may add
+// it (STUDIO.md, 10 September 2026).
 const chips: { label: string; ok: boolean }[] = [
   { label: collectsData ? 'Minimal data collected' : 'No data collected', ok: !collectsData },
-  { label: policy.hasAccounts ? 'Account-based' : 'No account needed', ok: !policy.hasAccounts },
+  ...(policy.hasAccounts ? [{ label: 'Account-based', ok: false }] : []),
   { label: hasThirdParties ? 'Uses named services' : 'No third-party sharing', ok: !hasThirdParties },
 ];
 ---

@@ -232,6 +232,9 @@ describe('Waypost Words product content', () => {
     // describe a build that no longer exists.
     expect(policy.storedLocally.join(' ')).not.toMatch(/haptic/i);
     expect(policy.retention).toMatch(/iPad/);
+    // Nothing that a later release may change is promised as absent.
+    expect(policy.dataNotCollected).toHaveLength(0);
+    expect(policy.retention).not.toMatch(/never|no account/i);
   });
 
   it('shows the icon the game ships with', () => {

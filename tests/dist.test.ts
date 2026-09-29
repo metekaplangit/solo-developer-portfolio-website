@@ -133,6 +133,19 @@ describe('every built page', () => {
     expect(product).toContain('Not yet available');
   });
 
+  // The studio never states what a product lacks (STUDIO.md, 10 September
+  // 2026). The policy keeps only the answers Apple asks every policy to give —
+  // what data, if any, and who it is shared with (5.1.1(i)).
+  it("states Waypost Words' data answers without listing what the game lacks", () => {
+    const [, raw] = built.find(([r]) => r === '/privacy/waypost-words/')!;
+    const policy = raw.replace(/ |&nbsp;|&#160;/g, ' ');
+    expect(policy).toContain('No data collected');
+    expect(policy).toContain('No third-party sharing');
+    expect(policy).not.toContain('No account needed');
+    expect(policy).not.toContain('What we never collect');
+    expect(policy).not.toMatch(/no analytics|no advertising|no purchases|without connecting|no account to delete/i);
+  });
+
   // Phone captures are portrait. In the Mac-shaped carousel they were squashed
   // to 2880:1800, so a portrait product gets the phone rail: every capture in
   // one track, four in view on a wide screen, arrows to the rest.
