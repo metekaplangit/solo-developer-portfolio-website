@@ -35,6 +35,39 @@ icon:
   path: /media/waypost-words/icon.png
   altText: Waypost Words app icon — a white letter tile with a purple W, tilted on a starry night-purple ground
   licenseOrOwnership: owned
+# Real captures from the running game on a 6.9-inch iPhone, 1320×2868, from the
+# owner's store screenshots in that project (store-assets/screenshots/Mobile/
+# 1, 4, 3 and 8.png, dropped 2026-09-24 to 2026-09-28), converted to JPEG.
+# Nothing is composited onto them; the words in the third are the game's own.
+screenshots:
+  - id: waypost-words-shot-lightning
+    productId: waypost-words
+    type: screenshot
+    path: 01-lightning-reveals-a-letter.jpg
+    altText: A Waypost Words crossword at the stop Ice Floe on a night-purple sky, with a bolt of lightning striking one square to reveal its letter, the letter wheel below it, and four skill buttons along the bottom, each with its coin cost.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-meteor
+    productId: waypost-words
+    type: screenshot
+    path: 02-a-meteor-opens-a-square.jpg
+    altText: A Waypost Words crossword at the stop Heather Moor on a purple dusk, with a meteor streaking down onto a chosen square that glows orange as it opens, and the letter wheel below.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-keepsakes
+    productId: waypost-words
+    type: screenshot
+    path: 03-a-traveller-s-keepsakes.jpg
+    altText: An open wooden chest of old belongings — an oar, a glass float, mittens, a knitted hat, a kite, a rag doll and more — above the line “Spell words to work the passage. Every word is one of them coming home.” and a Back to stories button.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-road
+    productId: waypost-words
+    type: screenshot
+    path: 04-the-road-ahead.jpg
+    altText: The Waypost Words home screen showing the destination Dune Reach, the current stop and seat, words found, today's goals and the daily gift, a Continue button, and buttons for the daily puzzle, daily gift, map, stories, skills, words, a random board and how to play.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
 # Copy from the game's own listing batch, store-assets/listings/
 # listings-2026-09-28-2007-skills-first-pack (COPY_PACK.md §4, the owner's pick,
 # direction B), written against v1.215.21. Each claim there is traced to the

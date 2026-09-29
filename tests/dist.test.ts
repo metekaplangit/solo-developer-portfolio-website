@@ -133,6 +133,18 @@ describe('every built page', () => {
     expect(product).toContain('Not yet available');
   });
 
+  // Phone captures are portrait. In the Mac-shaped carousel they were squashed
+  // to 2880:1800, so a portrait product gets the phone grid and no carousel.
+  it('lays Waypost Words phone captures side by side, not in the Mac carousel', () => {
+    const [, product] = built.find(([r]) => r === '/apps/waypost-words/')!;
+    expect(product).toContain('class="phone-grid');
+    expect([...product.matchAll(/class="phone-img/g)]).toHaveLength(4);
+    expect(product).not.toContain('aria-roledescription="carousel"');
+    const [, sole] = built.find(([r]) => r === '/apps/sole-focus/')!;
+    expect(sole).toContain('aria-roledescription="carousel"');
+    expect(sole).not.toContain('class="phone-grid');
+  });
+
   it('carries exactly one canonical URL, and it matches the route', () => {
     for (const [route, html] of built) {
       const found = [...html.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map((m) => m[1]);

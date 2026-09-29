@@ -24,10 +24,46 @@ interface Props {
 }
 const { shots, label = 'Screenshots' } = Astro.props;
 const many = shots.length > 1;
+// Phone captures are portrait. The carousel frame below is cut for a Mac
+// window at 2880:1800, and a portrait shot forced into it is squashed, or at
+// its own ratio a single slide stands taller than the screen. So a product
+// whose shots are taller than wide gets them side by side, whole, in a plain
+// grid — four fit one row on a wide screen and two on a phone, with nothing to
+// swipe and no script to run.
+const portrait = shots.length > 0 && shots[0].img.height > shots[0].img.width;
 ---
 
 {
-  shots.length > 0 && (
+  portrait && (
+    <section class="phones reveal" aria-label={label}>
+      <ul class="phone-grid" role="list">
+        {shots.map((shot, i) => (
+          <li class="phone">
+            {/* Unlike carousel slides 2-5, these are not hidden off to the
+                side: the whole row is on the first screen, so none is lazy (a
+                lazy image there is queued late for no reason — the geometry
+                suite's rule). The first keeps the one priority hint. */}
+            <Image
+              src={shot.img}
+              alt={shot.alt}
+              widths={[360, 540, 720]}
+              sizes="(min-width: 74rem) 17rem, (min-width: 40rem) calc((100vw - 6rem) / 4), calc((100vw - 3.75rem) / 2)"
+              format="webp"
+              quality={80}
+              loading="eager"
+              fetchpriority={i === 0 ? 'high' : undefined}
+              class="phone-img"
+              draggable={false}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+{
+  !portrait && shots.length > 0 && (
     <section class="gallery reveal" aria-roledescription="carousel" aria-label={label}>
       <div class="frame">
         <ul
@@ -110,6 +146,41 @@ const many = shots.length > 1;
 }
 
 <style>
+  .phones {
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+  .phone-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  @media (min-width: 40rem) {
+    .phone-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+  }
+  .phone {
+    min-width: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    /* The same hairline ring and lift as the carousel frame, per shot. */
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    line-height: 0;
+  }
+  .phone-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .gallery {
     /* Breaks out well past the prose column — the screenshots are the most
        prominent element on the page (STEP-0036). Centered on the same axis. */

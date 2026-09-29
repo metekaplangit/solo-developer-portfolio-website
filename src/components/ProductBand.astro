@@ -50,6 +50,9 @@ const {
 
 const shot = product.screenshots?.[0];
 const img = shot ? resolveScreenshot(shot.path) : undefined;
+// A phone capture is portrait; at the full image column it would stand well
+// over a screen tall, so it is held to a phone's width and centred instead.
+const portrait = img ? img.height > img.width : false;
 const alt = shot
   ? announceBakedInText
     ? [shot.bakedInText, shot.altText].filter(Boolean).join(' ')
@@ -119,7 +122,7 @@ const facts = [product.requirements]
     {
       img && (
         <a
-          class="band-shot"
+          class:list={['band-shot', portrait && 'band-shot-portrait']}
           href={withBase(`/apps/${product.slug}/`)}
           aria-label={`Open ${product.name}`}
         >
@@ -130,8 +133,8 @@ const facts = [product.requirements]
           <Image
             src={img}
             alt={alt}
-            widths={[600, 900, 1300, 1900]}
-            sizes="(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)"
+            widths={portrait ? [360, 540, 720] : [600, 900, 1300, 1900]}
+            sizes={portrait ? '18rem' : '(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)'}
             format="webp"
             quality={80}
             loading={eager ? 'eager' : 'lazy'}
@@ -211,6 +214,10 @@ const facts = [product.requirements]
     display: block;
     width: 100%;
     height: auto;
+  }
+  .band-shot-portrait {
+    justify-self: center;
+    width: min(18rem, 100%);
   }
   @media (prefers-reduced-motion: no-preference) {
     .band-shot {

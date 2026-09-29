@@ -239,6 +239,16 @@ describe('Waypost Words product content', () => {
     expect(existsSync(join(root, 'public/media/waypost-words/icon.png'))).toBe(true);
   });
 
+  it('shows real iPhone captures, whose files are in the build', () => {
+    expect(product.screenshots).toHaveLength(4);
+    for (const shot of product.screenshots) {
+      expect(existsSync(join(root, 'src/assets/waypost-words/screenshots', shot.path))).toBe(true);
+      // Portrait, which is what sends them to the side-by-side phone grid
+      // rather than the Mac-shaped carousel.
+      expect(shot.dimensions!.height).toBeGreaterThan(shot.dimensions!.width);
+    }
+  });
+
   it('never promises offline play, which a later release may change', () => {
     expect(product.features.join(' ')).not.toMatch(/offline/i);
   });
