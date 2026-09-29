@@ -146,6 +146,18 @@ describe('every built page', () => {
     expect(policy).not.toMatch(/no analytics|no advertising|no purchases|without connecting|no account to delete/i);
   });
 
+  // Review 0001 (control/cards/apps-games-and-the-studio-privacy-policy-say-
+  // only-what-is-tr/): with a game in development on Apps & Games,
+  // "everything the studio has shipped" was false, as was "its own support
+  // page" (there is one support page) and the site-wide policy's "some of
+  // them do collect data" (none does).
+  it('claims nothing untrue about the products on Apps & Games or the studio policy', () => {
+    const text = (route: string) =>
+      built.find(([r]) => r === route)![1].replace(/ |&nbsp;|&#160;/g, ' ');
+    expect(text('/apps/')).not.toMatch(/has shipped|own support page/);
+    expect(text('/privacy/')).not.toContain('some of them do collect data');
+  });
+
   // Phone captures are portrait. In the Mac-shaped carousel they were squashed
   // to 2880:1800, so a portrait product gets the phone rail: every capture in
   // one track, four in view on a wide screen, arrows to the rest.
