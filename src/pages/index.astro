@@ -13,6 +13,7 @@ import {
   sortProducts,
   visibleStoreLinks,
   productHue,
+  downloadLabel,
 } from '../lib/products';
 import { organizationSchema, websiteSchema } from '../lib/schema';
 import { tie } from '../lib/typography';
@@ -85,7 +86,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
       <h1 id="hero-h">Small studio.<br /><span class="voice">Serious craft.</span></h1>
       <p class="lede">{site.lede}</p>
       <div class="actions">
-        {heroHasDownload && <DownloadButton product={spotlight} label="Mac App Store" />}
+        {heroHasDownload && <DownloadButton product={spotlight} label={downloadLabel(spotlight)} />}
         <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
           See the app
         </a>
@@ -185,7 +186,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     <div class="rail">
       <h2 id="promise-h" class="over">The deal</h2>
       <ul role="list">
-        <li>{tie('Native. Built for the Mac, not wrapped from something else.')}</li>
+        <li>{tie('Personal. Every product is designed, built and supported by one person.')}</li>
         <li>{tie('Documented. Every product has its own privacy page, kept current.')}</li>
         <li>Answered. A real person reads <SupportEmail>{site.supportEmail}</SupportEmail>.</li>
       </ul>

@@ -5,6 +5,7 @@ import {
   visibleStoreLinks,
   hasStoreLinks,
   storeLabel,
+  downloadLabel,
   statusLabel,
   platformLabel,
   relatedProducts,
@@ -129,5 +130,26 @@ describe('productHue', () => {
     // An unclaimed band reads as studio chrome, not as a product with a
     // forgotten colour — so the fallback is the site's own near-white.
     expect(productHue(make({}))).toBe(NEUTRAL_HUE);
+  });
+});
+
+describe('downloadLabel', () => {
+  it('names the store the button opens, so an iPhone game never reads "Mac App Store"', () => {
+    const ios = make({
+      storeLinks: [{ store: 'app-store', url: 'https://apps.apple.com/app/id1', status: 'available' }],
+    });
+    const mac = make({
+      storeLinks: [{ store: 'mac-app-store', url: 'https://apps.apple.com/app/id2', status: 'available' }],
+    });
+    expect(downloadLabel(ios)).toBe('App Store');
+    expect(downloadLabel(mac)).toBe('Mac App Store');
+  });
+
+  it('is undefined when nothing can be downloaded yet', () => {
+    expect(downloadLabel(make({ storeLinks: [] }))).toBeUndefined();
+    const soon = make({
+      storeLinks: [{ store: 'app-store', url: 'https://apps.apple.com/app/id1', status: 'coming-soon' }],
+    });
+    expect(downloadLabel(soon)).toBeUndefined();
   });
 });

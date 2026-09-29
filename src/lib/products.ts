@@ -55,6 +55,19 @@ export function visibleStoreLinks(product: Product): StoreLink[] {
   return product.storeLinks.filter((link) => link.status !== 'unavailable');
 }
 
+/**
+ * The visible label for a product's download button: the name of the store it
+ * actually opens. It was written in as "Mac App Store" at every call site while
+ * every product was a Mac app, which would have put that name on an iPhone
+ * game's button — and broken WCAG 2.5.3, because the button's accessible name
+ * says "on the App Store". Undefined when there is nothing to download, which
+ * leaves DownloadButton rendering nothing.
+ */
+export function downloadLabel(product: Product): string | undefined {
+  const link = visibleStoreLinks(product).find((l) => l.status === 'available');
+  return link ? storeLabel(link.store) : undefined;
+}
+
 export function hasStoreLinks(product: Product): boolean {
   return visibleStoreLinks(product).length > 0;
 }

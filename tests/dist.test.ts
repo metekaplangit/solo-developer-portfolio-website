@@ -145,6 +145,19 @@ describe('every built page', () => {
     expect(sole).not.toContain('class="phone-grid');
   });
 
+  // The studio lists an iPhone and iPad game, and the game is a web build in a
+  // native shell, so "native Mac software" and "not wrapped from something
+  // else" stopped being true of the studio. The Mac products still name their
+  // own store on their buttons.
+  it('describes the studio as more than Mac software', () => {
+    // Read through the wrapping rule's non-breaking spaces.
+    const home = built.find(([r]) => r === '/')![1].replace(/\u00a0/g, ' ');
+    expect(home).not.toContain('native Mac software');
+    expect(home).not.toContain('not wrapped from something else');
+    expect(home).toContain('for Mac, iPhone and iPad');
+    expect(home).toContain('Mac App Store');
+  });
+
   it('carries exactly one canonical URL, and it matches the route', () => {
     for (const [route, html] of built) {
       const found = [...html.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map((m) => m[1]);
