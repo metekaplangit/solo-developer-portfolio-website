@@ -192,21 +192,23 @@ describe('Magic Notes product content', () => {
   });
 });
 
-// Waypost Words is unreleased (2026-09-22). Its two pages exist so the addresses
-// written into the game resolve before it ships — the case STEP-0069 opened for
-// Magic Notes. Everything it cannot yet support is pinned empty, so a later edit
-// cannot claim a download, a price or a release that has not happened, and the
-// privacy address is pinned because a link inside a shipped build cannot change.
+// Waypost Words is unreleased (2026-09-29), with its first build headed to App
+// Review. Its two pages exist so the addresses written into the game resolve
+// before it ships — the case STEP-0069 opened for Magic Notes. Everything it
+// cannot yet support is pinned empty, so a later edit cannot claim a download, a
+// price or a release that has not happened, and the privacy address is pinned
+// because a link inside a shipped build cannot change.
 describe('Waypost Words product content', () => {
   const product = productSchema.parse(frontmatter('src/content/products/waypost-words.md'));
   const policy = privacyPolicyEntrySchema.parse(
     frontmatter('src/content/policies/waypost-words.md'),
   );
 
-  it('is an unreleased iPhone game with nothing to download yet', () => {
+  it('is an unreleased iPhone and iPad game with nothing to download yet', () => {
     expect(product.type).toBe('game');
     expect(product.status).toBe('in-development');
-    expect(product.platforms).toEqual(['ios']);
+    // One universal build: TARGETED_DEVICE_FAMILY "1,2" in the game's project.
+    expect(product.platforms).toEqual(['ios', 'ipados']);
     expect(product.storeLinks).toHaveLength(0);
     expect(product.price).toBeUndefined();
     expect(product.releaseDate).toBeUndefined();
@@ -220,12 +222,25 @@ describe('Waypost Words product content', () => {
     expect(policy.contact).toBe('support@metkapstudio.com');
   });
 
-  it('states what the game does with data today, as a draft', () => {
-    expect(policy.reviewStatus).toBe('draft');
+  it('states what the build going to App Review does with data', () => {
+    expect(policy.reviewStatus).toBe('reviewed');
     expect(policy.hasAccounts).toBe(false);
     expect(policy.dataCollected).toHaveLength(0);
     expect(policy.thirdPartyServices).toHaveLength(0);
     expect(policy.retention).toMatch(/delet/i);
+    // The game dropped its haptics setting from the save; listing it would
+    // describe a build that no longer exists.
+    expect(policy.storedLocally.join(' ')).not.toMatch(/haptic/i);
+    expect(policy.retention).toMatch(/iPad/);
+  });
+
+  it('shows the icon the game ships with', () => {
+    expect(product.icon?.path).toBe('/media/waypost-words/icon.png');
+    expect(existsSync(join(root, 'public/media/waypost-words/icon.png'))).toBe(true);
+  });
+
+  it('never promises offline play, which a later release may change', () => {
+    expect(product.features.join(' ')).not.toMatch(/offline/i);
   });
 
   it('carries its own hue, distinct from the other two products', () => {
