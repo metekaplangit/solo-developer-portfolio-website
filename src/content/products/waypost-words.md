@@ -114,35 +114,50 @@ screenshots:
     licenseOrOwnership: owned
 # Copy from the game's own listing batch, store-assets/listings/
 # listings-2026-09-28-2007-skills-first-pack (COPY_PACK.md §4, the owner's pick,
-# direction B), written against v1.215.21. Each claim there is traced to the
-# game's source; the skill count, road lengths, devices and storage were read
-# again from the source on 2026-09-29. Nothing here is a promise about a later
-# release. The pack lists seven features; its bonus-jar line is left to the
-# prose below, because seven cards cannot fill even rows (src/lib/grid.ts) and
-# fell into one column.
+# direction B), written against v1.215.21, word for word. Each claim there is
+# traced to the game's source; the skill count, road lengths, devices, storage
+# and the 26 skies (src/core/game/godmode.ts) were read again on 2026-09-29.
+# The seven website bullets are all here; the eighth, "26 skies to buy with
+# your coins", is the App Store description's own (§3, Your way), added because
+# seven cards cannot fill even rows (src/lib/grid.ts) and fell into one column.
+# Nothing here is a promise about a later release.
 features:
   - Trace letters on a wheel to fill the crossword above it
   - Seven skills to unlock, four to carry
   - Three travellers, 60 places, 1,500 stops
   - Weather that changes while you play
+  - Extra words you find fill a bonus jar
   - A daily puzzle, a daily gift and three daily goals
+  - 26 skies to buy with your coins
   - Made for iPhone and iPad, in portrait
 lastUpdated: 2026-09-29
 seo:
-  title: Waypost Words — Crosswords with Seven Skills, for iPhone and iPad
+  title: Waypost Words — crosswords with seven skills, for iPhone and iPad
   description: Trace letters on a wheel to fill the crossword, or reach for one of seven skills. Three roads to walk, under weather that changes as you play.
 ---
 
-Spell it. Strike it. Rain letters on it. Trace letters on a wheel to spell a
-word and it drops into the crossword above. Fill every answer and the road moves
-on to its next stop.
+## Spell it. Strike it. Rain letters on it.
+
+Waypost Words is a crossword word game with a road to walk. Letters sit on a
+wheel. Trace them to spell a word and it drops into the crossword above. Fill
+every answer and you move on to the next stop.
 
 ## Seven skills, and something to watch
 
 Lightning reveals a letter. A meteor opens the square you pick. A cloudburst
 rains letters across the crossword, and Keystone opens the square two answers
-share. Start with one skill, unlock the rest as you play, and carry four. Each
-use costs coins you earn as you play.
+share. Start with one skill, unlock the rest as you play, and carry four.
+
+- **Reveal a letter:** one letter from an answer you haven't found.
+- **Reveal a square:** the letter in the square you pick.
+- **Meaning:** what an answer means, without giving away a letter.
+- **Solve an answer:** one whole answer, filled in.
+- **First letters:** the first letter of every answer still missing.
+- **Keystone:** the square two answers share, and one more in each.
+- **Cloudburst:** a few squares opened across several answers.
+
+Each use costs coins you earn as you play. Go a few tries in a row without
+filling anything and the game offers a hand.
 
 ## Three travellers
 

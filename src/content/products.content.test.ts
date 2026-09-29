@@ -250,6 +250,42 @@ describe('Waypost Words product content', () => {
     }
   });
 
+  // The listing batch's website copy (COPY_PACK.md §4 in the game's
+  // store-assets/listings/listings-2026-09-28-2007-skills-first-pack), word for
+  // word, so what App Review reads here matches the listing it is reviewing.
+  it('carries its App Store listing words exactly', () => {
+    expect(product.seo?.title).toBe(
+      'Waypost Words — crosswords with seven skills, for iPhone and iPad',
+    );
+    for (const line of [
+      'Trace letters on a wheel to fill the crossword above it',
+      'Seven skills to unlock, four to carry',
+      'Three travellers, 60 places, 1,500 stops',
+      'Weather that changes while you play',
+      'Extra words you find fill a bonus jar',
+      'A daily puzzle, a daily gift and three daily goals',
+      'Made for iPhone and iPad, in portrait',
+    ]) {
+      // The schema ties short words with non-breaking spaces.
+      expect(product.features.map((f) => f.replace(/\u00a0/g, ' '))).toContain(line);
+    }
+    const body = readFileSync(join(root, 'src/content/products/waypost-words.md'), 'utf8')
+      .split(/^---$/m)[2]
+      .replace(/\s+/g, ' ');
+    expect(body).toContain('## Spell it. Strike it. Rain letters on it.');
+    for (const skill of [
+      '**Reveal a letter:** one letter from an answer you haven\'t found.',
+      '**Reveal a square:** the letter in the square you pick.',
+      '**Meaning:** what an answer means, without giving away a letter.',
+      '**Solve an answer:** one whole answer, filled in.',
+      '**First letters:** the first letter of every answer still missing.',
+      '**Keystone:** the square two answers share, and one more in each.',
+      '**Cloudburst:** a few squares opened across several answers.',
+    ]) {
+      expect(body).toContain(skill);
+    }
+  });
+
   it('never promises offline play, which a later release may change', () => {
     expect(product.features.join(' ')).not.toMatch(/offline/i);
   });

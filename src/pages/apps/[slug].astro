@@ -371,6 +371,17 @@ const schema = [
   .prose :global(h2:first-child) {
     margin-top: 0;
   }
+  /* Waypost Words lists its seven skills in its description. */
+  .prose :global(ul) {
+    margin-block: var(--space-4);
+    padding-inline-start: 1.25rem;
+    color: var(--muted);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+  .prose :global(li + li) {
+    margin-top: var(--space-2);
+  }
   .prose :global(strong) {
     color: var(--text-strong);
     font-weight: 600;
