@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.56.2
+
+- A visitor on Apps & Games sees two phone screenshots of a mobile game
+
 ## v0.56.1
 
 - The home page describes a studio that makes iPhone games as well as Mac apps

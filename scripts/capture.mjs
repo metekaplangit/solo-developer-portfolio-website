@@ -139,6 +139,15 @@ async function shoot(route, width, browser) {
     await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
     await page.goto(base + route.path, { waitUntil: 'load', timeout: 60_000 });
     await new Promise((r) => setTimeout(r, 400));
+    // A full-page picture never scrolls, so a lazy image far down the page was
+    // never asked for and came out as an empty frame — Waypost Words on /apps/
+    // at 390, 2026-09-29, which read as "no picture" while a visitor scrolling
+    // there gets one. Load every image before the picture, as scrolling would.
+    await page.evaluate(async () => {
+      const imgs = [...document.images];
+      for (const img of imgs) img.loading = 'eager';
+      await Promise.all(imgs.map((img) => img.decode().catch(() => {})));
+    });
     const path = join(into, `${route.file}-${width}.png`);
     await page.screenshot({ path, fullPage: true });
     console.log(`  • ${path}`);

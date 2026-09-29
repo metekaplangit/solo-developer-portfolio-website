@@ -50,9 +50,18 @@ const {
 
 const shot = product.screenshots?.[0];
 const img = shot ? resolveScreenshot(shot.path) : undefined;
-// A phone capture is portrait; at the full image column it would stand well
-// over a screen tall, so it is held to a phone's width and centred instead.
+// A phone capture is portrait. One alone, at the full image column, stands well
+// over a screen tall, and held to a phone's width it leaves most of the column
+// empty. So a mobile product shows its first two captures side by side — the
+// owner's call for Apps & Games (2026-09-29) — which fills the column the way a
+// Mac window does.
 const portrait = img ? img.height > img.width : false;
+const phones = portrait
+  ? (product.screenshots ?? [])
+      .slice(0, 2)
+      .map((s) => ({ img: resolveScreenshot(s.path), alt: s.altText }))
+      .filter((s): s is { img: NonNullable<typeof s.img>; alt: string } => Boolean(s.img))
+  : [];
 const alt = shot
   ? announceBakedInText
     ? [shot.bakedInText, shot.altText].filter(Boolean).join(' ')
@@ -120,9 +129,29 @@ const facts = [product.requirements]
       }
     </div>
     {
-      img && (
+      portrait && (
+        <a class="band-phones" href={withBase(`/apps/${product.slug}/`)} aria-label={`Open ${product.name}`}>
+          {phones.map((p, i) => (
+            <span class="band-phone">
+              <Image
+                src={p.img}
+                alt={p.alt}
+                widths={[360, 540, 720]}
+                sizes="(min-width: 66rem) 16rem, calc((100vw - 3.5rem) / 2)"
+                format="webp"
+                quality={80}
+                loading={eager ? 'eager' : 'lazy'}
+                fetchpriority={eager && i === 0 ? 'high' : undefined}
+              />
+            </span>
+          ))}
+        </a>
+      )
+    }
+    {
+      img && !portrait && (
         <a
-          class:list={['band-shot', portrait && 'band-shot-portrait']}
+          class="band-shot"
           href={withBase(`/apps/${product.slug}/`)}
           aria-label={`Open ${product.name}`}
         >
@@ -133,8 +162,8 @@ const facts = [product.requirements]
           <Image
             src={img}
             alt={alt}
-            widths={portrait ? [360, 540, 720] : [600, 900, 1300, 1900]}
-            sizes={portrait ? '18rem' : '(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)'}
+            widths={[600, 900, 1300, 1900]}
+            sizes="(min-width: 66rem) 47vw, calc(100vw - 2 * 1.25rem)"
             format="webp"
             quality={80}
             loading={eager ? 'eager' : 'lazy'}
@@ -215,9 +244,32 @@ const facts = [product.requirements]
     width: 100%;
     height: auto;
   }
-  .band-shot-portrait {
+  .band-phones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
     justify-self: center;
-    width: min(18rem, 100%);
+    width: min(34rem, 100%);
+  }
+  .band-phone {
+    display: block;
+    line-height: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+  }
+  .band-phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .band-phones {
+      transition: transform var(--dur) var(--ease);
+    }
+    .band-phones:hover {
+      transform: translateY(-3px);
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     .band-shot {

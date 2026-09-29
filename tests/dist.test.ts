@@ -149,6 +149,16 @@ describe('every built page', () => {
   // native shell, so "native Mac software" and "not wrapped from something
   // else" stopped being true of the studio. The Mac products still name their
   // own store on their buttons.
+  // Owner's call, 2026-09-29: a mobile product shows its first two phone
+  // captures side by side on Apps & Games; the Mac products keep one window.
+  it('shows two phone captures for a mobile game on Apps & Games', () => {
+    const [, apps] = built.find(([r]) => r === '/apps/')!;
+    const band = apps.slice(apps.indexOf('class="band-phones'));
+    expect(apps).toContain('href="/apps/waypost-words/" aria-label="Open Waypost Words"');
+    expect(band.slice(0, band.indexOf('</a>')).match(/<img /g)).toHaveLength(2);
+    expect(apps.match(/class="band-shot"/g)).toHaveLength(2);
+  });
+
   it('describes the studio as more than Mac software', () => {
     // Read through the wrapping rule's non-breaking spaces.
     const home = built.find(([r]) => r === '/')![1].replace(/\u00a0/g, ' ');
