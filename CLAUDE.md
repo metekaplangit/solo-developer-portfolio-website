@@ -62,6 +62,7 @@ Two tiers run by the control, and a third you run by hand.
 
       @home  @apps  @sole-focus  @magic-notes  @waypost-words  @about
       @support  @privacy-index  @privacy-sole-focus  @privacy-waypost-words
+      @waypost-rail
       @not-found  @every-route
 
 A card that touches anything under `src/` or `public/` names the screens it

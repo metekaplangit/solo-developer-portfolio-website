@@ -363,7 +363,19 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
   for (const img of Array.from(document.querySelectorAll('img'))) {
     if (!visible(img)) continue;
     const r = img.getBoundingClientRect();
-    const visibleW = Math.max(0, Math.min(r.right, window.innerWidth) - Math.max(r.left, 0));
+    // Clip to any scroller around the image as well as to the window: a slide
+    // parked past a horizontal rail's edge is inside the window yet hidden by
+    // the rail (Waypost Words' fifth phone shot at 1440, 2026-09-29), and that
+    // is exactly the slide this rule means to leave lazy.
+    let clipLeft = 0;
+    let clipRight = window.innerWidth;
+    for (let el = img.parentElement; el && el !== document.body; el = el.parentElement) {
+      if (getComputedStyle(el).overflowX === 'visible') continue;
+      const box = el.getBoundingClientRect();
+      clipLeft = Math.max(clipLeft, box.left);
+      clipRight = Math.min(clipRight, box.right);
+    }
+    const visibleW = Math.max(0, Math.min(r.right, clipRight) - Math.max(r.left, clipLeft));
     const visibleH = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
     const onScreen = visibleW >= r.width / 4 && visibleH >= r.height / 4;
     if (onScreen && img.loading === 'lazy') {
@@ -407,6 +419,10 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
 const readings = new Map<string, Record<string, Reading>>();
 let server: Server | undefined;
 let chrome: Chrome | undefined;
+
+/** What the Waypost Words phone rail did when driven, per width. */
+type RailStep = { count: string; prevDisabled: boolean; nextDisabled: boolean; firstVisible: number };
+const rail = new Map<string, RailStep[]>();
 
 const LIMITS = { targetMin: TARGET_MIN, textMin: TEXT_MIN, gapMax: GAP_MAX };
 
@@ -495,6 +511,78 @@ async function readOnce(chrome: Chrome, url: string, phone: boolean, width?: num
   );
 }
 
+/**
+ * Drive the phone rail on Waypost Words' page: read it, press Next until it is
+ * disabled, then press Previous once. Every screenshot has to be reachable by
+ * the arrows alone, and the count has to follow — the owner's ask, 2026-09-29.
+ */
+async function driveRail(chrome: Chrome, url: string, width: number): Promise<RailStep[]> {
+  // Chrome on this machine detaches a frame about 1 page in 3 (see `launch`),
+  // and the chance grows with how long a page lives. So the rail is driven with
+  // reduced motion — each page jumps instead of gliding — and short waits, and
+  // gets more attempts than a one-shot reading does.
+  //
+  // Each attempt also has a 20-second deadline. A detached page does not always
+  // throw: a call on it can wait out the launch's 120-second protocol timeout,
+  // and two of those spent the whole suite's 240-second hook budget in one run.
+  // Driving the rail takes about three seconds, so 20 is a hang, not a slow page.
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const deadline = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('rail attempt passed its 20s deadline')), 20_000);
+      });
+      page = await Promise.race([chrome.page(), deadline]);
+      page.setDefaultTimeout(10_000);
+      const steps = await Promise.race([drive(page), deadline]);
+      clearTimeout(timer);
+      await page.close().catch(() => {});
+      return steps;
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not drive the rail at ${width} in 8 attempts: ${String(lastError).slice(0, 160)}`);
+
+  async function drive(page: import('puppeteer-core').Page): Promise<RailStep[]> {
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await page.setViewport({ width, height: 900, deviceScaleFactor: 1 });
+    await page.goto(url, { waitUntil: 'load', timeout: 15_000 });
+    await page.evaluate(() => document.querySelector('[data-phones]')!.scrollIntoView({ block: 'center' }));
+    const read = () =>
+      page.evaluate((): RailStep => {
+        const root = document.querySelector('[data-phones]')!;
+        const track = root.querySelector('.phone-track')!;
+        const box = track.getBoundingClientRect();
+        const slides = [...track.querySelectorAll('.phone')];
+        const firstVisible = slides.findIndex((el) => el.getBoundingClientRect().left >= box.left - 2) + 1;
+        return {
+          count: (root.querySelector('.phone-count')?.textContent ?? '').replace(/\s+/g, ' ').trim(),
+          prevDisabled: root.querySelector<HTMLButtonElement>('.nav.prev')!.disabled,
+          nextDisabled: root.querySelector<HTMLButtonElement>('.nav.next')!.disabled,
+          firstVisible,
+        };
+      });
+    const settle = () => new Promise((r) => setTimeout(r, 250));
+    await settle();
+    const steps: RailStep[] = [await read()];
+    for (let i = 0; i < 10 && !steps[steps.length - 1].nextDisabled; i++) {
+      await page.click('[data-phones] .nav.next');
+      await settle();
+      steps.push(await read());
+    }
+    await page.click('[data-phones] .nav.prev');
+    await settle();
+    steps.push(await read());
+    return steps;
+  }
+}
+
 /** One browser per route, replaced on any failure; one fresh page per width. */
 async function readRoute(chrome: Chrome, base: string, route: string): Promise<Record<string, Reading>> {
   const per: Record<string, Reading> = {};
@@ -527,6 +615,9 @@ beforeAll(async () => {
   // for, never which pages get loaded. Reading all nine costs about a minute.
   for (const route of ROUTES) {
     readings.set(route.path, await readRoute(chrome, started.base, route.path));
+  }
+  for (const width of [1440, 390]) {
+    rail.set(String(width), await driveRail(chrome, started.base + '/apps/waypost-words/', width));
   }
   // Nothing is read after this point, so the browser goes now rather than
   // waiting on the assertions.
@@ -622,6 +713,20 @@ test('the not-found page holds its geometry @not-found', () => holdsGeometry('/4
 // supposed to match — and a tag that quietly stops existing is a screen the
 // control can no longer be asked to run. Carries no `@tag` of its own on purpose:
 // a tag here would become a tenth screen that opens nothing.
+// The rail is only worth having if its arrows reach every capture: four in
+// view on a wide screen, two on a phone, Next pages to the last one and stops,
+// Previous comes back, and the count says where you are.
+test("Waypost Words's screenshots are all reachable by the arrows @waypost-rail", () => {
+  const wide = rail.get('1440')!;
+  expect(wide[0]).toMatchObject({ count: '1–4 of 10', prevDisabled: true, nextDisabled: false, firstVisible: 1 });
+  expect(wide.at(-2)).toMatchObject({ count: '7–10 of 10', nextDisabled: true, prevDisabled: false });
+  expect(wide.at(-1)!.nextDisabled).toBe(false);
+  const phone = rail.get('390')!;
+  expect(phone[0]).toMatchObject({ count: '1–2 of 10', prevDisabled: true, nextDisabled: false });
+  expect(phone.at(-2)).toMatchObject({ count: '9–10 of 10', nextDisabled: true });
+  expect(phone.at(-1)!.nextDisabled).toBe(false);
+});
+
 test('every route in the table has a test carrying its tag', () => {
   // Only lines that open a test count — the same place the control looks. Searching
   // the whole file would find every tag in the `ROUTES` table itself and pass while

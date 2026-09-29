@@ -134,21 +134,20 @@ describe('every built page', () => {
   });
 
   // Phone captures are portrait. In the Mac-shaped carousel they were squashed
-  // to 2880:1800, so a portrait product gets the phone grid and no carousel.
-  it('lays Waypost Words phone captures side by side, not in the Mac carousel', () => {
+  // to 2880:1800, so a portrait product gets the phone rail: every capture in
+  // one track, four in view on a wide screen, arrows to the rest.
+  it('puts every Waypost Words phone capture in the phone rail, with arrows', () => {
     const [, product] = built.find(([r]) => r === '/apps/waypost-words/')!;
-    expect(product).toContain('class="phone-grid');
-    expect([...product.matchAll(/class="phone-img/g)]).toHaveLength(4);
-    expect(product).not.toContain('aria-roledescription="carousel"');
+    expect(product).toContain('class="phone-track');
+    expect([...product.matchAll(/class="phone-img/g)]).toHaveLength(10);
+    expect(product).toContain('aria-label="Next screenshots"');
+    expect(product).toContain('aria-label="Previous screenshots"');
+    expect(product).not.toContain('class="track');
     const [, sole] = built.find(([r]) => r === '/apps/sole-focus/')!;
-    expect(sole).toContain('aria-roledescription="carousel"');
-    expect(sole).not.toContain('class="phone-grid');
+    expect(sole).toContain('class="track');
+    expect(sole).not.toContain('class="phone-track');
   });
 
-  // The studio lists an iPhone and iPad game, and the game is a web build in a
-  // native shell, so "native Mac software" and "not wrapped from something
-  // else" stopped being true of the studio. The Mac products still name their
-  // own store on their buttons.
   // Owner's call, 2026-09-29: a mobile product shows its first two phone
   // captures side by side on Apps & Games; the Mac products keep one window.
   it('shows two phone captures for a mobile game on Apps & Games', () => {

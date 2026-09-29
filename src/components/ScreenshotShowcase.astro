@@ -27,37 +27,65 @@ const many = shots.length > 1;
 // Phone captures are portrait. The carousel frame below is cut for a Mac
 // window at 2880:1800, and a portrait shot forced into it is squashed, or at
 // its own ratio a single slide stands taller than the screen. So a product
-// whose shots are taller than wide gets them side by side, whole, in a plain
-// grid — four fit one row on a wide screen and two on a phone, with nothing to
-// swipe and no script to run.
+// whose shots are taller than wide gets a phone rail instead: four whole shots
+// side by side on a wide screen (two on a phone), and arrows that page through
+// the rest — the owner's call, 2026-09-29, so every capture stays reachable.
 const portrait = shots.length > 0 && shots[0].img.height > shots[0].img.width;
+/** How many phone shots the rail shows at once on a wide screen. */
+const PHONES_WIDE = 4;
 ---
 
 {
   portrait && (
-    <section class="phones reveal" aria-label={label}>
-      <ul class="phone-grid" role="list">
-        {shots.map((shot, i) => (
-          <li class="phone">
-            {/* Unlike carousel slides 2-5, these are not hidden off to the
-                side: the whole row is on the first screen, so none is lazy (a
-                lazy image there is queued late for no reason — the geometry
-                suite's rule). The first keeps the one priority hint. */}
-            <Image
-              src={shot.img}
-              alt={shot.alt}
-              widths={[360, 540, 720]}
-              sizes="(min-width: 74rem) 17rem, (min-width: 40rem) calc((100vw - 6rem) / 4), calc((100vw - 3.75rem) / 2)"
-              format="webp"
-              quality={80}
-              loading="eager"
-              fetchpriority={i === 0 ? 'high' : undefined}
-              class="phone-img"
-              draggable={false}
-            />
-          </li>
-        ))}
-      </ul>
+    <section class="phones reveal" aria-roledescription="carousel" aria-label={label} data-phones>
+      <div class="phone-frame">
+        <ul
+          class="phone-track"
+          role="list"
+          tabindex="0"
+          aria-label={`${label} — use the left and right arrow keys to see more`}
+        >
+          {shots.map((shot, i) => (
+            <li class="phone" aria-label={`Screenshot ${i + 1} of ${shots.length}`}>
+              {/* The first four are the rail's first view on a wide screen, so
+                  they load at once (a lazy image on the first screen is queued
+                  late for nothing — the geometry suite's rule); the rest sit
+                  off to the side until the arrows bring them in. */}
+              <Image
+                src={shot.img}
+                alt={shot.alt}
+                widths={[360, 540, 720]}
+                sizes="(min-width: 74rem) 17rem, (min-width: 40rem) calc((100vw - 6rem) / 4), calc((100vw - 3.5rem) / 2)"
+                format="webp"
+                quality={80}
+                loading={i < PHONES_WIDE ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : undefined}
+                class="phone-img"
+                draggable={false}
+              />
+            </li>
+          ))}
+        </ul>
+        {shots.length > 2 && (
+          <>
+            <button type="button" class="nav prev" aria-label="Previous screenshots" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="28" height="28">
+                <path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button type="button" class="nav next" aria-label="Next screenshots" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="28" height="28">
+                <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </>
+        )}
+      </div>
+      {shots.length > 2 && (
+        <p class="phone-count" aria-live="polite" hidden>
+          <span class="phone-from">1</span>–<span class="phone-to">{Math.min(PHONES_WIDE, shots.length)}</span> of {shots.length}
+        </p>
+      )}
     </section>
   )
 }
@@ -150,28 +178,46 @@ const portrait = shots.length > 0 && shots[0].img.height > shots[0].img.width;
     max-width: 72rem;
     margin-inline: auto;
   }
-  .phone-grid {
+  .phone-frame {
+    position: relative;
+  }
+  .phone-track {
+    --gap: var(--space-4);
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4);
+    display: flex;
+    gap: var(--gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
   }
-  @media (min-width: 40rem) {
-    .phone-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--space-6);
-    }
+  .phone-track::-webkit-scrollbar {
+    display: none;
+  }
+  .phone-track:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
   }
   .phone {
+    /* Two whole shots per view on a phone, four from 40rem. */
+    flex: 0 0 calc((100% - var(--gap)) / 2);
     min-width: 0;
+    scroll-snap-align: start;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    /* The same hairline ring and lift as the carousel frame, per shot. */
+    /* The same hairline ring as the carousel frame, per shot. */
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
     line-height: 0;
+  }
+  @media (min-width: 40rem) {
+    .phone-track {
+      --gap: var(--space-6);
+    }
+    .phone {
+      flex-basis: calc((100% - 3 * var(--gap)) / 4);
+    }
   }
   .phone-img {
     display: block;
@@ -179,6 +225,33 @@ const portrait = shots.length > 0 && shots[0].img.height > shots[0].img.width;
     height: auto;
     -webkit-user-select: none;
     user-select: none;
+  }
+  /* On a phone the rail runs to the gutter, so the arrows sit just inside it;
+     an arrow pushed past the edge was cut off by the screen. From 64rem there
+     is room beside the rail, and they straddle its edges so they never cover
+     the middle of a shot. */
+  .phones .nav.prev {
+    left: var(--space-2);
+  }
+  .phones .nav.next {
+    right: var(--space-2);
+  }
+  @media (min-width: 64rem) {
+    .phones .nav.prev {
+      left: 0;
+      transform: translate(-35%, -50%);
+    }
+    .phones .nav.next {
+      right: 0;
+      transform: translate(35%, -50%);
+    }
+  }
+  .phone-count {
+    margin: var(--space-4) 0 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
   }
 
   .gallery {
@@ -360,7 +433,8 @@ const portrait = shots.length > 0 && shots[0].img.height > shots[0].img.width;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .track {
+    .track,
+    .phone-track {
       scroll-behavior: auto;
     }
     .nav,
@@ -441,4 +515,58 @@ const portrait = shots.length > 0 && shots[0].img.height > shots[0].img.width;
   }
 
   document.querySelectorAll<HTMLElement>('.gallery').forEach(initGallery);
+  // The phone rail: arrows page by one view, the count says which shots are in
+  // view, and both follow the scroll whether it came from a swipe, a trackpad,
+  // an arrow or the keyboard.
+  function initPhones(root: HTMLElement) {
+    const track = root.querySelector<HTMLElement>('.phone-track');
+    const prev = root.querySelector<HTMLButtonElement>('.nav.prev');
+    const next = root.querySelector<HTMLButtonElement>('.nav.next');
+    const count = root.querySelector<HTMLElement>('.phone-count');
+    const from = root.querySelector<HTMLElement>('.phone-from');
+    const to = root.querySelector<HTMLElement>('.phone-to');
+    const slides = Array.from(track?.querySelectorAll<HTMLElement>('.phone') ?? []);
+    if (!track || !prev || !next || slides.length < 3) return;
+
+    const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+    const perView = () => Math.max(1, Math.round((track.clientWidth + (step() - slides[0].offsetWidth)) / step()));
+    const render = () => {
+      const first = Math.round(track.scrollLeft / step());
+      const max = track.scrollWidth - track.clientWidth;
+      if (from) from.textContent = String(first + 1);
+      if (to) to.textContent = String(Math.min(slides.length, first + perView()));
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= max - 1;
+    };
+    const page = (dir: number) => track.scrollBy({ left: dir * perView() * step() });
+
+    prev.removeAttribute('hidden');
+    next.removeAttribute('hidden');
+    count?.removeAttribute('hidden');
+    prev.addEventListener('click', () => page(-1));
+    next.addEventListener('click', () => page(1));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        page(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        page(1);
+      }
+    });
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        render();
+      });
+    };
+    track.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    render();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-phones]').forEach(initPhones);
 </script>

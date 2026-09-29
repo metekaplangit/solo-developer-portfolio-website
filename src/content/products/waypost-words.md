@@ -35,9 +35,11 @@ icon:
   path: /media/waypost-words/icon.png
   altText: Waypost Words app icon — a white letter tile with a purple W, tilted on a starry night-purple ground
   licenseOrOwnership: owned
-# Real captures from the running game on a 6.9-inch iPhone, 1320×2868, from the
-# owner's store screenshots in that project (store-assets/screenshots/Mobile/
-# 1, 4, 3 and 8.png, dropped 2026-09-24 to 2026-09-28), converted to JPEG.
+# Real captures from the running game on a 6.9-inch iPhone, 1320×2868: all ten
+# of the owner's store screenshots in that project (store-assets/screenshots/
+# Mobile/1, 4, 3, 8, 5, 2, 6, 9, 10 and 7.png, in this order, dropped 2026-09-24
+# to 2026-09-28), converted to JPEG. The page shows four at a time with arrows
+# to the rest; the first two lead the Apps & Games band.
 # Nothing is composited onto them; the words in the third are the game's own.
 screenshots:
   - id: waypost-words-shot-lightning
@@ -66,6 +68,48 @@ screenshots:
     type: screenshot
     path: 04-the-road-ahead.jpg
     altText: The Waypost Words home screen showing the destination Dune Reach, the current stop and seat, words found, today's goals and the daily gift, a Continue button, and buttons for the daily puzzle, daily gift, map, stories, skills, words, a random board and how to play.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-tracing
+    productId: waypost-words
+    type: screenshot
+    path: 05-tracing-a-word.jpg
+    altText: A Waypost Words crossword at the stop Beacon Heath under an olive-green sky, with the word HELPIN being traced across the letter wheel by a line joining its letters.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-green
+    productId: waypost-words
+    type: screenshot
+    path: 06-a-green-crossword.jpg
+    altText: A Waypost Words crossword at the stop Mill Race in green, with LATE and HEAT filled in and the rest of the squares still empty above a green letter wheel.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-tools
+    productId: waypost-words
+    type: screenshot
+    path: 07-a-surveyor-s-tools.jpg
+    altText: Old surveying instruments — a chain, a plumb bob, a protractor, compasses, a tripod, a telescope and a pocket watch — above the line “Spell words to walk the line. Every word is a name coming back.” and a Back to stories button.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-places
+    productId: waypost-words
+    type: screenshot
+    path: 08-places-on-the-road.jpg
+    altText: The Waypost Words Places screen, a list of finished places — Bird Cliff, Green Lagoon, The Spit, Far Light and Open Water — each an Admit One ticket with its keepsake and 25 of 25 stops, above a Carry on travelling button.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-rain
+    productId: waypost-words
+    type: screenshot
+    path: 09-rain-over-the-moor.jpg
+    altText: A Waypost Words crossword at the stop Heather Moor with rain falling across a dark teal sky, the crossword partly filled above the letter wheel.
+    dimensions: { width: 1320, height: 2868 }
+    licenseOrOwnership: owned
+  - id: waypost-words-shot-answer
+    productId: waypost-words
+    type: screenshot
+    path: 10-the-answer-lands.jpg
+    altText: A Waypost Words crossword at the stop Ice Floe as lightning strikes, with the squares of the answers it touches glowing pink.
     dimensions: { width: 1320, height: 2868 }
     licenseOrOwnership: owned
 # Copy from the game's own listing batch, store-assets/listings/
