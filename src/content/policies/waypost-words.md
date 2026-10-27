@@ -1,7 +1,7 @@
 ---
 productId: waypost-words
 title: Waypost Words Privacy Policy
-lastUpdated: 2026-09-29
+lastUpdated: 2026-10-27
 dataCollected: []
 dataUse: []
 # Empty on purpose. The studio never states what a product lacks, because a
@@ -20,9 +20,13 @@ permissions: []
 retention: "Everything Waypost Words keeps lives on your own iPhone or iPad and in that device's own backup, for as long as the game is installed. Deleting the game removes it."
 hasAccounts: false
 contact: support@metkapstudio.com
-effectiveScope: The Waypost Words game for iPhone and iPad, as it is built for its first release.
-# Read again from the game's source on 2026-09-29, at v1.215.21 (build 1215021),
-# the build being prepared for App Review: its storage keys and save schema
+effectiveScope: The Waypost Words game for iPhone and iPad, as first released on the App Store.
+# Read again on 2026-10-27 against v1.215.23 (build 1215023), the build Apple
+# released on 2026-10-26: between v1.215.21 and it the game changed a Settings
+# line, its styles, its launch screen and its build numbers — no storage key,
+# save field, native package or network call — so every line below still holds.
+# Read from the game's source on 2026-09-29, at v1.215.21 (build 1215021),
+# the build then being prepared for App Review: its storage keys and save schema
 # (settings are sound, music, reduced motion and text size — the haptics setting
 # was removed from the save, so it is no longer listed), its iOS privacy manifest
 # (no collected data, no tracking, no tracking domains), its native packages
@@ -37,7 +41,7 @@ sections:
   # once advertising is added, which limits the ads allowed and can require
   # parental consent. Keep this in step with the App Store age rating answers.
   children: "Waypost Words is a word game made for a general audience, and it isn't directed at children. It collects no personal data from anyone, so it holds nothing about children either."
-  changes: "This policy describes Waypost Words as it is built for its first release. It is revised with any release that changes what the game does with data, and the Updated date at the top always shows the current version."
+  changes: "This policy describes Waypost Words as first released on the App Store. It is revised with any release that changes what the game does with data, and the Updated date at the top always shows the current version."
 ---
 
 Everything Waypost Words keeps stays on your iPhone or iPad: your progress

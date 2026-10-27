@@ -3,21 +3,34 @@ id: waypost-words
 name: Waypost Words
 slug: waypost-words
 type: game
-# Not released. No store link, no price and no release date — the page says so
-# rather than implying a download that does not exist yet. Built ahead of the
-# release so the addresses written into the game resolve before it ships, and
-# so App Review finds this page describing the build it is reviewing.
+# Live on the App Store since 2026-10-26, as version 1.215.23. Status, store
+# link, price, requirement and release date were held empty while the build was
+# in App Review, and every one of them was read from Apple's lookup endpoint for
+# id 6817343620 on 2026-10-27 — the listing, not the submission draft.
 # Called Wander Words until 2026-09-22, when another word game was found under
 # that name. The old addresses forward here (src/pages/*/wander-words.astro),
 # because a build of the game already carries them.
-status: in-development
+status: released
+# Not featured: the home spotlight is Magic Notes', the owner's decision
+# (STEP-0083). Exactly one product is featured at a time.
 featured: false
 summary: A crossword word game where you can spell every answer yourself or reach for a skill. Seven to unlock, four on the board, and three roads of crosswords to walk on iPhone and iPad.
 # iPhone and iPad from one universal build: TARGETED_DEVICE_FAMILY "1,2" in the
 # game's Xcode project and "Shipping now: iOS on iPhone and iPad" in its
 # docs/architecture/platform.md, both read 2026-09-29.
 platforms: [ios, ipados]
-storeLinks: []
+storeLinks:
+  - store: app-store
+    url: https://apps.apple.com/us/app/waypost-words/id6817343620
+    status: available
+# Free, from the listing. The price is what the listing says today and nothing
+# more; the page carries no claim about advertising, in-app purchases or
+# subscriptions in either direction, because those are decisions the studio
+# keeps open.
+price: "0"
+# The listing's minimum: iOS 15.0, and iPadOS 15.0 on iPad.
+requirements: iOS or iPadOS 15 or later
+releaseDate: 2026-10-26
 # Identity colour, read from the game rather than chosen for the site: the
 # lavender side of the lettered tile on the game's icon. The game's world is a
 # night purple; the darker purples in it fail contrast as chip text on this
@@ -130,7 +143,7 @@ features:
   - A daily puzzle, a daily gift and three daily goals
   - 26 skies to buy with your coins
   - Made for iPhone and iPad, in portrait
-lastUpdated: 2026-09-29
+lastUpdated: 2026-10-27
 seo:
   title: Waypost Words — crosswords with seven skills, for iPhone and iPad
   description: Trace letters on a wheel to fill the crossword, or reach for one of seven skills. Three roads to walk, under weather that changes as you play.
@@ -175,5 +188,5 @@ leaves, and a storm brings lightning. A new sky every time you open the game.
 Chests in the crossword, a mystery box, a wheel to spin, three crates, a
 pedlar, and a bonus jar for every extra word you find.
 
-_Waypost Words is not on the App Store yet. This page gets the store link and
-the price the day it is. The support address answers in the meantime._
+_Free on the App Store, for iPhone and iPad. The support address answers if
+something does not do what you expected._

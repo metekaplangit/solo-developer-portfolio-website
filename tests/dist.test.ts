@@ -119,18 +119,44 @@ describe('every built page', () => {
     expect(product).not.toContain('Not yet available');
   });
 
-  // Waypost Words is unreleased, and its pages exist so the addresses written
-  // into the game resolve before it ships. The route list above proves both
-  // pages exist; this proves they are the addresses the game will carry, and
-  // that the product page claims no offer for a download that is not there.
-  it('serves the Waypost Words pages the game will link to, with no offer', () => {
+  // Waypost Words went live on 2026-10-26. Its pages are the addresses the
+  // shipped game carries, so they stay pinned; and the page now advertises the
+  // download it withheld, the way STEP-0082's pin does for Magic Notes — the
+  // offer needs `released`, a price and an available link all at once.
+  it('serves the Waypost Words pages the game links to, with its App Store offer', () => {
     const [, policy] = built.find(([r]) => r === '/privacy/waypost-words/')!;
     expect(policy).toContain('<link rel="canonical" href="https://metkapstudio.com/privacy/waypost-words/"');
     expect(policy).toContain('support@metkapstudio.com');
     const [, product] = built.find(([r]) => r === '/apps/waypost-words/')!;
     expect(product).toContain('<link rel="canonical" href="https://metkapstudio.com/apps/waypost-words/"');
-    expect(product).not.toContain('"offers"');
-    expect(product).toContain('Not yet available');
+    expect(product).toContain(
+      '"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://apps.apple.com/us/app/waypost-words/id6817343620"}',
+    );
+    expect(product).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
+    expect(product).not.toContain('Not yet available');
+  });
+
+  // Once every product is out, no page may still talk as if one were coming:
+  // the game's own pages, Apps & Games, and Home. Its band on Apps & Games
+  // carries the App Store button. Home shows only the featured product, Magic
+  // Notes (STEP-0083), so the game has no band there to carry one.
+  it('says Waypost Words is out wherever it appears', () => {
+    const text = (route: string) =>
+      built.find(([r]) => r === route)![1].replace(/ |&nbsp;|&#160;/g, ' ');
+    for (const route of ['/', '/apps/', '/apps/waypost-words/', '/privacy/waypost-words/']) {
+      expect(text(route), route).not.toMatch(
+        /not on the App Store yet|Not yet available|check back soon|In development|in the meantime|as it is built for|on its way|in beta, and planned/i,
+      );
+    }
+    expect(text('/apps/')).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
+  });
+
+  // No app or game collects data: every policy's `dataCollected` is empty. The
+  // privacy overview's lead said some did — the same false line review 0001
+  // took off the studio policy, in the one place it was left.
+  it('never says an app collects data when none does', () => {
+    const [, overview] = built.find(([r]) => r === '/privacy/')!;
+    expect(overview.replace(/ |&nbsp;|&#160;/g, ' ')).not.toMatch(/apps collect data/i);
   });
 
   // The studio never states what a product lacks (STUDIO.md, 10 September

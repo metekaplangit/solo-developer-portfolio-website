@@ -192,27 +192,47 @@ describe('Magic Notes product content', () => {
   });
 });
 
-// Waypost Words is unreleased (2026-09-29), with its first build headed to App
-// Review. Its two pages exist so the addresses written into the game resolve
-// before it ships — the case STEP-0069 opened for Magic Notes. Everything it
-// cannot yet support is pinned empty, so a later edit cannot claim a download, a
-// price or a release that has not happened, and the privacy address is pinned
-// because a link inside a shipped build cannot change.
+// Waypost Words went live on the App Store on 2026-10-26. Its pages were built
+// ahead of the release so the addresses written into the game would resolve,
+// with the download, price and release date pinned empty — the case STEP-0069
+// opened for Magic Notes. Those pins now assert the opposite of the truth, so
+// they are replaced the way Magic Notes' were: the risk flipped from claiming a
+// release that had not happened to failing to show one that has. The privacy
+// address stays pinned because a link inside a shipped build cannot change.
 describe('Waypost Words product content', () => {
   const product = productSchema.parse(frontmatter('src/content/products/waypost-words.md'));
   const policy = privacyPolicyEntrySchema.parse(
     frontmatter('src/content/policies/waypost-words.md'),
   );
 
-  it('is an unreleased iPhone and iPad game with nothing to download yet', () => {
+  // Every value here was read from Apple's lookup endpoint for id 6817343620 on
+  // 2026-10-27: free, iOS 15.0 or later, released 2026-10-26, one universal
+  // build for iPhone and iPad.
+  it('is a released, free iPhone and iPad game that links its App Store listing', () => {
     expect(product.type).toBe('game');
-    expect(product.status).toBe('in-development');
+    expect(product.status).toBe('released');
     // One universal build: TARGETED_DEVICE_FAMILY "1,2" in the game's project.
     expect(product.platforms).toEqual(['ios', 'ipados']);
-    expect(product.storeLinks).toHaveLength(0);
-    expect(product.price).toBeUndefined();
-    expect(product.releaseDate).toBeUndefined();
+    expect(product.storeLinks).toEqual([
+      {
+        store: 'app-store',
+        url: 'https://apps.apple.com/us/app/waypost-words/id6817343620',
+        status: 'available',
+      },
+    ]);
+    expect(product.price).toBe('0');
+    expect(product.requirements).toBe('iOS or iPadOS 15 or later');
+    expect(product.releaseDate?.toISOString().slice(0, 10)).toBe('2026-10-26');
     expect(product.featured).toBe(false);
+  });
+
+  // Every sentence that waited for the release, gone with it.
+  it('no longer says the game is on its way', () => {
+    const file = readFileSync(join(root, 'src/content/products/waypost-words.md'), 'utf8');
+    const body = file.split(/^---$/m)[2];
+    expect(body).not.toMatch(/not on the App Store yet|in the meantime|the day it is/i);
+    expect(policy.effectiveScope).not.toMatch(/as it is built/);
+    expect(policy.sections.changes).not.toMatch(/as it is built/);
   });
 
   it('serves the privacy URL the game will carry', () => {
@@ -222,7 +242,7 @@ describe('Waypost Words product content', () => {
     expect(policy.contact).toBe('support@metkapstudio.com');
   });
 
-  it('states what the build going to App Review does with data', () => {
+  it('states what the released game does with data', () => {
     expect(policy.reviewStatus).toBe('reviewed');
     expect(policy.hasAccounts).toBe(false);
     expect(policy.dataCollected).toHaveLength(0);
@@ -255,7 +275,7 @@ describe('Waypost Words product content', () => {
 
   // The listing batch's website copy (COPY_PACK.md §4 in the game's
   // store-assets/listings/listings-2026-09-28-2007-skills-first-pack), word for
-  // word, so what App Review reads here matches the listing it is reviewing.
+  // word, so the page matches the listing a visitor arrives from.
   it('carries its App Store listing words exactly', () => {
     expect(product.seo?.title).toBe(
       'Waypost Words — crosswords with seven skills, for iPhone and iPad',
