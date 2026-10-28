@@ -14,7 +14,7 @@ status: released
 # Not featured: the home spotlight is Magic Notes', the owner's decision
 # (STEP-0083). Exactly one product is featured at a time.
 featured: false
-summary: A crossword word game where you can spell every answer yourself or reach for a skill. Seven to unlock, four on the board, and three roads of crosswords to walk on iPhone and iPad.
+summary: A crossword game for iPhone and iPad. Trace every answer yourself, or reach for a skill — seven to unlock, four to carry.
 # iPhone and iPad from one universal build: TARGETED_DEVICE_FAMILY "1,2" in the
 # game's Xcode project and "Shipping now: iOS on iPhone and iPad" in its
 # docs/architecture/platform.md, both read 2026-09-29.

@@ -10,7 +10,7 @@ status: released
 # Sole Focus keeps its own page, the catalog row on the home page, and the
 # catalogue.
 featured: false
-summary: A calm focus timer for Mac — a Pomodoro timer and a real count-up stopwatch, in one small window that gets out of your way.
+summary: A focus timer for Mac that stays out of your way. Use Pomodoro sessions or a stopwatch, from one small window.
 platforms: [macos]
 storeLinks:
   - store: mac-app-store

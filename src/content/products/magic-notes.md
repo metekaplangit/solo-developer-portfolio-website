@@ -12,7 +12,7 @@ status: released
 # ONE product is featured at a time — `index.astro` gives the hero a product's
 # hue only on that condition — so Sole Focus was unfeatured in the same change.
 featured: true
-summary: A Mac writing pad that does the arithmetic. Write the sum the way you would say it, and the answer lands beside the line — exactly, or not at all.
+summary: A notebook for Mac that does arithmetic. Write the sum as you would say it, and the answer lands beside the line.
 platforms: [macos]
 storeLinks:
   - store: mac-app-store
