@@ -16,11 +16,20 @@
      full-bleed poster band read as a poster, and light enough to stay a
      material rather than a hole. */
   --bg: #08090c;
+  /* The ramp above the stage climbs in EVEN steps of perceived lightness —
+     OKLCH L 0.140 → 0.175 → 0.210 → 0.245 → 0.280, one blue-grey hue (268°),
+     chroma rising a hair per step so each level reads as the same material
+     lit more. Measured before: 0.140 / 0.160 / 0.191 / 0.218 / 0.245, so the
+     band step (+0.020) was the smallest of all and fell under a just-visible
+     difference from the stage it was meant to lift off (ΔE 0.0199). Linear's
+     dark levels step 0.139 / 0.172 / 0.195 / 0.217 and Radix's dark grays by
+     0.03-0.04; this takes Radix's step, so every level is one clear
+     step from the next rather than a guess. */
   /* One step up — the ground a product band sits on before its hue wash. */
-  --bg-2: #0c0d11;
-  --surface: #121419;
-  --surface-2: #171a21;
-  --surface-hover: #1c2029;
+  --bg-2: #0f1015;
+  --surface: #16181d;
+  --surface-2: #1e2027;
+  --surface-hover: #262931;
 
   /* Text — off-white, never #fff for prose: pure white on a near-black ground
      is what makes long reading vibrate. */
@@ -231,6 +240,20 @@
 .band-says {
   --hue-soft: color-mix(in oklab, var(--hue) 16%, transparent);
   --hue-wash: color-mix(in oklab, var(--hue) 22%, transparent);
+}
+/* The label on a hue-filled button is the product's own hue taken down to
+   near-black, never one fixed colour. `--hue-contrast` was `#1c0d02` — Sole
+   Focus's orange-brown — on every product, so Waypost Words' lavender and
+   Magic Notes' silver buttons carried a brown label. Same rule as the washes:
+   re-derived where the hue is owned. Browsers without relative colour (about
+   1 in 9, 2026-09) keep the fixed fallback above, which still reads. */
+@supports (color: oklch(from red l c h)) {
+  .product-band,
+  .product-page,
+  .band-hero.owns-hue,
+  .band-says {
+    --hue-contrast: oklch(from var(--hue) 0.22 calc(c * 0.6) h);
+  }
 }
 
 *,

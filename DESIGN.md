@@ -3,10 +3,10 @@ name: MetKap Studio
 description: Spectrum — a near-black stage, neutral studio chrome, and colour supplied by the product rather than by the site.
 colors:
   bg: "#08090c"
-  bg-2: "#0c0d11"
-  surface: "#121419"
-  surface-2: "#171a21"
-  surface-hover: "#1c2029"
+  bg-2: "#0f1015"
+  surface: "#16181d"
+  surface-2: "#1e2027"
+  surface-hover: "#262931"
   text: "#f2f3f6"
   text-strong: "#ffffff"
   muted: "#a2a7b3"
@@ -168,14 +168,19 @@ authored in that product's content file (`hue`, resolved by `productHue()` in
 
 ### Stage
 - **Stage** (`#08090c`): the page ground.
-- **Band** (`#0c0d11`): the ground a product band sits on before its hue wash.
-- **Surface** (`#121419`) / **Lifted** (`#171a21`): cards, panels, chips.
+- **Band** (`#0f1015`): the ground a product band sits on before its hue wash.
+- **Surface** (`#16181d`) / **Lifted** (`#1e2027`) / **Hover** (`#262931`): cards,
+  panels, chips. Stage to hover climbs in even OKLCH lightness steps — 0.140,
+  0.174, 0.209, 0.245, 0.280 — on one blue-grey hue (268°).
 
 ### Product voice
 - **`--hue`**: the product's own colour, re-declared per band. Sole Focus is
   `#ff9245`, taken from its own icon. Measured **8.96:1** on the stage.
-- **`--hue-contrast`** (`#1c0d02`): label colour on a hue-filled button —
-  **8.53:1**.
+- **`--hue-contrast`**: label colour on a hue-filled button, derived from the
+  product's own hue taken down to near-black — `oklch(from var(--hue) 0.22
+  calc(c * 0.6) h)`. Sole Focus `#390400` (7.93:1), Waypost Words `#1e152c`
+  (9.25:1), Magic Notes `#171b1f` (8.91:1). Browsers without relative colour
+  keep the fixed `#1c0d02`.
 - **`--hue-soft` / `--hue-wash`**: `color-mix(in oklab, …)` tints for band
   washes. Never used for text.
 
