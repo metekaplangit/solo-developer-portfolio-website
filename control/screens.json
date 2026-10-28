@@ -3,13 +3,13 @@
   "@apps": "v0.61.0",
   "@every-route": "v0.62.0",
   "@home": "v0.61.0",
-  "@magic-notes": "v0.62.0",
+  "@magic-notes": "v0.62.1",
   "@not-found": "v0.61.0",
-  "@privacy-index": "v0.60.0",
+  "@privacy-index": "v0.62.1",
   "@privacy-sole-focus": "v0.62.0",
-  "@privacy-waypost-words": "v0.60.0",
-  "@sole-focus": "v0.62.0",
-  "@support": "v0.59.0",
+  "@privacy-waypost-words": "v0.62.1",
+  "@sole-focus": "v0.62.1",
+  "@support": "v0.62.1",
   "@waypost-rail": "v0.60.0",
-  "@waypost-words": "v0.62.0"
+  "@waypost-words": "v0.62.1"
 }
