@@ -273,7 +273,8 @@ few millimetres; they never simulate a dramatic drop.
 - **`--shadow-md`** (`0 8px 24px -8px rgba(0,0,0,0.55)`): The default lift for
   cards, panels, and the screenshot frame.
 - **`--shadow-lg`** (`0 20px 48px -16px rgba(0,0,0,0.6)`): Reserved for elements
-  that float *over* content — gallery arrows, the featured spotlight.
+  that float *over* content — the featured spotlight. The gallery arrows carry
+  none since 2026-10-28: their glass and strong hairline separate them.
 
 ### Named Rules
 
@@ -340,8 +341,10 @@ inside a set. A one-off height on a single button is the failure this names.
 - One large frame at a time (`72rem` max, `2880/1800` ratio), CSS scroll-snap so
   swipe and trackpad work with no JavaScript; arrows, dots, a live counter, and
   keyboard control are layered on as progressive enhancement.
-- Controls are glass circles over the image; the dot marks are `11px` but sit in
-  `44px` hit areas.
+- Controls are glass circles over the image: 48px arrows in the `.chip-glass`
+  recipe with the strong hairline and a 20-unit chevron. The dot marks are `7px`,
+  the current one a `22 × 7px` pill in the product hue, in `28px` hit areas
+  (`44px` on touch).
 - A native `<details>` transcript below lists every screenshot as text.
 
 ### Facts Line (signature component)
