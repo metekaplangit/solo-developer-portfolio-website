@@ -591,6 +591,8 @@ type ContrastReading = {
   /** Lifted surfaces, by selector and computed box-shadow. */
   surfaces: Array<{ el: string; shadow: string }>;
   header: { background: string; backdrop: string };
+  /** A gallery arrow while the pointer is on it, where the page has one. */
+  arrowHover: { background: string; color: string } | null;
 };
 
 /**
@@ -604,10 +606,35 @@ async function readContrast(chrome: Chrome, url: string, value: 'more' | 'no-pre
     try {
       page = await chrome.page();
       page.setDefaultTimeout(60_000);
-      await page.emulateMediaFeatures([{ name: 'prefers-contrast', value }]);
+      // Reduced motion makes every transition instant, so a hover reads its end
+      // state at once rather than after a wait.
+      await page.emulateMediaFeatures([
+        { name: 'prefers-contrast', value },
+        { name: 'prefers-reduced-motion', value: 'reduce' },
+      ]);
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await page.goto(url, { waitUntil: 'load', timeout: 60_000 });
-      const reading = await page.evaluate((): ContrastReading => {
+      const arrow = await page.$('button.nav:not([disabled])');
+      let arrowHover: ContrastReading['arrowHover'] = null;
+      if (arrow) {
+        await arrow.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+        await arrow.hover();
+        arrowHover = await arrow.evaluate((el) => {
+          const cs = getComputedStyle(el);
+          // Through a canvas, so an `oklch()` or `color()` value comes back as
+          // the plain `rgb()` the ratio below reads.
+          const ctx = document.createElement('canvas').getContext('2d', { willReadFrequently: true })!;
+          const rgb = (c: string) => {
+            ctx.clearRect(0, 0, 1, 1);
+            ctx.fillStyle = c;
+            ctx.fillRect(0, 0, 1, 1);
+            const [r, g, bl] = ctx.getImageData(0, 0, 1, 1).data;
+            return `rgb(${r}, ${g}, ${bl})`;
+          };
+          return { background: rgb(cs.backgroundColor), color: rgb(cs.color) };
+        });
+      }
+      const reading = await page.evaluate((): Omit<ContrastReading, 'arrowHover'> => {
         const root = getComputedStyle(document.documentElement);
         const header = getComputedStyle(document.querySelector('.site-header')!);
         return {
@@ -621,7 +648,7 @@ async function readContrast(chrome: Chrome, url: string, value: 'more' | 'no-pre
         };
       });
       await page.close().catch(() => {});
-      return reading;
+      return { ...reading, arrowHover };
     } catch (error) {
       lastError = error;
       await page?.close().catch(() => {});
@@ -632,6 +659,19 @@ async function readContrast(chrome: Chrome, url: string, value: 'more' | 'no-pre
 }
 
 const CONTRAST_ROUTES = ['/', '/apps/sole-focus/', '/support/'] as const;
+
+/** WCAG contrast between two opaque `rgb()` colours as Chrome reports them. */
+function ratio(a: string, b: string): number {
+  const lum = (c: string) => {
+    const [r, g, bl] = (c.match(/[\d.]+/g) ?? []).slice(0, 3).map((v) => {
+      const x = Number(v) / 255;
+      return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * bl;
+  };
+  const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
 
 /** The opacity of a white hairline token, however Chrome spells it back. */
 function alpha(value: string): number {
@@ -810,6 +850,15 @@ test('a Mac set to Increase contrast gets stronger text, hairlines and edges @in
     }
     if (more.header.backdrop !== 'none') bad.push(`${route}: header still blurred (${more.header.backdrop})`);
     if (!/^rgb\(/.test(more.header.background)) bad.push(`${route}: header still translucent (${more.header.background})`);
+    // The solid fill must not outlast the arrow's own hover, which turns its
+    // glyph dark: a dark glyph on the solid stage is an arrow that vanishes.
+    const hover = more.arrowHover;
+    if (hover && ratio(hover.background, hover.color) < 3) {
+      bad.push(`${route}: gallery arrow vanishes on hover (${hover.color} on ${hover.background})`);
+    }
+  }
+  if (!CONTRAST_ROUTES.some((route) => contrast.get(`more ${route}`)!.arrowHover)) {
+    bad.push('no gallery arrow found to hover');
   }
   // The home page holds no lifted surface; the other two hold all four kinds.
   const checked = CONTRAST_ROUTES.reduce((n, route) => n + contrast.get(`more ${route}`)!.surfaces.length, 0);

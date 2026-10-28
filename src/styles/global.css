@@ -1189,6 +1189,12 @@ img {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
+  /* …except a gallery arrow under the pointer, which keeps its own solid
+     hover fill: the hover darkens its glyph, and on the stage colour that
+     glyph would vanish. */
+  button.nav:hover {
+    background: var(--accent) !important;
+  }
   /* The underline is a link's only difference from prose (WCAG 1.4.1); it
      stops being dimmed. */
   .policy a:not(.avatar-link),
