@@ -268,11 +268,12 @@ shadows. Shadows exist, but they are ambient — they lift a panel off the groun
 few millimetres; they never simulate a dramatic drop.
 
 ### Shadow Vocabulary
-- **`--shadow-sm`** (`0 1px 2px rgba(0,0,0,0.4)`): Barely-there seat for the
+The values live in `src/styles/global.css`; these are the roles.
+- **`--shadow-sm`**: Barely-there seat for the
   product header block.
-- **`--shadow-md`** (`0 8px 24px -8px rgba(0,0,0,0.55)`): The default lift for
+- **`--shadow-md`**: The default lift for
   cards, panels, and the screenshot frame.
-- **`--shadow-lg`** (`0 20px 48px -16px rgba(0,0,0,0.6)`): Reserved for elements
+- **`--shadow-lg`**: Reserved for elements
   that float *over* content — the featured spotlight. The gallery arrows carry
   none since 2026-10-28: their glass and strong hairline separate them.
 
