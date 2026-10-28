@@ -46,6 +46,27 @@
   --shadow-md: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
   --shadow-lg: 0 40px 90px -35px rgba(0, 0, 0, 0.95);
 
+  /* ONE LIGHT, FROM ABOVE. Every shadow here falls downward, so every lit
+     surface must be brighter at its TOP. The surface gradient ran the other
+     way — `--surface` at the top to the lighter `--surface-2` at the bottom —
+     so cards were lit from below while their shadows said above. And on a
+     near-black stage a black shadow barely registers; what reads in the dark
+     is the edge that catches the light. So a surface on this stage is its
+     tone, lit from above, plus that top edge — one lift, in three heights:
+
+       --lift-1  resting on the stage (card, tile, cell)
+       --lift-2  raised: a panel that leads its band
+       --lift-3  answering the pointer
+
+     The edge is part of the lift, not a second cue: it is the tone catching
+     the light, drawn 1px wide. A hairline (`--border`) stays the other cue,
+     for ruled lists and image frames, and a surface never takes both. */
+  --surface-fill: linear-gradient(180deg, var(--surface-2), var(--surface));
+  --edge-light: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  --lift-1: var(--edge-light), var(--shadow-sm);
+  --lift-2: var(--edge-light), var(--shadow-md);
+  --lift-3: inset 0 1px 0 0 rgba(255, 255, 255, 0.14), var(--shadow-lg);
+
   /* Studio chrome signal — deliberately ACHROMATIC.
 
      THE ONE VOICE PER BAND RULE. The site itself has no colour: chrome
@@ -702,18 +723,18 @@ img {
   max-width: var(--measure-mid);
 }
 
-/* Panel — the one elevated surface. Single separation cue: an elevated
-   gradient plus a shadow, never also a border (DESIGN.md §4, Single-Cue). */
+/* Panel — the one raised surface. Single separation cue: the lift
+   (`--lift-2`), never also a border (DESIGN.md §4, Single-Cue). */
 .panel {
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface), var(--surface-2));
-  box-shadow: var(--shadow-md);
+  background: var(--surface-fill);
+  box-shadow: var(--lift-2);
   padding: clamp(var(--space-6), 3.5vw, var(--space-10));
 }
 /* A panel a product owns: the wash is the product's hue, never the site's. */
 .panel-accent {
   background: radial-gradient(130% 150% at 0% 0%, var(--hue-soft), transparent 58%),
-    linear-gradient(180deg, var(--surface), var(--surface-2));
+    var(--surface-fill);
 }
 
 /* Card system (STEP-0042) ---------------------------------------------------
@@ -789,8 +810,9 @@ img {
   gap: var(--space-3);
   padding: clamp(var(--space-5), 2.5vw, var(--space-6));
   border-radius: var(--radius);
-  /* Single separation cue: elevated surface, never also a border. */
-  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  /* Single separation cue: the lift, never also a border. */
+  background: var(--surface-fill);
+  box-shadow: var(--lift-1);
 }
 .card > :first-child {
   margin-top: 0;

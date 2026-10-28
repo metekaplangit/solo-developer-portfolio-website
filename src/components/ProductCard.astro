@@ -74,21 +74,20 @@ const stores = visibleStoreLinks(product);
     /* One separation cue: a contrasting elevated surface + shadow, not a
        stacked border (Refactoring UI — prefer fewer borders). */
     border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    background: var(--surface-fill);
     padding: var(--space-6);
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
     height: 100%;
-    /* Shadow for lift + a barely-there inset hairline for a crafted edge. */
-    box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    box-shadow: var(--lift-1);
     transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
   }
   .card:hover,
   .card:focus-within {
     transform: translateY(-3px);
-    /* Edge brightens on hover — feels like the card lifts toward the light. */
-    box-shadow: var(--shadow-md), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    /* Edge brightens on hover — the card lifts toward the light. */
+    box-shadow: var(--lift-3);
   }
   .card-head {
     display: flex;

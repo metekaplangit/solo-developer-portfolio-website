@@ -49,14 +49,15 @@ const text = line ?? [kind, ...product.platforms.map(platformLabel)].join(' · '
     height: 100%;
     padding: var(--space-4) var(--space-5) var(--space-4) var(--space-4);
     border-radius: var(--radius);
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    background: var(--surface-fill);
+    box-shadow: var(--lift-1);
     color: var(--text);
     transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
   }
   .tile:hover {
     color: var(--text-strong);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--lift-3);
   }
   .tile:active {
     transform: translateY(0) scale(0.99);

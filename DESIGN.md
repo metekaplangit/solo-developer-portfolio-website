@@ -217,7 +217,8 @@ a hole.
 `#08090c` is the lightest text permitted anywhere. Prohibited: lighter greys
 "for elegance". This floor exists because it was previously breached (`#71757e`
 at 3.9:1) and had to be repaired. Every pair in this section was recomputed when
-the palette changed; the lowest is 5.44:1.
+the palette changed; the lowest is 5.33:1 — `--faint` on the lit top of a fit
+cell (measured 2026-10-28, after the even ramp and the One Light Rule).
 
 ## 3. Typography
 
@@ -290,6 +291,16 @@ The values live in `src/styles/global.css`; these are the roles.
   that float *over* content — the featured spotlight. The gallery arrows carry
   none since 2026-10-28: their glass and strong hairline separate them.
 
+**The One Light Rule.** *(Added 2026-10-28, style-project 0001.)* Light falls
+from above, so every lifted surface is brighter at its top: `--surface-fill`
+runs from `surface-2` at the top to `surface` at the bottom, and its top edge
+catches the light (`--edge-light`, a 1px inset at 10% white). Surfaces lift in
+three heights, each the edge plus a shadow — `--lift-1` (card, tile, fit cell,
+resting on the stage), `--lift-2` (a panel leading its band), `--lift-3`
+(answering the pointer, edge at 14%). The edge is the tone catching the light,
+not a hairline, so a lift is still one cue. Image frames keep their own ring
+and shadow: they hold pictures, not surfaces.
+
 ### Named Rules
 
 **The Full-Row Rule.** *(Added 2026-08-01, STEP-0063.)* A grid that IS the
@@ -334,9 +345,10 @@ inside a set. A one-off height on a single button is the failure this names.
 ### Cards / Panels
 - **Corner Style:** `20px` (`--radius-lg`) for panels and cards; `14px` for
   smaller blocks; `8px` for chips.
-- **Background:** A subtle vertical gradient from `surface` to `surface-2`, which
-  reads as light falling from above rather than a flat fill.
-- **Shadow Strategy:** `--shadow-md`, per the Single-Cue Rule (no border).
+- **Background:** `--surface-fill`, a subtle vertical gradient from `surface-2`
+  at the top to `surface`, lit from above like its shadow (the One Light Rule).
+- **Shadow Strategy:** `--lift-2` for panels, `--lift-1` for cards and tiles,
+  `--lift-3` on hover, per the Single-Cue Rule (no border).
 - **Internal Padding:** `1.5rem`, scaling up with `clamp()` on large panels.
 
 ### Badges / Chips

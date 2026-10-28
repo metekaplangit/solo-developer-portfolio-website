@@ -88,7 +88,9 @@ const wrapperProps = href
   }
   .avatar-lg {
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    /* An icon rests on the page; it does not float over it. The panel-height
+       shadow it wore was the same lift as the panel it sits in. */
+    box-shadow: var(--shadow-sm);
   }
   .monogram {
     display: grid;

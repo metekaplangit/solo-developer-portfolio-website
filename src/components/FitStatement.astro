@@ -46,8 +46,9 @@ const show = Boolean(product.fitFor && product.fitNotFor);
     }
   }
   .cell {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    /* The lift, like every surface — it carried a fill AND a hairline. */
+    background: var(--surface-fill);
+    box-shadow: var(--lift-1);
     border-radius: var(--radius);
     padding: var(--space-4) var(--space-5);
   }
