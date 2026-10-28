@@ -95,6 +95,33 @@
   --display-2: clamp(2.25rem, 5.5vw, 4.25rem);
   --display-3: clamp(2.25rem, 4.6vw, 3.75rem);
 
+  /* Type roles — the sizes above, set in ONE rhythm (style pass, 2026-10-28).
+     Measured before this block: four weights (400/600/650/700, the middle two
+     indistinguishable at a glance), thirteen line heights and fourteen
+     letter-spacings across the eleven routes — 46 different size/weight/
+     leading/tracking combinations for ten sizes, because every component
+     typed its own. Each role below has one value and no component types a
+     number for it again.
+
+     Weight: three, by job. Apple's own product pages use 400 and 600 and
+     nothing else; this site adds 700 for display type only. */
+  --weight-text: 400;
+  --weight-strong: 600;
+  --weight-display: 700;
+  /* Leading: display (40px and up) sits tight, headings a touch looser,
+     one- and two-line UI text in between, and every paragraph on one value. */
+  --leading-display: 0.96;
+  --leading-heading: 1.12;
+  --leading-ui: 1.35;
+  --leading-body: 1.6;
+  /* Tracking is a function of size, not a number per component: nothing at
+     body size, tightening steadily to -0.04em by 40px and holding there
+     (after Cloud Four, "Responsive letter-spacing", 2025-11-20). The `em`s
+     resolve on the element that uses it, so one value serves every size. */
+  --track-optical: clamp(-0.04em, calc((1em - 1rem) / -14), 0em);
+  /* The one uppercase label treatment — it was 0.06, 0.08, 0.1 and 0.14em. */
+  --track-caps: 0.08em;
+
   /* Spacing scale */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -218,7 +245,7 @@ html {
      defining the scale in terms of itself. Every type token above resolves
      against this value; it is the root of the ramp, not a step on it. */
   font-size: 16px;
-  line-height: 1.65;
+  line-height: var(--leading-body);
   color: var(--text);
   background-color: var(--bg);
   /* Flat stage. The old page-wide accent glow was the site claiming a colour of
@@ -255,10 +282,10 @@ main {
 h1,
 h2,
 h3 {
-  line-height: 1.1;
-  letter-spacing: -0.022em;
+  line-height: var(--leading-heading);
+  letter-spacing: var(--track-optical);
   color: var(--text-strong);
-  font-weight: 650;
+  font-weight: var(--weight-strong);
   /* Balance headline line breaks so no lonely orphan word wraps alone. */
   text-wrap: balance;
 }
@@ -568,7 +595,7 @@ img {
   background: var(--surface-2);
   color: var(--muted);
   font-size: var(--text-xs);
-  line-height: 1.5;
+  line-height: var(--leading-ui);
   white-space: nowrap;
 }
 /* The at-a-glance row: same pill, deliberately louder. */
@@ -601,9 +628,9 @@ img {
 .page-title {
   margin: 0 0 var(--space-6);
   font-size: var(--display-2);
-  font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-weight: var(--weight-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--track-optical);
   color: var(--text-strong);
 }
 
@@ -614,9 +641,9 @@ img {
    60px. */
 .product-title {
   font-size: var(--display-3);
-  font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-weight: var(--weight-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--track-optical);
   color: var(--text-strong);
 }
 
@@ -629,8 +656,8 @@ img {
 .band-title {
   margin: 0 0 var(--space-6);
   font-size: var(--text-xl);
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--track-optical);
   color: var(--text-strong);
 }
 .band-head {
@@ -751,15 +778,15 @@ img {
 .card-title {
   margin: 0;
   font-size: var(--text-base);
-  font-weight: 650;
-  letter-spacing: -0.01em;
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--track-optical);
   color: var(--text-strong);
 }
 .card p {
   margin: 0;
   color: var(--muted);
   font-size: var(--text-sm);
-  line-height: 1.6;
+  line-height: var(--leading-body);
 }
 .card ul {
   margin: 0;
@@ -768,7 +795,7 @@ img {
   gap: var(--space-2);
   color: var(--muted);
   font-size: var(--text-sm);
-  line-height: 1.6;
+  line-height: var(--leading-body);
 }
 
 /* Full-width row variant — one block per line, heading rail on the left and
@@ -826,7 +853,7 @@ img {
   padding: 0.5rem 1.4rem;
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
-  font-weight: 650;
+  font-weight: var(--weight-strong);
   line-height: 1.2;
   text-decoration: none;
   border: 1px solid transparent;
@@ -916,8 +943,7 @@ img {
    clicked (a real complaint from the critique's first-timer persona). */
 .eyebrow {
   font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: var(--weight-strong);
   color: var(--muted);
   margin: 0;
 }

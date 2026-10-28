@@ -111,8 +111,8 @@ const isLead = tone === 'lead';
   .maker-heading {
     margin: 0 0 var(--space-5);
     font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 0.01em;
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-optical);
     color: var(--faint);
   }
   /* The closing note is the page's last and best beat; give it a real heading
@@ -123,8 +123,8 @@ const isLead = tone === 'lead';
      page's closing band had no distinct tier at squint distance. */
   .is-lead .maker-heading {
     font-size: var(--text-2xl);
-    font-weight: 650;
-    letter-spacing: -0.02em;
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-optical);
     color: var(--text-strong);
     margin-bottom: var(--space-6);
   }
@@ -132,7 +132,7 @@ const isLead = tone === 'lead';
   .maker-note p {
     margin: 0 0 var(--space-4);
     color: var(--muted);
-    line-height: 1.6;
+    line-height: var(--leading-body);
   }
   .maker-note p.lead {
     color: var(--text);
@@ -141,7 +141,7 @@ const isLead = tone === 'lead';
   /* Large display text wants the SHORTER measure, not the longer one. */
   .is-lead p.lead {
     font-size: var(--text-lg);
-    line-height: 1.55;
+    line-height: var(--leading-body);
     max-width: 46ch;
   }
   .is-lead p:not(.lead):not(.sig):not(.sig-support) {
@@ -181,8 +181,8 @@ const isLead = tone === 'lead';
   .is-quiet .maker-heading {
     margin: 0 0 var(--space-5);
     font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 0.01em;
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-optical);
     color: var(--faint);
   }
   /* One column, or one row — never a ragged last row.
@@ -221,7 +221,7 @@ const isLead = tone === 'lead';
        quieter than this token; the next step down fails. */
     color: var(--faint);
     font-size: var(--text-sm);
-    line-height: 1.6;
+    line-height: var(--leading-body);
   }
   .cell-sig {
     display: block;

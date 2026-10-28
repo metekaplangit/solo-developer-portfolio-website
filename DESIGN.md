@@ -24,31 +24,31 @@ typography:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, system-ui, sans-serif"
     fontSize: "clamp(2.75rem, 7vw, 4.75rem)"
     fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: "-0.03em"
+    lineHeight: 0.96
+    letterSpacing: "-0.04em"
   headline:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, system-ui, sans-serif"
     fontSize: "2rem"
-    fontWeight: 650
-    lineHeight: 1.1
-    letterSpacing: "-0.022em"
+    fontWeight: 600
+    lineHeight: 1.12
+    letterSpacing: "-0.036em"
   title:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, system-ui, sans-serif"
     fontSize: "1.5rem"
-    fontWeight: 650
-    lineHeight: 1.1
-    letterSpacing: "-0.022em"
+    fontWeight: 600
+    lineHeight: 1.12
+    letterSpacing: "-0.024em"
   body:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, system-ui, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.6
     letterSpacing: "normal"
   label:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, system-ui, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 600
-    lineHeight: 1.4
+    lineHeight: 1.35
     letterSpacing: "normal"
 rounded:
   sm: "10px"
@@ -229,13 +229,21 @@ the page feel like part of the platform rather than a visitor to it. A downloade
 display face would be the first thing that felt bolted on.
 
 ### Hierarchy
-- **Display** (700, `clamp(2.75rem, 7vw, 4.75rem)`, 1.1, `-0.03em`): The studio
+- **Display** (700, `clamp(2.75rem, 7vw, 4.75rem)`, 0.96, `-0.04em`): The studio
   name on the home hero. One per page, maximum.
-- **Headline** (650, `2rem`, 1.1, `-0.022em`): Page and section titles.
-- **Title** (650, `1.5rem`, 1.1): Card names, panel headings, sub-sections.
-- **Body** (400, `1.0625rem`, 1.65): All prose. The 17px base matches Apple's own
+- **Headline** (600, `2rem`, 1.12): Page and section titles.
+- **Title** (600, `1.5rem`, 1.12): Card names, panel headings, sub-sections.
+- **Body** (400, `1.0625rem`, 1.6): All prose. The 17px base matches Apple's own
   body size. Measure is capped at the reading column (`43rem`, ~82ch).
-- **Label** (600, `0.8125rem`): Badges, chips, buttons, metadata.
+- **Label** (600, `0.8125rem`, 1.35): Badges, chips, buttons, metadata. Uppercase
+  labels track at `--track-caps` (`0.08em`).
+
+**The Type Role Rule.** *(Added 2026-10-28, style-project 0001.)* Weight, leading
+and tracking come from tokens in `global.css`, never typed per component: three
+weights (`--weight-text` 400, `--weight-strong` 600, `--weight-display` 700), one
+leading per role (`--leading-display` 0.96, `--leading-heading` 1.12,
+`--leading-ui` 1.35, `--leading-body` 1.6; buttons 1.2), and tracking from size —
+`--track-optical` is 0 at body size and tightens to `-0.04em` from 40px.
 
 ### Named Rules
 

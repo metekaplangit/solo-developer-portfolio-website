@@ -295,7 +295,7 @@ const chips: { label: string; ok: boolean }[] = [
     margin-top: var(--space-8);
     max-width: var(--measure-mid);
     font-size: var(--text-lg);
-    line-height: 1.6;
+    line-height: var(--leading-body);
     color: var(--muted);
   }
   .policy-lead :global(p) {
@@ -328,19 +328,19 @@ const chips: { label: string; ok: boolean }[] = [
     margin: 0;
     color: var(--muted);
     font-size: var(--text-sm);
-    line-height: 1.6;
+    line-height: var(--leading-body);
   }
   .sec-label {
     margin: 0;
     color: var(--text);
-    font-weight: 600;
+    font-weight: var(--weight-strong);
     font-size: var(--text-sm);
   }
   .sec-note {
     margin: 0;
     font-size: var(--text-sm);
     color: var(--faint);
-    line-height: 1.6;
+    line-height: var(--leading-body);
   }
   .sec-body :global(a),
   .sections a {
