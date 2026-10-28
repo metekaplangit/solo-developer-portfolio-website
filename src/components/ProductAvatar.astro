@@ -82,12 +82,11 @@ const wrapperProps = href
     width: var(--sz);
     height: var(--sz);
     flex: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-icon);
     box-shadow: var(--shadow-sm);
     display: block;
   }
   .avatar-lg {
-    border-radius: var(--radius-lg);
     /* An icon rests on the page; it does not float over it. The panel-height
        shadow it wore was the same lift as the panel it sits in. */
     box-shadow: var(--shadow-sm);
@@ -107,7 +106,7 @@ const wrapperProps = href
   .avatar-link {
     display: inline-flex;
     flex: none;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-icon);
     line-height: 0;
     transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease);
   }

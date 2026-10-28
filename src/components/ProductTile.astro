@@ -48,7 +48,10 @@ const text = line ?? [kind, ...product.platforms.map(platformLabel)].join(' · '
     gap: var(--space-4);
     height: 100%;
     padding: var(--space-4) var(--space-5) var(--space-4) var(--space-4);
-    border-radius: var(--radius);
+    /* Nests round the icon it holds: the icon's ~11px corner plus the 16px
+       inset is ~27px, so `--radius-lg` — `--radius` (18) bowed tighter than
+       the icon inside it. */
+    border-radius: var(--radius-lg);
     background: var(--surface-fill);
     box-shadow: var(--lift-1);
     color: var(--text);

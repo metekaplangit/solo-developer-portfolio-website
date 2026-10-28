@@ -343,8 +343,13 @@ heights. Emphasis comes from fill, width, and the mark — never from a taller b
 inside a set. A one-off height on a single button is the failure this names.
 
 ### Cards / Panels
-- **Corner Style:** `20px` (`--radius-lg`) for panels and cards; `14px` for
-  smaller blocks; `8px` for chips.
+- **Corner Style:** `24px` (`--radius-lg`) for panels and for tiles that hold an
+  icon, so the outer corner nests round the icon's; `18px` (`--radius`) for
+  cards and smaller blocks; `10px` (`--radius-sm`) for small controls; pills
+  for chips.
+- **Icon Corner:** an app icon never takes a `--radius-*` step. It takes
+  `--radius-icon` (`22.37%` of its own size), the proportion Apple's icon masks
+  use, so one icon is the same shape at 28, 48 and 56px. The brand mark too.
 - **Background:** `--surface-fill`, a subtle vertical gradient from `surface-2`
   at the top to `surface`, lit from above like its shadow (the One Light Rule).
 - **Shadow Strategy:** `--lift-2` for panels, `--lift-1` for cards and tiles,

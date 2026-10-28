@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.62.15
+
+- App icons keep the Mac icon shape at every size, and their tiles nest round them
+
 ## v0.62.14
 
 - Cards and tiles are lit from the top, with one lift scale

@@ -82,12 +82,10 @@ function isCurrent(href: string): boolean {
   .brand-mark {
     width: 28px;
     height: 28px;
-    /* Deliberately off the `--radius-*` scale. This is an app-icon mask, not a
-       UI surface: 7px is 25% of the 28px box, the ratio macOS uses for its own
-       icon rounding, so the mark reads as the app's icon rather than as another
-       rounded chip in the header. `--radius-sm` (8px) would be 29% and visibly
-       rounder than the Mac App Store artwork it mirrors. */
-    border-radius: 7px;
+    /* An app-icon mask, not a UI surface: `--radius-icon`, the same
+       proportion every product icon uses, so the mark reads as an app's icon
+       rather than as another rounded chip in the header. */
+    border-radius: var(--radius-icon);
     display: block;
   }
   .nav-list {

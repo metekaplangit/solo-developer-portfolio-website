@@ -172,6 +172,13 @@
   --radius: 18px;
   --radius-lg: 24px;
   --radius-pill: 999px;
+  /* An app icon is not a UI surface, so it never takes a `--radius-*` step.
+     Its corner is a PROPORTION of its own size — the rounding Apple's icon
+     masks use (about 22% of the edge; the Magic Notes artwork ships its own
+     at 224/1024) — so one icon reads as the same object at 28, 48 and 56px.
+     A fixed pixel radius did the opposite: 7px on 28 (25%), 18px on 48
+     (37.5%) and 24px on 56 (43%), cutting the icons' own masks into circles. */
+  --radius-icon: 22.37%;
 
   /* Layout measures — one shared reading column so every content page lines up.
      --maxw    = wide shell (home, catalog, product galleries) — widened so wide
