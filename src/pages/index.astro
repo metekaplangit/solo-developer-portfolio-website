@@ -88,7 +88,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
       <div class="actions">
         {heroHasDownload && <DownloadButton product={spotlight} label={downloadLabel(spotlight)} />}
         <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
-          See the app
+          See {spotlight?.name ?? 'the app'}
         </a>
       </div>
     </div>

@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.62.7
+
+- The home opening says what the studio makes, and the button names its app
+
 ## v0.62.6
 
 - Lines across the site break where a reader would break them
