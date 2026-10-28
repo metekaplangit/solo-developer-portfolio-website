@@ -6,7 +6,7 @@
 - Found by: retouch-project 0002
 - Filed: 2026-10-28
 - Tried by: —
-- Closed by: —
+- Closed by: plan 0007 cards B and C — both panels plain `.panel`; the built-output test "the accent panel appears only on a page whose product sets its hue" seen red on /about/ first
 
 ## What happens
 The "Get in touch" panel on `/about/` and the address panel on `/support/` use `.panel-accent`, whose wash is `var(--hue-soft)`. Neither page sets `--hue`, so both fall back to the default `#ff9245` — Sole Focus's orange — and show a brown-orange glow in their top-left corner on pages that belong to the studio, not to a product.

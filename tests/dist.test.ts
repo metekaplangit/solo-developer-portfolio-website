@@ -478,3 +478,17 @@ describe('the retired graphite ground', () => {
     }
   });
 });
+
+// `.panel-accent` washes its corner with `--hue-soft`, and a page that sets no
+// `--hue` gets the fallback — Sole Focus's orange — on a surface no product owns
+// (issue 0009: the Support and About contact panels). Studio pages stay
+// colourless, so a page that draws an accent panel must be a page a product owns.
+describe('the accent panel', () => {
+  it('appears only on a page whose product sets its hue', () => {
+    const wrong = built
+      .filter(([, html]) => /class="[^"]*\bpanel-accent\b/.test(html))
+      .filter(([, html]) => !/style="[^"]*--hue:\s*#[0-9a-f]{3,8}/i.test(html))
+      .map(([route]) => route);
+    expect(wrong, 'pages wearing the fallback hue on an accent panel').toEqual([]);
+  });
+});

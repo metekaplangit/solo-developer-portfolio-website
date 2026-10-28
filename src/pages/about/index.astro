@@ -41,33 +41,50 @@ const values = [
   title="About"
   description="About MetKap Studio and the developer behind these apps and games."
 >
+  {/* The headline and the person beside it: the statement on the left, the
+      plain introduction on the right, so the opening fills its rail instead of
+      leaving the right half of the first screen empty. */}
   <section class="band band-lead about-hero" aria-labelledby="about-h">
-    <p class="eyebrow">About the studio</p>
-    <h1 id="about-h" class="page-title about-title">One person, making software that behaves.</h1>
-    <p class="lede measure">
-      {tie(`MetKap Studio is the one-person studio of ${site.person}. I build small, focused apps and games and try to keep them calm, fast, and respectful of your attention and your data.`)}
+    <div class="about-head">
+      <p class="eyebrow">About the studio</p>
+      <h1 id="about-h" class="page-title about-title">One person, making software that behaves.</h1>
+    </div>
+    <p class="lede about-lede">
+      {tie(`MetKap Studio is the one-person studio of ${site.person.replace(/ /g, '\u00a0')}. I build small, focused apps and games and try to keep them calm, fast, and respectful of your attention and your data.`)}
     </p>
   </section>
 
-  <section class="band band-loose values-band" aria-labelledby="values-h">
-    <h2 id="values-h" class="band-title">How I build</h2>
-    <ul class="values card-grid" role="list">
-      {
-        values.map((v) => (
-          <li class="card reveal">
-            <h3 class="card-title">{v.title}</h3>
-            <p>{v.body}</p>
-          </li>
-        ))
-      }
-    </ul>
+  {/* Four principles as a numbered, ruled list on the label rail — the shape
+      the product pages give "What it does" — not four identical boxes. */}
+  <section class="band values-band" aria-labelledby="values-h">
+    <div class="values-wrap">
+      <h2 id="values-h" class="band-title values-title">How I build</h2>
+      <ol class="values grid-even" role="list" style="--cols-mid: 2; --cols-wide: 2;">
+        {
+          values.map((v, n) => (
+            <li class="value">
+              <span class="value-n" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>
+              <h3 class="value-title">{v.title}</h3>
+              <p>{v.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </section>
 
-  <section class="band band-loose band-tail contact-band" aria-labelledby="contact-h">
-    <div class="panel panel-accent contact reveal">
+  <section class="band band-tail contact-band" aria-labelledby="contact-h">
+    <div class="panel contact reveal">
       <div class="contact-copy">
         <h2 id="contact-h" class="contact-title">Get in touch</h2>
         <p>Questions, bugs, or ideas — the door&rsquo;s open.</p>
+        {/* The small links live inside the panel they belong to, in the
+            site's own type: mono is for code, and these are not code. */}
+        <ul class="elsewhere" role="list">
+          <li><SupportEmail><a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></SupportEmail></li>
+          <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
+          <li><a href={withBase('/privacy/')}>Privacy</a></li>
+        </ul>
       </div>
       <div class="contact-actions">
         <a class="btn btn-primary" href={withBase('/support/')}>Contact support</a>
@@ -80,22 +97,48 @@ const values = [
         }
       </div>
     </div>
-
-    <ul class="elsewhere" role="list">
-      <li><SupportEmail><a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></SupportEmail></li>
-      <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
-      <li><a href={withBase('/privacy/')}>Privacy</a></li>
-    </ul>
   </section>
 </BaseLayout>
 
 <style>
+  /* One grid for the page: the label rail, then the two columns of the
+     principles. The statement spans the rail and the first column; the
+     introduction takes the second, so it starts on the same line as
+     principles 02 and 04 below it, and on the page-top line with the eyebrow. */
+  @media (min-width: 64rem) {
+    .about-hero,
+    .values-wrap {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 15rem) var(--gutter) minmax(0, 1fr) var(--space-8) minmax(0, 1fr);
+      column-gap: 0;
+      align-items: start;
+    }
+    .about-head {
+      grid-column: 1 / 4;
+    }
+    .about-lede {
+      grid-column: 5;
+      padding-top: 0.15em;
+    }
+    .values-title {
+      grid-column: 1;
+    }
+    .values {
+      grid-column: 3 / 6;
+    }
+  }
   .about-title {
     /* Size, weight, line-height and tracking come from `.page-title`; only the
        measure is page-specific. */
-    /* 16ch left 690px (60%) of the rail dead at 44px type. `text-wrap: balance`
-       is already global and does the line-breaking work. */
-    max-width: 22ch;
+    max-width: 18ch;
+    margin-bottom: 0;
+  }
+  @media (max-width: 63.999rem) {
+    .about-title {
+      max-width: 22ch;
+      margin-bottom: var(--space-6);
+    }
   }
   .lede {
     margin: 0;
@@ -104,13 +147,46 @@ const values = [
     line-height: var(--leading-body);
   }
 
-  /* Four values, two-up. Only the track floor is local — padding, radius,
-     title and body all come from the shared `.card` system so this grid can
-     never drift from the ones on Support, the product page and the policies
-     again. */
+  /* How I build — the label rail and ruled, numbered rows. */
+  @media (min-width: 64rem) {
+    .values-title {
+      margin: 0;
+      padding-top: var(--space-5);
+    }
+  }
   .values {
-    grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
-    gap: var(--space-5);
+    column-gap: var(--space-8);
+    row-gap: 0;
+  }
+  .value {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    column-gap: var(--space-2);
+    align-content: start;
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--border);
+  }
+  .value-n {
+    grid-row: 1 / span 2;
+    padding-top: 0.2em;
+    color: var(--faint);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-caps);
+    font-variant-numeric: tabular-nums;
+  }
+  .value-title {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-optical);
+    color: var(--text-strong);
+  }
+  .value p {
+    margin: var(--space-1) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
   }
 
   .contact {
@@ -137,14 +213,12 @@ const values = [
 
   .elsewhere {
     list-style: none;
-    margin: var(--space-8) 0 0;
+    margin: var(--space-4) 0 0;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--faint);
+    gap: var(--space-1) var(--space-5);
+    font-size: var(--text-sm);
   }
   .elsewhere a {
     color: var(--muted);
