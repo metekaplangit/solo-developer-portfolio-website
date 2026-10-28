@@ -85,7 +85,7 @@ const chips: { label: string; ok: boolean }[] = [
     </div>
   </header>
 
-  <ul class="glance" aria-label="At a glance">
+  <ul class="glance" role="list" aria-label="At a glance">
     {chips.map((c) => <li class={`chip chip-lg${c.ok ? ' chip-accent' : ''}`}>{c.label}</li>)}
   </ul>
 

@@ -6,7 +6,7 @@
 - Found by: plan 0007 loop card (check-plan-0007-landed-and-fix-what-did-not)
 - Filed: 2026-10-28
 - Tried by: —
-- Closed by: —
+- Closed by: card "Every policy's At a glance chips are read as a list" — `role="list"` on the chips, nav, footer and 404 links; the screen probe now fails any unmarked list without it, seen red on every route first
 
 Doubt: whether today's iOS VoiceOver still drops the list — WebKit 304137 (Dec 2025, duplicate of open 122320 since 23 Feb 2026) says it does; not heard on a device here. Rounded up to `low` since only a screen-reader user meets it.
 

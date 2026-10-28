@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.63.8
+
+- Every policy's At a glance chips are read as a list
+
 ## v0.63.6
 
 - The product page opening states its facts as a ledger

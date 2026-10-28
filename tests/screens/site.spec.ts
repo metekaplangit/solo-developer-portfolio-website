@@ -161,6 +161,7 @@ type Reading = {
   voids: Array<{ parent: string; after: string; before: string; gap: number }>;
   lazyInFirstView: Array<{ src: string; top: number; left: number }>;
   strayHues: Array<{ el: string; hue: string; derived: string }>;
+  silentLists: string[];
 };
 
 /**
@@ -198,6 +199,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     voids: [],
     lazyInFirstView: [],
     strayHues: [],
+    silentLists: [],
   };
 
   // --- Text size -----------------------------------------------------------
@@ -409,6 +411,18 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
       if (derived && !derived.toLowerCase().includes(hue.toLowerCase())) {
         out.strayHues.push({ el: label(el), hue, derived: `${prop}: ${derived}` });
       }
+    }
+  }
+
+  // --- A list stays a list (issue 0012) -----------------------------------
+  //
+  // Safari drops list semantics from a `ul` or `ol` drawn without markers, so
+  // iPhone VoiceOver reads its items as loose text (WebKit 304137, a duplicate
+  // of the still-open 122320). Every list the site draws without markers says
+  // `role="list"` to keep them; the policy chips were the one that did not.
+  for (const el of Array.from(document.querySelectorAll('ul, ol'))) {
+    if (getComputedStyle(el).listStyleType === 'none' && el.getAttribute('role') !== 'list' && visible(el)) {
+      out.silentLists.push(label(el));
     }
   }
 
@@ -768,6 +782,10 @@ function faults(width: string, r: Reading): string[] {
 
   for (const i of r.lazyInFirstView) {
     bad.push(`@${width} lazy image already on screen — ${i.src} at ${i.left},${i.top}`);
+  }
+
+  for (const l of r.silentLists) {
+    bad.push(`@${width} list read as loose text — ${l} has no markers and no role="list"`);
   }
 
   for (const h of r.strayHues) {
