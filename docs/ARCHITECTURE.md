@@ -19,8 +19,8 @@ src/
   lib/            # Pure helpers (formatting, link resolution) — domain logic
   styles/         # Design tokens + global CSS
 public/           # Static assets served as-is (icons, screenshots, CNAME)
-docs/             # Governance system (this folder)
-scripts/          # Governance validator + tooling
+docs/             # Retired governance record, plus live reference pages (see CLAUDE.md)
+scripts/          # Capture, screen and live-check scripts, probes, and the retired validator
 ```
 
 ## Layer boundaries (Ports & Adapters, scaled to a static site)
@@ -70,3 +70,4 @@ platform adapters in the MVP (pure static web).
 Consequential architecture/storage/deployment decisions get a short ADR under
 `docs/decisions/`. First ADR candidate: the static-only + zero-cost contract
 (recorded here for the baseline; promote to an ADR if it is ever challenged).
+None has been written yet, so the folder does not exist.
