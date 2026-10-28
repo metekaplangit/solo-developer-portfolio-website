@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.62.9
+
+- The reply-time promise reads the same on every page
+
 ## v0.62.8
 
 - The 3 product summaries share 1 shape and say only what each app does
