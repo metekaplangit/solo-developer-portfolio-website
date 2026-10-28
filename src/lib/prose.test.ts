@@ -27,9 +27,9 @@ describe('bodyIntro', () => {
   it('returns the paragraphs before the first heading, inline markup stripped', () => {
     expect(bodyIntro(BODY)).toEqual([
       'First intro paragraph.',
-      // "with" and "in" are bound to what follows by the wrapping rule
-      // (STEP-0062) — this is body prose, so it is tied.
-      `Second intro paragraph, with${NBSP}bold in${NBSP}it.`,
+      // "with bold" opens a clause and "in" points forward, so the wrapping
+      // rule (STEP-0062) holds them to what follows — this is body prose.
+      `Second intro paragraph, with${NBSP}bold${NBSP}in${NBSP}it.`,
     ]);
   });
 
@@ -52,7 +52,7 @@ describe('bodySections', () => {
   it('keeps every paragraph of a multi-paragraph section', () => {
     const [first] = bodySections(BODY);
     expect(first!.text).toContain('Run structured Pomodoro sessions');
-    expect(first!.text).toContain(`switch to${NBSP}Chrono`);
+    expect(first!.text).toContain(`switch${NBSP}to${NBSP}Chrono`);
   });
 
   // Titles are NOT tied: a heading gets `text-wrap: balance`, and one bound

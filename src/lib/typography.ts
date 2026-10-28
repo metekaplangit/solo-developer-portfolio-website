@@ -41,6 +41,20 @@ const TIE_WORDS = new Set([
   'it', 'its', 'my', 'your', 'our', 'their', 'his', 'her', 'this', 'these',
   'you', 'we', 'they', 'i',
 ]);
+
+/**
+ * Words that point forward just as surely, found on the site's own breaks. They
+ * bind in a second pass, after `TIE_WORDS`, and only while the whole run stays
+ * inside `MAX_PAIR`: the core list is the line-end rule the built site is held
+ * to (T1), so nothing here may cost it a binding.
+ */
+const MORE_TIE_WORDS = new Set([
+  'would', 'could', 'should', 'may', 'might', 'must', 'own', 'each', 'every',
+  'some', 'any', 'both', 'more', 'most', 'very', 'about', 'after', 'before',
+  'between', 'through', 'without', 'within', 'until', 'while', 'when', 'where',
+  'which', 'what', 'who', 'whose', 'because', 'though', 'unless', 'since', 'how',
+  'why', 'such', 'just', 'only', 'one', 'those',
+]);
 // Deliberately absent: 'up', 'off', 'out'. They are as often particles closing
 // a phrase ("set it up", "find out") as prepositions opening one, and tying a
 // particle to the next sentence's first word is a worse break than the one it
@@ -107,6 +121,28 @@ export function bindPhrases(text: string): string {
   return out;
 }
 
+/** A figure that belongs with the word after it: "2–3 business days", "60 places". */
+function isNumber(word: string): boolean {
+  return /^[\d][\d.,–-]*$/u.test(word);
+}
+
+/**
+ * The position of `left` inside the clause it belongs to: 1 for the clause's
+ * first word, 2 for its second, 0 otherwise. A clause starts after a full stop,
+ * comma, colon, semicolon or dash. Binding its opening words keeps a phrase from
+ * starting on one line with a single word ("…for Mac, iPhone and iPad, each /
+ * with a plain privacy page").
+ */
+const CLAUSE_WORDS = 2;
+function clauseWord(before: string, left: string): number {
+  if (/[,.;:!?]$/u.test(left)) return 0;
+  before = before.replace(/\u00a0/g, ' ');
+  const m = before.match(/(?:[,.;:!?]|\s[—–])\s+((?:\S+\s+){0,2})$/u);
+  if (!m) return 0;
+  const n = m[1].trim() ? m[1].trim().split(/\s+/).length + 1 : 1;
+  return n <= CLAUSE_WORDS ? n : 0;
+}
+
 /**
  * Bind every stray short word to the word that follows it.
  *
@@ -127,11 +163,15 @@ export function tie(text: string): string {
   // rather than "a Pomodoro" with "timer" dropped to the next line — the exact
   // break the owner reported on /apps/.
   text = bindPhrases(text);
+  // A dash never starts a line: it stays with the word before it. A short
+  // hyphenated word never splits at its hyphen ("count- / up").
+  text = text.replace(/ ([—–]) /gu, `${NBSP}$1 `);
+  text = text.replace(/(^|[\s(“"])([\p{L}]{1,10})-([\p{L}]{1,10})(?=[\s,.;:!?)”"]|$)/gu, '$1$2\u2011$3');
 
   // `[ \t]` rather than `\s`: a newline is a wrap the author chose, and
   // replacing one would reflow their paragraph. `[^\s]` on the left excludes
   // an existing NBSP, which is what makes this idempotent.
-  return text.replace(/([^\s]+)([ \t]+)(?=([^\s]+))/gu, (match, left, _gap, right) => {
+  text = text.replace(/([^\s]+)([ \t]+)(?=([^\s]+))/gu, (match, left, _gap, right) => {
     if (!isTieWord(left)) return match;
     // Only the word itself counts toward the pair length, not punctuation
     // trailing it — a full stop cannot cause an overflow on its own.
@@ -139,6 +179,48 @@ export function tie(text: string): string {
     if (left.length + 1 + rightWord.length > MAX_PAIR) return match;
     return `${left}${NBSP}`;
   });
+
+  return bindMore(text);
+}
+
+/** How wide an unbreakable chunk is, without punctuation trailing it. */
+function chunkWidth(chunk: string): number {
+  return chunk.replace(/[^\p{L}\p{N}]+$/u, '').length;
+}
+
+/**
+ * The second pass: forward-pointing words beyond the core list, a figure and
+ * the word it counts, and the first 2 words of a clause. Bound pairs chain
+ * ("has its own privacy"), so the cap is on the whole unbreakable run, and a
+ * run the first pass already built counts in full — which is also what keeps a
+ * second `tie()` over the same text from growing it.
+ */
+function bindMore(text: string): string {
+  const parts = text.split(/([ \t]+)/u);
+  let out = parts[0] ?? '';
+  for (let i = 1; i < parts.length; i += 2) {
+    const right = parts[i + 1] ?? '';
+    // `\s` would count a no-break space as a break; only a real gap ends a run.
+    const leftChunk = out.slice(out.search(/[^ \t\n]*$/u));
+    const left = leftChunk.slice(leftChunk.lastIndexOf(NBSP) + 1);
+    const before = out.slice(0, out.length - left.length);
+    const wanted =
+      right !== '' &&
+      (isMoreTieWord(left) || isNumber(left) || clauseWord(before, left) > 0);
+    const rightChunk = right.split(/[ \t\n]/u)[0] ?? right;
+    if (wanted && leftChunk.length + 1 + chunkWidth(rightChunk) <= MAX_PAIR) {
+      out += NBSP + right;
+    } else {
+      out += parts[i] + right;
+    }
+  }
+  return out;
+}
+
+function isMoreTieWord(word: string): boolean {
+  const bare = word.replace(/^[^\p{L}\p{N}]+/u, '');
+  if (!/^\p{L}+$/u.test(bare)) return false;
+  return MORE_TIE_WORDS.has(bare.toLowerCase());
 }
 
 /**

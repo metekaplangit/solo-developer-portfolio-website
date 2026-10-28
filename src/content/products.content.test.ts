@@ -72,7 +72,8 @@ describe('Sole Focus product content', () => {
   // Taste-round T2/T5 (STEP-0034/0035): both render only from these fields and
   // the copy was explicitly user-approved — pin it so changes are deliberate.
   it('carries the approved fit statement', () => {
-    expect(product.fitFor).toContain('calm, native Mac timer');
+    // The wording is pinned, not where the wrapping rule put its no-break spaces.
+    expect((product.fitFor ?? '').replace(/\u00a0/g, ' ')).toContain('calm, native Mac timer');
     expect(product.fitNotFor).toContain('website blocker');
   });
 

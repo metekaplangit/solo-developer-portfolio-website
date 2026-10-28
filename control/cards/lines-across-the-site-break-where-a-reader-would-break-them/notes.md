@@ -1,0 +1,2 @@
+- Bad breaks, interface text, 1920/1440/390 (scratch measure-text.mjs): before 173; card A with a normal build 100 (stale content cache); after `astro build --force` 30 — / 1, /apps/ 1, sole-focus 7, magic-notes 9, waypost-words 2, about 10, others 0. No page overflow.
+- First port failed dist T1 on 19 lines: the shared run cap refused core tie words. Split into core pass + capped second pass.

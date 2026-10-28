@@ -19,7 +19,9 @@ describe('tie', () => {
 
   it('does not tie a word that closes a clause', () => {
     expect(tie('nothing to see, and more below')).toBe(
-      `nothing to${NBSP}see, and${NBSP}more below`,
+      // "see," closes its clause, so it stays free; "and more" open the next
+      // one and are held to it.
+      `nothing to${NBSP}see, and${NBSP}more${NBSP}below`,
     );
   });
 
@@ -45,6 +47,52 @@ describe('tie', () => {
 
   it('returns empty input unchanged', () => {
     expect(tie('')).toBe('');
+  });
+});
+
+describe('tie — the breaks the text review measured', () => {
+  it('holds a figure to the word it counts', () => {
+    expect(tie('replies in 2–3 business days')).toContain(`2–3${NBSP}business`);
+    expect(tie('765 worked examples')).toContain(`765${NBSP}worked`);
+  });
+
+  it('holds the opening words of a clause together', () => {
+    // A clause starting with one word at a line end: "…iPad, each / with".
+    const out = tie('for Mac, iPhone and iPad, each with a plain page.');
+    expect(out).toContain(`each${NBSP}with`);
+    expect(out).toContain(`iPhone${NBSP}and`);
+  });
+
+  it('never starts a line with a dash', () => {
+    expect(tie('Support goes straight to me — I usually reply.')).toContain(`me${NBSP}— I`);
+    expect(tie('pages 2 – 4 here')).toContain(`2${NBSP}– 4`);
+  });
+
+  it('never splits a short hyphenated word at its hyphen', () => {
+    expect(tie('a count-up stopwatch')).toContain('count\u2011up');
+    expect(tie('open-ended work')).toContain('open\u2011ended');
+    // Too long to hold in a narrow column, so it keeps its breakable hyphen.
+    expect(tie('internationalization-ready')).toBe('internationalization-ready');
+  });
+
+  it('never binds a run too wide for the 320px column, even run twice', () => {
+    // The budget T4 holds the built site to. Chained ties and a second pass
+    // over already-tied text are the two ways a run grew past it.
+    const lines = [
+      'Each product has its own privacy page, and every one of them is kept current.',
+      'Support goes straight to me. If something breaks you hear back — usually within 2–3 business days.',
+      'Write the sum as you would say it, and the answer lands beside the line.',
+      'A crossword game for iPhone and iPad. Trace every answer yourself, or reach for a skill — seven to unlock, four to carry.',
+      'You want a calm, native Mac timer that lives in your menu bar and opens straight to a usable timer.',
+    ];
+    for (const line of lines) {
+      for (const out of [tie(line), tie(tie(line))]) {
+        for (const run of out.split(/[ \t\n]/)) {
+          expect(run.length, run).toBeLessThanOrEqual(30);
+        }
+      }
+      expect(tie(tie(line))).toBe(tie(line));
+    }
   });
 });
 

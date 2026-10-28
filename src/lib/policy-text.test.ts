@@ -80,8 +80,8 @@ describe('resolveSection', () => {
   const NBSP = ' ';
 
   it('prefers the content file’s override over the generated default', () => {
-    // "Our" is a tie word; "own" is not — hence the pairing.
-    expect(resolveSection('Our own wording.', 'The default.')).toBe(`Our${NBSP}own wording.`);
+    // "Our" and "own" both point forward — hence the run.
+    expect(resolveSection('Our own wording.', 'The default.')).toBe(`Our${NBSP}own${NBSP}wording.`);
   });
 
   it('falls back to the default when no override is set', () => {

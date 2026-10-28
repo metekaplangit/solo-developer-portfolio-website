@@ -265,7 +265,19 @@ h3 {
 
 p {
   font-size: var(--text-base);
-  /* Avoid short orphan last lines in body copy. */
+  /* Short copy — a lede, a summary, a card, a list item — balances, so its
+     lines come out even rather than full, full, stub. */
+  text-wrap: balance;
+}
+
+li {
+  text-wrap: balance;
+}
+
+/* Reading prose keeps `pretty`: balance stops working past 6 lines in
+   Chromium, and a long paragraph should fill its measure. */
+.sec-body p,
+.sec-body li {
   text-wrap: pretty;
 }
 
