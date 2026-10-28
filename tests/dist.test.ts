@@ -285,6 +285,39 @@ describe('every built page', () => {
   });
 });
 
+describe('the studio icons', () => {
+  /** A PNG's width and height, read from its IHDR chunk. */
+  const pngSize = (path: string): [number, number] => {
+    const b = readFileSync(join(DIST, path));
+    return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  };
+
+  it('serves every icon a page or the manifest names at the size it declares', () => {
+    const declared: Array<[string, number]> = [];
+    for (const [, html] of built) {
+      for (const m of html.matchAll(/<link rel="(?:icon|apple-touch-icon)" href="\/([^"]+\.png)"(?: sizes="(\d+)x\d+")?/g)) {
+        declared.push([m[1], m[2] ? Number(m[2]) : m[1] === 'apple-touch-icon-180.png' ? 180 : NaN]);
+      }
+    }
+    const manifest = JSON.parse(readFileSync(join(DIST, 'site.webmanifest'), 'utf-8'));
+    for (const icon of manifest.icons) declared.push([icon.src.replace(/^\//, ''), Number(icon.sizes.split('x')[0])]);
+    expect(declared.length).toBeGreaterThan(3);
+    for (const [path, size] of declared) {
+      expect(pngSize(path), path).toEqual([size, size]);
+    }
+  });
+
+  // Link previews crop to about 1.91:1. A square preview lost the top and bottom
+  // of the gem once the mark grew to 79% of its tile (2026-10-28).
+  it('serves the link preview at 1200x630, so no site crops the mark', () => {
+    for (const [route, html] of built) {
+      const m = html.match(/<meta property="og:image" content="https:\/\/metkapstudio\.com\/([^"]+)"/);
+      expect(m, `${route}: og:image`).not.toBeNull();
+      expect(pngSize(m![1]), route).toEqual([1200, 630]);
+    }
+  });
+});
+
 describe('the wrapping rule reaches rendered Markdown (STEP-0062)', () => {
   const NBSP = ' ';
 

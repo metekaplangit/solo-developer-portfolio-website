@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.58.1
+
+- The studio's gem logo fills its tile, so it reads clearly in tabs, on home screens and in link previews
+
 ## v0.58.0
 
 - A visitor can get Waypost Words from the App Store, and every page says it is out

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Link preview, 1200x630: the gem master centred at 0.5x, 405px tall, on the same ground. -->
+  <defs>
+    <linearGradient id="m3bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24262c"/><stop offset="1" stop-color="#15161a"/></linearGradient>
+    <linearGradient id="m3ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#aab4ff"/><stop offset="1" stop-color="#6b79f0"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#m3bg)"/>
+  <g transform="translate(344 59) scale(0.5)">
+    <g transform="rotate(45 512 512)">
+      <rect x="189" y="189" width="646" height="646" rx="123" fill="url(#m3ac)"/>
+      <rect x="320" y="320" width="384" height="384" rx="74" fill="#15161a"/>
+    </g>
+    <circle cx="512" cy="512" r="94" fill="url(#m3ac)"/>
+  </g>
+</svg>

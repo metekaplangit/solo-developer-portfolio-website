@@ -1,13 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- MetKap Studio gem, 2026-10-28: the 2026-07 mark (STEP-0011) scaled 1.43x so it
+       fills 79% of the tile instead of 55%. Colours and gradients unchanged. -->
   <defs>
     <linearGradient id="m3bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24262c"/><stop offset="1" stop-color="#15161a"/></linearGradient>
     <linearGradient id="m3ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#aab4ff"/><stop offset="1" stop-color="#6b79f0"/></linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#m3bg)"/>
-  <!-- crafted "gem" frame: rounded diamond with an inner cutout -->
+  <!-- rounded diamond frame with an inner cutout -->
   <g transform="rotate(45 512 512)">
-    <rect x="286" y="286" width="452" height="452" rx="86" fill="url(#m3ac)"/>
-    <rect x="378" y="378" width="268" height="268" rx="52" fill="#15161a"/>
+    <rect x="189" y="189" width="646" height="646" rx="123" fill="url(#m3ac)"/>
+    <rect x="320" y="320" width="384" height="384" rx="74" fill="#15161a"/>
   </g>
-  <circle cx="512" cy="512" r="66" fill="url(#m3ac)"/>
+  <circle cx="512" cy="512" r="94" fill="url(#m3ac)"/>
 </svg>
