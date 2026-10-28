@@ -1,0 +1,170 @@
+{
+ "google-play/metkap-studio-google-play-developer-header-4096x2304.png": {
+  "front": [
+   226,
+   944,
+   3628,
+   1359
+  ],
+  "safe": [
+   0,
+   0,
+   1,
+   1
+  ]
+ },
+ "youtube/metkap-studio-youtube-channel-banner-2560x1440.jpg": {
+  "front": [
+   507,
+   631,
+   2053,
+   808
+  ],
+  "safe": [
+   0.198046875,
+   0.3527777777777778,
+   0.801953125,
+   0.6465277777777778
+  ]
+ },
+ "facebook/metkap-studio-facebook-page-cover-1702x630.jpg": {
+  "front": [
+   324,
+   236,
+   1378,
+   357
+  ],
+  "safe": [
+   0.19,
+   0.1,
+   0.81,
+   0.84
+  ]
+ },
+ "x/metkap-studio-x-header-1500x500.jpg": {
+  "front": [
+   75,
+   127,
+   1273,
+   243
+  ],
+  "safe": [
+   0.05,
+   0.1,
+   0.96,
+   0.64
+  ]
+ },
+ "bluesky/metkap-studio-bluesky-banner-3000x1000.jpg": {
+  "front": [
+   150,
+   254,
+   2548,
+   485
+  ],
+  "safe": [
+   0.05,
+   0.1,
+   0.96,
+   0.64
+  ]
+ },
+ "mastodon/metkap-studio-mastodon-header-1500x500.jpg": {
+  "front": [
+   75,
+   127,
+   1273,
+   243
+  ],
+  "safe": [
+   0.05,
+   0.1,
+   0.96,
+   0.64
+  ]
+ },
+ "linkedin/metkap-studio-linkedin-page-cover-1512x256.jpg": {
+  "front": [
+   227,
+   82,
+   1248,
+   174
+  ],
+  "safe": [
+   0.15,
+   0.08,
+   0.95,
+   0.92
+  ]
+ },
+ "twitch/metkap-studio-twitch-profile-banner-1200x480.jpg": {
+  "front": [
+   96,
+   182,
+   1053,
+   298
+  ],
+  "safe": [
+   0.08,
+   0.08,
+   0.92,
+   0.92
+  ]
+ },
+ "reddit/metkap-studio-reddit-banner-1600x480.jpg": {
+  "front": [
+   96,
+   160,
+   1416,
+   321
+  ],
+  "safe": [
+   0.06,
+   0.1,
+   0.94,
+   0.9
+  ]
+ },
+ "discord/metkap-studio-discord-server-banner-960x540.png": {
+  "front": [
+   67,
+   248,
+   864,
+   345
+  ],
+  "safe": [
+   0.04,
+   0.14,
+   0.96,
+   0.96
+  ]
+ },
+ "github/metkap-studio-github-social-preview-1280x640.jpg": {
+  "front": [
+   77,
+   256,
+   1132,
+   385
+  ],
+  "safe": [
+   0.06,
+   0.08,
+   0.94,
+   0.92
+  ]
+ },
+ "website/metkap-studio-website-link-preview-1200x630.png": {
+  "front": [
+   72,
+   254,
+   1061,
+   375
+  ],
+  "safe": [
+   0.06,
+   0.08,
+   0.94,
+   0.92
+  ]
+ }
+}
