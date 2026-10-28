@@ -361,8 +361,8 @@ inside a set. A one-off height on a single button is the failure this names.
   let fill and width carry emphasis.
 - **Do** separate a surface with a tone-and-shadow lift **or** a hairline —
   exactly one.
-- **Do** keep body text at `#f4f5f7` and never let any text go lighter than
-  `#8b909a` on the graphite ground.
+- **Do** keep body text at `--text` and never let any text go fainter than
+  `--faint` on the ground (the Contrast Floor Rule).
 - **Do** let real product screenshots carry the product sections; they are the
   strongest asset the site has.
 - **Do** state price, system requirement, and privacy stance as literal,
