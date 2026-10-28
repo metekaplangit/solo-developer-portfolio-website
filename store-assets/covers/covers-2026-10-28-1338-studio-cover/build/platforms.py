@@ -1,7 +1,7 @@
-# Lays the picked cover (front + background 21) out again for every platform's own shape and safe area.
-# Run: node render-svg.cjs && python3 platforms.py   (writes ../<platform>/ files and ../master/)
-# Settles: every platform gets the same cover, re-laid from its parts rather than cropped, with the
-# lockup and the 3 tiles inside what that platform never covers or cuts off.
+# Makes the picked cover (front + background 21) for every platform's own shape and safe area.
+# Run: node render-svg.cjs && python3 platforms.py   (writes ../<platform>/ files)
+# Settles: every platform gets the same cover — the Google Play background scaled to fit, the text
+# re-placed at the far left and the 3 tiles over the screenshots, inside what that platform shows.
 import math, sys
 from pathlib import Path
 import numpy as np
@@ -41,7 +41,32 @@ def phones(W, H, x0, ph, pivot_x):
     return line.crop((pad, pad, pad + W, pad + H))
 
 
-def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, ph=None, quality=None):
+_MASTER = None
+
+
+def background(W, H):
+    """The Google Play background, scaled to fill W x H and trimmed top and bottom, never re-laid:
+    every size shows the same phones at the same size relative to its width, nothing repeated."""
+    global _MASTER
+    if _MASTER is None:
+        MW, MH = 4096, 2304
+        m = Image.new('RGB', (MW, MH)); d = ImageDraw.Draw(m)
+        for y in range(MH):
+            t = y / (MH - 1)
+            d.line([(0, y), (MW, y)], fill=tuple(round(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)))
+        m = m.convert('RGBA')
+        rx = (MW - ROW_W * MH) * 0.325  # where the master's gem stands
+        x0, ph = rx + PHONES_AT * MH, MH * 0.92
+        lay = phones(MW, MH, x0, ph, x0 + 0.735 * ph)  # the master turns the line about this point
+        m.alpha_composite(fade(lay, MW, MH, start=(rx + FADE_AT * MH) / MW, span=FADE_SPAN * MH / MW, edge=0.0, strength=0.42))
+        _MASTER = m
+    k = max(W / _MASTER.width, H / _MASTER.height)
+    big = _MASTER.resize((math.ceil(_MASTER.width * k), math.ceil(_MASTER.height * k)), Image.LANCZOS)
+    top = (big.height - H) // 2
+    return big.crop((big.width - W, top, big.width, top + H))
+
+
+def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None):
     """safe: the box (fractions of W and H) the lockup and tiles must stay inside."""
     sx0, sy0, sx1, sy1 = safe[0] * W, safe[1] * H, safe[2] * W, safe[3] * H
     # 16:9 keeps the master's proportions; wider banners show small, so their front grows to fill the box.
@@ -50,17 +75,7 @@ def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, ph=None, quality=None):
     rx = sx0 + ((sx1 - sx0) - ROW_W * u) * align
     cy = (sy0 + sy1) / 2
 
-    bg = Image.new('RGB', (W, H)); d = ImageDraw.Draw(bg)
-    for y in range(H):
-        t = y / (H - 1)
-        d.line([(0, y), (W, y)], fill=tuple(round(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM)))
-    bg = bg.convert('RGBA')
-
-    ph = ph or H * 0.92
-    x0 = rx + PHONES_AT * u
-    lay = phones(W, H, x0, ph, x0 + 0.735 * ph)  # the master turns the line about this point
-    fs = rx + FADE_AT * u
-    bg.alpha_composite(fade(lay, W, H, start=fs / W, span=FADE_SPAN * u / W, edge=0.0, strength=0.42))
+    bg = background(W, H)
 
     # The 3 category tiles: games, apps, websites.
     s = round(u * 0.15); gap = round(s * 0.28)
@@ -109,28 +124,28 @@ def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, ph=None, quality=None):
 
 
 # The front always starts at the left of the safe box (align 0); 16:9 keeps the master's margin.
-# platform, file, W, H, safe box, align, phone height (None = 0.92 H), JPEG quality (None = PNG)
+# platform, file, W, H, safe box, align, JPEG quality (None = PNG)
 TARGETS = [
-    ('google-play', 'developer-header', 4096, 2304, (0, 0, 1, 1), 0.325, None, None),
-    ('youtube', 'channel-banner', 2560, 1440, (507 / 2560, 508 / 1440, 2053 / 2560, 931 / 1440), 0, None, 92),
-    ('facebook', 'page-cover', 1702, 630, (0.19, 0.10, 0.81, 0.84), 0, None, 92),
+    ('google-play', 'developer-header', 4096, 2304, (0, 0, 1, 1), 0.325, None),
+    ('youtube', 'channel-banner', 2560, 1440, (507 / 2560, 508 / 1440, 2053 / 2560, 931 / 1440), 0, 92),
+    ('facebook', 'page-cover', 1702, 630, (0.19, 0.10, 0.81, 0.84), 0, 92),
     # X, Bluesky and Mastodon put the profile photo over the bottom left, so the front sits above it.
-    ('x', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, None, 90),
-    ('bluesky', 'banner', 3000, 1000, (0.05, 0.10, 0.96, 0.64), 0, None, 88),
-    ('mastodon', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, None, 90),
+    ('x', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, 90),
+    ('bluesky', 'banner', 3000, 1000, (0.05, 0.10, 0.96, 0.64), 0, 88),
+    ('mastodon', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, 90),
     # LinkedIn's logo covers the bottom left 2-13 percent, so the front starts just right of it.
-    ('linkedin', 'page-cover', 1512, 256, (0.15, 0.08, 0.95, 0.92), 0, 256 * 1.3, 92),
-    ('twitch', 'profile-banner', 1200, 480, (0.08, 0.08, 0.92, 0.92), 0, None, 92),
-    ('reddit', 'banner', 1600, 480, (0.06, 0.10, 0.94, 0.90), 0, None, 90),
-    ('discord', 'server-banner', 960, 540, (0.04, 0.14, 0.96, 0.96), 0.325, None, None),
-    ('github', 'social-preview', 1280, 640, (0.06, 0.08, 0.94, 0.92), 0, None, 90),
-    ('website', 'link-preview', 1200, 630, (0.06, 0.08, 0.94, 0.92), 0, None, None),
+    ('linkedin', 'page-cover', 1512, 256, (0.15, 0.08, 0.95, 0.92), 0, 92),
+    ('twitch', 'profile-banner', 1200, 480, (0.08, 0.08, 0.92, 0.92), 0, 92),
+    ('reddit', 'banner', 1600, 480, (0.06, 0.10, 0.94, 0.90), 0, 90),
+    ('discord', 'server-banner', 960, 540, (0.04, 0.14, 0.96, 0.96), 0.325, None),
+    ('github', 'social-preview', 1280, 640, (0.06, 0.08, 0.94, 0.92), 0, 90),
+    ('website', 'link-preview', 1200, 630, (0.06, 0.08, 0.94, 0.92), 0, None),
 ]
 
 
 def name_of(t):
     p, use, W, H = t[:4]
-    return OUT / p / f'metkap-studio-{p}-{use}-{W}x{H}.{"jpg" if t[7] else "png"}'
+    return OUT / p / f'metkap-studio-{p}-{use}-{W}x{H}.{"jpg" if t[6] else "png"}'
 
 
 if __name__ == '__main__':
@@ -140,7 +155,7 @@ if __name__ == '__main__':
     for t in TARGETS:
         if only and t[0] not in only:
             continue
-        box = compose(t[2], t[3], name_of(t), safe=t[4], align=t[5], ph=t[6], quality=t[7])
+        box = compose(t[2], t[3], name_of(t), safe=t[4], align=t[5], quality=t[6])
         landed[str(name_of(t).relative_to(OUT))] = {'front': box, 'safe': t[4]}
         print(t[0], t[2], t[3], 'front', box)
     (HERE / 'landed.json').write_text(json.dumps(landed, indent=1))  # read by prove.py

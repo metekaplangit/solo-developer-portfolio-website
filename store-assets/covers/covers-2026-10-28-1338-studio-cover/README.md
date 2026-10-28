@@ -12,7 +12,7 @@ Rebuild every file and check it:
 
 ## How each size is made
 
-- **Laid out again, never cropped.** Each file places the front and the phone line for its own shape (`platforms.py`).
+- **One background everywhere.** Every file uses the Google Play background, scaled to fill its width and trimmed top and bottom, so the same phones show at the same relative size, none repeated. The text and tiles are placed again for each shape (`platforms.py`).
 - **The front stays in the safe box**: the part every device shows, clear of any profile photo drawn over the banner.
 - **The text and the tiles are placed separately.** The gem and the name hold the far left of the safe box. The 3 tiles stand over the screenshots, at the master's 73.5% across, pulled in only where the safe box ends sooner.
 - **16:9 files keep the master's proportions**; wider banners let the front grow, because they show small.
