@@ -131,21 +131,29 @@ const schema = [
 
   {
     product.features.length > 0 && (
-      <section class="band band-tight features-band" aria-labelledby="features-h">
-        <h2 id="features-h" class="band-title">What it does</h2>
-        {/* Column counts come from the ITEM COUNT, not from the available
-            width — see src/lib/grid.ts. `auto-fit` cannot know how many items
-            follow it, which is why this grid ended on a short row at every
-            width above 390px. */}
-        <ul
-          class="feature-grid grid-even"
-          role="list"
-          style={`--cols-mid: ${evenColumns(product.features.length, 2)}; --cols-wide: ${evenColumns(product.features.length, 4)};`}
-        >
-          {product.features.map((f) => (
-            <li class="card feature reveal">{f}</li>
-          ))}
-        </ul>
+      <section class="band band-loose features-band" aria-labelledby="features-h">
+        {/* A ruled list, not a wall of boxes: twelve identical cards was the
+            "endless identical feature cards" DESIGN.md names as the thing to
+            avoid. The heading takes the left rail the policy rows use, and each
+            claim is a numbered line in the product's hue — the same index the
+            home page gives its three statements. */}
+        <div class="features">
+          <h2 id="features-h" class="band-title features-title">What it does</h2>
+          <ol
+            class="feature-list grid-even"
+            role="list"
+            style={`--cols-mid: ${evenColumns(product.features.length, 2)}; --cols-wide: ${evenColumns(product.features.length, 3)};`}
+          >
+            {product.features.map((f, i) => (
+              <li class="feature">
+                <span class="feature-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                {/* A compound never splits at its hyphen ("exchange- / rate"):
+                    the hyphen becomes a non-breaking one for display only. */}
+                <span class="feature-text">{f.replace(/(\w)-(\w)/g, '$1‑$2')}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
     )
   }
@@ -320,16 +328,52 @@ const schema = [
   }
 
 
-  /* One claim per cell. The track COUNT now comes from `.grid-even` and the
-     `--cols-*` values set on the element (the full-row rule, STEP-0063); the
-     local `repeat(auto-fit, …)` that used to live here is what produced the
-     short last row, since auto-fit sizes by width and never sees the count.
-     Padding, radius and type still come from the shared `.card` system. */
+  /* What it does — a ruled, numbered list. The track COUNT still comes from
+     `.grid-even` and the `--cols-*` values (the full-row rule, STEP-0063), so
+     every column ends on the same line. One cue only: a hairline above each
+     claim, no fill. */
+  .features {
+    display: grid;
+    gap: var(--space-2) var(--gutter);
+  }
+  @media (min-width: 64rem) {
+    .features {
+      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+  .features-title {
+    margin: 0;
+    padding-top: var(--space-5);
+  }
+  .feature-list {
+    column-gap: var(--space-8);
+    row-gap: 0;
+    counter-reset: none;
+  }
   .feature {
-    color: var(--muted);
-    font-size: var(--text-sm);
-    line-height: 1.6;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-2);
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--border);
+  }
+  .feature-n {
+    color: var(--hue);
+    font-size: var(--text-xs);
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+  }
+  .feature-text {
+    color: var(--text);
+    font-size: var(--text-base);
+    line-height: 1.5;
+    /* Balance, not pretty: each claim is a caption of two or three lines,
+       and `pretty` only rescues the last one — measured, item 07 broke as
+       "chosen / by you rather / than by your region" at 1440. */
+    text-wrap: balance;
   }
 
   .prose-grid {

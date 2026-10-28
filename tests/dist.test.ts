@@ -395,7 +395,9 @@ describe('the checklist text rules (STEP-0073)', () => {
     const offenders: string[] = [];
     for (const [route, html] of built) {
       for (const run of wrappableRuns(html)) {
-        for (const m of run.matchAll(/([\p{L}\p{N}’'-]+) (?=[\p{L}\p{N}])/gu)) {
+        // U+2011 joins a word exactly as `-` does: "built‑in" is one word, and
+        // its "in" is not a preposition waiting for the next line.
+        for (const m of run.matchAll(/([\p{L}\p{N}’'\u2011-]+) (?=[\p{L}\p{N}])/gu)) {
           if (TIE_WORDS.has(m[1]!.toLowerCase())) {
             offenders.push(`${route}: "${m[1]} …" in "${run.slice(0, 70)}"`);
           }
@@ -446,7 +448,7 @@ describe('the checklist text rules (STEP-0073)', () => {
     const broken = real.split(NB).join(' ');
 
     const brokenTie = wrappableRuns(broken).flatMap((run) =>
-      [...run.matchAll(/([\p{L}\p{N}’'-]+) (?=[\p{L}\p{N}])/gu)].filter((m) =>
+      [...run.matchAll(/([\p{L}\p{N}’'\u2011-]+) (?=[\p{L}\p{N}])/gu)].filter((m) =>
         TIE_WORDS.has(m[1]!.toLowerCase()),
       ),
     );
