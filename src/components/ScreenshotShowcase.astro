@@ -384,7 +384,7 @@ const PHONES_WIDE = 4;
     margin: var(--space-3) 0 0;
     padding: 0;
   }
-  /* Dot buttons keep their 11px visual mark but sit inside a larger transparent
+  /* Dot buttons keep their 7px visual mark but sit inside a larger transparent
      hit area (review-0001 OPP-08): ~28px on fine pointers, 44px on touch. */
   .dot {
     display: grid;
@@ -399,20 +399,22 @@ const PHONES_WIDE = 4;
   }
   .dot::after {
     content: '';
-    width: 11px;
-    height: 11px;
+    width: 7px;
+    height: 7px;
     border-radius: var(--radius-pill);
-    background: var(--border-strong);
+    background: color-mix(in srgb, var(--text) 30%, transparent);
     transition:
       background 0.2s var(--ease),
-      transform 0.2s var(--ease);
+      width 0.25s var(--ease);
   }
   .dot:hover::after {
     background: var(--muted);
   }
+  /* The current mark stretches into a pill: position reads from shape as well
+     as colour, and the row never changes height. */
   .dot[aria-current='true']::after {
+    width: 22px;
     background: var(--accent);
-    transform: scale(1.35);
   }
   .dot:focus-visible {
     outline: 2px solid var(--accent);
@@ -439,7 +441,8 @@ const PHONES_WIDE = 4;
       scroll-behavior: auto;
     }
     .nav,
-    .dot {
+    .dot,
+    .dot::after {
       transition: none;
     }
   }
