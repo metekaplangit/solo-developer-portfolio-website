@@ -22,9 +22,11 @@ No secondary audience is claimed; this is deliberately a single-audience site.
 ## Product Purpose
 
 The public home of MetKap Studio: it presents the studio's shipped software —
-currently Magic Notes, a Mac notebook that answers arithmetic written in plain
-sentences, and Sole Focus, a free Pomodoro and count-up focus timer — together with
-per-product privacy information and a direct support route.
+one file per product in `src/content/products/`; today Magic Notes, a Mac
+notebook that answers arithmetic written in plain sentences, Sole Focus, a free
+Pomodoro and count-up focus timer, and Waypost Words, a crossword word game for
+iPhone and iPad — together with per-product privacy information and a direct
+support route.
 
 Success is **credibility**. A visitor should leave believing a careful,
 honest studio is behind this, whether or not they install anything today. Downloads
