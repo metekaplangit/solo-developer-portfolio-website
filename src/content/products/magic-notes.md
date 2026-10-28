@@ -98,18 +98,18 @@ screenshots:
     dimensions: { width: 2880, height: 1800 }
     licenseOrOwnership: owned
 features:
-  - Answers in a column beside your writing, live as you type
-  - Plain sentences rather than a calculator syntax
-  - Percentages, money, units, cooking measures, dates, times and durations
-  - Loans, rates, powers and roots, rounding, number bases and statistics
-  - Named values, section totals, and questions asked of the lines above
-  - 765 worked examples in the built-in guide, one press to insert
-  - English or Turkish input, chosen by you rather than by your region
-  - Custom units, and exchange-rate snapshots stamped with the day they were true
-  - Folders, pinning, library-wide search, and previewed find and replace
-  - A revision timeline per sheet, guarded backup restore, and unlimited undo
-  - Export to plain text, Markdown, print, PDF, or a portable library bundle
-  - Zen mode, Shortcuts actions, and Spotlight indexing that is off until you ask
+  - Plain sentences in, answers out, live as you type
+  - Money, percentages, units and cooking measures
+  - Dates, times, durations, loans and interest rates
+  - Powers, roots, rounding, bases and statistics
+  - Named values, totals, and questions about lines above
+  - 765 worked examples, one press to insert
+  - English or Turkish, chosen by you, not by region
+  - Custom units and dated exchange-rate snapshots
+  - Folders, pinning, library search, previewed replace
+  - Unlimited undo, sheet timelines, guarded restore
+  - Export to text, Markdown, PDF, print or a bundle
+  - Zen mode, Shortcuts, and opt-in Spotlight indexing
 releaseDate: 2026-08-16
 lastUpdated: 2026-08-17
 seo:
