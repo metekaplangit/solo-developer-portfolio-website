@@ -460,3 +460,21 @@ describe('the checklist text rules (STEP-0073)', () => {
     expect(brokenPhrase.length, 'T2 must report a split name').toBeGreaterThan(0);
   });
 });
+
+// The Spectrum swap retired the graphite ground #16171b for --bg, but the
+// gallery arrows kept it hardcoded as rgba(22, 23, 27, 0.78) (issue 0005), so a
+// palette change never reached them. Every stylesheet and page a visitor loads
+// must take that ground from the tokens, in any spelling the minifier emits.
+describe('the retired graphite ground', () => {
+  const RETIRED = /#16171b(?:[0-9a-f]{2})?\b|rgba?\(\s*22\s*,\s*23\s*,\s*27\b|rgba?\(\s*22\s+23\s+27\b/i;
+
+  it('is gone from every built stylesheet and page', () => {
+    const css = readdirSync(join(DIST, '_astro'))
+      .filter((name) => name.endsWith('.css'))
+      .map((name): [string, string] => [`_astro/${name}`, readFileSync(join(DIST, '_astro', name), 'utf-8')]);
+    expect(css.length, 'the build emitted no stylesheet').toBeGreaterThan(0);
+    for (const [where, text] of [...css, ...built]) {
+      expect(text.match(RETIRED)?.[0], where).toBeUndefined();
+    }
+  });
+});
