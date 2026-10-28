@@ -26,7 +26,7 @@ Machine-checked rules live in two suites, and both run against the built output
 rather than against a component in isolation:
 
 - `tests/dist.test.ts` — what is in the HTML a visitor is sent. `npm run test:dist`.
-- `tests/geometry.test.ts` — what a browser lays that HTML out as: sizes,
+- `tests/screens/site.spec.ts` — what a browser lays that HTML out as: sizes,
   positions, alignment, spacing. `npm run test:ui`. Added by STEP-0080, because
   a rule "read by a person" is a rule enforced when someone remembers, and two
   defects had already survived exactly that.
@@ -77,7 +77,7 @@ words. Do not tie heading text. *Read by a person.*
 side share their height, their top edge and their bottom edge. One card taller
 than its neighbour reads as a mistake, never as emphasis. *Machine-checked* —
 markup parity in `tests/dist.test.ts`, and since STEP-0080 the rendered heights
-too, in `tests/geometry.test.ts`. A "set" there means members that render the
+too, in `tests/screens/site.spec.ts`. A "set" there means members that render the
 same tag and the same class on the same row: a label column beside a content
 column is two different things by design, and this rule was never about those.
 
@@ -90,7 +90,7 @@ date on its own line and the other puts it inline are two designs, not one set.
 column it sits in, its type follows the scale already on the page, and its
 alignment follows the grid — never a value picked to make one element look
 right on its own. *Partly machine-checked since STEP-0080:* the site keeps ONE
-left rail, and `tests/geometry.test.ts` proves the wordmark, the first body
+left rail, and `tests/screens/site.spec.ts` proves the wordmark, the first body
 paragraph and the first footer link share it on every route at every width. The
 rest of the rule — type scale, column width, judgement — is *read by a person.*
 
@@ -106,7 +106,7 @@ because it comes from the type scale, the spacing scale or the grid. A stray
 **W1 — No gap larger than the rhythm the page already keeps.** The space
 between two blocks comes from the section spacing scale. A gap wider than the
 largest step is a void, and a reader crossing it thinks something failed to
-load. *Machine-checked since STEP-0080* — `tests/geometry.test.ts` fails when
+load. *Machine-checked since STEP-0080* — `tests/screens/site.spec.ts` fails when
 two in-flow siblings sit more than 120px apart, which is `--band-y-loose` at its
 cap. In-flow only: an absolutely-positioned overlay sits where it is told, and
 the distance between two of them means nothing.
@@ -130,11 +130,11 @@ breakpoint. When an element goes, its spacing goes with it. *Read by a person.*
 | T2 | `tests/dist.test.ts` | a protected phrase appears with an ordinary space inside it |
 | T4 | `src/lib/typography.test.ts` | a bound pair exceeds 22 characters |
 | L1, L2 | `tests/dist.test.ts` | two cards in one set emit a different element set |
-| L1 | `tests/geometry.test.ts` | two members of one set on the same row render more than 1px apart in height |
-| L3 (rail only) | `tests/geometry.test.ts` | the wordmark, the first body paragraph and the first footer link do not share a left edge |
-| W1 | `tests/geometry.test.ts` | two in-flow siblings sit more than 120px apart |
+| L1 | `tests/screens/site.spec.ts` | two members of one set on the same row render more than 1px apart in height |
+| L3 (rail only) | `tests/screens/site.spec.ts` | the wordmark, the first body paragraph and the first footer link do not share a left edge |
+| W1 | `tests/screens/site.spec.ts` | two in-flow siblings sit more than 120px apart |
 
-`tests/geometry.test.ts` also holds four site standards that are recorded
+`tests/screens/site.spec.ts` also holds four site standards that are recorded
 elsewhere rather than in this checklist, because they are not about *placing a
 new item* — they are about the page never being wrong:
 
