@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.59.0
+
+- The support page shows each product as an icon tile, not a bare text link
+
 ## v0.58.5
 
 - Every cover is crystal clear: lossless where the platform allows, with no halo or smudge on the text, gem and tiles

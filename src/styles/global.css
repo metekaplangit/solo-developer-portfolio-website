@@ -714,6 +714,13 @@ img {
     grid-template-columns: repeat(var(--cols-wide, 1), minmax(0, 1fr));
   }
 }
+/* A list of `ProductTile`s. Its column count is the full-row rule's
+   (`.grid-even` with `--cols-*`); a tile never stretches past 26rem a column,
+   so a single related product is a tile, not a 1232px bar. */
+.tile-grid {
+  max-width: min(100%, calc(var(--cols-wide, 1) * 26rem));
+}
+
 .card {
   display: flex;
   flex-direction: column;

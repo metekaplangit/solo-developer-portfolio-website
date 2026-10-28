@@ -6,6 +6,8 @@ import SupportEmail from '../../components/SupportEmail.astro';
 import { sortProducts } from '../../lib/products';
 import { withBase } from '../../lib/url';
 import { tie } from '../../lib/typography';
+import ProductTile from '../../components/ProductTile.astro';
+import { evenColumns } from '../../lib/grid';
 
 const products = sortProducts((await getCollection('products')).map((e) => e.data));
 const subject = encodeURIComponent('Support request');
@@ -65,11 +67,15 @@ const include = [
 
   <section class="band band-tight band-tail products-band" aria-labelledby="products-h">
     <h2 id="products-h" class="band-title">Supported products</h2>
-    <ul class="products" role="list">
+    <ul
+      class="tile-grid grid-even"
+      role="list"
+      style={`--cols-mid: ${evenColumns(products.length, 2)}; --cols-wide: ${evenColumns(products.length, 3)};`}
+    >
       {
         products.map((p) => (
           <li>
-            <a href={withBase(`/apps/${p.slug}/`)}>{p.name}</a>
+            <ProductTile product={p} href={`/apps/${p.slug}/`} eager />
           </li>
         ))
       }
@@ -135,19 +141,8 @@ const include = [
     grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
   }
 
-  .products {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
-  }
-  .products a {
-    color: var(--text);
-  }
-  .products a:hover {
-    color: var(--accent-hover);
+  .tile-grid > li {
+    display: grid;
   }
   .privacy-ref {
     margin: var(--space-8) 0 0;
