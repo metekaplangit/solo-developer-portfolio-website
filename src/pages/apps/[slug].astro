@@ -167,20 +167,19 @@ const schema = [
        landmark) nested inside one trips axe's
        `landmark-complementary-is-top-level`. -->
   <div class="band band-loose prose-band">
-    <div class="prose-grid">
-      <div class="prose measure-mid">
+    {/* The story keeps the page's one grid: section names on the label rail
+        "What it does" opened, the prose on the column its list runs in. It was
+        one 560px column with the right 45% of the rail empty for ~2000px on
+        the two products with no maker note. The maker's note, where there is
+        one, opens the column as its first voice. */}
+    <div class="story">
+      {product.makerNote.length > 0 && (
+        <div class="story-note">
+          <MakerNote product={product} />
+        </div>
+      )}
+      <div class="prose story-prose">
         <Content />
-      </div>
-      {/* The maker's voice runs ALONGSIDE the description rather than in front
-          of it. This is also the page's one deliberate asymmetric moment: the
-          prose keeps its reading measure and the ~400px that used to sit empty
-          beside a 1464px-tall block now carries the one piece of content a
-          competitor couldn't reproduce. Sticky so it accompanies the read. */}
-      {/* A plain div, not an <aside>: MakerNote already renders an <aside>
-          (a complementary landmark), and nesting one inside another trips
-          axe's landmark-complementary-is-top-level. */}
-      <div class="prose-aside">
-        <MakerNote product={product} />
       </div>
     </div>
   </div>
@@ -388,33 +387,84 @@ const schema = [
     text-wrap: balance;
   }
 
-  .prose-grid {
-    display: grid;
-    gap: var(--gutter);
+  /* The story — label rail left, prose right, the same two tracks and gap as
+     `.features` above, so the prose starts on the line the feature list does
+     and every section opens on one hairline across both tracks. */
+  .story-prose > :global(*) {
+    margin: var(--space-4) 0 0;
+    min-width: 0;
   }
-  /* 75rem, not less: the aside only earns a column when it has room to read.
-     At 68rem the second track computed to 205px (~25ch) — cramped, not
-     composed. At 75rem+ it is >=320px while the prose keeps its full measure. */
-  @media (min-width: 75rem) {
-    .prose-grid {
-      grid-template-columns: minmax(0, var(--measure-mid)) minmax(0, 1fr);
+  .story-prose > :global(:first-child) {
+    margin-top: 0;
+  }
+  /* The opening paragraph reads as the story's lede. */
+  .story-prose > :global(p:first-child) {
+    color: var(--text);
+    font-size: var(--text-lg);
+    line-height: var(--leading-body);
+  }
+  .story-prose > :global(h2) {
+    margin: var(--space-12) 0 0;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border);
+    text-wrap: balance;
+  }
+  @media (min-width: 64rem) {
+    .story-prose {
+      display: grid;
+      grid-template-columns: minmax(0, 15rem) minmax(0, var(--measure-mid));
+      column-gap: var(--gutter);
       align-items: start;
     }
-    .prose-aside {
-      position: sticky;
-      top: var(--space-20);
+    .story-prose > :global(*) {
+      grid-column: 2;
+    }
+    /* A heading spans the rows of its section (no section runs past six
+       blocks), so a three-line heading never pushes its own second paragraph
+       down: the rows it does not fill are empty and collapse to nothing. */
+    .story-prose > :global(h2) {
+      grid-column: 1;
+      grid-row: span 6;
+    }
+    /* The section's first paragraph shares the heading's row, rule and air. */
+    .story-prose > :global(h2 + *),
+    .story-prose.prose :global(#common-questions + p:has(> strong:first-child)) {
+      margin-top: var(--space-12);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--border);
+    }
+    /* A story that opens on a heading starts both tracks on the top line. */
+    .story-prose > :global(h2:first-child + *) {
+      margin-top: 0;
+    }
+    /* The maker's note takes the same two tracks: its label on the rail,
+       its words in the column. */
+    .story-note {
+      margin-bottom: var(--space-12);
+    }
+    .story-note :global(.maker-note) {
+      display: grid;
+      grid-template-columns: minmax(0, 15rem) minmax(0, var(--measure-mid));
+      column-gap: var(--gutter);
+      align-items: baseline;
+      max-width: none;
+      /* Space, not a full-width rule: every rule in the story is the
+         two-segment section rule, and this one ran straight across both. */
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+    .story-note :global(.maker-heading) {
+      margin: 0;
     }
   }
-  @media (max-width: 74.999rem) {
-    /* Stacked: the note reads first, as an introduction. */
-    .prose-grid {
-      display: flex;
-      flex-direction: column-reverse;
+  @media (max-width: 63.999rem) {
+    .story-note {
+      margin-bottom: var(--space-10);
     }
   }
 
   .prose :global(p) {
-    margin-block: var(--space-4);
     color: var(--muted);
     font-size: var(--text-base);
     line-height: var(--leading-body);
@@ -422,14 +472,10 @@ const schema = [
   .prose :global(h2) {
     font-size: var(--text-xl);
     letter-spacing: var(--track-optical);
-    margin: var(--space-12) 0 var(--space-4);
-  }
-  .prose :global(h2:first-child) {
-    margin-top: 0;
+    line-height: var(--leading-heading);
   }
   /* Waypost Words lists its seven skills in its description. */
   .prose :global(ul) {
-    margin-block: var(--space-4);
     padding-inline-start: 1.25rem;
     color: var(--muted);
     font-size: var(--text-base);
