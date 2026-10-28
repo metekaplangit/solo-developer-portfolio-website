@@ -2,8 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PolicyArticle from '../../components/PolicyArticle.astro';
+import ProductTile from '../../components/ProductTile.astro';
+import { evenColumns } from '../../lib/grid';
 import { formatDate } from '../../lib/format';
-import { withBase } from '../../lib/url';
 import { tie } from '../../lib/typography';
 import { GLOBAL_POLICY_ID, productPolicyEntries } from '../../lib/privacy';
 
@@ -17,6 +18,12 @@ if (!globalEntry) {
   throw new Error('A global privacy policy (productId: global) is required.');
 }
 const { Content } = await render(globalEntry);
+
+const products = (await getCollection('products')).map((p) => p.data);
+const policies = perProduct.flatMap((entry) => {
+  const product = products.find((p) => p.id === entry.data.productId);
+  return product ? [{ entry, product }] : [];
+});
 ---
 
 <BaseLayout
@@ -32,16 +39,23 @@ const { Content } = await render(globalEntry);
     <p class="per-product-lead measure">
       {tie('These are separate from the website policy above. Each one says what that app or game keeps on your device — open a policy for the details.')}
     </p>
-    <ul class="policy-list" role="list">
+    {/* One tile per product, recognised by its icon, with the date the policy
+        was last revised as the line under the name. Columns from the count,
+        so three policies are one full row rather than two and a hole. */}
+    <ul
+      class="tile-grid grid-even"
+      role="list"
+      style={`--cols-mid: ${evenColumns(policies.length, 2)}; --cols-wide: ${evenColumns(policies.length, 3)};`}
+    >
       {
-        perProduct.map((e) => (
+        policies.map(({ entry, product }) => (
           <li class="reveal">
-            <a class="policy-link" href={withBase(`/privacy/${e.data.productId}/`)}>
-              <span class="policy-name">{e.data.title}</span>
-              <span class="policy-date">
-                updated {formatDate(e.data.lastUpdated)}
-              </span>
-            </a>
+            <ProductTile
+              product={product}
+              href={`/privacy/${entry.data.productId}/`}
+              hint="privacy policy"
+              line={`Privacy policy · updated ${formatDate(entry.data.lastUpdated).replace(/ /g, ' ')}`}
+            />
           </li>
         ))
       }
@@ -54,54 +68,8 @@ const { Content } = await render(globalEntry);
     margin: 0 0 var(--space-6);
     color: var(--muted);
   }
-  /* Card grid, matching the policy sections above and the rest of the site,
-     rather than a hairline-divided list in a narrow column. */
-  .policy-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* Every tile stretches to the tallest in its row. */
+  .tile-grid > li {
     display: grid;
-    gap: var(--space-4);
-    /* auto-FILL + a max track, not auto-fit + 1fr: with a single policy the
-       fit version stretched one card to the full 1152px rail and
-       `space-between` threw its title and date 774px apart. */
-    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 26rem));
-    justify-content: start;
-  }
-  /* Every card is a row of the grid, so it stretches to the tallest one in its
-     row. Without this the box was only as tall as its own text and the two
-     cards ended on different bottom edges — 96px against 66px at 1440px,
-     purely because one product's name wrapped and the other's did not
-     (CHECKLIST L1). */
-  .policy-list > li {
-    display: grid;
-  }
-  .policy-link {
-    /* Grid, not flex with `space-between`. The flex version put the date beside
-       the name when both fitted and underneath it when they did not, so the
-       same component rendered two different designs depending on how long a
-       product is called (CHECKLIST L2). Name above, date below, always. */
-    display: grid;
-    align-content: start;
-    gap: var(--space-2);
-    padding: var(--space-5);
-    border-radius: var(--radius);
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
-    color: var(--text);
-    transition: background-color var(--dur) var(--ease), transform var(--dur) var(--ease);
-  }
-  .policy-link:hover {
-    color: var(--text-strong);
-    transform: translateY(-2px);
-  }
-  .policy-name {
-    font-weight: 650;
-    letter-spacing: -0.01em;
-  }
-  .policy-date {
-    font-family: var(--font-mono);
-    color: var(--faint);
-    font-size: var(--text-xs);
-    white-space: nowrap;
   }
 </style>
