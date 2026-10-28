@@ -8,6 +8,10 @@
 
 ## Governance docs (canonical owners) — `docs/`
 
+Retired on 2026-08-17 and kept as read-only history: work now runs through
+`control/README.md`, and CLAUDE.md says which of these pages still describe the
+product.
+
 | Path | Owns | Read when |
 |---|---|---|
 | `docs/STATUS.md` | Live state + next action | Every session (first) |
@@ -45,16 +49,16 @@
 | `src/styles/**` | Design tokens |
 | `public/**` | Static assets (icons, screenshots, CNAME at M4) |
 | `tests/dist.test.ts` | Assertions about the HTML a visitor is sent (`npm run test:dist`) |
-| `tests/geometry.test.ts` | Assertions about what the browser lays that HTML out as (`npm run test:ui`) |
+| `tests/screens/site.spec.ts` | Assertions about what the browser lays that HTML out as (`npm run test:ui`) |
 | `vitest.dist.config.ts` / `vitest.ui.config.ts` | The two slow suites' configs, each kept out of `npm test` |
-| `scripts/validate-governance.py` | Governance validator |
+| `scripts/retired/validate-governance.py.retired` | The retired governance validator, kept as history |
 | `.github/workflows/**` | `deploy.yml` only — build + Lighthouse a11y gate + Pages publish |
 | `.github/ISSUE_TEMPLATE/**` | Issue forms + security route |
-| `docs/tasks/**` | Task Cards per Step |
-| `docs/issues/LEDGER.md` | Pre-remote issue fallback |
+| `docs/tasks/**` | Task Cards per Step (retired) |
+| `docs/issues/LEDGER.md` | Pre-remote issue fallback (retired; issues are files in `docs/issues/open/`) |
 
 ## Key commands
 
 `npm run dev` · `npm run build` · `npm run check` · `npm test` (STEP-0001+) ·
 `npm run test:dist` (STEP-0068) · `npm run test:ui` (STEP-0080) ·
-`python3 scripts/validate-governance.py`
+`npm run headless` · `python3 control/loop.py start | check | finish`
