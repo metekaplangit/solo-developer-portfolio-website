@@ -100,7 +100,7 @@ def build(W, H, out, variant=1):
     x0 = round(W * 0.735 - total / 2)
     y0 = round(H * 0.5 - s / 2)
     for i, ic in enumerate(icons):
-        ic = ic.resize((s, s), Image.LANCZOS)
+        ic = ic.resize((s, s), Image.BOX)
         if ic.getchannel('A').getextrema()[0] == 255:  # opaque square icon: give it the iOS corner
             ic = rounded(ic, round(s * 0.2237))
         sh = Image.new('RGBA', (2 * s, 2 * s), (0, 0, 0, 0))
@@ -113,7 +113,7 @@ def build(W, H, out, variant=1):
     # Left third: the gem beside the studio name, one line (the identity lockup).
     gem = Image.open(HERE / 'parts/gem-mark.png').convert('RGBA')
     g = round(unit * 0.18)
-    gem = gem.resize((g, g), Image.LANCZOS)
+    gem = gem.resize((g, g), Image.BOX)
     name = ImageFont.truetype(FONT, round(unit * 0.072)); name.set_variation_by_name('Bold')
     tag = ImageFont.truetype(FONT, round(unit * 0.034)); tag.set_variation_by_name('Semibold')
     gx = round(W * 0.055)

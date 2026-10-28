@@ -89,7 +89,7 @@ def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None):
         tx0 = math.floor(max(text_end + 0.10 * u, min(0.735 * W, sx1 - tiles_w / 2) - tiles_w / 2))  # down, never past the edge
     ty0 = round(cy - s / 2)
     for i, k in enumerate(('games', 'apps', 'websites')):
-        ic = Image.open(HERE / f'parts/cat-{k}.png').convert('RGBA').resize((s, s), Image.LANCZOS)
+        ic = Image.open(HERE / f'parts/cat-{k}.png').convert('RGBA').resize((s, s), Image.BOX)  # area average: no halo on the hard edges
         sh = Image.new('RGBA', (2 * s, 2 * s), (0, 0, 0, 0))
         ImageDraw.Draw(sh).rounded_rectangle((s // 2, s // 2 + s // 14, s // 2 + s, s // 2 + s // 14 + s), round(s * 0.2237), fill=(0, 0, 0, 150))
         sh = sh.filter(ImageFilter.GaussianBlur(max(1, s // 8)))
@@ -99,7 +99,7 @@ def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None):
 
     # The gem beside the studio name, and the site's headline under it.
     g = round(u * 0.18)
-    gem = Image.open(HERE / 'parts/gem-mark.png').convert('RGBA').resize((g, g), Image.LANCZOS)
+    gem = Image.open(HERE / 'parts/gem-mark.png').convert('RGBA').resize((g, g), Image.BOX)
     gx, gy = math.ceil(rx), round(cy - g / 2)  # up, so it never rounds past the safe edge
     bg.alpha_composite(gem, (gx, gy))
     name = ImageFont.truetype(FONT, round(u * 0.072)); name.set_variation_by_name('Bold')
@@ -117,28 +117,28 @@ def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None):
     rgb = bg.convert('RGB')
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     if quality:
-        rgb.save(out, quality=quality, optimize=True, progressive=True)
+        rgb.save(out, quality=quality, subsampling=0, optimize=True, progressive=True)  # 4:4:4 keeps colour edges sharp
     else:
         rgb.save(out, optimize=True)
     return box
 
 
 # The front always starts at the left of the safe box (align 0); 16:9 keeps the master's margin.
-# platform, file, W, H, safe box, align, JPEG quality (None = PNG)
+# platform, file, W, H, safe box, align, JPEG quality (None = lossless PNG, used wherever it fits the limit)
 TARGETS = [
     ('google-play', 'developer-header', 4096, 2304, (0, 0, 1, 1), 0.325, None),
-    ('youtube', 'channel-banner', 2560, 1440, (507 / 2560, 508 / 1440, 2053 / 2560, 931 / 1440), 0, 92),
-    ('facebook', 'page-cover', 1702, 630, (0.19, 0.10, 0.81, 0.84), 0, 92),
+    ('youtube', 'channel-banner', 2560, 1440, (507 / 2560, 508 / 1440, 2053 / 2560, 931 / 1440), 0, None),
+    ('facebook', 'page-cover', 1702, 630, (0.19, 0.10, 0.81, 0.84), 0, None),
     # X, Bluesky and Mastodon put the profile photo over the bottom left, so the front sits above it.
-    ('x', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, 90),
-    ('bluesky', 'banner', 3000, 1000, (0.05, 0.10, 0.96, 0.64), 0, 88),
-    ('mastodon', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, 90),
+    ('x', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, None),
+    ('bluesky', 'banner', 3000, 1000, (0.05, 0.10, 0.96, 0.64), 0, 98),  # PNG is 1.02 MB, over its ~1 MB
+    ('mastodon', 'header', 1500, 500, (0.05, 0.10, 0.96, 0.64), 0, None),
     # LinkedIn's logo covers the bottom left 2-13 percent, so the front starts just right of it.
-    ('linkedin', 'page-cover', 1512, 256, (0.15, 0.08, 0.95, 0.92), 0, 92),
-    ('twitch', 'profile-banner', 1200, 480, (0.08, 0.08, 0.92, 0.92), 0, 92),
-    ('reddit', 'banner', 1600, 480, (0.06, 0.10, 0.94, 0.90), 0, 90),
+    ('linkedin', 'page-cover', 1512, 256, (0.15, 0.08, 0.95, 0.92), 0, None),
+    ('twitch', 'profile-banner', 1200, 480, (0.08, 0.08, 0.92, 0.92), 0, None),
+    ('reddit', 'banner', 1600, 480, (0.06, 0.10, 0.94, 0.90), 0, None),
     ('discord', 'server-banner', 960, 540, (0.04, 0.14, 0.96, 0.96), 0.325, None),
-    ('github', 'social-preview', 1280, 640, (0.06, 0.08, 0.94, 0.92), 0, 90),
+    ('github', 'social-preview', 1280, 640, (0.06, 0.08, 0.94, 0.92), 0, None),
     ('website', 'link-preview', 1200, 630, (0.06, 0.08, 0.94, 0.92), 0, None),
 ]
 

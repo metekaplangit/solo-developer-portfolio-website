@@ -13,7 +13,7 @@
    1
   ]
  },
- "youtube/metkap-studio-youtube-channel-banner-2560x1440.jpg": {
+ "youtube/metkap-studio-youtube-channel-banner-2560x1440.png": {
   "front": [
    507,
    631,
@@ -27,7 +27,7 @@
    0.6465277777777778
   ]
  },
- "facebook/metkap-studio-facebook-page-cover-1702x630.jpg": {
+ "facebook/metkap-studio-facebook-page-cover-1702x630.png": {
   "front": [
    324,
    236,
@@ -41,7 +41,7 @@
    0.84
   ]
  },
- "x/metkap-studio-x-header-1500x500.jpg": {
+ "x/metkap-studio-x-header-1500x500.png": {
   "front": [
    75,
    127,
@@ -69,7 +69,7 @@
    0.64
   ]
  },
- "mastodon/metkap-studio-mastodon-header-1500x500.jpg": {
+ "mastodon/metkap-studio-mastodon-header-1500x500.png": {
   "front": [
    75,
    127,
@@ -83,7 +83,7 @@
    0.64
   ]
  },
- "linkedin/metkap-studio-linkedin-page-cover-1512x256.jpg": {
+ "linkedin/metkap-studio-linkedin-page-cover-1512x256.png": {
   "front": [
    227,
    82,
@@ -97,7 +97,7 @@
    0.92
   ]
  },
- "twitch/metkap-studio-twitch-profile-banner-1200x480.jpg": {
+ "twitch/metkap-studio-twitch-profile-banner-1200x480.png": {
   "front": [
    96,
    182,
@@ -111,7 +111,7 @@
    0.92
   ]
  },
- "reddit/metkap-studio-reddit-banner-1600x480.jpg": {
+ "reddit/metkap-studio-reddit-banner-1600x480.png": {
   "front": [
    96,
    160,
@@ -139,7 +139,7 @@
    0.96
   ]
  },
- "github/metkap-studio-github-social-preview-1280x640.jpg": {
+ "github/metkap-studio-github-social-preview-1280x640.png": {
   "front": [
    77,
    256,

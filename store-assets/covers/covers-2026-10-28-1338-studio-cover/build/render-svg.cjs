@@ -20,7 +20,7 @@ const jobs = [
 ];
 (async () => {
   for (const [name, svg] of jobs) {
-    await sharp(svg, { density: 300 }).resize(1024, 1024).png().toFile(path.join(out, name));
+    await sharp(svg, { density: 288 }).png().toFile(path.join(out, name));  // drawn straight at 4096, so every size is a clean average of many pixels
   }
   console.log('rendered', jobs.length);
 })();
