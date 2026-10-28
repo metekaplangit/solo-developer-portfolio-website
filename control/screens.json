@@ -1,7 +1,7 @@
 {
-  "@about": "v0.62.15",
-  "@apps": "v0.62.15",
-  "@every-route": "v0.62.15",
+  "@about": "v0.63.3",
+  "@apps": "v0.63.3",
+  "@every-route": "v0.63.3",
   "@home": "v0.63.0",
   "@increased-contrast": "v0.63.1",
   "@magic-notes": "v0.63.0",
@@ -10,7 +10,7 @@
   "@privacy-sole-focus": "v0.63.2",
   "@privacy-waypost-words": "v0.63.2",
   "@sole-focus": "v0.63.1",
-  "@support": "v0.63.2",
+  "@support": "v0.63.3",
   "@waypost-rail": "v0.63.2",
   "@waypost-words": "v0.63.2"
 }

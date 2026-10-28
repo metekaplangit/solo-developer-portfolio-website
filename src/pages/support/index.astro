@@ -25,22 +25,24 @@ const include = [
   title="Support"
   description="How to get support for any app or game — a direct email, no forms."
 >
-  <section class="band band-lead support-hero" aria-labelledby="support-h">
-    <p class="eyebrow">Support</p>
-    <h1 id="support-h" class="page-title support-title">A real person answers.</h1>
-    <p class="lede measure">
-      {tie('Need help with an app or game? Email me directly — there\u2019s no form, no ticket number, and nothing is tracked.')}
-    </p>
-  </section>
+  {/* One opening: the promise on the left, the address it promises on the
+      right, so the one thing this page exists to hand over is in the first
+      screen beside the headline rather than a band below it. */}
+  <section class="band band-lead support-top" aria-labelledby="support-h">
+    <div class="support-hero">
+      <p class="eyebrow">Support</p>
+      <h1 id="support-h" class="page-title support-title">A real person answers.</h1>
+      <p class="lede measure">
+        {tie('Need help with an app or game? Email me directly — there\u2019s no form and no ticket number.')}
+      </p>
+    </div>
 
-  <section class="band band-tight contact-band" aria-labelledby="contact-h">
-    <div class="panel panel-accent contact reveal">
-      <div class="contact-copy">
-        <h2 id="contact-h" class="contact-title">
-          <SupportEmail>{site.supportEmail}</SupportEmail>
-        </h2>
-        <p>I usually reply within 2–3 business days.</p>
-      </div>
+    <section class="panel contact reveal" aria-labelledby="contact-h">
+      <p class="contact-label">Write to</p>
+      <h2 id="contact-h" class="contact-title">
+        <SupportEmail>{site.supportEmail}</SupportEmail>
+      </h2>
+      <p class="contact-note">I usually reply within 2–3 business days.</p>
       <div class="contact-actions">
         <SupportEmail>
           <a class="btn btn-primary" href={`mailto:${site.supportEmail}?subject=${subject}`}>
@@ -48,24 +50,27 @@ const include = [
           </a>
         </SupportEmail>
       </div>
-    </div>
+    </section>
   </section>
 
-  <section class="band band-loose include-band" aria-labelledby="include-h">
+  {/* A numbered, ruled list — the shape the product pages give "What it does" —
+      rather than three more boxes under a box. */}
+  <section class="band include-band" aria-labelledby="include-h">
     <h2 id="include-h" class="band-title">What to include</h2>
-    <ul class="cards card-grid" role="list">
+    <ol class="include grid-even" role="list" style="--cols-mid: 1; --cols-wide: 3;">
       {
-        include.map((i) => (
-          <li class="card reveal">
-            <h3 class="card-title">{i.title}</h3>
+        include.map((i, n) => (
+          <li class="include-item">
+            <span class="include-n" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>
+            <h3 class="include-title">{i.title}</h3>
             <p>{i.body}</p>
           </li>
         ))
       }
-    </ul>
+    </ol>
   </section>
 
-  <section class="band band-tight band-tail products-band" aria-labelledby="products-h">
+  <section class="band band-tail products-band" aria-labelledby="products-h">
     <h2 id="products-h" class="band-title">Supported products</h2>
     <ul
       class="tile-grid grid-even"
@@ -95,38 +100,48 @@ const include = [
     line-height: var(--leading-body);
   }
 
-  .contact {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-6);
+  /* The opening: hero left, the address panel right, both starting on the
+     page-top line so nothing rises above where every page begins. */
+  @media (min-width: 64rem) {
+    .support-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+      column-gap: var(--gutter);
+      align-items: start;
+    }
+    .support-hero .lede {
+      margin-bottom: 0;
+    }
   }
-  .contact-copy {
-    min-width: 0;
+  @media (max-width: 63.999rem) {
+    .contact {
+      margin-top: var(--space-8);
+    }
+  }
+  .contact {
+    padding: clamp(var(--space-6), 2.5vw, var(--space-8));
+  }
+  .contact-label {
+    margin: 0 0 var(--space-2);
+    color: var(--faint);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
   }
   /* The address is the heading here — it is the one thing the page exists to
-     give you. Mono so a long address wraps predictably and reads as data.
-
-     Sized fluidly rather than at a fixed `--text-lg`, because at that size the
-     address does not fit its own panel on a phone: measured at 320px the box is
-     224px and the string needs ~288px, so `overflow-wrap` broke it between
-     `.co` and `m` — an address split mid-domain reads as a typo on the one page
-     whose entire job is handing over a working address. The lower bound keeps
-     all 24 characters on one line from 320px up; the upper bound is the
-     original `--text-lg`, so nothing changes from ~476px on. */
+     give you. Mono so it reads as data, and sized so all 24 characters stay
+     on one line from 320px up (a split mid-domain reads as a typo). */
   .contact-title {
-    margin: 0 0 var(--space-2);
+    margin: 0;
     font-family: var(--font-mono);
     font-size: clamp(0.95rem, 4.2vw, var(--text-lg));
     font-weight: var(--weight-strong);
     letter-spacing: var(--track-optical);
-    /* Retained as a safety valve for a future longer address, not as the
-       mechanism for this one — the clamp above is what keeps it intact. */
     overflow-wrap: anywhere;
   }
-  .contact-copy p {
-    margin: 0;
+  .contact-note {
+    margin: var(--space-2) 0 0;
     color: var(--muted);
     font-size: var(--text-sm);
   }
@@ -134,11 +149,42 @@ const include = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
+    margin-top: var(--space-6);
   }
 
-  /* Track floor only; everything else is the shared `.card` system. */
-  .cards {
-    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  .include {
+    column-gap: var(--space-8);
+    row-gap: 0;
+  }
+  .include-item {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    column-gap: var(--space-2);
+    align-content: start;
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--border);
+  }
+  .include-n {
+    grid-row: 1 / span 2;
+    padding-top: 0.2em;
+    color: var(--faint);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-caps);
+    font-variant-numeric: tabular-nums;
+  }
+  .include-title {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-optical);
+    color: var(--text-strong);
+  }
+  .include-item p {
+    margin: var(--space-1) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
   }
 
   .tile-grid > li {

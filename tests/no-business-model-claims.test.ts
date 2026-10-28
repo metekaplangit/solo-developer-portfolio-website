@@ -32,7 +32,9 @@ const FORBIDDEN: Array<[RegExp, string]> = [
   [/\bad-free\b/i, 'advertising'],
   [/\bno advertising\b/i, 'advertising'],
   [/\bno tracking\b/i, 'tracking'],
-  [/\bnothing tracked\b/i, 'tracking'],
+  // Up to 3 words may sit between: "nothing is tracked" slipped past the bare
+  // phrase on the support page until 2026-10-28 (issue 0006).
+  [/\bnothing (?:[\w']+ ){0,3}tracked\b/i, 'tracking'],
   [/\bno analytics\b/i, 'analytics'],
   [/\bno subscription/i, 'subscriptions'],
   [/\bno in-app purchase/i, 'in-app purchases'],

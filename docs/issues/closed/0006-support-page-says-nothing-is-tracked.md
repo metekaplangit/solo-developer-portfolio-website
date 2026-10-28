@@ -6,7 +6,7 @@
 - Found by: health-project 0002
 - Filed: 2026-10-28
 - Tried by: —
-- Closed by: —
+- Closed by: plan 0007 card B, "The support page reads as one picture" — the line reworded, the claims test widened and seen red first
 
 Doubt: in context the line may mean "no ticket tracking" for support email rather than visitor tracking. It reads as either, which is the problem. Rounded to `low` because it is only seen.
 
