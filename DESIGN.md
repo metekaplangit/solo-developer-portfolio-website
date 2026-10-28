@@ -319,6 +319,15 @@ system look cheap.
 **The Hairline Rule.** Borders are `rgba(255,255,255,0.09)` — a hairline, not a
 line. If a border is visible as a distinct grey stroke, it is too strong.
 
+**The Increased Contrast Rule.** *(Added 2026-10-28, style-project 0001.)* When a
+visitor's Mac or iPhone asks for more contrast (`prefers-contrast: more`), every
+quiet value has a stronger version, set once at the end of `global.css`: text
+`#fff`, muted `#d0d3da`, faint `#babec8`, hairlines 32% and 56%, accent-soft
+20%. Lifted surfaces swap their lift for a 1px ring — the shadow becomes the
+border, so a surface still takes one cue under the Single-Cue Rule. The header,
+glass chips and gallery arrows go solid, with no blur. Link underlines go to full
+strength. Without the setting, nothing changes. `@increased-contrast` holds it.
+
 ## 5. Components
 
 ### Buttons

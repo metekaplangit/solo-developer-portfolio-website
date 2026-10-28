@@ -1139,3 +1139,67 @@ img {
     scroll-behavior: auto !important;
   }
 }
+
+/* THE SYSTEM'S INCREASED CONTRAST. macOS "Increase contrast" (and iOS's)
+   reaches a page as `prefers-contrast: more`, and Apple's colour guidance asks
+   every custom colour for a version with a "significantly higher" difference
+   when it is on. The default values above are tuned to be quiet on a dark
+   stage — 9% hairlines, two grey tiers, glass over imagery — which is exactly
+   what goes missing for someone who has asked their Mac for more contrast.
+   The whole answer lives here, as values: every component already reads
+   these tokens, so nothing below the root needs to know the mode exists,
+   except the three places that are translucent on purpose. It sits LAST in
+   this file so it outranks the base rules it answers, at equal specificity.
+
+   Measured anchors (2026-10-28): the App Store's own web pages lift secondary
+   text from 55% to 70% white, tertiary from 25% to 50%, and lines from 10% to
+   30%, and drop their backdrop blur for solid fills under this query. */
+@media (prefers-contrast: more) {
+  :root {
+    --text: #ffffff;
+    --muted: #d0d3da;
+    --faint: #babec8;
+    --border: rgba(255, 255, 255, 0.32);
+    --border-strong: rgba(255, 255, 255, 0.56);
+    --accent-soft: rgba(255, 255, 255, 0.2);
+    --surface: #181a20;
+    --surface-2: #1e2129;
+  }
+  /* A tone step and a soft shadow are the cues that fade first; under this
+     setting every lifted surface is edged by a ring INSTEAD — the shadow
+     becomes a border, as high-contrast modes elsewhere do (Elastic EUI), and
+     a surface still takes one cue (the Single-Cue Rule). Ring, not border, so
+     nothing moves. `!important` because this answers the visitor's own
+     setting: the components' scoped rules (`.tile[data-astro-cid-…]`, their
+     `:hover` lifts) outrank any plain selector here, and the ring has to win
+     over all of them, hover included. */
+  .card,
+  .panel,
+  .tile,
+  .cells > * {
+    box-shadow: inset 0 0 0 1px var(--border) !important;
+  }
+  /* Translucency on purpose — the header, the gallery's glass controls and
+     counter — becomes solid: blur over moving imagery is noise here. The
+     header's own scoped rule would otherwise keep its glass. */
+  .site-header,
+  .chip-glass,
+  button.nav {
+    background: var(--bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  /* The underline is a link's only difference from prose (WCAG 1.4.1); it
+     stops being dimmed. */
+  .policy a:not(.avatar-link),
+  .prose a,
+  .privacy-ref a,
+  .per-product-lead a,
+  .footer-links a,
+  .page-back a,
+  .elsewhere a,
+  .products a,
+  .section-link {
+    background-image: linear-gradient(currentColor, currentColor);
+  }
+}

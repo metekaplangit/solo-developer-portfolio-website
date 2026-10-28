@@ -584,6 +584,64 @@ async function driveRail(chrome: Chrome, url: string, width: number): Promise<Ra
 }
 
 /** One browser per route, replaced on any failure; one fresh page per width. */
+/** What the system's increased-contrast setting changes on one page. */
+type ContrastReading = {
+  border: string;
+  faint: string;
+  /** Lifted surfaces, by selector and computed box-shadow. */
+  surfaces: Array<{ el: string; shadow: string }>;
+  header: { background: string; backdrop: string };
+};
+
+/**
+ * Read one page with `prefers-contrast` set before it loads — set after, Chrome
+ * keeps the colours it already resolved (measured, style-project 0001).
+ */
+async function readContrast(chrome: Chrome, url: string, value: 'more' | 'no-preference'): Promise<ContrastReading> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    try {
+      page = await chrome.page();
+      page.setDefaultTimeout(60_000);
+      await page.emulateMediaFeatures([{ name: 'prefers-contrast', value }]);
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await page.goto(url, { waitUntil: 'load', timeout: 60_000 });
+      const reading = await page.evaluate((): ContrastReading => {
+        const root = getComputedStyle(document.documentElement);
+        const header = getComputedStyle(document.querySelector('.site-header')!);
+        return {
+          border: root.getPropertyValue('--border').trim(),
+          faint: root.getPropertyValue('--faint').trim(),
+          surfaces: [...document.querySelectorAll('.card, .panel, .tile, .cells > *')].map((el) => ({
+            el: `${el.tagName.toLowerCase()}.${[...el.classList].join('.')}`,
+            shadow: getComputedStyle(el).boxShadow,
+          })),
+          header: { background: header.backgroundColor, backdrop: header.backdropFilter },
+        };
+      });
+      await page.close().catch(() => {});
+      return reading;
+    } catch (error) {
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not read ${url} under prefers-contrast: ${value} in 4 attempts: ${String(lastError).slice(0, 160)}`);
+}
+
+const CONTRAST_ROUTES = ['/', '/apps/sole-focus/', '/support/'] as const;
+
+/** The opacity of a white hairline token, however Chrome spells it back. */
+function alpha(value: string): number {
+  const hex = /^#[0-9a-f]{6}([0-9a-f]{2})$/i.exec(value);
+  if (hex) return parseInt(hex[1], 16) / 255;
+  const rgba = /rgba?\([^)]*,\s*([\d.]+)\s*\)$/.exec(value);
+  return rgba ? Number(rgba[1]) : 1;
+}
+const contrast = new Map<string, ContrastReading>();
+
 async function readRoute(chrome: Chrome, base: string, route: string): Promise<Record<string, Reading>> {
   const per: Record<string, Reading> = {};
   for (const width of WIDTHS) {
@@ -618,6 +676,11 @@ beforeAll(async () => {
   }
   for (const width of [1440, 390]) {
     rail.set(String(width), await driveRail(chrome, started.base + '/apps/waypost-words/', width));
+  }
+  for (const route of CONTRAST_ROUTES) {
+    for (const value of ['more', 'no-preference'] as const) {
+      contrast.set(`${value} ${route}`, await readContrast(chrome, started.base + route, value));
+    }
   }
   // Nothing is read after this point, so the browser goes now rather than
   // waiting on the assertions.
@@ -725,6 +788,33 @@ test("Waypost Words's screenshots are all reachable by the arrows @waypost-rail"
   expect(phone[0]).toMatchObject({ count: '1–2 of 10', prevDisabled: true, nextDisabled: false });
   expect(phone.at(-2)).toMatchObject({ count: '9–10 of 10', nextDisabled: true });
   expect(phone.at(-1)!.nextDisabled).toBe(false);
+});
+
+// A Mac set to "Increase contrast" asks every custom colour for a stronger
+// version (Apple's colour guidance). The site's quiet values — 9% hairlines,
+// two grey tiers, a translucent header — are what goes missing for that
+// visitor. Under the setting: hairlines strong, faint text lighter, every
+// lifted surface edged by a ring INSTEAD of its shadow (one cue, DESIGN.md's
+// Single-Cue Rule), and the header solid. Without it, nothing changes.
+test('a Mac set to Increase contrast gets stronger text, hairlines and edges @increased-contrast', () => {
+  const bad: string[] = [];
+  for (const route of CONTRAST_ROUTES) {
+    const more = contrast.get(`more ${route}`)!;
+    const plain = contrast.get(`no-preference ${route}`)!;
+    if (alpha(more.border) < 0.3) bad.push(`${route}: hairline ${more.border} under the setting`);
+    if (more.faint.toLowerCase() !== '#babec8') bad.push(`${route}: faint text ${more.faint} under the setting`);
+    if (alpha(plain.border) > 0.1) bad.push(`${route}: hairline ${plain.border} without it`);
+    for (const { el, shadow } of more.surfaces) {
+      if (!/0px 0px 0px 1px inset/.test(shadow)) bad.push(`${route}: ${el} has no ring (${shadow})`);
+      if (shadow.split(/,(?![^(]*\))/).length > 1) bad.push(`${route}: ${el} stacks a shadow on its ring (${shadow})`);
+    }
+    if (more.header.backdrop !== 'none') bad.push(`${route}: header still blurred (${more.header.backdrop})`);
+    if (!/^rgb\(/.test(more.header.background)) bad.push(`${route}: header still translucent (${more.header.background})`);
+  }
+  // The home page holds no lifted surface; the other two hold all four kinds.
+  const checked = CONTRAST_ROUTES.reduce((n, route) => n + contrast.get(`more ${route}`)!.surfaces.length, 0);
+  if (checked === 0) bad.push('no lifted surface found to check');
+  expect(bad).toEqual([]);
 });
 
 test('every route in the table has a test carrying its tag', () => {
