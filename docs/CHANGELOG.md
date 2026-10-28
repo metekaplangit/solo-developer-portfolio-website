@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.58.2
+
+- The studio logo is ready at every size Google Play and each social channel asks for
+
 ## v0.58.1
 
 - The studio's gem logo fills its tile, so it reads clearly in tabs, on home screens and in link previews
