@@ -563,6 +563,23 @@ const PHONES_WIDE = 4;
       }
     });
 
+    // A track that changes width keeps the picture it was on. Safari keeps the
+    // old pixel offset instead, so narrowing past it lands on the last picture
+    // (hunt-project 0001; WebKit bug 184774). The jump is instant — a smooth one
+    // would glide across every picture in between — and it runs from the scroll
+    // handler as well as the observer, because the clamped scroll arrives first
+    // and must not be taken as the visitor's own move.
+    let width = track.clientWidth;
+    const pin = () => {
+      if (track.clientWidth === width) return false;
+      width = track.clientWidth;
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = slides[current].offsetLeft - track.offsetLeft;
+      track.style.removeProperty('scroll-behavior');
+      return true;
+    };
+    new ResizeObserver(pin).observe(track);
+
     // The current slide is the one nearest the middle, so the counter and the
     // dots change at the halfway point of any move — arrow, dot, key, swipe or
     // trackpad — rather than once a slide is 60% in.
@@ -574,6 +591,7 @@ const PHONES_WIDE = 4;
         queued = true;
         requestAnimationFrame(() => {
           queued = false;
+          if (pin()) return;
           const i = Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
           if (i !== current) {
             current = i;

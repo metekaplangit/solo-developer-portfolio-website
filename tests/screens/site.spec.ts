@@ -701,6 +701,84 @@ async function driveRail(chrome: Chrome, url: string, width: number): Promise<Ra
   }
 }
 
+/** Where a slide gallery rested after its window changed size, per case. */
+type GalleryStep = { picked: number; from: number; to: number; showing: number; counter: string };
+const galleries = new Map<string, GalleryStep[]>();
+
+/**
+ * Rest a slide gallery on a middle and a late picture, change the window's
+ * width both ways, and read which picture is showing and what the counter says
+ * (hunt-project 0001). Safari keeps the old scroll offset when the track
+ * narrows and lands on the last picture; Chrome re-snaps by itself and would
+ * hide that. So snapping is switched off on the track first — through its style
+ * property, as the CSP refuses an injected stylesheet — and Chrome then keeps
+ * the old offset the way Safari does.
+ */
+async function driveGallery(chrome: Chrome, url: string): Promise<GalleryStep[]> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const deadline = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('gallery attempt passed its 20s deadline')), 20_000);
+      });
+      page = await Promise.race([chrome.page(), deadline]);
+      page.setDefaultTimeout(10_000);
+      const steps = await Promise.race([drive(page), deadline]);
+      clearTimeout(timer);
+      await page.close().catch(() => {});
+      return steps;
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not drive the gallery on ${url} in 8 attempts: ${String(lastError).slice(0, 160)}`);
+
+  async function drive(page: import('puppeteer-core').Page): Promise<GalleryStep[]> {
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+    await page.goto(url, { waitUntil: 'load', timeout: 15_000 });
+    const count = await page.evaluate(() => {
+      const root = document.querySelector('.gallery')!;
+      root.scrollIntoView({ block: 'center' });
+      root.querySelector<HTMLElement>('.track')!.style.scrollSnapType = 'none';
+      return root.querySelectorAll('.slide').length;
+    });
+    const settle = () => new Promise((r) => setTimeout(r, 250));
+    const steps: GalleryStep[] = [];
+    for (const picked of [3, count - 1]) {
+      for (const [from, to] of [[1440, 390], [390, 1440]]) {
+        await page.setViewport({ width: from, height: 900, deviceScaleFactor: 1 });
+        await settle();
+        await page.evaluate((i) => document.querySelector<HTMLButtonElement>(`.gallery .dot[data-index="${i}"]`)!.click(), picked - 1);
+        await settle();
+        await page.setViewport({ width: to, height: 900, deviceScaleFactor: 1 });
+        await settle();
+        steps.push({
+          picked,
+          from,
+          to,
+          ...(await page.evaluate(() => {
+            const root = document.querySelector('.gallery')!;
+            const left = root.querySelector('.track')!.getBoundingClientRect().left;
+            const slides = [...root.querySelectorAll('.slide')];
+            const off = slides.map((el) => Math.abs(el.getBoundingClientRect().left - left));
+            return {
+              showing: off.indexOf(Math.min(...off)) + 1,
+              counter: root.querySelector('.counter-now')?.textContent ?? '',
+            };
+          })),
+        });
+      }
+    }
+    return steps;
+  }
+}
+
 /** One browser per route, replaced on any failure; one fresh page per width. */
 /** What the system's increased-contrast setting changes on one page. */
 type ContrastReading = {
@@ -835,6 +913,9 @@ beforeAll(async () => {
   for (const width of [1440, 390]) {
     rail.set(String(width), await driveRail(chrome, started.base + '/apps/waypost-words/', width));
   }
+  for (const path of ['/apps/sole-focus/', '/apps/magic-notes/']) {
+    galleries.set(path, await driveGallery(chrome, started.base + path));
+  }
   for (const route of CONTRAST_ROUTES) {
     for (const value of ['more', 'no-preference'] as const) {
       contrast.set(`${value} ${route}`, await readContrast(chrome, started.base + route, value));
@@ -962,6 +1043,19 @@ test("Waypost Words's screenshots are all reachable by the arrows @waypost-rail"
     expect(squeezed.nextDisabled, `${width}: nothing to scroll while squeezed`).toBe(true);
     expect(regrown, width).toMatchObject({ count: first, prevDisabled: true, nextDisabled: false });
   }
+});
+
+// A gallery resting on a picture is still on that picture after the window
+// narrows or widens — a phone turned upright, a window dragged smaller — with
+// the counter agreeing. Safari used to land on the last one (hunt-project 0001).
+test('a screenshot gallery keeps its picture when the window changes size @gallery-resize', () => {
+  const bad = [...galleries].flatMap(([path, steps]) =>
+    steps
+      .filter((s) => s.showing !== s.picked || s.counter !== String(s.picked))
+      .map((s) => `${path} picture ${s.picked}, ${s.from}→${s.to}: showing ${s.showing}, counter ${s.counter}`),
+  );
+  expect(galleries.size).toBe(2);
+  expect(bad).toEqual([]);
 });
 
 // A Mac set to "Increase contrast" asks every custom colour for a stronger
