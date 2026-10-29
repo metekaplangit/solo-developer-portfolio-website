@@ -6,7 +6,6 @@ import ProductCard from '../components/ProductCard.astro';
 import ProductBand from '../components/ProductBand.astro';
 import DownloadButton from '../components/DownloadButton.astro';
 import MakerNote from '../components/MakerNote.astro';
-import SupportEmail from '../components/SupportEmail.astro';
 import { site } from '../lib/site';
 import {
   getFeatured,
@@ -186,9 +185,9 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     <div class="rail">
       <h2 id="promise-h" class="over">The deal</h2>
       <ul role="list">
-        <li>{tie('Personal. Every product is designed, built and supported by one person.')}</li>
-        <li>{tie('Documented. Every product has its own privacy page, kept current.')}</li>
-        <li>Answered. A real person reads <SupportEmail>{site.supportEmail}</SupportEmail>.</li>
+        <li>{tie('Personal. Designed, built and supported by one person.')}</li>
+        <li>{tie('Documented. For every product, a dated privacy page.')}</li>
+        <li>{tie('Answered. I usually reply within 2–3 business days.')}</li>
       </ul>
     </div>
   </section>
