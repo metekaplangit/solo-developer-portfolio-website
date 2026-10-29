@@ -199,6 +199,27 @@ describe('every built page', () => {
     expect(sole).not.toContain('class="phone-track');
   });
 
+  // The story opens on its claim and the maker's note follows it — in the page,
+  // not only on screen. CSS `order` would move the picture and leave a screen
+  // reader and the Tab key on the note first (MDN, `order`, 2026-04-20).
+  it("opens every product story on its claim, before the maker's note, in reading order", () => {
+    const dir = 'src/content/products';
+    for (const file of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
+      const slug = file.replace(/\.md$/, '');
+      const [, html] = built.find(([r]) => r === `/apps/${slug}/`)!;
+      const story = html.slice(html.indexOf('class="story"'));
+      const body = readFileSync(join(dir, file), 'utf8').split(/^---$/m).slice(2).join('---');
+      const opensOnParagraph = !body.trimStart().startsWith('#');
+      const lead = story.indexOf('story-lead');
+      const note = story.indexOf('class="maker-note');
+      const rest = story.search(/class="prose story-prose"/);
+      expect(lead > -1, `${slug}: a story that opens on a paragraph sets it as the claim`).toBe(opensOnParagraph);
+      if (lead > -1) expect(lead, `${slug}: the claim comes before the sections`).toBeLessThan(rest);
+      if (note > -1) expect(note, `${slug}: the note comes after the claim and before the sections`).toBeGreaterThan(lead);
+      if (note > -1) expect(note).toBeLessThan(rest);
+    }
+  });
+
   // Owner's call, 2026-09-29: a mobile product shows its first two phone
   // captures side by side on Apps & Games; the Mac products keep one window.
   it('shows two phone captures for a mobile game on Apps & Games', () => {

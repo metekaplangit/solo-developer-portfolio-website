@@ -1,5 +1,5 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Badge from '../../components/Badge.astro';
 import ProductAvatar from '../../components/ProductAvatar.astro';
@@ -42,7 +42,15 @@ interface Props {
 }
 const { entry, related } = Astro.props;
 const product = entry.data;
-const { Content } = await render(entry);
+// The story opens on its claim, the description's first paragraph, and the
+// maker's note follows it. Split here rather than reordered in CSS, so a
+// screen reader and the Tab key meet them in the order the eye does: `order`
+// moves only the picture (MDN, `order`, modified 2026-04-20). The Markdown has
+// no components, so its rendered HTML is the whole of what `<Content />` drew.
+const storyHtml = entry.rendered?.html ?? '';
+const storyLeadMatch = /^\s*<p>[\s\S]*?<\/p>/.exec(storyHtml);
+const storyLead = storyLeadMatch?.[0] ?? '';
+const storyRest = storyHtml.slice(storyLead.length);
 
 const stores = visibleStoreLinks(product);
 
@@ -196,17 +204,16 @@ const schema = [
     {/* The story keeps the page's one grid: section names on the label rail
         "What it does" opened, the prose on the column its list runs in. It was
         one 560px column with the right 45% of the rail empty for ~2000px on
-        the two products with no maker note. The maker's note, where there is
-        one, opens the column as its first voice. */}
+        the two products with no maker note. It opens on the product's claim;
+        the maker's note, where there is one, is the first section after it. */}
     <div class="story">
+      {storyLead && <div class="prose story-prose story-lead" set:html={storyLead} />}
       {product.makerNote.length > 0 && (
         <div class="story-note">
           <MakerNote product={product} />
         </div>
       )}
-      <div class="prose story-prose">
-        <Content />
-      </div>
+      <div class="prose story-prose" set:html={storyRest} />
     </div>
   </div>
 
@@ -466,18 +473,37 @@ const schema = [
   /* The story — label rail left, prose right, the same two tracks and gap as
      `.features` above, so the prose starts on the line the feature list does
      and every section opens on one hairline across both tracks. */
+  /* The story (retouch 0003). It opens on its own claim — the description's
+     first paragraph, set as the page's thesis across both tracks — and the
+     maker's note follows as the story's first section, titled and ruled the
+     way every section after it is. The page splits the claim off the prose
+     (see the frontmatter), and both prose wrappers step aside
+     (`display: contents`) so the claim, the note and the sections share one
+     grid in the order they are read. */
+  .story {
+    display: flex;
+    flex-direction: column;
+  }
+  .story-prose {
+    display: contents;
+  }
   .story-prose > :global(*) {
     margin: var(--space-4) 0 0;
     min-width: 0;
   }
-  .story-prose > :global(:first-child) {
+  .story > .story-prose:first-child > :global(:first-child) {
     margin-top: 0;
   }
-  /* The opening paragraph reads as the story's lede. */
-  .story-prose > :global(p:first-child) {
-    color: var(--text);
-    font-size: var(--text-lg);
-    line-height: var(--leading-body);
+  .story-note {
+    margin-top: var(--space-10);
+  }
+  .story-prose.story-lead > :global(p) {
+    max-width: 40ch;
+    color: var(--text-strong);
+    font-size: var(--text-xl);
+    line-height: 1.45;
+    letter-spacing: var(--track-optical);
+    text-wrap: pretty;
   }
   .story-prose > :global(h2) {
     margin: var(--space-12) 0 0;
@@ -485,8 +511,27 @@ const schema = [
     border-top: 1px solid var(--border);
     text-wrap: balance;
   }
+  /* The note's label is a section title like the ones below it, not a faint
+     caption: same size, same weight, same two-segment rule. */
+  .story-note :global(.maker-note) {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .story .story-note :global(.maker-note p.maker-heading) {
+    margin: 0 0 var(--space-4);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-strong);
+    letter-spacing: var(--track-optical);
+    line-height: var(--leading-heading);
+    color: var(--text-strong);
+    text-wrap: balance;
+  }
   @media (min-width: 64rem) {
-    .story-prose {
+    .story {
       display: grid;
       grid-template-columns: minmax(0, 15rem) minmax(0, var(--measure-mid));
       column-gap: var(--gutter);
@@ -494,6 +539,9 @@ const schema = [
     }
     .story-prose > :global(*) {
       grid-column: 2;
+    }
+    .story-prose.story-lead > :global(p) {
+      grid-column: 1 / -1;
     }
     /* A heading spans the rows of its section (no section runs past six
        blocks), so a three-line heading never pushes its own second paragraph
@@ -510,33 +558,25 @@ const schema = [
       border-top: 1px solid var(--border);
     }
     /* A story that opens on a heading starts both tracks on the top line. */
-    .story-prose > :global(h2:first-child + *) {
+    .story > .story-prose:first-child > :global(h2:first-child + *) {
       margin-top: 0;
     }
-    /* The maker's note takes the same two tracks: its label on the rail,
-       its words in the column. */
     .story-note {
-      margin-bottom: var(--space-12);
+      grid-column: 1 / -1;
+      margin-top: var(--space-12);
     }
     .story-note :global(.maker-note) {
       display: grid;
       grid-template-columns: minmax(0, 15rem) minmax(0, var(--measure-mid));
       column-gap: var(--gutter);
-      align-items: baseline;
-      max-width: none;
-      /* Space, not a full-width rule: every rule in the story is the
-         two-segment section rule, and this one ran straight across both. */
-      padding-bottom: 0;
-      margin-bottom: 0;
-      border-bottom: 0;
+      align-items: start;
     }
-    .story-note :global(.maker-heading) {
+    .story .story-note :global(.maker-note p.maker-heading) {
       margin: 0;
     }
-  }
-  @media (max-width: 63.999rem) {
-    .story-note {
-      margin-bottom: var(--space-10);
+    .story-note :global(.maker-body) {
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--border);
     }
   }
 
