@@ -30,8 +30,8 @@ price: "0"
 # site's stage matches. See docs/tasks/STEP-0069.md for why the app's default
 # accent (a burnt orange) was not used.
 hue: "#B2BBC5"
-fitFor: "You do consequential arithmetic while writing — a budget, a quote, a renovation, a loan — and you would rather see the working than trust one number."
-fitNotFor: "You want a programmable calculator, a spreadsheet, or a computer-algebra system — Magic Notes is a notebook that answers, and deliberately stops there."
+fitFor: "You want to see the working behind budgets, quotes and loans."
+fitNotFor: "You need a spreadsheet or a programmable calculator."
 requirements: macOS 15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/magic-notes/

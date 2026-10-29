@@ -25,8 +25,8 @@ price: "0"
 # orange clock rim), so the site is coloured by the software rather than by a
 # palette chosen for the site.
 hue: "#ff9245"
-fitFor: "You want a calm, native Mac timer that lives in your menu bar and opens straight to a usable timer."
-fitNotFor: "You need a website blocker, team tracking, or cross-device sync — Sole Focus deliberately does none of those."
+fitFor: "You want a calm, native Mac timer that waits in your menu bar."
+fitNotFor: "You need a website blocker, team tracking or sync across devices."
 makerNote:
   - "I built Sole Focus because every timer I tried wanted to be more than a timer — a dashboard, a setup screen, streaks that punish you for resting."
   - "So this one stays small on purpose: a quiet window, your minutes, and a timer that is already running two seconds after you open it."
