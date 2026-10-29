@@ -41,8 +41,8 @@ features:
   - Zen and Study modes for distraction-free, always-in-reach focus
   - Statistics and a light leveling system that make progress visible
   - Erase every setting, session and preset whenever you like, from Settings
-  # Restates the appearance options already described in "Calm, and always in
-  # reach" below — no new claim (DESIGN.md §6: never fabricate proof). Added to
+  # Restates the appearance options already described in "Always in reach"
+  # below — no new claim (DESIGN.md §6: never fabricate proof). Added to
   # make the grid's last row full; see docs/tasks/STEP-0063.md.
   - Five completion sounds, light and dark themes, accent colors, adjustable sizing
 icon:
@@ -96,45 +96,40 @@ seo:
   description: A calm Pomodoro and stopwatch timer for macOS. Menu-bar focus sessions, named task presets, statistics, and a light rank ladder.
 ---
 
-Sole Focus is a calm, distraction-free focus timer for your Mac. It pairs a
-classic Pomodoro timer with a free count-up stopwatch, so whether you work in
-fixed sessions or open-ended sprints, the right timer is always ready.
-
-No setup screen to get through. Sole Focus lives in your menu bar and opens
-straight to a usable timer — then gets out of your way.
+Sole Focus opens to a timer that is ready to start. It lives in your menu bar,
+with nothing to set up first.
 
 ## Two ways to work
 
-Run structured **Pomodoro** sessions with adjustable lengths, or switch to
-**Chrono**, a count-up stopwatch for work with no fixed end.
+Run **Pomodoro** sessions with breaks, or switch to **Chrono**, which counts up
+for work with no fixed end.
 
-Focus, short-break and long-break lengths are all adjustable, and you choose how
-many sessions lead to a long break — or drop to a plain countdown. Chrono adds
-milestone markers as it climbs. Save the timers you reach for as named **Tasks**
-and start them in a single click.
+Set how long you focus, how long each break lasts, and how many sessions come
+before a long one — or drop to a plain countdown.
 
-## Calm, and always in reach
+Chrono marks milestones as it climbs. Save the timers you use most as named
+**Tasks**, and start each in one click.
 
-A glanceable menu-bar timer keeps pause, skip and finish a click away, wherever
-you happen to be working.
+## Always in reach
 
-**Zen mode** shrinks everything to a small, always-on-top window sized to sit
-beside your work, and **Study mode** leaves a slim strip with a single focus
-quote. Five soothing completion sounds, light and dark themes, accent colors, and
-adjustable sizing let you make it yours.
+The menu-bar timer keeps pause, skip and finish one click away, whatever you are
+working in.
+
+**Zen mode** shrinks the app to a small window that stays on top beside your
+work. **Study mode** leaves a slim strip with a single focus quote. Pick from
+five completion sounds, light and dark themes, accent colors and sizes.
 
 ## See your progress
 
-Statistics track your focus time as it adds up, and a light leveling system
-turns focused minutes into visible progress.
+Statistics add up your focus time, and a light leveling system turns it into
+progress you can see.
 
-It is a gentle nudge to keep going, never a chore, and never a streak that
-punishes you for resting.
+It is a nudge to keep going, never a streak that punishes a day off.
 
 ## Yours to erase
 
-Your settings, sessions and presets are yours, and every one of them can be
-erased at any time from Settings ▸ General ▸ Danger zone.
+Every setting, session and preset can be erased at any time, from Settings ▸
+General ▸ Danger zone.
 
 What the app stores, and what it does with it, is set out on the Sole Focus
 privacy page linked from this one. That page carries a date and is revised with
