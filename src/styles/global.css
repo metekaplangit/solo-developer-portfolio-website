@@ -504,6 +504,37 @@ img {
 .band + .band-loose {
   margin-top: var(--band-y-loose);
 }
+/* The opening (retouch 0003) — every studio page opens the same way: its name
+   on the left across the label rail and the first column, what it says and
+   what you can do on the right, standing on the heading's last line. The
+   tracks are About's, so an opening and the ruled rows below it share edges.
+   Below 64rem it is one column in source order. */
+@media (min-width: 64rem) {
+  .opening {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 15rem) var(--gutter) minmax(0, 1fr) var(--space-8) minmax(0, 1fr);
+    align-items: start;
+  }
+  .opening-head {
+    grid-column: 1 / 4;
+  }
+  .opening-head > :last-child {
+    margin-bottom: 0;
+  }
+  .opening-side {
+    grid-column: 5;
+    /* Stands on the heading's last line when it is the shorter side; when it
+       is the taller one the heading keeps the page-top line. */
+    align-self: end;
+    /* Sits on the heading's last baseline, not its descender box. */
+    padding-bottom: 0.12em;
+  }
+  .opening-side > :last-child {
+    margin-bottom: 0;
+  }
+}
+
 /* The first band on a page. One value site-wide — see `--page-top`. */
 .band-lead {
   padding-top: var(--page-top);

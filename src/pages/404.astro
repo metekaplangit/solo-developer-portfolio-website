@@ -9,31 +9,36 @@ import { tie } from '../lib/typography';
   title="Page not found"
   description="That page doesn't exist. Here are the main sections of the site."
 >
-  <section class="band band-lead band-tail notfound">
+  <section class="band band-lead band-tail notfound opening">
+    <div class="opening-head">
     <p class="code">404</p>
     <h1 class="page-title notfound-title">Page not found</h1>
+    </div>
+    <div class="opening-side">
     <p class="lede measure">
       {tie("The page you were looking for doesn't exist or may have moved.")}
     </p>
     <nav aria-label="Site sections">
       <ul class="links" role="list">
-        {nav.map((item) => <li><a href={withBase(item.href)}>{item.label}</a></li>)}
+        {nav.map((item) => <li><a href={withBase(item.href)}><span>{item.label}</span><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>)}
       </ul>
     </nav>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
   /* On the shared left rail like every other page (STEP-0039). This was the
      last surface still centring itself in a narrower column. */
+  /* The code is a label, in the site's own type: mono is for code. Set exactly
+     as every other page's kicker, body leading included, so its ink lands on
+     the same `--page-top` line (issue 0010: it sat 2–3 px high). */
   .code {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
+    margin: 0 0 var(--space-5);
+    font-size: var(--text-xs);
     font-weight: var(--weight-strong);
     letter-spacing: var(--track-caps);
     color: var(--faint);
-    line-height: 1;
   }
   .lede {
     margin: 0 0 var(--space-8);
@@ -41,19 +46,48 @@ import { tie } from '../lib/typography';
     font-size: var(--text-lg);
     line-height: var(--leading-body);
   }
+  /* Every destination a ruled row, the way the site lists anything you can
+     open: the name left, the chevron right, the whole row the target. */
   .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
     list-style: none;
     margin: 0;
     padding: 0;
+    border-bottom: 1px solid var(--border);
   }
-  /* Target height comes from the shared standalone-link rule in global.css. */
+  .links li {
+    border-top: 1px solid var(--border);
+  }
   .links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3.25rem;
     color: var(--text);
+    font-weight: var(--weight-strong);
+    text-decoration: none;
+  }
+  .links svg {
+    color: var(--faint);
+    transition: transform var(--dur-fast, 150ms) var(--ease-out, ease-out), color var(--dur-fast, 150ms);
+  }
+  .links a:hover svg,
+  .links a:focus-visible svg {
+    color: var(--text-strong);
+    transform: translateX(2px);
   }
   .links a:hover {
-    color: var(--accent-hover);
+    color: var(--text-strong);
+  }
+  /* Poster scale, the home hero's: the page holds one statement, and at the
+     page-title size it left the left half of the screen empty below it. */
+  .notfound-title {
+    margin-bottom: 0;
+    font-size: var(--display-1);
+    max-width: 5.4em;
+  }
+  @media (max-width: 63.999rem) {
+    .notfound-title {
+      margin-bottom: var(--space-6);
+    }
   }
 </style>

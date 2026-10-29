@@ -5,7 +5,7 @@
 - Area: page top
 - Found by: retouch-project 0002
 - Filed: 2026-10-28
-- Tried by: —
+- Tried by: plan 0009 card A fixed the 404 half (its kicker now sets at body leading: 50 px at 1440, 34 px at 390) and added the `@every-route` page-top test, which lists `/privacy/` as this issue and fails the day it agrees
 - Closed by: —
 
 ## What happens

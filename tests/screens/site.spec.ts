@@ -157,6 +157,7 @@ type Reading = {
   undersizedTargets: Target[];
   rail: { brand: number | null; prose: number | null; footer: number | null };
   titleIndent: number | null;
+  pageTop: number | null;
   unequalRows: Array<{ parent: string; top: number; heights: number[] }>;
   voids: Array<{ parent: string; after: string; before: string; gap: number }>;
   lazyInFirstView: Array<{ src: string; top: number; left: number }>;
@@ -195,6 +196,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     undersizedTargets: [],
     rail: { brand: null, prose: null, footer: null },
     titleIndent: null,
+    pageTop: null,
     unequalRows: [],
     voids: [],
     lazyInFirstView: [],
@@ -288,6 +290,29 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     const rail = out.rail.prose;
     if (!h1 || !visible(h1) || rail === null) return null;
     return round(h1.getBoundingClientRect().left - rail);
+  })();
+
+  // --- One page-top line (DESIGN.md Page-Top Rule) --------------------------
+  // How far the first line of text in `main` sits below the header's bottom
+  // edge. Read off the text's own box (a Range), not its element's, so a kicker
+  // set at a tighter leading than every other page's shows as the 2–3 px it
+  // really moves — the 404's did (issue 0010).
+  out.pageTop = (() => {
+    const header = document.querySelector('.site-header');
+    const main = document.querySelector('main');
+    if (!header || !main) return null;
+    const walk = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+      const host = n.parentElement;
+      if (!host || !n.textContent!.trim() || !visible(host)) continue;
+      if (host.closest('.visually-hidden, .skip-link, [aria-hidden="true"]')) continue;
+      const range = document.createRange();
+      range.selectNodeContents(n);
+      const rect = range.getClientRects()[0];
+      if (!rect || rect.width < 2 || rect.height < 2) continue;
+      return round(rect.top - header.getBoundingClientRect().bottom);
+    }
+    return null;
   })();
 
   // --- Members of a set that share a row share a height (CHECKLIST L1) ------
@@ -915,6 +940,32 @@ test('every page title starts on the rail or at the one shared lockup indent @ev
     if (seen.size > 1) {
       const shown = [...seen].map(([indent, routes]) => `${indent}px (${routes.join(', ')})`).join(' vs ');
       bad.push(`@${width}: ${shown}`);
+    }
+  }
+  expect(bad).toEqual([]);
+});
+
+// Every page begins its first line the same distance below the header, so
+// moving between pages nothing jumps (DESIGN.md's Page-Top Rule). A route still
+// known to break it is listed with its issue, and the test fails the day it
+// agrees, so the list cannot outlive the fault.
+const PAGE_TOP_KNOWN: Record<string, string> = {
+  '/privacy/': 'issue 0010 — the privacy overview starts higher than the rest',
+};
+test('every page starts on the one page-top line @every-route', () => {
+  const byWidth = new Map<string, Array<[string, number]>>();
+  for (const { route, width, r } of each()) {
+    if (r.pageTop === null) continue;
+    byWidth.set(width, [...(byWidth.get(width) ?? []), [route, r.pageTop]]);
+  }
+  const bad: string[] = [];
+  for (const [width, rows] of byWidth) {
+    const held = rows.filter(([route]) => !(route in PAGE_TOP_KNOWN)).map(([, v]) => v).sort((a, b) => a - b);
+    const line = held[Math.floor(held.length / 2)];
+    for (const [route, v] of rows) {
+      const off = Math.abs(v - line) > 1;
+      if (off && !(route in PAGE_TOP_KNOWN)) bad.push(`@${width} ${route}: ${v}px, the line is ${line}px`);
+      if (!off && route in PAGE_TOP_KNOWN) bad.push(`@${width} ${route} now agrees — ${PAGE_TOP_KNOWN[route]}: close it and drop it from PAGE_TOP_KNOWN`);
     }
   }
   expect(bad).toEqual([]);

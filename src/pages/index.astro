@@ -80,15 +80,19 @@ const hue = spotlight ? productHue(spotlight) : undefined;
 >
   <!-- BAND 1 — the studio, poster scale -->
   <section class={`band-hero${heroOwnsHue ? ' owns-hue' : ''}`} style={heroOwnsHue ? `--hue: ${hue};` : undefined} aria-labelledby="hero-h">
-    <div class="rail">
-      <p class="over">{site.tagline}</p>
-      <h1 id="hero-h">Small studio.<br /><span class="voice">Serious craft.</span></h1>
+    <div class="rail opening">
+      <div class="opening-head">
+        <p class="over">{site.tagline}</p>
+        <h1 id="hero-h">Small studio.<br /><span class="voice">Serious craft.</span></h1>
+      </div>
+      <div class="opening-side">
       <p class="lede">{site.lede}</p>
       <div class="actions">
         {heroHasDownload && <DownloadButton product={spotlight} label={downloadLabel(spotlight)} />}
         <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
           See {spotlight?.name ?? 'the app'}
         </a>
+      </div>
       </div>
     </div>
     {heroOwnsHue && <div class="hero-glow" aria-hidden="true"></div>}
@@ -363,7 +367,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
      four children declared in reading order rather than three of them delayed
      and the fourth left implicit. */
   @media (prefers-reduced-motion: no-preference) {
-    .band-hero > .rail > * {
+    .band-hero .opening > * > * {
       animation: rise var(--dur-slow) var(--ease-out) both;
     }
     /* The delays MUST match the wildcard rule's shape. Measured 2026-07-31:
@@ -371,16 +375,16 @@ const hue = spotlight ? productHue(spotlight) : undefined;
        specificity — three classes beat two — so every child computed a 0s
        delay and the whole stagger had silently never run. Selecting through
        the same path keeps them equal, and later-wins does the rest. */
-    .band-hero > .rail > .over {
+    .band-hero .opening > * > .over {
       animation-delay: 0s;
     }
-    .band-hero > .rail > h1 {
+    .band-hero .opening > * > h1 {
       animation-delay: 60ms;
     }
-    .band-hero > .rail > .lede {
+    .band-hero .opening > * > .lede {
       animation-delay: 120ms;
     }
-    .band-hero > .rail > .actions {
+    .band-hero .opening > * > .actions {
       animation-delay: 180ms;
     }
     @keyframes rise {

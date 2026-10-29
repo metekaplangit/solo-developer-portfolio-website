@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.63.14
+
+- Home, Apps and the 404 open with the title on the left and the intro on the right
+
 ## v0.63.12
 
 - The deal states 3 checkable facts without repeating the opening

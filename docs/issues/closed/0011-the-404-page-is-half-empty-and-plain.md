@@ -6,7 +6,7 @@
 - Found by: retouch-project 0002
 - Filed: 2026-10-28
 - Tried by: —
-- Closed by: —
+- Closed by: card "Home, Apps and the 404 open with the title on the left and the intro on the right" (plan 0009 A) — the shared two-sided opening, a poster title and ruled destination rows; largest empty 50.9% → 33.3% at 1440 and 40.4% → 10.5% at 390, no link alone on a line
 
 Doubt: it could be called a design want rather than a fault; filed because retouch-project files a far-from-premium part that missed its 5.
 
