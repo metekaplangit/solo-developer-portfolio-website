@@ -30,5 +30,7 @@ stopwatch / for open‑ended work" is flagged as a stranded phrase start; 390 is
 the phone pass, outside the 3 widths the plan held these items to, and every
 item wrapped there before. Left as a line. The other 390 flag, in the Magic
 Notes story paragraph ("…number bases / and statistics…"), is text no card of
-this plan touched. `npm run headless` passed through finish; the 7 screens
-photographed at 1440 and 390 and looked at.
+this plan touched. The control ran no tier at finish (no product file
+changed); `npm run headless` was run by hand on main afterwards and passed
+(exit 0, 130 and 38 tests). The 7 screens were photographed at 1440 and 390
+and looked at.
