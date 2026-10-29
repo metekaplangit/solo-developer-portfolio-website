@@ -107,7 +107,7 @@ const schema = [
 
           Measured at the top of the first screen on every width — 165px down at
           390px, 153px at 1440px — so it is never lazy. */}
-      <ProductAvatar icon={product.icon} name={product.name} size={56} eager />
+      <ProductAvatar icon={product.icon} name={product.name} size={56} eager travel={product.slug} />
       <div class="identity-text head-body" data-land="1">
         <h1 id="product-h" class="product-title product-name">{product.name}</h1>
         <div class="tags">
@@ -295,7 +295,7 @@ const schema = [
           >
             {related.map((r) => (
               <li>
-                <ProductTile product={r} href={`/apps/${r.slug}/`} />
+                <ProductTile product={r} href={`/apps/${r.slug}/`} travels={false} />
               </li>
             ))}
           </ul>

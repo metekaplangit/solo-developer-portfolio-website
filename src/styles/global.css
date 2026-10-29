@@ -1164,6 +1164,26 @@ img {
 ::view-transition-new(root) {
   animation: none;
 }
+
+/* A product's icon travels (plan 0011): the one icon that stands for a
+   product on each page carries `view-transition-class: product-icon` and a
+   name per product (`ProductAvatar`'s `travel`), so between two pages that
+   both show it, it glides and resizes on the entrance role instead of fading
+   with the page. */
+::view-transition-group(*.product-icon) {
+  animation-duration: var(--dur-slow);
+  animation-timing-function: var(--ease-out);
+}
+/* An icon with no partner on the other page is not travelling anywhere: it
+   leaves with the page, or is simply there, exactly as the root does. Without
+   this, every other product's icon on the Apps page lingers for the full
+   420ms after the rest of the page has gone. */
+::view-transition-old(*.product-icon):only-child {
+  animation: vt-leave var(--dur-leave) var(--ease-in) both;
+}
+::view-transition-new(*.product-icon):only-child {
+  animation: none;
+}
 @keyframes vt-leave {
   to {
     opacity: 0;

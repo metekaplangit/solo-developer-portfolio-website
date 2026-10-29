@@ -22,14 +22,21 @@ interface Props {
   hint?: string;
   /** Inside the first screen? Passed to the icon — see `ProductAvatar`'s `eager`. */
   eager?: boolean;
+  /**
+   * Whether this tile's icon is the one that stands for its product on the
+   * page (see `ProductAvatar`'s `travel`). Off for the "more from the studio"
+   * tiles at the foot of a product page: named there, every other product's
+   * icon on the page before would fly down to them on each visit (plan 0011).
+   */
+  travels?: boolean;
 }
-const { product, href, line, hint, eager = false } = Astro.props;
+const { product, href, line, hint, eager = false, travels = true } = Astro.props;
 const kind = product.type === 'game' ? 'Game' : 'App';
 const text = line ?? [kind, ...product.platforms.map(platformLabel)].join(' · ');
 ---
 
 <a class="tile" href={withBase(href)}>
-  <ProductAvatar icon={product.icon} name={product.name} size={48} eager={eager} />
+  <ProductAvatar icon={product.icon} name={product.name} size={48} eager={eager} travel={travels ? product.slug : undefined} />
   <span class="tile-text">
     <span class="tile-name">{product.name}{hint && <span class="visually-hidden"> {hint}</span>}</span>
     <span class="tile-line">{text}</span>

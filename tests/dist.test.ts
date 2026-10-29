@@ -317,6 +317,21 @@ describe('every built page', () => {
     expect(inline, 'no inline script found anywhere in dist').toBeGreaterThan(0);
   });
 
+  it('names nothing twice for a view transition (plan 0011)', () => {
+    // Two elements with one view-transition-name on the same page make the
+    // browser skip the whole transition — silently, the page just cuts. The
+    // product icons are named per product, so a second icon of the same
+    // product given \`travel\` on one page is exactly this fault.
+    let icons = 0;
+    for (const [route, html] of built) {
+      const names = [...html.matchAll(/view-transition-name:\s*([\w-]+)/g)].map((m) => m[1]);
+      const twice = names.filter((n, i) => names.indexOf(n) !== i);
+      expect(twice, `${route}: view-transition-name used twice`).toEqual([]);
+      icons += names.filter((n) => n.startsWith('icon-')).length;
+    }
+    expect(icons, 'no travelling product icon anywhere in dist').toBeGreaterThan(0);
+  });
+
   it('loads no script from a third-party origin', () => {
     for (const [route, html] of built) {
       for (const m of html.matchAll(/<script[^>]*\bsrc="([^"]+)"/g)) {

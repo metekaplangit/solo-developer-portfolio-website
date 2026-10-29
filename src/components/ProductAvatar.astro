@@ -35,8 +35,18 @@ interface Props {
    * priority away from the thing that actually decides the paint.
    */
   eager?: boolean;
+  /**
+   * The product's slug, where this icon is the one that stands for the product
+   * on its page — its band, its tile, its page header, its policy header. The
+   * icon is then named for a view transition, so opening the product carries
+   * this one icon across to the next page instead of fading it out and a new
+   * one in (plan 0011). Never set it on a second icon of the same product on
+   * one page: a name used twice cancels the whole transition, and
+   * `tests/dist.test.ts` refuses it.
+   */
+  travel?: string;
 }
-const { icon = null, name, size = 48, alt, href, redundant = false, eager = false } = Astro.props;
+const { icon = null, name, size = 48, alt, href, redundant = false, eager = false, travel } = Astro.props;
 const monogram = name
   .split(/\s+/)
   .map((w) => w[0])
@@ -44,7 +54,9 @@ const monogram = name
   .slice(0, 2)
   .toUpperCase();
 const large = size >= 56;
-const sizeStyle = `--sz:${size}px`;
+const sizeStyle = travel
+  ? `--sz:${size}px;view-transition-name:icon-${travel};view-transition-class:product-icon`
+  : `--sz:${size}px`;
 // Inside a link the image is decorative — the link (or its sibling) names the target.
 const imgAlt = href ? '' : (alt ?? '');
 
