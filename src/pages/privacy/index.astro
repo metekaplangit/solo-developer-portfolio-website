@@ -7,22 +7,23 @@ import { evenColumns } from '../../lib/grid';
 import { formatDate } from '../../lib/format';
 import { tie } from '../../lib/typography';
 import { GLOBAL_POLICY_ID, productPolicyEntries } from '../../lib/privacy';
+import { sortProducts } from '../../lib/products';
 
 const entries = await getCollection('policies');
 const globalEntry = entries.find((e) => e.data.productId === GLOBAL_POLICY_ID);
-const perProduct = productPolicyEntries(entries).sort((a, b) =>
-  a.data.title.localeCompare(b.data.title),
-);
+const perProduct = productPolicyEntries(entries);
 
 if (!globalEntry) {
   throw new Error('A global privacy policy (productId: global) is required.');
 }
 const { Content } = await render(globalEntry);
 
-const products = (await getCollection('products')).map((p) => p.data);
-const policies = perProduct.flatMap((entry) => {
-  const product = products.find((p) => p.id === entry.data.productId);
-  return product ? [{ entry, product }] : [];
+// In the site's one product order — newest release first — like every other
+// list of products (owner, 2026-10-29), not by policy title.
+const products = sortProducts((await getCollection('products')).map((p) => p.data));
+const policies = products.flatMap((product) => {
+  const entry = perProduct.find((e) => e.data.productId === product.id);
+  return entry ? [{ entry, product }] : [];
 });
 ---
 

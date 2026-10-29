@@ -8,10 +8,6 @@ type: app
 # accepted; every fact below is read from Apple's own listing for id 6797499171,
 # not from the app's submission draft.
 status: released
-# The home spotlight, by the owner's decision on 2026-08-17 (STEP-0083). Exactly
-# ONE product is featured at a time — `index.astro` gives the hero a product's
-# hue only on that condition — so Sole Focus was unfeatured in the same change.
-featured: true
 summary: A notebook for Mac that does arithmetic. Write the sum as you would say it, and the answer lands beside the line.
 platforms: [macos]
 storeLinks:

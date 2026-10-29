@@ -21,7 +21,6 @@ describe('productSchema', () => {
     const result = productSchema.parse(validProduct);
     expect(result.storeLinks).toEqual([]);
     expect(result.supportUrl).toBe('/support/');
-    expect(result.featured).toBe(false);
   });
 
   it('rejects a non-kebab-case slug', () => {

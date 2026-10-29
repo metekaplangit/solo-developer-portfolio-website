@@ -34,6 +34,8 @@ export function resolveScreenshot(pathOrFile: string): ImageMetadata | undefined
 export function screenshotTitle(pathOrFile: string): string {
   const file = pathOrFile.split('/').pop() ?? pathOrFile;
   const base = file.replace(/\.[a-z0-9]+$/i, '').replace(/^\d+[-_]/, '');
-  const words = base.replace(/[-_]+/g, ' ').trim();
+  // A lone "s" between two words is a possessive the file name could not
+  // spell (`a-traveller-s-keepsakes`): it gets its apostrophe back.
+  const words = base.replace(/[-_]+/g, ' ').trim().replace(/(\w) s (?=\w)/g, '$1’s ');
   return words.charAt(0).toUpperCase() + words.slice(1);
 }

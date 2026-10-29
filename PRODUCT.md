@@ -43,9 +43,10 @@ platform requirements (e.g. "macOS 10.15 or later").
 
 ## Conversion & proof
 
-- **Primary CTA:** Download the featured product on the Mac App Store — Magic
-  Notes since 2026-08-17, Sole Focus before that. Exactly one product is featured
-  at a time (`featured` in its content file).
+- **Primary CTA:** Download the featured product from its store. The featured
+  product is always whatever the studio released last (owner, 2026-10-29) —
+  Waypost Words since then, Magic Notes and Sole Focus before it. Nothing is
+  flagged by hand; see "Publishing a product" in CLAUDE.md.
 - **Secondary fallback:** not yet decided — open question for the owner
   (candidates: open the product page, or read the privacy/support pages).
 - **The line a visitor should remember after ten seconds:** *a one-person Mac

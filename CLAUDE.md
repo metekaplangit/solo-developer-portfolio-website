@@ -36,6 +36,27 @@ because they describe the product rather than the system:
 [`docs/SOURCE_MAP.md`](docs/SOURCE_MAP.md). So are `DESIGN.md` and `PRODUCT.md` at
 the root. `docs/CHANGELOG.md` is live and the control writes to it.
 
+## Publishing a product: newest first, everywhere
+
+Standing rule from the owner (2026-10-29). Whatever the studio published last
+takes first place on every page, and the rest follow by release date, newest to
+oldest: the home page features it, and Apps & Games, the privacy list, Support
+and the "more from the studio" tiles all list it first.
+
+The site does this by itself. When a product goes live, publishing it on the
+site is one edit to its file in `src/content/products/`:
+
+- `status: released`, its store link `available`, and `releaseDate:` — the real
+  date from the store's own listing, never the submission date.
+- Nothing else. There is no `featured` flag and no hand-set order; every list
+  goes through `sortProducts()` and the home page through `newestRelease()`
+  (`src/lib/products.ts`). Never sort a product list any other way.
+
+`tests/dist.test.ts` ("newest release first") reads the release dates from the
+product files and fails the build if any page lists them in another order. After
+a product goes live, check the home page with it featured — its screenshots lead
+the page, and a new kind of product can need its own layout there.
+
 ## Non-negotiables
 
 - **Zero-cost / static-only:** Astro `output: 'static'`; no backend, database,

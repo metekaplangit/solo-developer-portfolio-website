@@ -37,16 +37,33 @@ export function storeLabel(store: StoreLink['store']): string {
   return STORE_LABELS[store];
 }
 
-/** Featured products, in display order. */
-export function getFeatured(products: Product[]): Product[] {
-  return sortProducts(products.filter((p) => p.featured));
+/**
+ * The product the home page features: whatever the studio released last
+ * (owner, 2026-10-29). Publishing a product — `status: released` and its
+ * `releaseDate` — is all it takes; nothing is flagged by hand. Undefined
+ * until something is released.
+ */
+export function newestRelease(products: Product[]): Product | undefined {
+  const first = sortProducts(products)[0];
+  return first?.status === 'released' ? first : undefined;
 }
 
-/** Sort by release status, then name (stable, pure — does not mutate input). */
+const releaseTime = (p: Product): number => p.releaseDate?.getTime() ?? -Infinity;
+
+/**
+ * The one order every list of products on the site uses: released first, and
+ * within each status the newest release first, so whatever the studio
+ * published last takes first place everywhere and the rest move down by date
+ * (owner, 2026-10-29). Undated products follow the dated ones, by name.
+ * Stable and pure — does not mutate input.
+ */
 export function sortProducts(products: Product[]): Product[] {
   return [...products].sort((a, b) => {
     const byStatus = STATUS_RANK[a.status] - STATUS_RANK[b.status];
-    return byStatus !== 0 ? byStatus : a.name.localeCompare(b.name);
+    if (byStatus !== 0) return byStatus;
+    const byDate = releaseTime(b) - releaseTime(a);
+    if (byDate !== 0 && !Number.isNaN(byDate)) return byDate;
+    return a.name.localeCompare(b.name);
   });
 }
 

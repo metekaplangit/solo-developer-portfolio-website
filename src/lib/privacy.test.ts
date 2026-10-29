@@ -15,7 +15,6 @@ function product(overrides: Partial<Product>): Product {
     supportUrl: '/support/',
     screenshots: [],
     features: [],
-    featured: false,
     ...overrides,
   } as Product;
 }

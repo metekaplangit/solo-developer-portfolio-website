@@ -139,8 +139,8 @@ describe('every built page', () => {
 
   // Once every product is out, no page may still talk as if one were coming:
   // the game's own pages, Apps & Games, and Home. Its band on Apps & Games
-  // carries the App Store button. Home shows only the featured product, Magic
-  // Notes (STEP-0083), so the game has no band there to carry one.
+  // carries the App Store button. Home features whatever was released last,
+  // so the game's text there is checked too.
   it('says Waypost Words is out wherever it appears', () => {
     const text = (route: string) =>
       built.find(([r]) => r === route)![1].replace(/ |&nbsp;|&#160;/g, ' ');
@@ -237,7 +237,9 @@ describe('every built page', () => {
     expect(home).not.toContain('native Mac software');
     expect(home).not.toContain('not wrapped from something else');
     expect(home).toContain('for Mac, iPhone and iPad');
-    expect(home).toContain('Mac App Store');
+    // The hero's button names the store of whatever was released last — the
+    // Mac App Store for a Mac app, the App Store for an iPhone game.
+    expect(home).toMatch(/>\s*(?:Mac )?App Store\s*</);
   });
 
   it('carries exactly one canonical URL, and it matches the route', () => {
@@ -565,4 +567,45 @@ describe('the accent panel', () => {
       .map(([route]) => route);
     expect(wrong, 'pages wearing the fallback hue on an accent panel').toEqual([]);
   });
+});
+
+describe('newest release first (owner, 2026-10-29)', () => {
+  // Whatever the studio published last takes first place on every page, and the
+  // rest follow by release date. Read from the product files themselves, so a
+  // new release reorders the site and this test with no one editing either.
+  const releases = readdirSync('src/content/products')
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => {
+      const text = readFileSync(join('src/content/products', f), 'utf-8');
+      const field = (k: string) => text.match(new RegExp(`^${k}:\\s*"?([^"\\n]+)"?`, 'm'))?.[1]?.trim();
+      return { slug: field('slug') ?? f.replace(/\.md$/, ''), status: field('status'), date: field('releaseDate') };
+    })
+    .filter((p) => p.status === 'released' && p.date)
+    .sort((a, b) => (b.date! < a.date! ? -1 : b.date! > a.date! ? 1 : 0))
+    .map((p) => p.slug);
+
+  /** The products a page links to inside <main>, in the order a reader meets them. */
+  const order = (route: string): string[] => {
+    const html = built.find(([r]) => r === route)?.[1] ?? '';
+    const main = html.match(/<main[\s\S]*<\/main>/)?.[0] ?? '';
+    const seen: string[] = [];
+    for (const m of main.matchAll(/href="\/(?:apps|privacy)\/([\w-]+)\/"/g)) {
+      if (releases.includes(m[1]) && !seen.includes(m[1])) seen.push(m[1]);
+    }
+    return seen;
+  };
+
+  it('has released products to order', () => {
+    expect(releases.length).toBeGreaterThan(1);
+  });
+
+  it('features the newest release on the home page', () => {
+    expect(order('/')[0], 'home spotlight').toBe(releases[0]);
+  });
+
+  for (const route of ['/apps/', '/support/', '/privacy/']) {
+    it(`lists every release newest first on ${route}`, () => {
+      expect(order(route)).toEqual(releases);
+    });
+  }
 });

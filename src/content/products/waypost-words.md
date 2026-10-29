@@ -11,9 +11,6 @@ type: game
 # that name. The old addresses forward here (src/pages/*/wander-words.astro),
 # because a build of the game already carries them.
 status: released
-# Not featured: the home spotlight is Magic Notes', the owner's decision
-# (STEP-0083). Exactly one product is featured at a time.
-featured: false
 summary: A crossword game for iPhone and iPad. Trace every answer yourself, or reach for a skill — seven to unlock, four to carry.
 # iPhone and iPad from one universal build: TARGETED_DEVICE_FAMILY "1,2" in the
 # game's Xcode project and "Shipping now: iOS on iPhone and iPad" in its

@@ -156,7 +156,8 @@ export const productSchema = z.object({
       description: z.string().optional(),
     })
     .optional(),
-  featured: z.boolean().default(false),
+  // No `featured` flag: the home page features whatever was released last
+  // (`newestRelease`, owner 2026-10-29), so publishing is the whole step.
 });
 export type Product = z.infer<typeof productSchema>;
 

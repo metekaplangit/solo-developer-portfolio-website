@@ -8,7 +8,7 @@ import DownloadButton from '../components/DownloadButton.astro';
 import MakerNote from '../components/MakerNote.astro';
 import { site } from '../lib/site';
 import {
-  getFeatured,
+  newestRelease,
   sortProducts,
   visibleStoreLinks,
   productHue,
@@ -21,7 +21,10 @@ import { bodySections, firstSentence } from '../lib/prose';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
-const featured = getFeatured(products);
+// The home page features whatever the studio released last (owner, 2026-10-29):
+// publishing a product puts it here, with no flag to remember.
+const newest = newestRelease(products);
+const featured = newest ? [newest] : [];
 const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
 
 const spotlight = showcase[0];
@@ -35,7 +38,15 @@ const shots = spotlight?.screenshots ?? [];
    Magic Notes has 6, and the swap in STEP-0083 put a lone figure at the bottom
    of the page with a 604px hole next to it. Rounded DOWN, so the band always
    ends on a full row, and a product that adds a seventh shot cannot reopen it. */
-const mosaic = shots.slice(1, 1 + 2 * Math.floor((shots.length - 1) / 2));
+/* A phone product's shots are portrait, and at two to a row each one stood
+   taller than the screen once the newest release — a phone game — took the
+   home page. Portrait shots sit four to a row on a wide screen (two on a
+   phone), the way the product page's phone rail shows them, and the count
+   rounds down to a full row of four. */
+const lead = shots[0] ? resolveScreenshot(shots[0].path) : undefined;
+const portraitShots = lead != null && lead.height > lead.width;
+const perRow = portraitShots ? 4 : 2;
+const mosaic = shots.slice(1, 1 + perRow * Math.floor((shots.length - 1) / perRow));
 
 const heroHasDownload =
   spotlight != null && visibleStoreLinks(spotlight).some((l) => l.status === 'available');
@@ -129,7 +140,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   {
     mosaic.length > 0 && (
       <section class="band-mosaic" aria-labelledby="mosaic-h">
-        <div class="rail mosaic-in">
+        <div class={`rail mosaic-in${portraitShots ? ' is-portrait' : ''}`}>
           <h2 id="mosaic-h" class="visually-hidden">More of {spotlight?.name}</h2>
           {mosaic.map((s) => {
             const img = resolveScreenshot(s.path);
@@ -146,8 +157,10 @@ const hue = spotlight ? productHue(spotlight) : undefined;
                 <Image
                   src={img}
                   alt={s.altText}
-                  widths={[500, 800, 1200, 1400]}
-                  sizes="(min-width: 60rem) 42vw, calc(100vw - 2 * 1.25rem)"
+                  widths={portraitShots ? [360, 540, 720] : [500, 800, 1200, 1400]}
+                  sizes={portraitShots
+                    ? '(min-width: 60rem) 20vw, calc((100vw - 2 * 1.25rem - 1.5rem) / 2)'
+                    : '(min-width: 60rem) 42vw, calc(100vw - 2 * 1.25rem)'}
                   format="webp"
                   quality={78}
                   loading="lazy"
@@ -339,6 +352,14 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
     gap: var(--space-6);
+  }
+  .mosaic-in.is-portrait {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 60rem) {
+    .mosaic-in.is-portrait {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
   .mosaic-in figure {
     margin: 0;

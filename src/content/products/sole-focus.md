@@ -4,12 +4,6 @@ name: Sole Focus
 slug: sole-focus
 type: app
 status: released
-# Handed the home spotlight to Magic Notes on 2026-08-17 (STEP-0083), the
-# owner's decision. Not a demotion of the product: exactly one product is
-# featured at a time, because the hero carries a hue only on that condition.
-# Sole Focus keeps its own page, the catalog row on the home page, and the
-# catalogue.
-featured: false
 summary: A focus timer for Mac that stays out of your way. Use Pomodoro sessions or a stopwatch, from one small window.
 platforms: [macos]
 storeLinks:

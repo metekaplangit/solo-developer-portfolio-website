@@ -1,16 +1,16 @@
 {
   "@about": "v0.65.3",
-  "@apps": "v0.65.3",
+  "@apps": "v0.66.0",
   "@every-route": "v0.65.3",
-  "@home": "v0.65.5",
+  "@home": "v0.66.0",
   "@increased-contrast": "v0.65.5",
   "@magic-notes": "v0.65.5",
   "@not-found": "v0.65.5",
-  "@privacy-index": "v0.65.2",
-  "@privacy-sole-focus": "v0.65.2",
-  "@privacy-waypost-words": "v0.65.2",
-  "@sole-focus": "v0.65.2",
-  "@support": "v0.65.5",
+  "@privacy-index": "v0.66.0",
+  "@privacy-sole-focus": "v0.66.0",
+  "@privacy-waypost-words": "v0.66.0",
+  "@sole-focus": "v0.66.0",
+  "@support": "v0.66.0",
   "@waypost-rail": "v0.65.2",
   "@waypost-words": "v0.65.2"
 }

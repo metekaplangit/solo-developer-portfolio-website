@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   sortProducts,
-  getFeatured,
+  newestRelease,
   visibleStoreLinks,
   hasStoreLinks,
   storeLabel,
@@ -27,34 +27,47 @@ function make(overrides: Partial<Product>): Product {
     supportUrl: '/support/',
     screenshots: [],
     features: [],
-    featured: false,
     ...overrides,
   } as Product;
 }
 
 describe('sortProducts', () => {
-  it('orders by status rank then name, without mutating input', () => {
+  it('puts released first, newest release first, without mutating input', () => {
     const input = [
       make({ id: 'b', name: 'Beta', status: 'beta' }),
+      make({ id: 'old', name: 'Alpha', status: 'released', releaseDate: new Date('2026-07-15') }),
+      make({ id: 'undated', name: 'Aardvark', status: 'released' }),
+      make({ id: 'new', name: 'Zeta', status: 'released', releaseDate: new Date('2026-10-26') }),
+      make({ id: 'mid', name: 'Mu', status: 'released', releaseDate: new Date('2026-08-16') }),
       make({ id: 'p', name: 'Planned', status: 'planned' }),
-      make({ id: 'r2', name: 'Zeta', status: 'released' }),
-      make({ id: 'r1', name: 'Alpha', status: 'released' }),
     ];
     const snapshot = [...input];
-    const sorted = sortProducts(input);
-    expect(sorted.map((p) => p.id)).toEqual(['r1', 'r2', 'b', 'p']);
+    expect(sortProducts(input).map((p) => p.id)).toEqual(['new', 'mid', 'old', 'undated', 'b', 'p']);
     expect(input).toEqual(snapshot); // pure
+  });
+
+  it('breaks a same-day tie by name', () => {
+    const day = new Date('2026-10-26');
+    const sorted = sortProducts([
+      make({ id: 'z', name: 'Zed', status: 'released', releaseDate: day }),
+      make({ id: 'a', name: 'Ace', status: 'released', releaseDate: day }),
+    ]);
+    expect(sorted.map((p) => p.id)).toEqual(['a', 'z']);
   });
 });
 
-describe('getFeatured', () => {
-  it('returns only featured products, sorted', () => {
+describe('newestRelease', () => {
+  it('is whatever was released last, whatever its name or file order', () => {
     const products = [
-      make({ id: 'a', name: 'A', featured: false }),
-      make({ id: 'b', name: 'B', featured: true, status: 'beta' }),
-      make({ id: 'c', name: 'C', featured: true, status: 'released' }),
+      make({ id: 'mid', name: 'A', status: 'released', releaseDate: new Date('2026-08-16') }),
+      make({ id: 'new', name: 'Z', status: 'released', releaseDate: new Date('2026-10-26') }),
+      make({ id: 'beta', name: 'B', status: 'beta', releaseDate: new Date('2026-11-01') }),
     ];
-    expect(getFeatured(products).map((p) => p.id)).toEqual(['c', 'b']);
+    expect(newestRelease(products)?.id).toBe('new');
+  });
+
+  it('is nothing until something is released', () => {
+    expect(newestRelease([make({ id: 'b', status: 'beta' })])).toBeUndefined();
   });
 });
 
