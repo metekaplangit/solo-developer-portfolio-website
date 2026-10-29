@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.63.9
+
+- Magic Notes' 3 home statements each say 1 thing a reader can use
+
 ## v0.63.8
 
 - Every policy's At a glance chips are read as a list

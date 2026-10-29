@@ -123,9 +123,9 @@ working in front of you, and stops where an honest answer stops.
 
 ## Exact, or it says so
 
-The engine keeps only values it can represent exactly. Anything approximate is
-marked with ≈, to the precision you chose, and a written request such as "to 6
-decimal places" overrides that on its own line.
+Every answer is exact, or clearly marked with ≈. Approximate answers show the
+precision you chose, and a written request such as "to 6 decimal places"
+overrides it on its own line.
 
 Anything impossible is refused **on the line**, with the reason and a hint you
 can open. Most calculators round quietly and hand you something that looks
@@ -133,10 +133,10 @@ exact. You are never left holding a confident wrong number.
 
 ## Written in words, not in syntax
 
-It reads the arithmetic people actually write. Percentages, money, units,
-cooking measures, dates, times and durations, loans and interest, rates such as
-an amount per week, powers and roots, rounding, factors and combinations,
-number bases, and statistics over the lines above.
+Money, dates, units and loans, in plain sentences. It also reads percentages,
+cooking measures, times and durations, interest, and rates such as an amount per
+week. Powers and roots, rounding, factors, combinations, number bases and
+statistics over the lines above work too.
 
 Name a value and use it further down. Total a section. Ask a question of the
 lines above it. Change one number at the top and watch the whole page follow.
@@ -148,8 +148,8 @@ the guide teaches a form the app does not have.
 
 ## Your rates, your dates
 
-Exchange rates are yours. You enter them, each with the date it was true, and a
-conversion names the exact snapshot it used.
+You set each exchange rate, and the date it was true. A conversion names the
+exact snapshot it used.
 
 Nothing is interpolated or invented — so a figure you show someone else is a
 figure you can account for.
