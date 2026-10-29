@@ -638,6 +638,16 @@ const PHONES_WIDE = 4;
     };
     track.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    // Re-measure whenever the rail's real size settles, not only on a scroll or a
+    // window resize. Reached through a page change, Safari can run this script
+    // before the stylesheet applies (WebKit bug 261655): the first reading saw
+    // nothing to scroll and left Next switched off (smooth-project 0001). The
+    // slides change size when the styles land; the track itself may not.
+    if ('ResizeObserver' in window) {
+      const sizes = new ResizeObserver(onScroll);
+      sizes.observe(track);
+      sizes.observe(slides[0]);
+    }
     render();
   }
 

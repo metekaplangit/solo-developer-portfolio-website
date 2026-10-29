@@ -520,6 +520,8 @@ let chrome: Chrome | undefined;
 /** What the Waypost Words phone rail did when driven, per width. */
 type RailStep = { count: string; prevDisabled: boolean; nextDisabled: boolean; firstVisible: number };
 const rail = new Map<string, RailStep[]>();
+/** The rail after its slides were squeezed, then given back their size, per width. */
+const railRegrow = new Map<string, { squeezed: RailStep; regrown: RailStep }>();
 
 const LIMITS = { targetMin: TARGET_MIN, textMin: TEXT_MIN, gapMax: GAP_MAX };
 
@@ -676,6 +678,25 @@ async function driveRail(chrome: Chrome, url: string, width: number): Promise<Ra
     await page.click('[data-phones] .nav.prev');
     await settle();
     steps.push(await read());
+
+    // The rail's size settling late (smooth-project 0001): Safari can run the
+    // rail's script before the page's stylesheet applies, so the first reading
+    // sees nothing to scroll. Squeeze the slides so nothing can, let the rail
+    // see it, then hand the size back with no scroll and no window resize —
+    // exactly what a late stylesheet does — and the arrows must follow.
+    await page.evaluate(() => {
+      const track = document.querySelector<HTMLElement>('[data-phones] .phone-track')!;
+      track.scrollLeft = 0;
+      for (const el of track.querySelectorAll<HTMLElement>('.phone')) el.style.flexBasis = '1px';
+      track.dispatchEvent(new Event('scroll'));
+    });
+    await settle();
+    const squeezed = await read();
+    await page.evaluate(() => {
+      for (const el of document.querySelectorAll<HTMLElement>('[data-phones] .phone')) el.style.removeProperty('flex-basis');
+    });
+    await settle();
+    railRegrow.set(String(width), { squeezed, regrown: await read() });
     return steps;
   }
 }
@@ -933,6 +954,14 @@ test("Waypost Words's screenshots are all reachable by the arrows @waypost-rail"
   expect(phone[0]).toMatchObject({ count: '1–2 of 10', prevDisabled: true, nextDisabled: false });
   expect(phone.at(-2)).toMatchObject({ count: '9–10 of 10', nextDisabled: true });
   expect(phone.at(-1)!.nextDisabled).toBe(false);
+  // The arrows follow the rail's real size whenever it changes, not only on a
+  // scroll or a window resize — reached through a page change in Safari, the
+  // first measurement comes before the stylesheet (smooth-project 0001).
+  for (const [width, first] of [['1440', '1–4 of 10'], ['390', '1–2 of 10']]) {
+    const { squeezed, regrown } = railRegrow.get(width)!;
+    expect(squeezed.nextDisabled, `${width}: nothing to scroll while squeezed`).toBe(true);
+    expect(regrown, width).toMatchObject({ count: first, prevDisabled: true, nextDisabled: false });
+  }
 });
 
 // A Mac set to "Increase contrast" asks every custom colour for a stronger
