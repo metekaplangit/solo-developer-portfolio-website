@@ -77,7 +77,7 @@ const chips: { label: string; ok: boolean }[] = [
     {/* The policy header is the first thing on the page — measured 181px down
         at 390px, 185px at 1440px — so this icon is never lazy. */}
     {icon && <ProductAvatar icon={icon} name={iconName ?? policy.title} size={56} alt={icon.altText} href={iconHref} eager />}
-    <div class="policy-head-text identity-text">
+    <div class="policy-head-text identity-text" data-land="1">
       <h1 class="page-title">{policy.title}</h1>
       <p class="policy-meta">
         Updated <time datetime={policy.lastUpdated.toISOString()}>{formatDate(policy.lastUpdated)}</time>{' · '}{tie(policy.effectiveScope)}
@@ -85,7 +85,7 @@ const chips: { label: string; ok: boolean }[] = [
     </div>
   </header>
 
-  <ul class="glance" role="list" aria-label="At a glance">
+  <ul class="glance" role="list" aria-label="At a glance" data-land="2">
     {chips.map((c) => <li class={`chip chip-lg${c.ok ? ' chip-accent' : ''}`}>{c.label}</li>)}
   </ul>
 

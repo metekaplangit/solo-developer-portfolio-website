@@ -40,6 +40,11 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    {/* Marks an arrival that came through a view transition, so the opening
+        waits for the old page to leave (global.css, `.vt-in [data-land]`).
+        Classic and inline on purpose: `pagereveal` fires before the first
+        frame, which a deferred module script would miss. */}
+    <script is:inline>addEventListener('pagereveal', (e) => { if (e.viewTransition) document.documentElement.classList.add('vt-in'); });</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#08090c" />

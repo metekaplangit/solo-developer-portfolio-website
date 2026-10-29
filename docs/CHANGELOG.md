@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.64.0
+
+- Every page's opening lands like the home hero's, and the old page leaves first
+
 ## v0.63.22
 
 - The feature lists read short and plain, every Sole Focus item on 1 line

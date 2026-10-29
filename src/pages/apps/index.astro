@@ -28,11 +28,11 @@ const schema = [
   <section class="masthead" aria-labelledby="catalog-h">
     <div class="rail opening">
       <div class="opening-head">
-      <p class="over">{products.length} {products.length === 1 ? 'product' : 'products'}</p>
-      <h1 id="catalog-h" class="page-title">Apps &amp; Games</h1>
+      <p class="over" data-land="1">{products.length} {products.length === 1 ? 'product' : 'products'}</p>
+      <h1 id="catalog-h" class="page-title" data-land="2">Apps &amp; Games</h1>
       </div>
       <div class="opening-side">
-      <p class="lede">
+      <p class="lede" data-land="3">
         {tie('Every app and game the studio makes. Each product has its own privacy page, and one person answers support for all of them.')}
       </p>
       </div>

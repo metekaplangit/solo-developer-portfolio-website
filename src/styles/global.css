@@ -244,12 +244,18 @@
 
      `--ease` settles rather than bounces and is right for responses.
      `--ease-out` decelerates harder, which is what makes an entrance feel like
-     it lands rather than drifts to a stop. */
+     it lands rather than drifts to a stop.
+
+     One more role, for a page going away (plan 0011): `--dur-leave` with
+     `--ease-in`, shorter than any entrance and fastest at the end, so what
+     leaves is gone before what arrives starts. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
   --dur-fast: 120ms;
   --dur: 220ms;
   --dur-slow: 420ms;
+  --dur-leave: 160ms;
 }
 
 /* Every element that OWNS a hue re-derives the two washes from it (STEP-0083).
@@ -1142,12 +1148,72 @@ img {
   navigation: auto;
 }
 
-/* Persistent chrome holds still. Without its own name the header is captured
-   inside the root snapshot and visibly cross-fades against itself on every
-   navigation — the single most common way this feature looks broken. */
+/* Leave, then land (plan 0011). The default is a 420ms cross-fade of the two
+   whole pages, which leaves both pages' text on screen together half-way
+   through. Instead the old page alone fades out on the leaving role, and the
+   new page sits beneath it unanimated — normal blending, no plus-lighter — so
+   what the eye follows is the new page's opening landing (`[data-land]`
+   below), not two pages dissolving into each other. The header and footer
+   keep their own names and hold still. */
 ::view-transition-group(root) {
-  animation-duration: var(--dur-slow);
-  animation-timing-function: var(--ease-out);
+  animation-duration: var(--dur-leave);
+}
+::view-transition-old(root) {
+  animation: vt-leave var(--dur-leave) var(--ease-in) both;
+}
+::view-transition-new(root) {
+  animation: none;
+}
+@keyframes vt-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+/* The opening lands — every page, the way the home hero always has.
+   `data-land="1"` … `"4"` marks an opening's parts in reading order; each
+   rises 12px and fades in on the entrance role, 60ms after the one before.
+   Arriving through a view transition, the whole set waits `--dur-leave` so it
+   starts once the old page has gone: `html.vt-in` is set by the one-line
+   `pagereveal` listener in BaseLayout, and only when a transition is really
+   running. A browser without view transitions (Firefox, 2026) never gets the
+   class and simply plays the rise on load. Opacity is safe here, unlike the
+   scroll reveal: a load animation runs on a clock, so it always finishes. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-land] {
+    animation: land var(--dur-slow) var(--ease-out) both;
+  }
+  [data-land='2'] {
+    animation-delay: 60ms;
+  }
+  [data-land='3'] {
+    animation-delay: 120ms;
+  }
+  [data-land='4'] {
+    animation-delay: 180ms;
+  }
+  .vt-in [data-land='1'] {
+    animation-delay: var(--dur-leave);
+  }
+  .vt-in [data-land='2'] {
+    animation-delay: calc(var(--dur-leave) + 60ms);
+  }
+  .vt-in [data-land='3'] {
+    animation-delay: calc(var(--dur-leave) + 120ms);
+  }
+  .vt-in [data-land='4'] {
+    animation-delay: calc(var(--dur-leave) + 180ms);
+  }
+  @keyframes land {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

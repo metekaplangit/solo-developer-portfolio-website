@@ -82,12 +82,12 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   <section class={`band-hero${heroOwnsHue ? ' owns-hue' : ''}`} style={heroOwnsHue ? `--hue: ${hue};` : undefined} aria-labelledby="hero-h">
     <div class="rail opening">
       <div class="opening-head">
-        <p class="over">{site.tagline}</p>
-        <h1 id="hero-h">Small studio.<br /><span class="voice">Serious craft.</span></h1>
+        <p class="over" data-land="1">{site.tagline}</p>
+        <h1 id="hero-h" data-land="2">Small studio.<br /><span class="voice">Serious craft.</span></h1>
       </div>
       <div class="opening-side">
-      <p class="lede">{site.lede}</p>
-      <div class="actions">
+      <p class="lede" data-land="3">{site.lede}</p>
+      <div class="actions" data-land="4">
         {heroHasDownload && <DownloadButton product={spotlight} label={downloadLabel(spotlight)} />}
         <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
           See {spotlight?.name ?? 'the app'}
@@ -392,41 +392,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     /* (The `min-height: 0` override is gone with the `min-height` it undid.) */
   }
 
-  /* Hero entrance. It used to animate `transform` only, so the text appeared at
-     full strength and then moved — which reads as a jolt rather than an
-     arrival. Opacity and transform together, on the entrance role, with the
-     four children declared in reading order rather than three of them delayed
-     and the fourth left implicit. */
-  @media (prefers-reduced-motion: no-preference) {
-    .band-hero .opening > * > * {
-      animation: rise var(--dur-slow) var(--ease-out) both;
-    }
-    /* The delays MUST match the wildcard rule's shape. Measured 2026-07-31:
-       written as `.band-hero h1` they lost to `.band-hero > .rail > *` on
-       specificity — three classes beat two — so every child computed a 0s
-       delay and the whole stagger had silently never run. Selecting through
-       the same path keeps them equal, and later-wins does the rest. */
-    .band-hero .opening > * > .over {
-      animation-delay: 0s;
-    }
-    .band-hero .opening > * > h1 {
-      animation-delay: 60ms;
-    }
-    .band-hero .opening > * > .lede {
-      animation-delay: 120ms;
-    }
-    .band-hero .opening > * > .actions {
-      animation-delay: 180ms;
-    }
-    @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  }
+  /* Hero entrance: the `data-land` parts above, timed by the one landing rule
+     in global.css that every page now shares (plan 0011). Same 420ms rise,
+     same 60ms steps in reading order as the hero has always had. */
 </style>

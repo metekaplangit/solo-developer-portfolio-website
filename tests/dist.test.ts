@@ -17,6 +17,7 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import { createHash } from 'node:crypto';
 
 const DIST = 'dist';
 const SITE = 'https://metkapstudio.com';
@@ -295,6 +296,25 @@ describe('every built page', () => {
         'unsafe-inline',
       );
     }
+  });
+
+  it('allows every inline script it ships, by hash (plan 0011)', () => {
+    // An inline script the policy does not hash is refused by the browser and
+    // fails silently — the page still loads, the behaviour just never happens.
+    // Astro hashes its own bundled scripts; one written `is:inline` (the
+    // `pagereveal` listener in BaseLayout) is hashed by hand in
+    // astro.config.mjs, and this is what notices when the two drift apart.
+    let inline = 0;
+    for (const [route, html] of built) {
+      const csp = html.match(/http-equiv="content-security-policy" content="([^"]*)"/i)?.[1] ?? '';
+      const scriptSrc = csp.match(/script-src ([^;]*)/)?.[1] ?? '';
+      for (const m of html.matchAll(/<script(?![^>]*\b(?:\bsrc=|type="application\/ld\+json"))[^>]*>([\s\S]*?)<\/script>/g)) {
+        inline++;
+        const hash = `'sha256-${createHash('sha256').update(m[1]).digest('base64')}'`;
+        expect(scriptSrc, `${route}: inline script not allowed by CSP: ${m[1].slice(0, 60)}`).toContain(hash);
+      }
+    }
+    expect(inline, 'no inline script found anywhere in dist').toBeGreaterThan(0);
   });
 
   it('loads no script from a third-party origin', () => {

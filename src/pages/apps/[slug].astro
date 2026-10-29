@@ -108,7 +108,7 @@ const schema = [
           Measured at the top of the first screen on every width — 165px down at
           390px, 153px at 1440px — so it is never lazy. */}
       <ProductAvatar icon={product.icon} name={product.name} size={56} eager />
-      <div class="identity-text head-body">
+      <div class="identity-text head-body" data-land="1">
         <h1 id="product-h" class="product-title product-name">{product.name}</h1>
         <div class="tags">
           <Badge label={product.type === 'game' ? 'Game' : 'App'} tone="accent" />
@@ -118,9 +118,9 @@ const schema = [
       </div>
     </div>
 
-    <p class="summary measure-mid">{productSummary(product)}</p>
+    <p class="summary measure-mid" data-land="2">{productSummary(product)}</p>
 
-    <div class="action-row">
+    <div class="action-row" data-land="3">
       <DownloadButton product={product} label={downloadLabel(product)} />
       <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>
     </div>
