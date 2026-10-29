@@ -163,6 +163,7 @@ type Reading = {
   lazyInFirstView: Array<{ src: string; top: number; left: number }>;
   strayHues: Array<{ el: string; hue: string; derived: string }>;
   silentLists: string[];
+  faintMarks: Array<{ el: string; ratio: number }>;
 };
 
 /**
@@ -201,6 +202,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     voids: [],
     lazyInFirstView: [],
     strayHues: [],
+    faintMarks: [],
     silentLists: [],
   };
 
@@ -448,6 +450,62 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
   for (const el of Array.from(document.querySelectorAll('ul, ol'))) {
     if (getComputedStyle(el).listStyleType === 'none' && el.getAttribute('role') !== 'list' && visible(el)) {
       out.silentLists.push(label(el));
+    }
+  }
+
+  // --- A control drawn only by its mark is seen (issue 0014) ---------------
+  //
+  // A button with no text and no child — the gallery's dots — is shown by
+  // the mark a pseudo-element paints, and nothing else. That mark is the
+  // control's whole visible part, so it owes 3:1 against what it sits on
+  // (WCAG 2.2 SC 1.4.11). The current one is exempt only from this rule:
+  // it is told apart by its shape. The mark is composited over the nearest
+  // opaque background on a canvas, the way the browser paints it, so a
+  // translucent token is judged by the colour a person sees.
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 1;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
+  const paint = (under: string, over: string) => {
+    ctx.clearRect(0, 0, 1, 1);
+    ctx.fillStyle = under;
+    ctx.fillRect(0, 0, 1, 1);
+    ctx.fillStyle = over;
+    ctx.fillRect(0, 0, 1, 1);
+    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+    return [r, g, b];
+  };
+  const lum = (rgb: number[]) => {
+    const [r, g, b] = rgb.map((v) => {
+      const x = v / 255;
+      return x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const alphaOf = (c: string) => {
+    ctx.clearRect(0, 0, 1, 1);
+    ctx.fillStyle = c;
+    ctx.fillRect(0, 0, 1, 1);
+    return ctx.getImageData(0, 0, 1, 1).data[3];
+  };
+  const stage = (el: Element) => {
+    for (let at: Element | null = el; at; at = at.parentElement) {
+      const bg = getComputedStyle(at).backgroundColor;
+      if (alphaOf(bg) === 255) return bg;
+    }
+    return 'rgb(255, 255, 255)';
+  };
+  for (const el of Array.from(document.querySelectorAll('button'))) {
+    if (el.textContent?.trim() || el.children.length || !visible(el)) continue;
+    if (el.getAttribute('aria-current') === 'true') continue;
+    const under = stage(el);
+    for (const pseudo of ['::before', '::after']) {
+      const cs = getComputedStyle(el, pseudo);
+      if (cs.content === 'none' || cs.display === 'none') continue;
+      const mark = cs.backgroundColor;
+      if (alphaOf(mark) === 0) continue;
+      const [a, b] = [lum(paint(under, mark)), lum(paint(under, under))].sort((x, y) => y - x);
+      const ratio = Math.round(((a + 0.05) / (b + 0.05)) * 100) / 100;
+      if (ratio < 3) out.faintMarks.push({ el: label(el) + pseudo, ratio });
     }
   }
 
@@ -815,6 +873,10 @@ function faults(width: string, r: Reading): string[] {
 
   for (const h of r.strayHues) {
     bad.push(`@${width} wrong wash — ${h.el} owns ${h.hue} but has ${h.derived}`);
+  }
+
+  for (const m of r.faintMarks) {
+    bad.push(`@${width} control's mark under 3:1 — ${m.el} at ${m.ratio}:1`);
   }
 
   return bad;

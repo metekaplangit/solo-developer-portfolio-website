@@ -6,7 +6,7 @@
 - Found by: style-project 0002
 - Filed: 2026-10-29
 - Tried by: —
-- Closed by: —
+- Closed by: card "The gallery's marker and counter keep pace with the slide" (v0.65.2, plan 0011 card D) — inactive dots at 50% of the text colour, 4.7:1; held by the screen suite's control-mark rule
 
 Doubt: a dot is a button here, so 3:1 applies (WCAG 2.2 SC 1.4.11); if it were read as decoration it would not. Rounded up to a fault.
 
