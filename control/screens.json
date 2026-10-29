@@ -4,13 +4,13 @@
   "@every-route": "v0.63.19",
   "@home": "v0.63.20",
   "@increased-contrast": "v0.63.19",
-  "@magic-notes": "v0.63.20",
-  "@not-found": "v0.63.18",
+  "@magic-notes": "v0.63.21",
+  "@not-found": "v0.63.21",
   "@privacy-index": "v0.63.20",
   "@privacy-sole-focus": "v0.63.20",
-  "@privacy-waypost-words": "v0.63.16",
-  "@sole-focus": "v0.63.20",
-  "@support": "v0.63.18",
+  "@privacy-waypost-words": "v0.63.21",
+  "@sole-focus": "v0.63.21",
+  "@support": "v0.63.21",
   "@waypost-rail": "v0.63.20",
-  "@waypost-words": "v0.63.20"
+  "@waypost-words": "v0.63.21"
 }

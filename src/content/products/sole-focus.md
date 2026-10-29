@@ -131,9 +131,8 @@ It is a nudge to keep going, never a streak that punishes a day off.
 Every setting, session and preset can be erased at any time, from Settings ▸
 General ▸ Danger zone.
 
-What the app stores, and what it does with it, is set out on the Sole Focus
-privacy page linked from this one. That page carries a date and is revised with
-the release that changes it.
+The privacy policy says what Sole Focus stores and why. It is dated, and it
+changes in the same release as the app.
 
 ## Common questions
 
@@ -142,5 +141,5 @@ the release that changes it.
 **Does it block apps or websites?** No. Sole Focus is a calm timer, not a
 blocker; it keeps you focused with gentle cues, not lockouts.
 
-_Free on the Mac App Store. The support address answers if something does not
-do what you expected._
+_If something does not work the way you expected, write to me. I read every
+message._

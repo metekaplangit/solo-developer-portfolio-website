@@ -188,5 +188,5 @@ leaves, and a storm brings lightning. A new sky every time you open the game.
 Chests in the crossword, a mystery box, a wheel to spin, three crates, a
 pedlar, and a bonus jar for every extra word you find.
 
-_Free on the App Store, for iPhone and iPad. The support address answers if
-something does not do what you expected._
+_If something in the game does not work the way you expected, write to me. I
+read every message._

@@ -170,9 +170,8 @@ the whole library.
 Spotlight indexing is off until you turn it on, and covers only sheet titles and
 the text you wrote.
 
-What the app stores, and what it does with it, is set out on the Magic Notes
-privacy page linked from this one. That page carries a date and is revised with
-the release that changes it.
+The privacy policy says what Magic Notes stores and why. It is dated, and it
+changes in the same release as the app.
 
 ## Common questions
 
@@ -188,5 +187,5 @@ looks right.
 Settings. The choice is never guessed from your region, and changing it never
 rewrites what you have already written.
 
-_Free on the Mac App Store. The support address answers if a line does not do
-what you expected._
+_If a line gives an answer you did not expect, write to me. I read every
+message._
