@@ -129,6 +129,12 @@ export default defineConfig({
   vite: {
     server: { strictPort: true },
     preview: { port: 5757, strictPort: true },
+    // One stylesheet for every page (smooth-project 0001). Split per page, the
+    // product pages carried a 15 KB sheet of their own, and the first one a
+    // visitor opened waited a whole extra round trip for it before drawing:
+    // +125 ms on a Mac, +460 ms on a throttled phone. Shared, it is fetched once
+    // with the first page and every later page draws from the cache.
+    build: { cssCodeSplit: false },
   },
   // Build-time only; @astrojs/sitemap emits static XML (no runtime service).
   // The game's old addresses only forward to its new ones, so they stay out.

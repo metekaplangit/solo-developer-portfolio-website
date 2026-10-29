@@ -352,6 +352,20 @@ describe('every built page', () => {
     expect(pills, 'no current-page pill anywhere in dist').toBeGreaterThan(0);
   });
 
+  // smooth-project 0001: product pages had a stylesheet of their own, so the first
+  // product page a visitor opened waited one more round trip before it could draw
+  // (+125 ms on a Mac, +460 ms on a throttled phone). One shared set means only the
+  // first page of a visit ever waits for CSS.
+  it('links the same stylesheets on every page, so no page change waits for new CSS', () => {
+    const sets = built.map(([route, html]) => [
+      route,
+      [...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map((m) => m[1]).sort().join(' '),
+    ]);
+    const first = sets[0][1];
+    expect(first, 'the build linked no stylesheet').not.toBe('');
+    for (const [route, set] of sets) expect(set, route).toBe(first);
+  });
+
   it('loads no script from a third-party origin', () => {
     for (const [route, html] of built) {
       for (const m of html.matchAll(/<script[^>]*\bsrc="([^"]+)"/g)) {
