@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.65.1
+
+- The current-page pill in the header glides to the page you went to
+
 ## v0.65.0
 
 - A product's icon travels with you between its band or tile and its page

@@ -332,6 +332,24 @@ describe('every built page', () => {
     expect(icons, 'no travelling product icon anywhere in dist').toBeGreaterThan(0);
   });
 
+  it('gives the current-page pill to the current nav item alone (plan 0011)', () => {
+    // The pill carries one view-transition-name, so a page with two pills
+    // cuts instead of transitioning, and a pill outside the current item
+    // glides to the wrong place.
+    let pills = 0;
+    for (const [route, html] of built) {
+      const nav = html.match(/<ul class="nav-list[\s\S]*?<\/ul>/)?.[0] ?? '';
+      const all = nav.match(/class="nav-pill\b/g) ?? [];
+      const inCurrent = nav.match(/aria-current="page"[^>]*>\s*<span class="nav-pill\b/g) ?? [];
+      const current = nav.match(/aria-current="page"/g) ?? [];
+      expect(all.length, `${route}: pills in the nav`).toBe(current.length);
+      expect(inCurrent.length, `${route}: pill outside the current item`).toBe(all.length);
+      expect(current.length, `${route}: current nav items`).toBeLessThanOrEqual(1);
+      pills += all.length;
+    }
+    expect(pills, 'no current-page pill anywhere in dist').toBeGreaterThan(0);
+  });
+
   it('loads no script from a third-party origin', () => {
     for (const [route, html] of built) {
       for (const m of html.matchAll(/<script[^>]*\bsrc="([^"]+)"/g)) {

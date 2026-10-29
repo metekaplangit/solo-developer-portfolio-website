@@ -1184,6 +1184,19 @@ img {
 ::view-transition-new(*.product-icon):only-child {
   animation: none;
 }
+/* The current-page pill glides (plan 0011). Its group moves and resizes from
+   the old page's nav item to the new one; both snapshots fill the group
+   rather than keeping their own aspect, which would grow the pill taller as
+   it widens. A pill with no partner (the 404 has no current item; Home's
+   item is hidden on phones) fades on the same clock. */
+::view-transition-group(nav-pill) {
+  animation-duration: var(--dur);
+  animation-timing-function: var(--ease);
+}
+::view-transition-old(nav-pill),
+::view-transition-new(nav-pill) {
+  height: 100%;
+}
 @keyframes vt-leave {
   to {
     opacity: 0;

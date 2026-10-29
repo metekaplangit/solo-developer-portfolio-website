@@ -26,7 +26,8 @@ function isCurrent(href: string): boolean {
                 href={withBase(item.href)}
                 aria-current={isCurrent(item.href) ? 'page' : undefined}
               >
-                {item.label}
+                {isCurrent(item.href) && <span class="nav-pill" aria-hidden="true" />}
+                <span class="nav-label" data-text={item.label}>{item.label}</span>
               </a>
             </li>
           ))
@@ -97,6 +98,8 @@ function isCurrent(href: string): boolean {
     padding: 0;
   }
   .nav-list a {
+    position: relative;
+    isolation: isolate;
     display: inline-block;
     text-decoration: none;
     color: var(--muted);
@@ -112,8 +115,37 @@ function isCurrent(href: string): boolean {
   }
   .nav-list a[aria-current='page'] {
     color: var(--text-strong);
-    background: var(--accent-soft);
     font-weight: var(--weight-strong);
+  }
+  /* Every label keeps the width it has in bold, so the current item turning
+     bold never pushes its neighbours along. Without it the row shifted on
+     every page change, and the header's old and new snapshots disagreed by
+     a few pixels: the labels doubled mid-transition. The hidden bold copy
+     is a zero-height second grid row, out of the accessibility tree; the
+     text is centred in that width, so regular and bold share a middle and
+     the cross-fade between them stays in place. */
+  .nav-label {
+    display: inline-grid;
+    justify-items: center;
+  }
+  .nav-label::after {
+    content: attr(data-text);
+    font-weight: var(--weight-strong);
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+  }
+  /* The current page's pill is its own empty element behind the label, not
+     the link's background, so a view transition can carry the pill from the
+     old page's item to the new one while the labels hold still in the
+     header (plan 0011; the travel rules are in global.css). */
+  .nav-pill {
+    view-transition-name: nav-pill;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--accent-soft);
   }
 
   /* Narrow screens. History: review-0001 OPP-01 replaced a two-row wrap
