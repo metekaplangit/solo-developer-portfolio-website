@@ -114,10 +114,10 @@ const hue = spotlight ? productHue(spotlight) : undefined;
         <div class="rail says-in">
           <h2 id="says-h" class="visually-hidden">What {spotlight?.name} does</h2>
           {statements.map((s, i) => (
-            <article>
-              <p class="over voice">{String(i + 1).padStart(2, '0')}</p>
+            <article class="say">
+              <p class="say-n voice" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
               <h3>{s.title}</h3>
-              <p>{s.text}</p>
+              <p class="say-text">{s.text}</p>
             </article>
           ))}
         </div>
@@ -271,27 +271,58 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     pointer-events: none;
   }
 
-  /* BAND 3 — statements */
+  /* BAND 3 — statements (retouch 0003). Three claims on one ruled line, the
+     way the site sets anything it lists: a hairline over each, the product's
+     numeral in its own hue hanging left of the title, the sentence under the
+     title at reading size. The band sits tight under the product it speaks
+     for and keeps one band gap above the mosaic, so it reads as the product's
+     caption rather than a band floating between two. */
   .band-says {
-    padding-block: var(--band-y);
+    padding-block: 0 var(--band-y);
   }
   .says-in {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
-    gap: clamp(var(--space-8), 4vw, var(--space-12));
-    align-items: start;
+    column-gap: var(--space-8);
+    row-gap: 0;
+    align-items: stretch;
+  }
+  .say {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    align-content: start;
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border-strong);
+  }
+  .say-n {
+    grid-row: 1 / span 2;
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--weight-strong);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--track-optical);
+    font-variant-numeric: tabular-nums;
   }
   .says-in h3 {
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-2);
     font-size: var(--text-xl);
     letter-spacing: var(--track-optical);
     line-height: var(--leading-heading);
+    color: var(--text-strong);
+    text-wrap: balance;
   }
-  .says-in article p:last-child {
+  .say-text {
     margin: 0;
     color: var(--muted);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     line-height: var(--leading-body);
+    text-wrap: pretty;
+  }
+  @media (max-width: 40rem) {
+    .say {
+      grid-template-columns: 2.25rem minmax(0, 1fr);
+      padding-block: var(--space-5);
+    }
   }
 
   /* BAND 4 — mosaic */
