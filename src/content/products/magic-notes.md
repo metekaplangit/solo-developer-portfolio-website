@@ -101,15 +101,15 @@ features:
   - Plain sentences in, answers out, live as you type
   - Money, percentages, units and cooking measures
   - Dates, times, durations, loans and interest rates
-  - Powers, roots, rounding, bases and statistics
-  - Named values, totals, and questions about lines above
-  - 765 worked examples, one press to insert
+  - Powers, roots, rounding, number bases and statistics
+  - Name a value, total a section, ask about lines above
+  - 765 worked examples to insert with one press
   - English or Turkish, chosen by you, not by region
-  - Custom units and dated exchange-rate snapshots
-  - Folders, pinning, library search, previewed replace
-  - Unlimited undo, sheet timelines, guarded restore
+  - Your own units, and exchange rates with dates
+  - Folders, pins, search, and replace with a preview
+  - Undo all the way back, and backups that restore safely
   - Export to text, Markdown, PDF, print or a bundle
-  - Zen mode, Shortcuts, and opt-in Spotlight indexing
+  - Zen mode, Shortcuts, and Spotlight if you turn it on
 releaseDate: 2026-08-16
 lastUpdated: 2026-08-17
 seo:

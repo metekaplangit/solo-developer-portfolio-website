@@ -34,17 +34,17 @@ requirements: macOS 10.15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/sole-focus/
 features:
-  - Pomodoro timer with adjustable focus, break, and cycle lengths
-  - Chrono — a count-up stopwatch with milestones for open-ended work
-  - Tasks — save named timer presets and start them in one click
-  - Lives in your menu bar with pause, skip, and finish controls
-  - Zen and Study modes for distraction-free, always-in-reach focus
-  - Statistics and a light leveling system that make progress visible
-  - Erase every setting, session and preset whenever you like, from Settings
+  - Pomodoro timer with lengths you set
+  - Chrono, a stopwatch for open-ended work
+  - Named timers you start in one click
+  - Pause, skip and finish from the menu bar
+  - Zen mode, a small window that stays on top
+  - Study mode, a slim strip with one quote
+  - Statistics and a light leveling system
   # Restates the appearance options already described in "Always in reach"
-  # below — no new claim (DESIGN.md §6: never fabricate proof). Added to
-  # make the grid's last row full; see docs/tasks/STEP-0063.md.
-  - Five completion sounds, light and dark themes, accent colors, adjustable sizing
+  # below — no new claim (DESIGN.md §6: never fabricate proof). Keeps the
+  # grid's last row full; see docs/tasks/STEP-0063.md.
+  - Five sounds, two themes, accent colors
 icon:
   id: sole-focus-icon
   productId: sole-focus
