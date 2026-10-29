@@ -83,7 +83,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     <div class="rail opening">
       <div class="opening-head">
         <p class="over" data-land="1">{site.tagline}</p>
-        <h1 id="hero-h" data-land="2">Small studio.<br /><span class="voice">Serious craft.</span></h1>
+        <h1 id="hero-h" data-land="2">Small studio.<br /><span class="voice">Serious <span class="craft">craft.</span></span></h1>
       </div>
       <div class="opening-side">
       <p class="lede" data-land="3">{site.lede}</p>
@@ -222,6 +222,12 @@ const hue = spotlight ? productHue(spotlight) : undefined;
   }
   .voice {
     color: var(--hue);
+  }
+  /* The one fixed colour the studio allows itself (owner, 2026-10-29): the
+     headline's last word in the orange the studio covers use, whatever product
+     the hero features. A signature, not an accent — nowhere else. */
+  .craft {
+    color: var(--craft);
   }
   .actions {
     display: flex;

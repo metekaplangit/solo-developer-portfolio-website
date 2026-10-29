@@ -74,6 +74,9 @@
      the only colour on any page belongs to a product, scoped to that product's
      band via `--hue`. One product, one voice, one band. A site-wide accent is
      exactly what made the previous design read as a template. */
+  /* The single exception to the rule above (owner, 2026-10-29): "craft." in
+     the home headline, in the orange of the studio covers. Used there only. */
+  --craft: #ff9245;
   --accent: #ffffff;
   --accent-hover: #ffffff;
   --accent-contrast: #08090c;

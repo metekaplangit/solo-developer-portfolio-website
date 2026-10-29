@@ -126,6 +126,11 @@ band. One app, one voice, one band. A catalogue of five apps therefore reads as
 five distinct things rather than as five rows of the same template, and the site
 never competes with the thing it is selling.
 
+One deliberate exception (owner, 2026-10-29): "craft." at the end of the home
+headline is always orange `#ff9245` (`--craft`), the same as on the studio's
+social covers. It is a signature on one word, not an accent — nothing else in the
+chrome takes it.
+
 That is the change from the previous system, which lit the whole site with a
 single periwinkle accent. The accent was restrained and correct, and it was also
 the most common indie-dark treatment on the web — the audience reads it as a
