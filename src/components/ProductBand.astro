@@ -264,20 +264,33 @@ const facts = [product.requirements]
     width: 100%;
     height: auto;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .band-phones {
-      transition: transform var(--dur) var(--ease);
-    }
-    .band-phones:hover {
-      transform: translateY(-3px);
-    }
+
+  /* The picture leans in, the frame stays put (plan 0011). Pointing at a
+     band's screenshot, or tabbing to it, brightens the frame's hairline and
+     brings the picture slightly closer inside it; the frame itself never
+     moves, so the band's layout and shadow hold still. The lean is slower
+     than the site's other answers on purpose — 600ms in, `--dur-slow` back —
+     because it reads as a camera easing forward, not as a control reacting.
+     `isolation` keeps the scaled picture clipped to the rounded frame in
+     Safari, which can otherwise paint a transformed child past the radius. */
+  .band-shot,
+  .band-phone {
+    isolation: isolate;
+    transition: box-shadow var(--dur-slow) var(--ease-out);
+  }
+  .band-shot:is(:hover, :focus-visible),
+  .band-phones:is(:hover, :focus-visible) .band-phone {
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border-strong);
   }
   @media (prefers-reduced-motion: no-preference) {
-    .band-shot {
-      transition: transform var(--dur) var(--ease);
+    .band-shot img,
+    .band-phone img {
+      transition: transform var(--dur-slow) var(--ease-out);
     }
-    .band-shot:hover {
-      transform: translateY(-3px);
+    .band-shot:is(:hover, :focus-visible) img,
+    .band-phones:is(:hover, :focus-visible) .band-phone img {
+      transform: scale(1.025);
+      transition-duration: 600ms;
     }
   }
   @media (max-width: 66rem) {

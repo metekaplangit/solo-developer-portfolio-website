@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.65.3
+
+- Hovering a band screenshot brings the picture closer inside a frame that stays still
+
 ## v0.65.2
 
 - The gallery's marker and counter keep pace with the slide
