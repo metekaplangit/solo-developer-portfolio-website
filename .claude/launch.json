@@ -6,12 +6,7 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",
-        "preview",
-        "--",
-        "--port",
-        "5757",
-        "--host",
-        "127.0.0.1"
+        "preview"
       ],
       "port": 5757,
       "url": "http://127.0.0.1:5757"
