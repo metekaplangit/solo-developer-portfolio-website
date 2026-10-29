@@ -8,6 +8,7 @@ import {
   hasStoreLinks,
   productHue,
   storeLabel,
+  downloadLabel,
   statusLabel,
   platformLabel,
   relatedProducts,
@@ -120,8 +121,8 @@ const schema = [
     <p class="summary measure-mid">{productSummary(product)}</p>
 
     <div class="action-row">
-      <DownloadButton product={product} />
-      <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(product))}>Privacy details</a>
+      <DownloadButton product={product} label={downloadLabel(product)} />
+      <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>
     </div>
 
     {/* The decision facts and the person behind them, as a ruled sheet on the
@@ -236,7 +237,7 @@ const schema = [
             <div class="get-actions">
               {stores.map((link, i) =>
                 i === 0 && link.status === 'available' ? (
-                  <DownloadButton product={product} />
+                  <DownloadButton product={product} label={downloadLabel(product)} />
                 ) : (
                   <a class="btn btn-secondary" href={link.url} rel="noopener" target="_blank">
                     {storeLabel(link.store)}
