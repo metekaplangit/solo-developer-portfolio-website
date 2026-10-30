@@ -29,8 +29,15 @@ interface Props {
    * For an address already written into a shipped build, which cannot change.
    */
   movedTo?: string;
+  /**
+   * Skip the view transition when leaving this page. Only for a page served
+   * with an error status: Chrome never keeps one in its back-forward cache, and
+   * a transition out of a page it cannot keep held the next page's first frame
+   * for about 380 ms (issue 0017).
+   */
+  leaveWithoutTransition?: boolean;
 }
-const { title, description = site.description, schema, bleed = false, movedTo } = Astro.props;
+const { title, description = site.description, schema, bleed = false, movedTo, leaveWithoutTransition = false } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 const canonical = new URL(movedTo ?? Astro.url.pathname, Astro.site ?? Astro.url).href;
 const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
@@ -45,6 +52,7 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
         Classic and inline on purpose: `pagereveal` fires before the first
         frame, which a deferred module script would miss. */}
     <script is:inline>addEventListener('pagereveal', (e) => { if (e.viewTransition) document.documentElement.classList.add('vt-in'); });</script>
+    {leaveWithoutTransition && <script is:inline>addEventListener('pageswap', (e) => e.viewTransition?.skipTransition());</script>}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#08090c" />

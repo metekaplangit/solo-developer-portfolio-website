@@ -97,13 +97,17 @@ export default defineConfig({
       //
       // `'self'` is restated because `resources` REPLACES Astro's defaults
       // rather than adding to them. Astro's own generated hashes are kept.
-      // The one hand-written inline script: BaseLayout's `pagereveal`
-      // listener (plan 0011). Astro hashes the scripts it bundles but not one
-      // marked `is:inline`, so its hash is listed here. Edit that script and
-      // this line goes stale — `tests/dist.test.ts` ("allows every inline
+      // The two hand-written inline scripts: BaseLayout's `pagereveal`
+      // listener (plan 0011), and the `pageswap` skip only the not-found page
+      // carries (issue 0017). Astro hashes the scripts it bundles but not one
+      // marked `is:inline`, so their hashes are listed here. Edit either script
+      // and its line goes stale — `tests/dist.test.ts` ("allows every inline
       // script it ships") fails until the new hash is pasted in.
       scriptDirective: {
-        hashes: ['sha256-5PKbTT5ArF9/xXrIgXZOQGUP4ETA070CXH1yu6CWMk0='],
+        hashes: [
+          'sha256-5PKbTT5ArF9/xXrIgXZOQGUP4ETA070CXH1yu6CWMk0=',
+          'sha256-ykkb2FQVcNkQFoDoNenW8RmbgApRGL6+89mbksOj1Yc=',
+        ],
       },
       styleDirective: {
         resources: [

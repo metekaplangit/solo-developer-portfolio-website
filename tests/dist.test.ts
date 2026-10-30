@@ -386,6 +386,19 @@ describe('every built page', () => {
     expect(buttons, 'no Download button was found to check').toBeGreaterThan(0);
   });
 
+  // Issue 0017. Chrome never keeps a 404 response in its back-forward cache, and
+  // a view transition out of a page it cannot keep held the next page's first
+  // frame for about 380 ms. The not-found page skips its transition on leaving,
+  // and it is the only page that does: everywhere else the hand-off stays.
+  it('skips the view transition when leaving the not-found page, and only there', () => {
+    const SKIP = /addEventListener\('pageswap',[^<]*skipTransition\(\)/;
+    for (const [route, html] of built) {
+      if (route === '/404') expect(html, `${route}: no pageswap skip`).toMatch(SKIP);
+      else expect(html, `${route}: skips its view transition`).not.toMatch(SKIP);
+    }
+    expect(built.some(([route]) => route === '/404'), 'the build made no /404 page').toBe(true);
+  });
+
   it('loads no script from a third-party origin', () => {
     for (const [route, html] of built) {
       for (const m of html.matchAll(/<script[^>]*\bsrc="([^"]+)"/g)) {

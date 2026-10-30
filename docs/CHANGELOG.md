@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.66.17
+
+- Leaving the 404 page draws the next page at once
+
 ## v0.66.16
 
 - Pressing a button settles it visibly
