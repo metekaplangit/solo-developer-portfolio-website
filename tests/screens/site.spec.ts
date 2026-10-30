@@ -148,6 +148,7 @@ type Reading = {
   strayHues: Array<{ el: string; hue: string; derived: string }>;
   silentLists: string[];
   faintMarks: Array<{ el: string; ratio: number }>;
+  badBreaks: Array<{ kind: string; text: string; line: string }>;
 };
 
 /**
@@ -188,6 +189,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     lazyInFirstView: [],
     strayHues: [],
     faintMarks: [],
+    badBreaks: [],
     silentLists: [],
   };
 
@@ -510,6 +512,64 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
       const [a, b] = [lum(paint(under, mark)), lum(paint(under, under))].sort((x, y) => y - x);
       const ratio = Math.round(((a + 0.05) / (b + 0.05)) * 100) / 100;
       if (ratio < 3) out.faintMarks.push({ el: label(el) + pseudo, ratio });
+    }
+  }
+
+  // Where interface text breaks (issues 0007 and 0015). A line may not end on a
+  // word that points at the next one, may not strand the first 1–2 words of a
+  // sentence or a dash-led phrase, and a 2-line heading may not leave a second
+  // line under 60% of its first. The legal text of a product policy is left
+  // out; the privacy index is interface text and stays in. Commas and colons
+  // are not phrase ends here: a series ("percentages, cooking measures, times")
+  // and a term list ("Reveal a letter: one letter") break after them correctly.
+  if (!/^\/privacy\/.+/.test(location.pathname)) {
+    const FORWARD = new Set(['a', 'an', 'the', 'and', 'or', 'nor', 'but', 'so', 'yet', 'if', 'as', 'than', 'that', 'of',
+      'to', 'in', 'on', 'at', 'by', 'for', 'from', 'with', 'into', 'onto', 'over', 'under', 'via', 'per', 'is', 'are',
+      'was', 'were', 'be', 'been', 'no', 'not', 'has', 'have', 'had', 'can', 'will', 'do', 'does', 'did', 'it', 'its',
+      'my', 'your', 'our', 'their', 'his', 'her', 'this', 'these', 'you', 'we', 'they', 'i', 'where', 'when', 'which',
+      'who', 'what', 'every', 'each']);
+    const sel = 'main p, main li, main h1, main h2, main h3, main h4, main dd, main figcaption, main blockquote';
+    for (const el of Array.from(document.querySelectorAll(sel))) {
+      if (el.querySelector('p, li, ul, ol, h1, h2, h3, h4') || !visible(el)) continue;
+      const words: Array<{ w: string; top: number }> = [];
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        const data = (n as Text).data;
+        for (const m of Array.from(data.matchAll(/[^\s\u00a0]+/g))) {
+          const range = document.createRange();
+          range.setStart(n, m.index!);
+          range.setEnd(n, m.index! + m[0].length);
+          const rect = Array.from(range.getClientRects()).find((q) => q.width > 0);
+          if (rect) words.push({ w: m[0], top: Math.round(rect.top) });
+        }
+      }
+      const lines: string[][] = [];
+      let top = NaN;
+      for (const { w, top: t } of words) {
+        if (lines.length && Math.abs(t - top) < 4) lines[lines.length - 1]!.push(w);
+        else { lines.push([w]); top = t; }
+      }
+      if (lines.length < 2) continue;
+      const text = (el.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 60);
+      for (const l of lines.slice(0, -1)) {
+        const last = l[l.length - 1]!;
+        if (/[.,;:!?—–)”"’]$/.test(last)) continue;
+        if (FORWARD.has(last.toLowerCase().replace(/[^\p{L}]/gu, ''))) {
+          out.badBreaks.push({ kind: 'ends on a word that points forward', text, line: l.join(' ') });
+        } else {
+          for (const k of [1, 2]) {
+            const before = l[l.length - 1 - k];
+            if (l.length > k + 1 && before && (/[.!?]$/.test(before) || /^[—–]$/.test(before))) {
+              out.badBreaks.push({ kind: 'strands a new phrase', text, line: l.join(' ') });
+              break;
+            }
+          }
+        }
+      }
+      if (/^H\d$/.test(el.tagName) && lines.length === 2) {
+        const [a, b] = [lines[0]!.join(' ').length, lines[1]!.join(' ').length];
+        if (b / a < 0.6) out.badBreaks.push({ kind: 'uneven heading', text, line: `${a} / ${b} characters` });
+      }
     }
   }
 
@@ -1061,6 +1121,16 @@ afterAll(async () => {
  * test now reports all of its broken rules together and a bare number would not
  * say which one it came from.
  */
+/**
+ * Bad breaks that only new words would mend, and the words are not ours to
+ * change. Each names its open issue; drop the line when the issue closes.
+ */
+const BREAKS_KNOWN = [
+  // Issue 0015: the Waypost Words heading is its App Store listing's words; in
+  // the 240px label rail its ties leave only "Weather with a mind / of its own".
+  'Weather with a mind of its own',
+];
+
 function faults(width: string, r: Reading): string[] {
   const bad: string[] = [];
 
@@ -1107,6 +1177,11 @@ function faults(width: string, r: Reading): string[] {
 
   for (const m of r.faintMarks) {
     bad.push(`@${width} control's mark under 3:1 — ${m.el} at ${m.ratio}:1`);
+  }
+
+  for (const b of r.badBreaks) {
+    if (BREAKS_KNOWN.some((k) => b.text.startsWith(k))) continue;
+    bad.push(`@${width} bad line break — ${b.kind}: "${b.line}" in "${b.text}"`);
   }
 
   return bad;

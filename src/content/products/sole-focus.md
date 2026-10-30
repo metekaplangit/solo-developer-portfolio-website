@@ -110,7 +110,9 @@ The menu-bar timer keeps pause, skip and finish one click away, whatever you are
 working in.
 
 **Zen mode** shrinks the app to a small window that stays on top beside your
-work. **Study mode** leaves a slim strip with a single focus quote. Pick from
+work.
+
+**Study mode** leaves a slim strip with a single focus quote. Pick from
 five completion sounds, light and dark themes, accent colors and sizes.
 
 ## See your progress

@@ -228,7 +228,7 @@ const schema = [
         <div class="identity get-id">
           <ProductAvatar icon={product.icon} name={product.name} size={56} />
           <div class="identity-text">
-            <h2 id="get-h" class="get-title">Get {product.name}</h2>
+            <h2 id="get-h" class="get-title">Get {product.name.replaceAll(' ', '\u00a0')}</h2>
             <FactsLine product={product} />
           </div>
         </div>

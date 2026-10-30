@@ -115,11 +115,13 @@ seo:
 
 Write "rent 1,450 a month" and the year appears beside it. Write "12% of that"
 and it knows what "that" was. Magic Notes reads ordinary sentences, keeps the
-working in front of you, and stops where an honest answer stops.
+working in front of you, and goes no further than an honest answer.
 
 ## Exact, or it says so
 
-Every answer is exact, or clearly marked with ≈. Approximate answers show the
+Every answer is exact, or clearly marked with ≈.
+
+Approximate answers show the
 precision you chose, and a written request such as "to 6 decimal places"
 overrides it on its own line.
 
@@ -154,7 +156,7 @@ figure you can account for.
 
 Keep as many sheets as you like, in folders, pinned and sorted the way you work.
 Search the whole library. Find and replace with a preview first. Duplicate a
-sheet as a starting point, and archive what you are finished with.
+sheet as a starting point, and archive the sheets you are finished with.
 
 Undo and redo go back as far as you need, every sheet keeps a revision timeline,
 and backups restore under a guard that checks before it replaces anything. Take

@@ -11,7 +11,7 @@ dataNotCollected:
   - Analytics or tracking identifiers
 thirdPartyServices: []
 storedLocally: []
-retention: "There is nothing stored about you, so there is nothing to keep or delete. Email support@metkapstudio.com with any privacy request and we will respond."
+retention: "Nothing about you is stored, so there is nothing to keep or delete — and any privacy request sent to support@metkapstudio.com is answered."
 hasAccounts: false
 contact: support@metkapstudio.com
 effectiveScope: The MetKap Studio website (metkapstudio.com) — not the apps or games.

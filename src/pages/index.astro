@@ -127,7 +127,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
           {statements.map((s, i) => (
             <article class="say">
               <p class="say-n voice" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
-              <h3>{s.title}</h3>
+              <h3>{tie(s.title)}</h3>
               <p class="say-text">{s.text}</p>
             </article>
           ))}
@@ -165,7 +165,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
                   quality={78}
                   loading="lazy"
                 />
-                <figcaption>{screenshotTitle(s.path)}</figcaption>
+                <figcaption>{tie(screenshotTitle(s.path))}</figcaption>
               </figure>
             ) : null;
           })}

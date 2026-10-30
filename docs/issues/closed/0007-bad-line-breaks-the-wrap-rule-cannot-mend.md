@@ -6,7 +6,7 @@
 - Found by: text-project 0001
 - Filed: 2026-10-28
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.15, card product-apps-and-about-text-breaks-where-a-reader-would
 
 Doubt: it could read `low` (only seen), but a torn line is the "ugly" that `medium` names; doubt rounds up.
 
@@ -43,4 +43,17 @@ No line of interface text at the standard sizes ends on a forward-pointing word 
 
 ## Evidence
 - assets/0007/01-about-heading.png — the About heading at 1440 px: "One person, making / software that behaves."
+- assets/0007/02-about-heading-after.png — the About heading at 1440 px after plan 0010 rewrote it; no bad break
 - docs/skills/text-project/0001-2026-10-28.md — readings before and after, and the wrap rule's diff
+
+## Closed
+
+Card `product-apps-and-about-text-breaks-where-a-reader-would`, 2026-10-30, re-measured every row at 1920, 1536, 1440, 414 and
+390 px with the card's `breaks.mjs`. Most rows were already gone, rewritten by plans 0008–0010. Of those still live, the Apps &
+Games closing line, the About "Privacy first" card, the privacy index's retention line, and the home captions and statement
+headings were mended (new words for the first three, ties for the last two). The screen suite's new line-break rule then found 5
+more at 320 and 768 px, and those were mended too.
+
+2 rows remain, judged and left: Waypost Words' "Reveal a letter: one letter / from an answer…" and "Reveal a square: the letter /
+in the square you pick." at 414 and 390. They are the game's App Store words, which only the owner changes. Each breaks after a
+complete noun phrase inside a term's description, which the new rule treats as a correct break.
