@@ -359,6 +359,12 @@ const schema = [
     gap: var(--space-3);
     margin-top: var(--space-6);
   }
+  /* One height for the set, the store button's 52 px. Stretch only evens out
+     one flex line, so once the row wraps on a phone the privacy link stood
+     at 44 under it (DESIGN.md, One Height Per Set). */
+  .action-row .btn {
+    --btn-h: 3.25rem;
+  }
   /* The opening: lockup, summary and actions on the left; the spec sheet on
      the right, its last rule level with the bottom of the buttons. */
   @media (min-width: 64rem) {

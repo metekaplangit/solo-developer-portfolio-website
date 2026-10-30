@@ -159,6 +159,7 @@ type Reading = {
   titleIndent: number | null;
   pageTop: number | null;
   unequalRows: Array<{ parent: string; top: number; heights: number[] }>;
+  unequalButtons: Array<{ parent: string; heights: string[] }>;
   voids: Array<{ parent: string; after: string; before: string; gap: number }>;
   lazyInFirstView: Array<{ src: string; top: number; left: number }>;
   strayHues: Array<{ el: string; hue: string; derived: string }>;
@@ -199,6 +200,7 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
     titleIndent: null,
     pageTop: null,
     unequalRows: [],
+    unequalButtons: [],
     voids: [],
     lazyInFirstView: [],
     strayHues: [],
@@ -354,6 +356,25 @@ const PROBE = (limits: { targetMin: number; textMin: number; gapMax: number }): 
           out.unequalRows.push({ parent: label(parent) + suffix, top, heights });
         }
       }
+    }
+  }
+
+  // --- Buttons in one set share one height (DESIGN.md, One Height Per Set) --
+  // A set is the buttons sharing a parent, whether they sit on one line or the
+  // row has wrapped. Stretch only evens out a single flex line, so a wrapped
+  // row is where a 44 px button stood under a 52 px one (inspect-project 0001).
+  const sets = new Map<Element, Element[]>();
+  for (const b of Array.from(document.querySelectorAll('.btn')).filter(visible)) {
+    if (b.parentElement) sets.set(b.parentElement, [...(sets.get(b.parentElement) ?? []), b]);
+  }
+  for (const [parent, set] of sets) {
+    if (set.length < 2) continue;
+    const heights = set.map((b) => round(b.getBoundingClientRect().height));
+    if (Math.max(...heights) - Math.min(...heights) > 1) {
+      out.unequalButtons.push({
+        parent: label(parent),
+        heights: set.map((b, i) => `"${(b.textContent ?? '').trim().replace(/\s+/g, ' ')}" ${heights[i]}`),
+      });
     }
   }
 
@@ -1079,6 +1100,10 @@ function faults(width: string, r: Reading): string[] {
 
   for (const u of r.unequalRows) {
     bad.push(`@${width} row heights — ${u.parent} at ${u.top}: ${u.heights.join(' / ')}`);
+  }
+
+  for (const u of r.unequalButtons) {
+    bad.push(`@${width} button heights in one set — ${u.parent}: ${u.heights.join(' / ')}`);
   }
 
   for (const v of r.voids) {

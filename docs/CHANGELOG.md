@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.66.8
+
+- A product page's two buttons are one height on a phone
+
 ## v0.66.6
 
 - Every press on a screenshot gallery or the phone rail moves it, however quickly they come

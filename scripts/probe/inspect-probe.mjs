@@ -1,5 +1,5 @@
 // What: inspect-project's measuring sweep — every built route at every size, page zoom and contrast setting, read as numbers (text that fits, overlap, alignment, spacing, sizes, pictures, tap size, contrast, line breaks, words) and pictured in tiles at the device's density.
-// Run: npm run build, then node scripts/probe/inspect-probe.mjs <time|calibrate|sweep|words> [--lane=1/3] [--out=<dir>] [--only=<cell id>] [--fresh] [--gpu]   (uses the global `playwright` install; `words` spell-checks every string in dist/ with macOS's own checker)
+// Run: npm run build, then node scripts/probe/inspect-probe.mjs <time|calibrate|sweep|words> [--lane=1/3] [--out=<dir>] [--only=<cell ids or route files, comma-separated>] [--fresh] [--gpu]   (uses the global `playwright` install; `words` spell-checks every string in dist/ with macOS's own checker)
 // Settles: what on the built site's screens looks wrong right now — placed, sized, spaced or written unlike the site's own values, or under a WCAG 2.2 floor?
 import { createServer } from 'node:http';
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
@@ -581,7 +581,7 @@ async function main() {
     const [li, ln] = (args.lane ?? '1/1').split('/').map(Number);
     // Spread by cost: tall routes at dense sizes first, dealt round-robin.
     const cost = (c) => (c.r.path.startsWith('/apps/') && !c.r.stub ? 3 : c.r.path === '/' ? 3 : 1) * c.s.dpr * c.zoom * (c.s.w < 800 ? 2 : 1);
-    const mine = (args.only ? all.filter((c) => c.id === args.only) : all).sort((a, b) => cost(b) - cost(a) || a.id.localeCompare(b.id)).filter((_, i) => i % ln === li - 1);
+    const mine = (args.only ? all.filter((c) => args.only.split(',').some((o) => c.id === o || c.id.startsWith(o + '@'))) : all).sort((a, b) => cost(b) - cost(a) || a.id.localeCompare(b.id)).filter((_, i) => i % ln === li - 1);
     const done = new Set(readdirSync(join(OUT, 'readings')).map((f) => f.replace(/\.json$/, '')));
     let n = 0;
     for (const cell of mine) {
