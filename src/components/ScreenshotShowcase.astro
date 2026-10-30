@@ -516,6 +516,77 @@ const PHONES_WIDE = 4;
 <script>
   // Progressive enhancement: wire arrows, dots, keyboard, and the live counter to
   // the native scroll-snap track. Falls back to plain swipe/scroll if this never runs.
+  import {
+    arrived,
+    clamp,
+    firstInView,
+    nearestPicture,
+    pageTarget,
+    railOffset,
+    shotsInView,
+  } from '../lib/rail';
+
+  // What both galleries share, so a fix to how a press lands is made once.
+  //
+  // A press aims from where the last press sent the track rather than from the
+  // picture showing, which only changes once a glide is half done: aimed from
+  // that, 3 quick taps on Next moved 1 picture (chaos-project 0001). The aim is
+  // let go once the track arrives, or the moment the visitor moves the track by
+  // hand. Left and right arrow keys press Previous and Next while the gallery or
+  // a control in it has focus; any other key may scroll the track itself, so it
+  // lets the aim go too. `frame` runs at most once per animation frame, after a
+  // scroll or a `nudge`.
+  function steer(
+    root: HTMLElement,
+    track: HTMLElement,
+    offsetOf: (target: number) => number,
+    press: (direction: number) => void,
+    frame: () => void,
+  ) {
+    let target: number | null = null;
+    const release = () => {
+      target = null;
+    };
+    const settle = () => {
+      if (target !== null && arrived(track.scrollLeft, offsetOf(target))) target = null;
+    };
+    track.addEventListener('pointerdown', release, { passive: true });
+    track.addEventListener('touchstart', release, { passive: true });
+    track.addEventListener('wheel', (e) => e.deltaX && release(), { passive: true });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        press(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        press(1);
+      } else {
+        release();
+      }
+    });
+    let queued = false;
+    const nudge = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        frame();
+      });
+    };
+    track.addEventListener('scroll', nudge, { passive: true });
+    return {
+      target: () => target,
+      /** Run `frame` on the next animation frame, as a scroll would. */
+      nudge,
+      send(to: number) {
+        target = to;
+        track.scrollTo({ left: offsetOf(to) });
+        settle();
+      },
+      settle,
+    };
+  }
+
   function initGallery(root: HTMLElement) {
     const track = root.querySelector<HTMLElement>('.track');
     const prev = root.querySelector<HTMLButtonElement>('.nav.prev');
@@ -527,24 +598,8 @@ const PHONES_WIDE = 4;
 
     let current = 0;
     const leftOf = (i: number) => slides[i].offsetLeft - track.offsetLeft;
-
-    // Where the last press sent the track. A press aims from here rather than
-    // from `current`, which only moves once a glide is half done: aimed from it,
-    // 3 quick taps on Next moved 1 picture (chaos-project 0001). It is let go
-    // once the track arrives, or the moment the visitor moves the track by hand.
-    let target: number | null = null;
-    const from = () => target ?? current;
-    const scrollToIndex = (i: number) => {
-      target = Math.max(0, Math.min(slides.length - 1, i));
-      track.scrollTo({ left: leftOf(target) });
-      if (Math.abs(track.scrollLeft - leftOf(target)) <= 1) target = null;
-    };
-    const byHand = () => {
-      target = null;
-    };
-    track.addEventListener('pointerdown', byHand, { passive: true });
-    track.addEventListener('touchstart', byHand, { passive: true });
-    track.addEventListener('wheel', (e) => e.deltaX && byHand(), { passive: true });
+    const go = (i: number) => aim.send(clamp(i, 0, slides.length - 1));
+    const from = () => aim.target() ?? current;
 
     const render = () => {
       if (counter) counter.textContent = String(current + 1);
@@ -554,31 +609,6 @@ const PHONES_WIDE = 4;
         d.setAttribute('aria-current', i === current ? 'true' : 'false'),
       );
     };
-
-    // Reveal the arrows only once JS is live (they ship hidden so no-JS users
-    // aren't shown dead controls).
-    prev?.removeAttribute('hidden');
-    next?.removeAttribute('hidden');
-
-    prev?.addEventListener('click', () => scrollToIndex(from() - 1));
-    next?.addEventListener('click', () => scrollToIndex(from() + 1));
-    dots.forEach((d) =>
-      d.addEventListener('click', () => scrollToIndex(Number(d.dataset.index))),
-    );
-
-    // Keyboard: left/right move when the gallery (or a control in it) is focused.
-    // Any other key may scroll the track itself, so it lets the target go.
-    root.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        scrollToIndex(from() - 1);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        scrollToIndex(from() + 1);
-      } else {
-        byHand();
-      }
-    });
 
     // A track that changes width keeps the picture it was on. Safari keeps the
     // old pixel offset instead, so narrowing past it lands on the last picture
@@ -597,31 +627,30 @@ const PHONES_WIDE = 4;
       track.style.removeProperty('scroll-behavior');
       return true;
     };
-    new ResizeObserver(pin).observe(track);
 
     // The current slide is the one nearest the middle, so the counter and the
     // dots change at the halfway point of any move — arrow, dot, key, swipe or
     // trackpad — rather than once a slide is 60% in.
-    let queued = false;
-    track.addEventListener(
-      'scroll',
-      () => {
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(() => {
-          queued = false;
-          if (pin()) return;
-          const i = Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
-          if (i !== current) {
-            current = i;
-            render();
-          }
-          if (target !== null && Math.abs(track.scrollLeft - leftOf(target)) <= 1) target = null;
-        });
-      },
-      { passive: true },
-    );
+    const aim = steer(root, track, leftOf, (direction) => go(from() + direction), () => {
+      if (pin()) return;
+      const i = nearestPicture(track.scrollLeft, track.clientWidth, slides.length);
+      if (i !== current) {
+        current = i;
+        render();
+      }
+      aim.settle();
+    });
 
+    // Reveal the arrows only once JS is live (they ship hidden so no-JS users
+    // aren't shown dead controls).
+    prev?.removeAttribute('hidden');
+    next?.removeAttribute('hidden');
+
+    prev?.addEventListener('click', () => go(from() - 1));
+    next?.addEventListener('click', () => go(from() + 1));
+    dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.index))));
+
+    new ResizeObserver(pin).observe(track);
     render();
   }
 
@@ -640,66 +669,36 @@ const PHONES_WIDE = 4;
     if (!track || !prev || !next || slides.length < 3) return;
 
     const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
-    const perView = () => Math.max(1, Math.round((track.clientWidth + (step() - slides[0].offsetWidth)) / step()));
+    const perView = () => shotsInView(track.clientWidth, step(), slides[0].offsetWidth);
     const max = () => track.scrollWidth - track.clientWidth;
-    // The first shot the last press sent the rail to. A press pages on from
-    // there, to a whole shot, rather than by an offset from wherever a glide had
-    // got to: that added to a half-way point, so 2 quick taps on Next stopped
-    // short of the end and Safari left the rail resting part-way across a shot
-    // (chaos-project 0001). Let go on arrival, or when the visitor moves it.
-    let target: number | null = null;
-    const leftOf = (first: number) => Math.min(first * step(), max());
+    // A press pages on from the first shot the last press sent the rail to, to a
+    // whole shot, rather than by an offset from wherever a glide had got to: that
+    // added to a half-way point, so 2 quick taps on Next stopped short of the end
+    // and Safari left the rail resting part-way across a shot (chaos-project 0001).
     const render = () => {
-      const first = Math.round(track.scrollLeft / step());
+      const first = firstInView(track.scrollLeft, step());
       if (from) from.textContent = String(first + 1);
       if (to) to.textContent = String(Math.min(slides.length, first + perView()));
       prev.disabled = track.scrollLeft <= 1;
       next.disabled = track.scrollLeft >= max() - 1;
-      if (target !== null && Math.abs(track.scrollLeft - leftOf(target)) <= 1) target = null;
+      aim.settle();
     };
-    const page = (dir: number) => {
-      const start = target ?? Math.round(track.scrollLeft / step());
-      target = Math.max(0, Math.min(slides.length - perView(), start + dir * perView()));
-      track.scrollTo({ left: leftOf(target) });
-      if (Math.abs(track.scrollLeft - leftOf(target)) <= 1) target = null;
+    const page = (direction: number) => {
+      const start = aim.target() ?? firstInView(track.scrollLeft, step());
+      aim.send(pageTarget(start, direction, perView(), slides.length));
     };
-    const byHand = () => {
-      target = null;
-    };
-    track.addEventListener('pointerdown', byHand, { passive: true });
-    track.addEventListener('touchstart', byHand, { passive: true });
-    track.addEventListener('wheel', (e) => e.deltaX && byHand(), { passive: true });
+    const aim = steer(root, track, (first) => railOffset(first, step(), max()), page, render);
 
     prev.removeAttribute('hidden');
     next.removeAttribute('hidden');
     count?.removeAttribute('hidden');
     prev.addEventListener('click', () => page(-1));
     next.addEventListener('click', () => page(1));
-    root.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        page(-1);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        page(1);
-      } else {
-        byHand();
-      }
-    });
-    let queued = false;
-    const onScroll = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        queued = false;
-        render();
-      });
-    };
-    track.addEventListener('scroll', onScroll, { passive: true });
     // A size change mid-glide re-aims at the same shot, which now sits elsewhere.
     const onResize = () => {
-      if (target !== null) track.scrollTo({ left: leftOf(target) });
-      onScroll();
+      const target = aim.target();
+      if (target !== null) track.scrollTo({ left: railOffset(target, step(), max()) });
+      aim.nudge();
     };
     window.addEventListener('resize', onResize);
     // Re-measure whenever the rail's real size settles, not only on a scroll or a
