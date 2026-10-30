@@ -25,8 +25,8 @@
 //     title ends in that route's `@tag`, and `control/loop.py check` will refuse
 //     a card naming a tag that no title here carries.
 //
-// A route is therefore one screen: nine screens, one per published route. The
-// rules that used to be nine separate `it()` blocks spanning every route are now
+// A route is therefore one screen, one per published route. The rules that
+// used to be nine separate `it()` blocks spanning every route are now
 // applied per route and collected, so a failure says WHICH PAGE is wrong before
 // it says which rule — and every rule that a route breaks is still listed, not
 // just the first.
@@ -46,27 +46,10 @@ import puppeteer, { type Browser } from 'puppeteer-core';
 
 const DIST = 'dist';
 
-/**
- * Every route the site publishes, in the order a reader would meet them, each
- * with the name a card writes down.
- *
- * No two tags may be a substring of one another: the control matches a card's
- * tag against a title with `in`, so `@privacy` would silently select the policy
- * index AND every product policy. Hence `@privacy-index`.
- */
-const ROUTES = [
-  { path: '/', tag: '@home', name: 'the home page' },
-  { path: '/apps/', tag: '@apps', name: 'the catalog' },
-  { path: '/apps/sole-focus/', tag: '@sole-focus', name: "Sole Focus's product page" },
-  { path: '/apps/magic-notes/', tag: '@magic-notes', name: "Magic Notes's product page" },
-  { path: '/apps/waypost-words/', tag: '@waypost-words', name: "Waypost Words's product page" },
-  { path: '/about/', tag: '@about', name: 'the about page' },
-  { path: '/support/', tag: '@support', name: 'the support page' },
-  { path: '/privacy/', tag: '@privacy-index', name: 'the privacy index' },
-  { path: '/privacy/sole-focus/', tag: '@privacy-sole-focus', name: "Sole Focus's privacy policy" },
-  { path: '/privacy/waypost-words/', tag: '@privacy-waypost-words', name: "Waypost Words's privacy policy" },
-  { path: '/404', tag: '@not-found', name: 'the not-found page' },
-] as const;
+// Every route the site publishes comes from the one table every check reads,
+// held against the build by `tests/dist.test.ts`. No two tags may share a name:
+// the control matches a card's tag against the words of a title.
+import { ROUTES } from '../../scripts/routes.mjs';
 
 /** 320 is the narrowest width this site supports; 1440 is the owner's desktop. */
 const WIDTHS = [320, 390, 768, 1440] as const;
@@ -1044,7 +1027,7 @@ beforeAll(async () => {
   // Every route, every run, whichever screens the card named. One rule below
   // compares routes against each other, and a run that loaded three of them
   // could not check it — so the tags choose which failures a card is answerable
-  // for, never which pages get loaded. Reading all nine costs about a minute.
+  // for, never which pages get loaded. Reading all of them costs about a minute.
   for (const route of ROUTES) {
     readings.set(route.path, await readRoute(chrome, started.base, route.path));
   }
@@ -1148,10 +1131,10 @@ function holdsGeometry(path: string): void {
 // out as — so a generated title like `${route.name} ... ${route.tag}` reads to it
 // exactly as written, `@home` appears nowhere, and `check` refuses the card with
 // "no screen test carries @home". That is what happened the first time this was
-// written; nine plain lines are the fix, and they are greppable besides.
+// written; one plain line per route is the fix, and greppable besides.
 //
-// Keep each title's tag in step with the `ROUTES` table above, and with the same
-// table in `scripts/capture.mjs`.
+// Keep each title's tag in step with `scripts/routes.mjs`; the test below
+// fails when a route in that table has no title carrying its tag.
 test('the home page holds its geometry @home', () => holdsGeometry('/'));
 test('the catalog holds its geometry @apps', () => holdsGeometry('/apps/'));
 test("Sole Focus's product page holds its geometry @sole-focus", () => holdsGeometry('/apps/sole-focus/'));
@@ -1161,6 +1144,7 @@ test('the about page holds its geometry @about', () => holdsGeometry('/about/'))
 test('the support page holds its geometry @support', () => holdsGeometry('/support/'));
 test('the privacy index holds its geometry @privacy-index', () => holdsGeometry('/privacy/'));
 test("Sole Focus's privacy policy holds its geometry @privacy-sole-focus", () => holdsGeometry('/privacy/sole-focus/'));
+test("Magic Notes's privacy policy holds its geometry @privacy-magic-notes", () => holdsGeometry('/privacy/magic-notes/'));
 test("Waypost Words's privacy policy holds its geometry @privacy-waypost-words", () => holdsGeometry('/privacy/waypost-words/'));
 test('the not-found page holds its geometry @not-found', () => holdsGeometry('/404'));
 
@@ -1254,7 +1238,7 @@ test('a Mac set to Increase contrast gets stronger text, hairlines and edges @in
 
 test('every route in the table has a test carrying its tag', () => {
   // Only lines that open a test count — the same place the control looks. Searching
-  // the whole file would find every tag in the `ROUTES` table itself and pass while
+  // the whole file would find a tag mentioned in a comment and pass while
   // no test carried any of them.
   const titles = readFileSync(new URL(import.meta.url), 'utf-8')
     .split('\n')

@@ -17,29 +17,17 @@
 //   - A picture older than the code it shows is refused as stale at closing
 //     time, so take them after the last edit, not before.
 //
-// Named tags narrow it to those routes; with none it photographs all nine.
+// Named tags narrow it to those routes; with none it photographs every route in
+// `scripts/routes.mjs`.
 
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, mkdirSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import puppeteer from 'puppeteer-core';
+import { ROUTES } from './routes.mjs';
 
 const DIST = 'dist';
 
-/** Kept in step with `tests/screens/site.spec.ts` — same routes, same tags. */
-const ROUTES = [
-  { path: '/', tag: '@home', file: 'home' },
-  { path: '/apps/', tag: '@apps', file: 'apps' },
-  { path: '/apps/sole-focus/', tag: '@sole-focus', file: 'sole-focus' },
-  { path: '/apps/magic-notes/', tag: '@magic-notes', file: 'magic-notes' },
-  { path: '/apps/waypost-words/', tag: '@waypost-words', file: 'waypost-words' },
-  { path: '/about/', tag: '@about', file: 'about' },
-  { path: '/support/', tag: '@support', file: 'support' },
-  { path: '/privacy/', tag: '@privacy-index', file: 'privacy-index' },
-  { path: '/privacy/sole-focus/', tag: '@privacy-sole-focus', file: 'privacy-sole-focus' },
-  { path: '/privacy/waypost-words/', tag: '@privacy-waypost-words', file: 'privacy-waypost-words' },
-  { path: '/404', tag: '@not-found', file: 'not-found' },
-];
 
 const WIDTHS = [1440, 390];
 

@@ -6,7 +6,7 @@
 - Found by: wrap-up, 2026-09-22
 - Filed: 2026-09-22
 - Tried by: —
-- Closed by: —
+- Closed by: the card "Every check covers every page the site builds" (plan 0016 A), 2026-10-30 — the route tables are gone from both files and the counting comments name `scripts/routes.mjs` instead; the lines that remain describe history
 
 ## What happens
 The site has 11 routes since v0.53.0 added the two Wander Words pages, and both route tables were updated, but the comments around them still say "nine".

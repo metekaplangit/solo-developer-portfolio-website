@@ -77,12 +77,13 @@ Two tiers run by the control, and a third you run by hand.
 - **Fast checks — `npm run headless`.** `npm audit --omit=dev`, the build,
   `astro check`, the unit suite and the built-output suite, in that order.
   Every card runs all of it.
-- **Screens — `tests/screens/site.spec.ts`.** A real Chrome over 11 routes at 4
+- **Screens — `tests/screens/site.spec.ts`.** A real Chrome over 12 routes at 4
   widths plus a phone pass, about a minute. One `test()` per route, and the
   `@tag` at the end of each title is what a card names:
 
       @home  @apps  @sole-focus  @magic-notes  @waypost-words  @about
-      @support  @privacy-index  @privacy-sole-focus  @privacy-waypost-words
+      @support  @privacy-index  @privacy-sole-focus  @privacy-magic-notes
+      @privacy-waypost-words
       @waypost-rail
       @not-found  @every-route
 
@@ -96,8 +97,9 @@ Build before photographing — a picture of a stale build reports differences th
 change never made, and the control refuses a picture older than the code it shows.
 A card that touched only a unit test writes one `unrendered:` line instead.
 
-- **The live tier — `npm run test:live`.** Fetches every route from
-  `https://metkapstudio.com` and holds the served HTML against `dist/`: any
+- **The live tier — `npm run test:live`.** Fetches every route in
+  `scripts/routes.mjs` from `https://metkapstudio.com` and holds the served
+  HTML against `dist/`: any
   `<script>` the build never wrote, any third-party origin, any missing CSP.
   Point it elsewhere with `npm run test:live -- <url>`.
 

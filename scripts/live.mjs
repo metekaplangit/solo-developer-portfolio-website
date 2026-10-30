@@ -24,6 +24,7 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { ROUTES, builtFile } from './routes.mjs';
 
 const SITE = process.argv[2] ?? 'https://metkapstudio.com';
 
@@ -39,18 +40,6 @@ const HEADERS = {
     '(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
 };
 
-// The routes the build produces, as `dist/` lays them out.
-const ROUTES = [
-  ['/', 'index.html'],
-  ['/apps', 'apps/index.html'],
-  ['/apps/sole-focus', 'apps/sole-focus/index.html'],
-  ['/apps/magic-notes', 'apps/magic-notes/index.html'],
-  ['/about', 'about/index.html'],
-  ['/support', 'support/index.html'],
-  ['/privacy', 'privacy/index.html'],
-  ['/privacy/sole-focus', 'privacy/sole-focus/index.html'],
-  ['/privacy/magic-notes', 'privacy/magic-notes/index.html'],
-];
 
 if (!existsSync('dist/index.html')) {
   console.error('dist/ is missing — run `npm run build` first.');
@@ -83,8 +72,8 @@ function origins(html) {
 const problems = [];
 let checked = 0;
 
-for (const [route, file] of ROUTES) {
-  const builtPath = join('dist', file);
+for (const { path: route } of ROUTES) {
+  const builtPath = join('dist', builtFile(route));
   if (!existsSync(builtPath)) {
     problems.push(`${route}: the build produced no ${builtPath} — this list is out of date with the site`);
     continue;

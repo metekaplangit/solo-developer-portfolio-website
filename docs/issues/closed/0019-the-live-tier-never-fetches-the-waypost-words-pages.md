@@ -6,7 +6,7 @@
 - Found by: hunt-project 0001
 - Filed: 2026-10-29
 - Tried by: —
-- Closed by: —
+- Closed by: the card "Every check covers every page the site builds" (plan 0016 A), 2026-10-30 — `scripts/live.mjs` reads `scripts/routes.mjs`; `npm run test:live` now reads `12 of 12 route(s) fetched`, both Waypost Words pages among them; the built-output test "has every check that covers every page read that table" seen red first
 
 ## What happens
 `npm run test:live` checks 9 routes, written out by hand in `scripts/live.mjs`.

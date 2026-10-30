@@ -18,6 +18,7 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { createHash } from 'node:crypto';
+import { ROUTES, builtFile } from '../scripts/routes.mjs';
 
 const DIST = 'dist';
 const SITE = 'https://metkapstudio.com';
@@ -60,23 +61,26 @@ beforeAll(() => {
 });
 
 describe('every built page', () => {
-  it('builds the 12 routes this site has, and the 2 old addresses that forward', () => {
-    expect(built.map(([r]) => r)).toEqual([
-      '/',
-      '/404',
-      '/about/',
-      '/apps/',
-      '/apps/magic-notes/',
-      '/apps/sole-focus/',
-      '/apps/wander-words/',
-      '/apps/waypost-words/',
-      '/privacy/',
-      '/privacy/magic-notes/',
-      '/privacy/sole-focus/',
-      '/privacy/wander-words/',
-      '/privacy/waypost-words/',
-      '/support/',
-    ]);
+  // The route table every check reads (`scripts/routes.mjs`). A page the build
+  // makes and the table lacks is a page the screen suite, the captures and the
+  // live tier all skip without a word — which is how `/privacy/magic-notes/` and
+  // both Waypost Words pages went unchecked (evaluate-project 0001).
+  it('lists every page the build makes in the one route table, and nothing it does not', () => {
+    const forwards = MOVED.map(([from]) => from);
+    expect(built.map(([r]) => r)).toEqual(
+      [...ROUTES.map((r) => r.path), ...forwards].sort((a, b) => a.localeCompare(b)),
+    );
+    for (const route of ROUTES) {
+      expect(existsSync(join(DIST, builtFile(route.path))), route.path).toBe(true);
+    }
+  });
+
+  it('has every check that covers every page read that table, and keep no list of its own', () => {
+    for (const file of ['tests/screens/site.spec.ts', 'scripts/capture.mjs', 'scripts/live.mjs']) {
+      const source = readFileSync(file, 'utf-8');
+      expect(source, file).toMatch(/import \{[^}]*\bROUTES\b[^}]*\} from '[./]*\/?(scripts\/)?routes\.mjs'/);
+      expect(source, file).not.toMatch(/\bconst ROUTES\b/);
+    }
   });
 
   // The game was Wander Words until 2026-09-22, and a build of it already links
