@@ -1077,6 +1077,67 @@ function each(): Array<{ route: string; width: string; r: Reading }> {
   return rows;
 }
 
+/** One button variant's transform at rest, hovered, and hovered while pressed. */
+type ButtonFeel = { variant: string; rest: string; hover: string; pressed: string };
+const buttonFeel = new Map<string, ButtonFeel[]>();
+const BUTTON_ROUTES = ['/', '/apps/', '/apps/sole-focus/'] as const;
+
+/**
+ * Hold each kind of button hovered, then hovered and pressed — a mouse is always
+ * hovering when it presses — and read its transform once its transition has
+ * been run to the end (issue 0016). The states are forced through the browser's
+ * own debugging protocol, so no pointer position or clock decides the result.
+ */
+async function readButtonFeel(chrome: Chrome, url: string): Promise<ButtonFeel[]> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const deadline = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('button attempt passed its 20s deadline')), 20_000);
+      });
+      page = await Promise.race([chrome.page(), deadline]);
+      page.setDefaultTimeout(10_000);
+      const feel = await Promise.race([drive(page), deadline]);
+      clearTimeout(timer);
+      await page.close().catch(() => {});
+      return feel;
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not read the buttons on ${url} in 8 attempts: ${String(lastError).slice(0, 160)}`);
+
+  async function drive(page: import('puppeteer-core').Page): Promise<ButtonFeel[]> {
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+    await page.goto(url, { waitUntil: 'load', timeout: 15_000 });
+    const cdp = await page.createCDPSession();
+    await cdp.send('DOM.enable');
+    await cdp.send('CSS.enable');
+    const { root } = await cdp.send('DOM.getDocument', { depth: 0 });
+    const out: ButtonFeel[] = [];
+    for (const variant of ['btn-primary', 'btn-hue', 'btn-secondary']) {
+      const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: `.btn.${variant}` });
+      if (!nodeId) continue;
+      const read = async (forced: string[]) => {
+        await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: forced });
+        return page.evaluate((sel) => {
+          const el = document.querySelector(sel)!;
+          for (const a of el.getAnimations()) a.finish();
+          return getComputedStyle(el).transform;
+        }, `.btn.${variant}`);
+      };
+      out.push({ variant, rest: await read([]), hover: await read(['hover']), pressed: await read(['hover', 'active']) });
+      await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] });
+    }
+    return out;
+  }
+}
+
 beforeAll(async () => {
   if (!existsSync(join(DIST, 'index.html'))) {
     throw new Error('dist/ is missing or empty — run `npm run build` before `npm run test:ui`.');
@@ -1099,6 +1160,9 @@ beforeAll(async () => {
   }
   for (const path of ['/apps/sole-focus/', '/apps/magic-notes/', '/apps/waypost-words/']) {
     presses.set(path, await drivePresses(chrome, started.base + path));
+  }
+  for (const route of BUTTON_ROUTES) {
+    buttonFeel.set(route, await readButtonFeel(chrome, started.base + route));
   }
   for (const route of CONTRAST_ROUTES) {
     for (const value of ['more', 'no-preference'] as const) {
@@ -1273,6 +1337,24 @@ test('every press on a gallery or the phone rail moves it, however quick @galler
   );
   expect(presses.size).toBe(3);
   expect(bad).toEqual([]);
+});
+
+// Every filled or outlined button settles when pressed: back down from its hover
+// lift and to 97%, in 90 ms (issue 0016). The hover rules sat after `.btn:active`
+// with equal weight, so with a mouse — always hovering as it presses — the lift
+// won and the press never showed.
+test('every kind of button settles when pressed @button-press', () => {
+  const bad: string[] = [];
+  const seen = new Set<string>();
+  for (const [route, feel] of buttonFeel) {
+    for (const f of feel) {
+      seen.add(f.variant);
+      if (f.hover !== 'matrix(1, 0, 0, 1, 0, -1)') bad.push(`${route} .${f.variant}: hover ${f.hover}, not the 1px lift`);
+      if (f.pressed !== 'matrix(0.97, 0, 0, 0.97, 0, 0)') bad.push(`${route} .${f.variant}: pressed ${f.pressed}, not the settle`);
+    }
+  }
+  expect(bad).toEqual([]);
+  expect([...seen].sort()).toEqual(['btn-hue', 'btn-primary', 'btn-secondary']);
 });
 
 // A Mac set to "Increase contrast" asks every custom colour for a stronger

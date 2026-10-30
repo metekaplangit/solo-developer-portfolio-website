@@ -964,11 +964,6 @@ img {
   padding-inline: 1.75rem;
   font-size: var(--text-base);
 }
-/* Press feedback — a quick settle that confirms the click was registered. */
-.btn:active {
-  transform: translateY(0) scale(0.97);
-  transition-duration: 90ms;
-}
 /* The neutral action: studio chrome, so it is achromatic. */
 .btn-primary {
   background: var(--accent);
@@ -1001,6 +996,14 @@ img {
   color: var(--text-strong);
   border-color: var(--border-strong);
   transform: translateY(-1px);
+}
+/* Press feedback — a quick settle that confirms the click was registered. It
+   sits after every hover rule on purpose: they carry the same weight, and a
+   mouse is always hovering when it presses, so the later rule is the one seen
+   (issue 0016). */
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 90ms;
 }
 
 /* Utilities ---------------------------------------------------------------- */

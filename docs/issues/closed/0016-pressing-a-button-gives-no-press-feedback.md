@@ -6,7 +6,7 @@
 - Found by: motion-project 0001
 - Filed: 2026-10-29
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.16, card pressing-a-button-settles-it-visibly
 
 Doubt: a missing press answer is only seen, which reads as `low`, but it is a
 designed response that should show and does not; rounded up to `medium`.
@@ -36,3 +36,5 @@ returns on release, as the comment above the rule says.
 - The served stylesheet, read in the browser pane: `.btn:active` is rule 0;
   `.btn-primary:hover`, `.btn-hue:hover`, `.btn-secondary:hover` are rules 1–3,
   each `translateY(-1px)`.
+- assets/0016/01-home-button-hovered.png — the home hero button after the fix, held hovered: lifted 1px
+- assets/0016/02-home-button-pressed.png — the same button hovered and pressed: settled to 97%
