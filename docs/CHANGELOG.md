@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.66.6
+
+- Every press on a screenshot gallery or the phone rail moves it, however quickly they come
+
 ## v0.66.4
 
 - A screenshot gallery keeps the picture you were on when the window narrows or the phone turns upright

@@ -779,6 +779,123 @@ async function driveGallery(chrome: Chrome, url: string): Promise<GalleryStep[]>
   }
 }
 
+/** Where a gallery or the rail came to rest after a burst of presses, per case. */
+type PressStep = { what: string; expected: string; showing: string; counter: string };
+const presses = new Map<string, PressStep[]>();
+
+/**
+ * Press a gallery's or the rail's controls several times in one burst — every
+ * press in the same moment, so no clock decides the result — then read where it
+ * came to rest (chaos-project 0001). Each press used to aim at the picture after
+ * the one showing, which does not change until the glide is half done, so 3
+ * quick taps on Next moved 1 picture and the rail stopped short of its end.
+ */
+async function drivePresses(chrome: Chrome, url: string): Promise<PressStep[]> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const deadline = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('press attempt passed its 20s deadline')), 20_000);
+      });
+      page = await Promise.race([chrome.page(), deadline]);
+      page.setDefaultTimeout(10_000);
+      const steps = await Promise.race([drive(page), deadline]);
+      clearTimeout(timer);
+      await page.close().catch(() => {});
+      return steps;
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not drive the presses on ${url} in 8 attempts: ${String(lastError).slice(0, 160)}`);
+
+  async function drive(page: import('puppeteer-core').Page): Promise<PressStep[]> {
+    // Motion stays on: with it off every move is instant, and instant moves add
+    // up correctly even on the broken code — the fault lives in the glide.
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+    await page.goto(url, { waitUntil: 'load', timeout: 15_000 });
+    // Rest is read off the track, not a timer: still for 300 ms, at most 6 s.
+    const settle = () =>
+      page.evaluate(
+        () =>
+          new Promise<void>((done) => {
+            const track = document.querySelector<HTMLElement>('.track, .phone-track')!;
+            let last = -1;
+            let still = 0;
+            const started = performance.now();
+            const tick = () => {
+              still = track.scrollLeft === last ? still + 1 : 0;
+              last = track.scrollLeft;
+              if (still >= 6 || performance.now() - started > 6000) done();
+              else setTimeout(tick, 50);
+            };
+            tick();
+          }),
+      );
+    const steps: PressStep[] = [];
+    const rail = await page.evaluate(() => !!document.querySelector('[data-phones]'));
+    // One burst: every event dispatched inside one call, before any frame runs.
+    const burst = (sel: string, times: number, key?: string) =>
+      page.evaluate(
+        (s, n, k) => {
+          const el = document.querySelector<HTMLElement>(s)!;
+          el.scrollIntoView({ block: 'center' });
+          for (let i = 0; i < n; i++) {
+            if (k) el.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true }));
+            else el.click();
+          }
+        },
+        sel,
+        times,
+        key,
+      );
+    if (!rail) {
+      const read = () =>
+        page.evaluate(() => {
+          const root = document.querySelector('.gallery')!;
+          const left = root.querySelector('.track')!.getBoundingClientRect().left;
+          const off = [...root.querySelectorAll('.slide')].map((el) => Math.abs(el.getBoundingClientRect().left - left));
+          return { showing: String(off.indexOf(Math.min(...off)) + 1), counter: root.querySelector('.counter-now')?.textContent ?? '' };
+        });
+      const n = await page.evaluate(() => document.querySelectorAll('.gallery .slide').length);
+      await settle();
+      await burst('.gallery .nav.next', 3);
+      await settle();
+      steps.push({ what: '3 taps on Next from picture 1', expected: '4', ...(await read()) });
+      await burst('.gallery .track', 2, 'ArrowLeft');
+      await settle();
+      steps.push({ what: '2 ArrowLeft from picture 4', expected: '2', ...(await read()) });
+      await burst('.gallery .nav.next', 40);
+      await settle();
+      steps.push({ what: '40 taps on Next', expected: String(n), ...(await read()) });
+      return steps;
+    }
+    const read = () =>
+      page.evaluate(() => {
+        const root = document.querySelector('[data-phones]')!;
+        const track = root.querySelector<HTMLElement>('.phone-track')!;
+        const shots = [...track.querySelectorAll<HTMLElement>('.phone')];
+        const step = shots[1].offsetLeft - shots[0].offsetLeft;
+        // Resting on a whole shot reads as a whole number; part-way reads as a fraction.
+        const first = Math.round((track.scrollLeft / step) * 100) / 100 + 1;
+        return { showing: String(first), counter: (root.querySelector('.phone-count')?.textContent ?? '').replace(/\s+/g, ' ').trim() };
+      });
+    await settle();
+    await burst('[data-phones] .nav.next', 2);
+    await settle();
+    steps.push({ what: 'rail: 2 taps on Next from the start', expected: '7', ...(await read()) });
+    await burst('[data-phones] .phone-track', 3, 'ArrowLeft');
+    await settle();
+    steps.push({ what: 'rail: 3 ArrowLeft from the end', expected: '1', ...(await read()) });
+    return steps;
+  }
+}
+
 /** One browser per route, replaced on any failure; one fresh page per width. */
 /** What the system's increased-contrast setting changes on one page. */
 type ContrastReading = {
@@ -915,6 +1032,9 @@ beforeAll(async () => {
   }
   for (const path of ['/apps/sole-focus/', '/apps/magic-notes/']) {
     galleries.set(path, await driveGallery(chrome, started.base + path));
+  }
+  for (const path of ['/apps/sole-focus/', '/apps/magic-notes/', '/apps/waypost-words/']) {
+    presses.set(path, await drivePresses(chrome, started.base + path));
   }
   for (const route of CONTRAST_ROUTES) {
     for (const value of ['more', 'no-preference'] as const) {
@@ -1055,6 +1175,19 @@ test('a screenshot gallery keeps its picture when the window changes size @galle
       .map((s) => `${path} picture ${s.picked}, ${s.from}→${s.to}: showing ${s.showing}, counter ${s.counter}`),
   );
   expect(galleries.size).toBe(2);
+  expect(bad).toEqual([]);
+});
+
+// Every press counts, however quickly they come: 3 taps on Next move 3
+// pictures, the rail moves one view per press and rests on a whole shot, and
+// the counter says where it rests (chaos-project 0001).
+test('every press on a gallery or the phone rail moves it, however quick @gallery-presses', () => {
+  const bad = [...presses].flatMap(([path, steps]) =>
+    steps
+      .filter((s) => s.showing !== s.expected || (path.includes('waypost') ? !s.counter.startsWith(`${s.expected}–`) : s.counter !== s.expected))
+      .map((s) => `${path} ${s.what}: showing ${s.showing}, counter ${s.counter}, expected ${s.expected}`),
+  );
+  expect(presses.size).toBe(3);
   expect(bad).toEqual([]);
 });
 
