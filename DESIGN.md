@@ -346,7 +346,8 @@ strength. Without the setting, nothing changes. `@increased-contrast` holds it.
   inside a band that product owns.
 - **Secondary:** transparent with a `border-strong` hairline and body-coloured
   text; fills to Lifted on hover.
-- **Download:** primary or product tone (`tone` prop) plus the Apple mark, at
+- **Download:** primary or product tone (`tone` prop) plus the studio's download mark (never
+  Apple's logo — Apple's marketing guidelines rule the standalone logo out), at
   `.btn-lg` in a hero and `.btn-sm` in a card.
 - **Hover / Focus:** lifts `-1px` with a glow matching its own fill. Focus is
   always a visible 2px white ring, never removed.

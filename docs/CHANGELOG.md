@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.66.14
+
+- The Download button carries the studio's own mark, not Apple's logo
+
 ## v0.66.11
 
 - Both screenshot galleries run on one shared controller

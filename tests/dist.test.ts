@@ -370,6 +370,22 @@ describe('every built page', () => {
     for (const [route, set] of sets) expect(set, route).toBe(first);
   });
 
+  // Issue 0004. Apple's App Store marketing guidelines: "Don't use the standalone
+  // Apple logo" and "Use only the badge artwork provided". Every Download button
+  // carries the studio's own mark instead, on every page that shows one.
+  it("never draws Apple's logo, and every Download button carries the studio's mark", () => {
+    let buttons = 0;
+    for (const [route, html] of built) {
+      expect(html, `${route}: the Apple logo path`).not.toMatch(/M17\.05 12\.54|apple-mark/);
+      expect(html, `${route}: the Apple glyph character`).not.toContain('');
+      for (const m of html.matchAll(/<a[^>]*class="[^"]*\bdownload-btn\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g)) {
+        buttons++;
+        expect(m[1], `${route}: a Download button without the studio's mark`).toMatch(/<svg[^>]*class="get-mark"/);
+      }
+    }
+    expect(buttons, 'no Download button was found to check').toBeGreaterThan(0);
+  });
+
   it('loads no script from a third-party origin', () => {
     for (const [route, html] of built) {
       for (const m of html.matchAll(/<script[^>]*\bsrc="([^"]+)"/g)) {
