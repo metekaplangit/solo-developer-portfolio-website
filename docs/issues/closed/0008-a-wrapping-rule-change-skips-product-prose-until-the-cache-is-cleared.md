@@ -6,7 +6,7 @@
 - Found by: plan 0005, card A
 - Filed: 2026-10-28
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.19, card a-change-to-the-wrapping-rule-reaches-product-prose-on-a-pla
 
 Doubt: deploys build from a fresh checkout, so visitors likely get the fresh render; not checked against a deploy log. Rounded to `medium` because the fast checks went green on text the change never reached.
 

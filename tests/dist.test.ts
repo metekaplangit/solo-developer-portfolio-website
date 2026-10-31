@@ -19,6 +19,8 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { createHash } from 'node:crypto';
 import { ROUTES, builtFile } from '../scripts/routes.mjs';
+import { markdownToHtml } from 'satteri';
+import satteriTie from '../src/lib/satteri-tie';
 
 const DIST = 'dist';
 const SITE = 'https://metkapstudio.com';
@@ -459,6 +461,48 @@ describe('the wrapping rule reaches rendered Markdown (STEP-0062)', () => {
   it('ties the policy sections too (STEP-0067)', () => {
     const [, policy] = built.find(([r]) => r === '/privacy/')!;
     expect(policy.includes(NBSP), 'policy prose is tied').toBe(true);
+  });
+
+  // Issue 0008: Astro's content cache kept prose rendered with an older rule,
+  // and every check stayed green — T1 below carries its own copy of the words,
+  // so a word added to `tie()` never reached it either. This renders each
+  // Markdown body afresh with today's plugin and holds its visible text against
+  // the page a visitor gets, so a build that reused old prose cannot pass.
+  it('renders every Markdown body with the rule as it stands today (issue 0008)', async () => {
+    const MARK = String.fromCharCode(0x0001);
+    const text = (h: string) =>
+      h
+        .replace(/<[^>]+>/g, MARK)
+        .replace(/&nbsp;/g, NBSP)
+        .replace(/&amp;/g, '&')
+        .split(MARK)
+        .map((s) => s.replace(/[\n\r\t ]+/g, ' ').trim())
+        .filter(Boolean)
+        .join('|');
+    const bodies: Array<[string, string, RegExp]> = [
+      ...readdirSync('src/content/products').map((f): [string, string, RegExp] => [
+        `src/content/products/${f}`,
+        `/apps/${f.replace(/\.md$/, '')}/`,
+        /<div class="prose story-prose[^"]*"[^>]*>([\s\S]*?)<\/div>/g,
+      ]),
+      ...readdirSync('src/content/policies').map((f): [string, string, RegExp] => [
+        `src/content/policies/${f}`,
+        f === 'global.md' ? '/privacy/' : `/privacy/${f.replace(/\.md$/, '')}/`,
+        /<div class="policy-lead"[^>]*>([\s\S]*?)<\/div>/g,
+      ]),
+    ].filter(([src]) => src.endsWith('.md'));
+    expect(bodies.length, 'Markdown bodies found').toBeGreaterThanOrEqual(7);
+    for (const [src, route, holder] of bodies) {
+      const md = readFileSync(src, 'utf-8').replace(/^---[\s\S]*?\n---\n/, '');
+      const { html } = await markdownToHtml(md, {
+        hastPlugins: [satteriTie],
+        features: { gfm: true, smartPunctuation: true },
+      } as never);
+      const page = built.find(([r]) => r === route);
+      expect(page, `${route} is built`).toBeDefined();
+      const shown = [...page![1].matchAll(holder)].map((m) => m[1]).join('');
+      expect(text(shown), `${route} (${src}) was rendered with an older rule`).toBe(text(html));
+    }
   });
 });
 

@@ -3,6 +3,14 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
 import satteriTie from './src/lib/satteri-tie.ts';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+
+/** The wrapping rule's source files, fingerprinted — see `markdown` below. */
+const RULE_DIGEST = createHash('sha256')
+  .update(['./src/lib/typography.ts', './src/lib/satteri-tie.ts'].map((f) => readFileSync(new URL(f, import.meta.url), 'utf-8')).join('\0'))
+  .digest('hex')
+  .slice(0, 12);
 
 // Zero-cost, fully static configuration.
 // Guardrails (see docs/ARCHITECTURE.md, docs/DEPLOYMENT.md):
@@ -30,8 +38,14 @@ export default defineConfig({
   // Naming the processor explicitly rather than using the deprecated
   // `markdown.rehypePlugins`, which would pull in `@astrojs/markdown-remark`
   // and swap the whole site's Markdown processor back to unified.
+  //
+  // The plugin's name carries a fingerprint of the rule's own source (issue
+  // 0008). Astro's content cache keeps rendered Markdown until the config's
+  // serialised form changes, and a function's body never reaches that form, so
+  // an edit to `tie()` alone left every product's prose on the old rule. A
+  // name is a string, so it does — and only an edit to the rule clears the cache.
   markdown: {
-    processor: satteri({ hastPlugins: [satteriTie] }),
+    processor: satteri({ hastPlugins: [{ ...satteriTie, name: `tie-${RULE_DIGEST}` }] }),
   },
   // Content-Security-Policy (STEP-0065).
   //
