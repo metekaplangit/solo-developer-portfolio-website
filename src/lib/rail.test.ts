@@ -4,6 +4,7 @@ import {
   arrived,
   clamp,
   firstInView,
+  focusHandOff,
   nearestPicture,
   pageTarget,
   railOffset,
@@ -104,5 +105,29 @@ describe('the phone rail', () => {
     expect(railOffset(0, step, maxScroll)).toBe(0);
     expect(railOffset(2, step, maxScroll)).toBe(2 * step);
     expect(railOffset(count - 1, step, maxScroll)).toBe(maxScroll);
+  });
+});
+
+describe('focusHandOff', () => {
+  const prev = { name: 'prev' };
+  const next = { name: 'next' };
+
+  it('passes focus to the arrow still on when the focused one switches off, at either end', () => {
+    expect(focusHandOff(next, [{ el: prev, off: false }, { el: next, off: true }])).toBe(prev);
+    expect(focusHandOff(prev, [{ el: prev, off: true }, { el: next, off: false }])).toBe(next);
+  });
+
+  it('leaves focus alone when the focused arrow stays on', () => {
+    expect(focusHandOff(next, [{ el: prev, off: true }, { el: next, off: false }])).toBeNull();
+    expect(focusHandOff(prev, [{ el: prev, off: false }, { el: next, off: false }])).toBeNull();
+  });
+
+  it('leaves focus alone when it is not on an arrow at all', () => {
+    expect(focusHandOff(null, [{ el: prev, off: true }, { el: next, off: false }])).toBeNull();
+    expect(focusHandOff({}, [{ el: prev, off: false }, { el: next, off: true }])).toBeNull();
+  });
+
+  it('has nowhere to go when every arrow is off', () => {
+    expect(focusHandOff(next, [{ el: prev, off: true }, { el: next, off: true }])).toBeNull();
   });
 });

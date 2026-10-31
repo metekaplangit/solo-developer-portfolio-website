@@ -1119,6 +1119,72 @@ function each(): Array<{ route: string; width: string; r: Reading }> {
 
 /** One button variant's transform at rest, hovered, and hovered while pressed. */
 type ButtonFeel = { variant: string; rest: string; hover: string; pressed: string };
+/**
+ * A gallery arrow that switches off at the end (issue 0025). A disabled button
+ * cannot hold focus, so pressing Next to the end with the keyboard dropped focus
+ * to the page body and the arrow keys, heard only inside the gallery, stopped
+ * working. Each walk tabs onto one arrow, presses Enter until that arrow is off,
+ * then presses the arrow key back: focus has to stay inside the gallery and the
+ * key has to move it. Reduced motion, so each move jumps.
+ */
+interface FocusWalk {
+  path: string;
+  arrow: 'next' | 'prev';
+  inside: boolean;
+  ring: boolean;
+  moved: boolean;
+}
+const focusWalks: FocusWalk[] = [];
+
+async function walkFocus(chrome: Chrome, base: string, path: string, kind: '[data-phones]' | '.gallery'): Promise<void> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 6; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    try {
+      page = await chrome.page();
+      page.setDefaultTimeout(15_000);
+      await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await page.goto(base + path, { waitUntil: 'load', timeout: 15_000 });
+      const out: FocusWalk[] = [];
+      for (const arrow of ['next', 'prev'] as const) {
+        // Start from the far end for Previous, so it has somewhere to go.
+        if (arrow === 'prev') {
+          await page.evaluate((k) => {
+            const t = document.querySelector(k)!.querySelector<HTMLElement>('.track, .phone-track')!;
+            t.scrollLeft = t.scrollWidth;
+          }, kind);
+          await new Promise((r) => setTimeout(r, 300));
+        }
+        await page.focus(`${kind} .nav.${arrow}`);
+        for (let i = 0; i < 12; i++) {
+          const off = await page.$eval(`${kind} .nav.${arrow}`, (b) => (b as HTMLButtonElement).disabled);
+          if (off) break;
+          await page.keyboard.press('Enter');
+          await new Promise((r) => setTimeout(r, 250));
+        }
+        const before = await page.evaluate((k) => document.querySelector(k)!.querySelector<HTMLElement>('.track, .phone-track')!.scrollLeft, kind);
+        const state = await page.evaluate((k) => {
+          const a = document.activeElement;
+          return { inside: !!a && document.querySelector(k)!.contains(a), ring: !!a && a.matches(':focus-visible') && getComputedStyle(a).opacity !== '0' };
+        }, kind);
+        await page.keyboard.press(arrow === 'next' ? 'ArrowLeft' : 'ArrowRight');
+        await new Promise((r) => setTimeout(r, 300));
+        const after = await page.evaluate((k) => document.querySelector(k)!.querySelector<HTMLElement>('.track, .phone-track')!.scrollLeft, kind);
+        out.push({ path, arrow, ...state, moved: Math.abs(after - before) > 1 });
+      }
+      await page.close().catch(() => {});
+      focusWalks.push(...out);
+      return;
+    } catch (error) {
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not walk the arrows on ${path} in 6 attempts: ${String(lastError).slice(0, 160)}`);
+}
+
 const buttonFeel = new Map<string, ButtonFeel[]>();
 const BUTTON_ROUTES = ['/', '/apps/', '/apps/sole-focus/'] as const;
 
@@ -1207,6 +1273,8 @@ beforeAll(async () => {
   for (const [width, text] of SIDEWAYS_SIZES) {
     await readSideways(chrome, started.base, width, text);
   }
+  await walkFocus(chrome, started.base, '/apps/waypost-words/', '[data-phones]');
+  await walkFocus(chrome, started.base, '/apps/sole-focus/', '.gallery');
   for (const route of CONTRAST_ROUTES) {
     for (const value of ['more', 'no-preference'] as const) {
       contrast.set(`${value} ${route}`, await readContrast(chrome, started.base + route, value));
@@ -1433,6 +1501,16 @@ test('a Mac set to Increase contrast gets stronger text, hairlines and edges @in
   // The home page holds no lifted surface; the other two hold all four kinds.
   const checked = CONTRAST_ROUTES.reduce((n, route) => n + contrast.get(`more ${route}`)!.surfaces.length, 0);
   if (checked === 0) bad.push('no lifted surface found to check');
+  expect(bad).toEqual([]);
+});
+
+// Reaching either end with the keyboard leaves focus inside the gallery, its
+// ring showing, and the arrow keys still move it (issue 0025).
+test('a gallery arrow at the end keeps keyboard focus in the gallery @gallery-focus', () => {
+  const bad = focusWalks
+    .filter((w) => !w.inside || !w.ring || !w.moved)
+    .map((w) => `${w.path} ${w.arrow} to the end: focus ${w.inside ? 'inside' : 'lost'}, ring ${w.ring ? 'shown' : 'not shown'}, arrow key ${w.moved ? 'moved it' : 'did nothing'}`);
+  expect(focusWalks.length).toBe(4);
   expect(bad).toEqual([]);
 });
 

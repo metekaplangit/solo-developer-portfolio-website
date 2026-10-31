@@ -520,11 +520,21 @@ const PHONES_WIDE = 4;
     arrived,
     clamp,
     firstInView,
+    focusHandOff,
     nearestPicture,
     pageTarget,
     railOffset,
     shotsInView,
   } from '../lib/rail';
+
+  // Switch the arrows on and off, handing focus to the one still on before its
+  // twin goes: a disabled button drops focus to the page body (issue 0025).
+  function switchArrows(prev: HTMLButtonElement | null, next: HTMLButtonElement | null, prevOff: boolean, nextOff: boolean) {
+    const arrows = [prev && { el: prev, off: prevOff }, next && { el: next, off: nextOff }].filter((a) => a !== null);
+    focusHandOff(document.activeElement, arrows)?.focus({ preventScroll: true });
+    if (prev) prev.disabled = prevOff;
+    if (next) next.disabled = nextOff;
+  }
 
   // What both galleries share, so a fix to how a press lands is made once.
   //
@@ -603,8 +613,7 @@ const PHONES_WIDE = 4;
 
     const render = () => {
       if (counter) counter.textContent = String(current + 1);
-      if (prev) prev.disabled = current === 0;
-      if (next) next.disabled = current === slides.length - 1;
+      switchArrows(prev, next, current === 0, current === slides.length - 1);
       dots.forEach((d, i) =>
         d.setAttribute('aria-current', i === current ? 'true' : 'false'),
       );
@@ -679,8 +688,7 @@ const PHONES_WIDE = 4;
       const first = firstInView(track.scrollLeft, step());
       if (from) from.textContent = String(first + 1);
       if (to) to.textContent = String(Math.min(slides.length, first + perView()));
-      prev.disabled = track.scrollLeft <= 1;
-      next.disabled = track.scrollLeft >= max() - 1;
+      switchArrows(prev, next, track.scrollLeft <= 1, track.scrollLeft >= max() - 1);
       aim.settle();
     };
     const page = (direction: number) => {

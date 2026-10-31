@@ -6,7 +6,7 @@
 - Found by: session (plan 0016 card C, evaluate-project 0001)
 - Filed: 2026-10-30
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.22, card a-gallery-arrow-at-the-end-keeps-keyboard-focus-in-the-galle
 
 Doubt: whether a screen reader user notices more than a keyboard user does;
 rounded to `medium` because the arrow keys stop working until focus is put

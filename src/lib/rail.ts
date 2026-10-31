@@ -54,3 +54,15 @@ export function pageTarget(first: number, direction: number, perView: number, co
 export function railOffset(first: number, step: number, maxScroll: number): number {
   return Math.min(first * step, maxScroll);
 }
+
+/**
+ * Where keyboard focus goes when the gallery's arrows switch on and off (issue
+ * 0025). A disabled button cannot hold focus, so an arrow switched off while
+ * focused dropped it to the page body, and the arrow keys — heard only inside
+ * the gallery — stopped working. Focus passes to the first arrow still on.
+ * `null` when focus is not on an arrow going off, or no arrow is left on.
+ */
+export function focusHandOff<T>(focused: unknown, arrows: ReadonlyArray<{ el: T; off: boolean }>): T | null {
+  if (!arrows.some((a) => a.el === focused && a.off)) return null;
+  return arrows.find((a) => !a.off)?.el ?? null;
+}
