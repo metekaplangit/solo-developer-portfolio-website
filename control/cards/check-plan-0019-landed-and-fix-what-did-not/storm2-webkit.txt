@@ -1,0 +1,9 @@
+config 0 [clickRandom,wheel,wheelX,key,tab,back,forward,hover,reload,goto,dot] 390x844 from /privacy/ gapped
+config 1 [clickRandom,clickControl,dblclick,wheelX,resize,hover,drag,reload,dot] 600x900 from /apps/magic-notes/ fast
+config 2 [clickControl,wheelX,key,back,resize,hover,reload,dot,arrow] 390x844 reduced from /privacy/sole-focus/ fast
+config 3 [clickRandom,clickControl,dblclick,wheelX,key,tab,back,forward,hover,drag,reload,dot,arrow] 320x568 from /privacy/magic-notes/ fast
+config 4 [clickRandom,wheel,key,tab,back,forward,resize,drag,reload,goto,dot] 844x390 from /apps/sole-focus/ gapped
+config 5 [dblclick,key,back,forward,resize,hover,drag,reload,goto] 1920x1080 from /apps/magic-notes/ fast
+config 6 [clickRandom,dblclick,wheel,wheelX,back,hover,drag,reload,dot,arrow] 1024x768 from /privacy/ gapped
+config 7 [clickControl,dblclick,wheel,wheelX,key,tab,forward,resize,drag,reload,goto,dot] 600x900 from /privacy/magic-notes/ fast
+done storm webkit seed 2 in 153s, 0 invariant breaks, log /private/tmp/claude-501/-Users-metekaplan-Documents-VibeCoding-Sites-PortfolioSite/a96e8793-5987-42b5-9a76-6b27cbbbed82/scratchpad/storm-logs-f/storm-webkit-seed2.jsonl

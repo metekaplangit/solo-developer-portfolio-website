@@ -30,14 +30,6 @@ export default defineConfig({
   site: 'https://metkapstudio.com',
   base: '/',
   trailingSlash: 'ignore',
-  // Every link's page is fetched once it scrolls into view, so a first visit
-  // to a page answers from the cache instead of waiting 250–450 ms on the
-  // network (issue 0018). The pages are 8–28 KB of HTML each. Astro falls back
-  // to fetching on tap for a visitor on data saver or a slow connection, and
-  // Safari, which has no `<link rel="prefetch">`, fetches into the HTTP cache
-  // that GitHub Pages' 600 s max-age then serves.
-  // https://docs.astro.build/en/guides/prefetch/ (read 2026-10-31)
-  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   build: {
     format: 'directory',
   },
@@ -119,15 +111,16 @@ export default defineConfig({
       //
       // `'self'` is restated because `resources` REPLACES Astro's defaults
       // rather than adding to them. Astro's own generated hashes are kept.
-      // The two hand-written inline scripts: BaseLayout's `pagereveal`
-      // listener (plan 0011), and the `pageswap` skip only the not-found page
-      // carries (issue 0017). Astro hashes the scripts it bundles but not one
+      // The three hand-written inline scripts: BaseLayout's `pagereveal`
+      // listener (plan 0011), its speculation rules (issue 0018, plan 0019),
+      // and the `pageswap` skip only the not-found page carries (issue 0017). Astro hashes the scripts it bundles but not one
       // marked `is:inline`, so their hashes are listed here. Edit either script
       // and its line goes stale — `tests/dist.test.ts` ("allows every inline
       // script it ships") fails until the new hash is pasted in.
       scriptDirective: {
         hashes: [
-          'sha256-Z1bJ+MdQ8xAkmXhNP5BJRua3hF4CiZMGudpSIXECJhw=',
+          'sha256-in62g3Ik/ElfCysYrKM64zRJcuCbN5QrItGJ2B47lMk=',
+          'sha256-gu27dVt2vaXocrF2NHvV/PD4ZnUR+hXcFBMSfZ/TAOw=',
           'sha256-ykkb2FQVcNkQFoDoNenW8RmbgApRGL6+89mbksOj1Yc=',
         ],
       },

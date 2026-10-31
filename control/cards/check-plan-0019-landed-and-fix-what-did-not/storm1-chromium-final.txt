@@ -1,0 +1,9 @@
+config 0 [clickRandom,dblclick,wheel,wheelX,tab,back,forward,resize,hover,drag,goto] 600x900 from /apps/wander-words/ gapped
+config 1 [clickRandom,dblclick,wheel,back,forward,resize,reload,goto,dot] 768x1024 from /apps/magic-notes/ gapped
+config 2 [clickRandom,clickControl,dblclick,wheel,key,forward,drag,reload] 1024x768 from /apps/magic-notes/ fast
+config 3 [clickRandom,clickControl,wheel,wheelX,key,back,forward,resize,hover,drag,reload,goto] 600x900 from /apps/wander-words/ gapped
+config 4 [clickRandom,dblclick,wheel,wheelX,key,back,forward,hover,reload,dot] 1024x768 from /apps/wander-words/ fast
+config 5 [clickRandom,clickControl,dblclick,wheelX,key,resize,reload,goto] 600x900 reduced from /support/ gapped
+config 6 [wheel,wheelX,tab,back,resize,drag,reload,goto] 1440x900 from /privacy/wander-words/ gapped
+config 7 [clickControl,wheel,wheelX,back,forward,resize,goto,dot] 1024x768 from /apps/magic-notes/ gapped
+done storm chromium seed 1 in 442s, 0 invariant breaks, log /private/tmp/claude-501/-Users-metekaplan-Documents-VibeCoding-Sites-PortfolioSite/a96e8793-5987-42b5-9a76-6b27cbbbed82/scratchpad/storm-logs-f/storm-chromium-seed1.jsonl

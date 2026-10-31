@@ -48,6 +48,19 @@ const { title, description = site.description, schema, bleed = false, movedTo, l
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 const canonical = new URL(movedTo ?? Astro.url.pathname, Astro.site ?? Astro.url).href;
 const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
+// Every page this site links to is fetched as soon as a page loads, so a
+// first visit answers from the browser's prefetch cache instead of waiting the
+// 250–450 ms network round trip (issue 0018). Speculation rules rather than
+// Astro's `prefetch`: Chrome and Edge do the fetching themselves, with no
+// script, and skip it under Save-Data or battery saver; a browser without them
+// (Safari, Firefox in 2026) ignores the rule. Astro's prefetch fell back to
+// `fetch()` in Safari, and every page change that cut one short logged an
+// error there (plan 0019's loop card). Same-origin only; the pages are 8–28 KB
+// of HTML each, and the header's link to the page already open is left out.
+// https://developer.chrome.com/docs/web-platform/prerender-pages (read 2026-10-31)
+const speculationRules = JSON.stringify({
+  prefetch: [{ where: { and: [{ href_matches: '/*' }, { not: { selector_matches: '[aria-current=page]' } }] }, eagerness: 'immediate' }],
+});
 ---
 
 <!doctype html>
@@ -63,9 +76,10 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
         so the opening does not wait for a hand-off that never ran (issue 0023).
         Chrome also aborts transitions it never hands to any page, and reports
         their rejection here, where nothing can catch it: only those notices,
-        named by the browser as a transition's abort or skip, are marked
+        named by the browser as a transition's abort, skip or timeout, are marked
         handled, and every other rejection stays in the console. */}
-    <script is:inline>addEventListener('pagereveal', (e) => { const t = e.viewTransition; if (t) { document.documentElement.classList.add('vt-in'); t.ready.catch(() => document.documentElement.classList.remove('vt-in')); } }); addEventListener('unhandledrejection', (e) => { const r = e.reason; if (r && (r.name === 'InvalidStateError' || r.name === 'AbortError') && /transition/i.test(r.message)) e.preventDefault(); });</script>
+    <script is:inline>addEventListener('pagereveal', (e) => { const t = e.viewTransition; if (t) { document.documentElement.classList.add('vt-in'); t.ready.catch(() => document.documentElement.classList.remove('vt-in')); } }); addEventListener('unhandledrejection', (e) => { const r = e.reason; if (r && /^(InvalidState|Abort|Timeout)Error$/.test(r.name) && /transition/i.test(r.message)) e.preventDefault(); });</script>
+    <script type="speculationrules" is:inline set:html={speculationRules} />
     {leaveWithoutTransition && <script is:inline>addEventListener('pageswap', (e) => e.viewTransition?.skipTransition());</script>}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />

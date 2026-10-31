@@ -77,7 +77,9 @@ async function fresh({ width = 1440, height = 900, reduced = false, js = true, t
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(`pageerror ${e.message}`));
-  page.on('console', (m) => { if (m.type() === 'error' && !/404 \(Not Found\)/.test(m.text())) errors.push(`console ${m.text().slice(0, 160)}`); });
+  // WebKit refuses a speculation-rule prefetch over plain http, which is only
+  // ever this probe's own server; the live site is https and logs nothing.
+  page.on('console', (m) => { if (m.type() === 'error' && !/404 \(Not Found\)|Prefetch request denied: URL must be secure/.test(m.text())) errors.push(`console ${m.text().slice(0, 160)}`); });
   page.on('response', (r) => { if (r.status() >= 400 && r.url().startsWith(base) && r.request().resourceType() !== 'document') errors.push(`${r.status()} ${r.url().replace(base, '')}`); });
   page.on('crash', () => errors.push('page crashed'));
   // Nothing leaves this machine: every other origin gets a stub page.

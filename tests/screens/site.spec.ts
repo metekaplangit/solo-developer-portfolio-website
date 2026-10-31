@@ -859,11 +859,11 @@ const presses = new Map<string, PressStep[]>();
 
 /**
  * Links fetched before the tap (issue 0018). A first visit to a page waited the
- * whole network round trip before anything moved; Astro's prefetch now fetches
- * each link's page as it comes into view. Every page's header links are in view
- * from the start, so each must have its page fetched — a `<link rel="prefetch">`
- * in Chrome — without anybody hovering or tapping. Keyed by route, the header
- * links (other than the page itself) that were never fetched.
+ * whole network round trip before anything moved; Chrome now fetches
+ * every same-origin link's page as soon as a page loads, through a speculation
+ * rule. Each header link (other than the page itself) must be fetched and held
+ * without anybody hovering or tapping. Keyed by route, the header links that
+ * never were.
  */
 const notPrefetched = new Map<string, string[]>();
 
@@ -875,30 +875,26 @@ async function readPrefetch(chrome: Chrome, base: string, path: string): Promise
       page = await chrome.page();
       page.setDefaultTimeout(30_000);
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      // Chrome reports each speculation-rule prefetch through the DevTools
+      // Preload domain; "Ready" means the page is held, waiting for the tap.
+      const ready = new Set<string>();
+      const cdp = await page.createCDPSession();
+      cdp.on('Preload.prefetchStatusUpdated', (e: { key: { url: string }; status: string }) => {
+        if (e.status === 'Ready' || e.status === 'Success') ready.add(new URL(e.key.url).pathname);
+      });
+      await cdp.send('Preload.enable');
       await page.goto(base + path, { waitUntil: 'load', timeout: 30_000 });
       const wanted = await page.evaluate(() =>
-        [...new Set([...document.querySelectorAll<HTMLAnchorElement>('header a[href^="/"]')]
-          .map((a) => new URL(a.href).pathname)
-          .filter((p) => p !== location.pathname))],
+        [...new Set([...document.querySelectorAll<HTMLAnchorElement>('header a[href^="/"]:not([aria-current="page"])')]
+          .map((a) => new URL(a.href).pathname))],
       );
-      // Waits on the condition, never on the clock: done the moment every
-      // header link has its prefetch, failed only by the timeout.
-      await page
-        .waitForFunction(
-          (paths: string[]) => {
-            const got = new Set([...document.querySelectorAll<HTMLLinkElement>('link[rel="prefetch"]')].map((l) => new URL(l.href).pathname));
-            return paths.every((p) => got.has(p));
-          },
-          { timeout: 5_000 },
-          wanted,
-        )
-        .catch(() => {});
-      const missing = await page.evaluate((paths: string[]) => {
-        const got = new Set([...document.querySelectorAll<HTMLLinkElement>('link[rel="prefetch"]')].map((l) => new URL(l.href).pathname));
-        return paths.filter((p) => !got.has(p));
-      }, wanted);
+      // Waits on the condition, never on a fixed clock: done the moment every
+      // header link is held, failed only by the 5 s limit.
+      const until = Date.now() + 5_000;
+      while (Date.now() < until && !wanted.every((p) => ready.has(p))) await new Promise((r) => setTimeout(r, 25));
+      await cdp.detach().catch(() => {});
       await page.close().catch(() => {});
-      return wanted.length ? missing : ['(no header links found)'];
+      return wanted.length ? wanted.filter((p) => !ready.has(p)) : ['(no header links found)'];
     } catch (error) {
       lastError = error;
       await page?.close().catch(() => {});

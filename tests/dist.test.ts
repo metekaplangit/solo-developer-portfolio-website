@@ -755,28 +755,37 @@ describe('every policy names what it covers (issue 0020)', () => {
 
 describe('every page loads its links before the tap (issue 0018)', () => {
   // A first visit to a page waited the whole network round trip — 250–450 ms
-  // on the live site — before anything moved. Astro's prefetch fetches each
-  // link's page once it scrolls into view, so the tap answers from the cache.
-  // That only holds where a page ships the prefetch client and no link opts
-  // out, so both are held on every built page.
-  const moduleSources = (html: string) =>
-    [...html.matchAll(/<script type="module" src="(\/_astro\/[^"]+\.js)"/g)].map((m) =>
-      readFileSync(join(DIST, m[1]), 'utf-8'),
-    );
+  // on the live site — before anything moved. Each page carries a speculation
+  // rule that has Chrome fetch every same-origin link it shows as soon as the
+  // page loads, so the tap answers from the prefetch cache. Plan 0019 first
+  // used Astro's prefetch, whose `fetch()` fallback in Safari logged an error
+  // for every request a page change cut short; it must not come back.
+  const rulesOf = (html: string) =>
+    [...html.matchAll(/<script type="speculationrules">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
 
-  it('ships the prefetch client on every page', () => {
-    const missing = built
-      .filter(([route]) => !MOVED.some(([from]) => from === route))
-      .filter(([, html]) => !moduleSources(html).some((js) => js.includes('astroPrefetch')))
-      .map(([route]) => route);
-    expect(missing, 'pages that would make a first visit wait on the network').toEqual([]);
+  it('asks for every same-origin link to be fetched at once, on every page', () => {
+    const wrong: string[] = [];
+    for (const [route, html] of built) {
+      if (MOVED.some(([from]) => from === route)) continue;
+      const rules = rulesOf(html);
+      if (rules.length !== 1) { wrong.push(`${route}: ${rules.length} speculation rule blocks`); continue; }
+      const rule = rules[0].prefetch?.[0];
+      const text = JSON.stringify(rule?.where ?? {});
+      if (rule?.eagerness !== 'immediate') wrong.push(`${route}: eagerness ${rule?.eagerness}`);
+      if (!text.includes('"href_matches":"/*"')) wrong.push(`${route}: does not cover every same-origin link — ${text}`);
+    }
+    expect(wrong).toEqual([]);
   });
 
-  it('lets no link on the site opt out', () => {
-    const optedOut = built
-      .filter(([, html]) => /data-astro-prefetch="false"/.test(html))
+  it('ships no script-driven prefetch for a browser to fall back on', () => {
+    const scripted = built
+      .filter(([, html]) =>
+        [...html.matchAll(/<script type="module" src="(\/_astro\/[^"]+\.js)"/g)].some((m) =>
+          readFileSync(join(DIST, m[1]), 'utf-8').includes('astroPrefetch'),
+        ),
+      )
       .map(([route]) => route);
-    expect(optedOut).toEqual([]);
+    expect(scripted).toEqual([]);
   });
 });
 
@@ -838,11 +847,13 @@ describe('a skipped page-change animation stays quiet (issue 0023)', () => {
       new DOMException('Transition was aborted because of invalid state. Viewport size changed', 'InvalidStateError'),
       new DOMException('Transition was skipped. Navigation aborted', 'AbortError'),
       new DOMException('Skipping view transition because viewport size changed.', 'InvalidStateError'),
+      new DOMException('Transition was aborted because of timeout in DOM update. DOM update timed out', 'TimeoutError'),
     ];
     const real = [
       new TypeError('Cannot read properties of undefined'),
       new DOMException('The object is in an invalid state.', 'InvalidStateError'),
       new DOMException('The operation was aborted.', 'AbortError'),
+      new DOMException('The operation timed out.', 'TimeoutError'),
       'a plain string',
       undefined,
     ];
