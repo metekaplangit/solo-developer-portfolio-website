@@ -5,7 +5,7 @@
 - Area: live site
 - Found by: health-project 0001
 - Filed: 2026-09-19
-- Tried by: —
+- Tried by: card every-live-page-carries-only-the-scripts-the-build-wrote, 2026-10-31 — `npm run test:live` still exit 1, the beacon on all 12 routes; only switching Web Analytics off in the owner's Cloudflare dashboard closes it
 - Closed by: —
 
 ## What happens
