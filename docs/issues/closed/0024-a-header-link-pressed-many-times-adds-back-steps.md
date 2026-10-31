@@ -6,7 +6,7 @@
 - Found by: chaos-project 0001
 - Filed: 2026-10-30
 - Tried by: —
-- Closed by: —
+- Closed by: not reproduced by card a-header-link-pressed-many-times-leaves-one-back-step, 2026-10-31 — try 1 the steps as written, try 2 raw mouse clicks on a fixed clock; Chrome 156 and WebKit 26.4, 0/50/150 ms: 1 history entry every time, also on the build from 9a6539c
 
 Doubt: likely the browser's own handling of links pressed during a page
 change rather than the site; Severity rounded up.
