@@ -1,0 +1,6 @@
+  BREAK seed 1 step 874 on /apps/: console Not allowed to launch 'mailto:support@metkapstudio.com' because a user gesture is required.
+  BREAK seed 1 step 1049 on /about/: console Not allowed to launch 'mailto:support@metkapstudio.com' because a user gesture is required.
+done storm chromium seed 1 in 448s, 2 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/storm-chromium-seed1.jsonl
+done storm chromium seed 2 in 468s, 0 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/storm-chromium-seed2.jsonl
+done storm chromium seed 3 in 345s, 0 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/storm-chromium-seed3.jsonl
+done storm webkit seed 2 in 156s, 0 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/storm-webkit-seed2.jsonl

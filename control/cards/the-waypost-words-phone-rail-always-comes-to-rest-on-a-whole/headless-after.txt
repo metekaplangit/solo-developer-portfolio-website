@@ -1,0 +1,344 @@
+
+> solo-dev-portfolio-website@0.0.0 headless
+> npm run audit && npm run build && npm run check && npm test && npm run test:dist
+
+
+> solo-dev-portfolio-website@0.0.0 audit
+> npm audit --omit=dev
+
+found 0 vulnerabilities
+
+> solo-dev-portfolio-website@0.0.0 build
+> astro build
+
+14:52:13 [WARN] [config] Shiki syntax highlighting uses inline styles that are not compatible with Content Security Policy (CSP). Consider using Prism syntax highlighting instead, or disable CSP if Shiki is required.
+14:52:13 [WARN] [csp] `security.csp.styleDirective` defines `style-src` resources ('self') as well as `style-src-attr` resources or hashes. Because `style-src-attr` override `style-src` for their scope (browsers do not fall back), those `style-src` resources will not apply there. Add them to the corresponding `kind` if needed.
+14:52:13 [content] Syncing content
+14:52:13 [content] Synced content
+14:52:13 [types] Generated 275ms
+14:52:13 [build] output: "static"
+14:52:13 [build] mode: "static"
+14:52:13 [build] directory: /Users/metekaplan/Documents/VibeCoding/Sites/PortfolioSite/solo-dev-portfolio-website/dist/
+14:52:13 [build] Collecting build info...
+14:52:13 [build] ✓ Completed in 295ms.
+14:52:13 [build] Building static entrypoints...
+14:52:13 [vite] ✓ built in 180ms
+14:52:13 [vite] ✓ built in 18ms
+14:52:13 [build] Rearranging server assets...
+
+ generating static routes 
+14:52:13   ├─ /404.html (+7ms) 
+14:52:13   ├─ /about/index.html (+4ms) 
+14:52:13   ├─ /apps/wander-words/index.html (+2ms) 
+14:52:13   ├─ /apps/magic-notes/index.html (+6ms) 
+14:52:13   ├─ /apps/sole-focus/index.html (+2ms) 
+14:52:13   ├─ /apps/waypost-words/index.html (+2ms) 
+14:52:13   ├─ /apps/index.html (+4ms) 
+14:52:13   ├─ /privacy/wander-words/index.html (+2ms) 
+14:52:13   ├─ /privacy/magic-notes/index.html (+3ms) 
+14:52:13   ├─ /privacy/sole-focus/index.html (+2ms) 
+14:52:13   ├─ /privacy/waypost-words/index.html (+2ms) 
+14:52:13   ├─ /privacy/index.html (+2ms) 
+14:52:13   ├─ /support/index.html (+2ms) 
+14:52:13   ├─ /index.html (+5ms) 
+14:52:13 ✓ Completed in 67ms.
+
+ generating optimized images 
+14:52:13   ▶ /_astro/02-a-notebook-that-counts.BfcvSOzi_Z1ko0UD.webp (reused cache entry) (+2ms) (1/137)
+14:52:13   ▶ /_astro/03-themes-that-read-all-day.BItOs0IV_Z2x2FkX.webp (reused cache entry) (+3ms) (2/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_ZN0GKe.webp (reused cache entry) (+3ms) (3/137)
+14:52:13   ▶ /_astro/04-inside-your-notebook.DTb1rvYx_Z2gjs1Q.webp (reused cache entry) (+3ms) (4/137)
+14:52:13   ▶ /_astro/06-what-time-is-it-there.CjSOq5Wv_14JTFk.webp (reused cache entry) (+3ms) (5/137)
+14:52:13   ▶ /_astro/02-day-and-long-game.DYBTx29q_JlGYT.webp (reused cache entry) (+3ms) (6/137)
+14:52:13   ▶ /_astro/05-change-one-line.D1kNPY1k_ZBApq6.webp (reused cache entry) (+3ms) (7/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z1ItXz8.webp (reused cache entry) (+3ms) (8/137)
+14:52:13   ▶ /_astro/03-count-up-then-vanish.DbJd7xG1_1pj2KW.webp (reused cache entry) (+3ms) (9/137)
+14:52:13   ▶ /_astro/04-disappear-into-work.Dy7erLtT_Z2w01ae.webp (reused cache entry) (+3ms) (10/137)
+14:52:13   ▶ /_astro/02-a-notebook-that-counts.BfcvSOzi_1NQHfR.webp (reused cache entry) (+1ms) (11/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_ZvUGCJ.webp (reused cache entry) (+1ms) (12/137)
+14:52:13   ▶ /_astro/04-inside-your-notebook.DTb1rvYx_Z8ETHD.webp (reused cache entry) (+1ms) (13/137)
+14:52:13   ▶ /_astro/03-themes-that-read-all-day.BItOs0IV_1xHnEu.webp (reused cache entry) (+1ms) (14/137)
+14:52:13   ▶ /_astro/05-change-one-line.D1kNPY1k_1kgwLJ.webp (reused cache entry) (+1ms) (15/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Ztz9w8.webp (reused cache entry) (+1ms) (16/137)
+14:52:13   ▶ /_astro/06-what-time-is-it-there.CjSOq5Wv_3YKIs.webp (reused cache entry) (+1ms) (17/137)
+14:52:13   ▶ /_astro/02-day-and-long-game.DYBTx29q_2uCxLq.webp (reused cache entry) (+2ms) (18/137)
+14:52:13   ▶ /_astro/03-count-up-then-vanish.DbJd7xG1_28vy4H.webp (reused cache entry) (+2ms) (19/137)
+14:52:13   ▶ /_astro/04-disappear-into-work.Dy7erLtT_ZVrF9.webp (reused cache entry) (+1ms) (20/137)
+14:52:13   ▶ /_astro/02-a-notebook-that-counts.BfcvSOzi_29PMmw.webp (reused cache entry) (+1ms) (21/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_1LsHyi.webp (reused cache entry) (+1ms) (22/137)
+14:52:13   ▶ /_astro/03-themes-that-read-all-day.BItOs0IV_29jtVx.webp (reused cache entry) (+1ms) (23/137)
+14:52:13   ▶ /_astro/04-inside-your-notebook.DTb1rvYx_29Iuto.webp (reused cache entry) (+1ms) (24/137)
+14:52:13   ▶ /_astro/05-change-one-line.D1kNPY1k_1aq0Ud.webp (reused cache entry) (+1ms) (25/137)
+14:52:13   ▶ /_astro/06-what-time-is-it-there.CjSOq5Wv_eDpLt.webp (reused cache entry) (+2ms) (26/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z1EUrhX.webp (reused cache entry) (+2ms) (27/137)
+14:52:13   ▶ /_astro/02-day-and-long-game.DYBTx29q_uSWtW.webp (reused cache entry) (+1ms) (28/137)
+14:52:13   ▶ /_astro/04-disappear-into-work.Dy7erLtT_Z6rAJ7.webp (reused cache entry) (+1ms) (29/137)
+14:52:13   ▶ /_astro/03-count-up-then-vanish.DbJd7xG1_ZDhaxc.webp (reused cache entry) (+1ms) (30/137)
+14:52:13   ▶ /_astro/02-a-notebook-that-counts.BfcvSOzi_Z1Pe6CT.webp (reused cache entry) (+1ms) (31/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_ZLENgW.webp (reused cache entry) (+2ms) (32/137)
+14:52:13   ▶ /_astro/03-themes-that-read-all-day.BItOs0IV_YC51U.webp (reused cache entry) (+2ms) (33/137)
+14:52:13   ▶ /_astro/05-change-one-line.D1kNPY1k_Z2vVmX8.webp (reused cache entry) (+2ms) (34/137)
+14:52:13   ▶ /_astro/04-inside-your-notebook.DTb1rvYx_Zop1lQ.webp (reused cache entry) (+2ms) (35/137)
+14:52:13   ▶ /_astro/06-what-time-is-it-there.CjSOq5Wv_ZLiywk.webp (reused cache entry) (+3ms) (36/137)
+14:52:13   ▶ /_astro/04-disappear-into-work.Dy7erLtT_ZJxKwO.webp (reused cache entry) (+2ms) (37/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_1EQCwE.webp (reused cache entry) (+3ms) (38/137)
+14:52:13   ▶ /_astro/02-day-and-long-game.DYBTx29q_ZLRCk6.webp (reused cache entry) (+3ms) (39/137)
+14:52:13   ▶ /_astro/03-count-up-then-vanish.DbJd7xG1_1RLrqu.webp (reused cache entry) (+3ms) (40/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_1JLLGG.webp (reused cache entry) (+3ms) (41/137)
+14:52:13   ▶ /_astro/02-a-notebook-that-counts.BfcvSOzi_Z2dJIXc.webp (reused cache entry) (+3ms) (42/137)
+14:52:13   ▶ /_astro/05-change-one-line.D1kNPY1k_1pyL4w.webp (reused cache entry) (+3ms) (43/137)
+14:52:13   ▶ /_astro/03-themes-that-read-all-day.BItOs0IV_Z1c7zxu.webp (reused cache entry) (+3ms) (44/137)
+14:52:13   ▶ /_astro/04-inside-your-notebook.DTb1rvYx_282yBM.webp (reused cache entry) (+3ms) (45/137)
+14:52:13   ▶ /_astro/06-what-time-is-it-there.CjSOq5Wv_xIxpk.webp (reused cache entry) (+2ms) (46/137)
+14:52:13   ▶ /_astro/04-disappear-into-work.Dy7erLtT_1kf7eb.webp (reused cache entry) (+3ms) (47/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_Z1acB9e.webp (reused cache entry) (+2ms) (48/137)
+14:52:13   ▶ /_astro/02-day-and-long-game.DYBTx29q_1UGWQN.webp (reused cache entry) (+3ms) (49/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z1TxIcG.webp (reused cache entry) (+4ms) (50/137)
+14:52:13   ▶ /_astro/01-lightning-reveals-a-letter.Dl-10l3M_26GRuw.webp (reused cache entry) (+3ms) (51/137)
+14:52:13   ▶ /_astro/05-choose-your-theme.BNf6coZW_ZcYxI0.webp (reused cache entry) (+3ms) (52/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_HpTci.webp (reused cache entry) (+2ms) (53/137)
+14:52:13   ▶ /_astro/03-count-up-then-vanish.DbJd7xG1_ZEX6oN.webp (reused cache entry) (+4ms) (54/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_Z2bD7c.webp (reused cache entry) (+2ms) (55/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__1CFYzt.webp (reused cache entry) (+2ms) (56/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_Z12lwv6.webp (reused cache entry) (+2ms) (57/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_9VFgV.webp (reused cache entry) (+3ms) (58/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_OBQQ6.webp (reused cache entry) (+2ms) (59/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z2nopIg.webp (reused cache entry) (+1ms) (60/137)
+14:52:13   ▶ /_astro/05-choose-your-theme.BNf6coZW_Z1IaHqQ.webp (reused cache entry) (+1ms) (61/137)
+14:52:13   ▶ /_astro/01-lightning-reveals-a-letter.Dl-10l3M_ZTaTTF.webp (reused cache entry) (+1ms) (62/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_gAyNr.webp (reused cache entry) (+1ms) (63/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_Z6Wwpz.webp (reused cache entry) (+2ms) (64/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_Z1vfDta.webp (reused cache entry) (+1ms) (65/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__Z32zct.webp (reused cache entry) (+2ms) (66/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_2m72vS.webp (reused cache entry) (+2ms) (67/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_Z1lRf4o.webp (reused cache entry) (+2ms) (68/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z29baw0.webp (reused cache entry) (+2ms) (69/137)
+14:52:13   ▶ /_astro/05-choose-your-theme.BNf6coZW_1mhP5B.webp (reused cache entry) (+1ms) (70/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_ZgRE6U.webp (reused cache entry) (+2ms) (71/137)
+14:52:13   ▶ /_astro/01-lightning-reveals-a-letter.Dl-10l3M_Z2qP1Co.webp (reused cache entry) (+1ms) (72/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_Z1W222D.webp (reused cache entry) (+1ms) (73/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_Z1F6j2D.webp (reused cache entry) (+1ms) (74/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__fAAxB.webp (reused cache entry) (+1ms) (75/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_1PJhXd.webp (reused cache entry) (+2ms) (76/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_Z2pqUwX.webp (reused cache entry) (+1ms) (77/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z159yVB.webp (reused cache entry) (+1ms) (78/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_Z1g406N.webp (reused cache entry) (+1ms) (79/137)
+14:52:13   ▶ /_astro/05-choose-your-theme.BNf6coZW_4vfgy.webp (reused cache entry) (+1ms) (80/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_1fc2rQ.webp (reused cache entry) (+1ms) (81/137)
+14:52:13   ▶ /_astro/01-lightning-reveals-a-letter.Dl-10l3M_ZEXOd7.webp (reused cache entry) (+1ms) (82/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_Z2uvfX0.webp (reused cache entry) (+2ms) (83/137)
+14:52:13   ▶ /_astro/01-words-in-answers-out.D7Qasi2C_Z4e2fi.webp (reused cache entry) (+2ms) (84/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_Z2eva5d.webp (reused cache entry) (+2ms) (85/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_ZgTNmS.webp (reused cache entry) (+2ms) (86/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_yQhKk.webp (reused cache entry) (+2ms) (87/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__ZJpaln.webp (reused cache entry) (+2ms) (88/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_Z1ofEBm.webp (reused cache entry) (+2ms) (89/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_iP656.webp (reused cache entry) (+2ms) (90/137)
+14:52:13   ▶ /_astro/05-choose-your-theme.BNf6coZW_Z2i6ilt.webp (reused cache entry) (+2ms) (91/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_Z1bKIpR.webp (reused cache entry) (+1ms) (92/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_SQkEw.webp (reused cache entry) (+1ms) (93/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_Zv3AIw.webp (reused cache entry) (+1ms) (94/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_ZfpmF7.webp (reused cache entry) (+1ms) (95/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_Z2kVvVB.webp (reused cache entry) (+1ms) (96/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__Z1vih3P.webp (reused cache entry) (+1ms) (97/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_Ziyl2M.webp (reused cache entry) (+2ms) (98/137)
+14:52:13   ▶ /_astro/01-one-quiet-app.CPwabKge_1eqxqC.webp (reused cache entry) (+2ms) (99/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_Z7YeiK.webp (reused cache entry) (+2ms) (100/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_2aed1v.webp (reused cache entry) (+2ms) (101/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_Z2qTtAB.webp (reused cache entry) (+2ms) (102/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_ZeD7Pg.webp (reused cache entry) (+2ms) (103/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_ZLRe7q.webp (reused cache entry) (+2ms) (104/137)
+14:52:13   ▶ /_astro/10-the-answer-lands.C0CiAkEk_Z232qQw.webp (reused cache entry) (+2ms) (105/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_113puL.webp (reused cache entry) (+3ms) (106/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__1SahX9.webp (reused cache entry) (+3ms) (107/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_Z2lBP9P.webp (reused cache entry) (+2ms) (108/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_vYXRL.webp (reused cache entry) (+3ms) (109/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_2z6Fp.webp (reused cache entry) (+2ms) (110/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_Z2l6eD1.webp (reused cache entry) (+1ms) (111/137)
+14:52:13   ▶ /_astro/10-the-answer-lands.C0CiAkEk_1XMEa8.webp (reused cache entry) (+1ms) (112/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_ZFsse7.webp (reused cache entry) (+2ms) (113/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_Zte3ml.webp (reused cache entry) (+2ms) (114/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_Z16AFPk.webp (reused cache entry) (+2ms) (115/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__2bNsIe.webp (reused cache entry) (+1ms) (116/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_Z1ccdtM.webp (reused cache entry) (+1ms) (117/137)
+14:52:13   ▶ /_astro/02-a-meteor-opens-a-square.Cq8p9LrL_Z14ACyn.webp (reused cache entry) (+1ms) (118/137)
+14:52:13   ▶ /_astro/10-the-answer-lands.C0CiAkEk_YUHY1.webp (reused cache entry) (+1ms) (119/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_ZyK90v.webp (reused cache entry) (+2ms) (120/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_2b64IJ.webp (reused cache entry) (+2ms) (121/137)
+14:52:13   ▶ /_astro/06-a-green-crossword.7j6IgzOS_Z2t5dGF.webp (reused cache entry) (+2ms) (122/137)
+14:52:13   ▶ /_astro/05-tracing-a-word.CDEWnuEx_1SPgiO.webp (reused cache entry) (+2ms) (123/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_ZCPMoP.webp (reused cache entry) (+2ms) (124/137)
+14:52:13   ▶ /_astro/04-the-road-ahead.Ccv71Op__Z1GfRLh.webp (reused cache entry) (+2ms) (125/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_1KkNY3.webp (reused cache entry) (+2ms) (126/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_PtSV4.webp (reused cache entry) (+1ms) (127/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_ZiFSzF.webp (reused cache entry) (+1ms) (128/137)
+14:52:13   ▶ /_astro/10-the-answer-lands.C0CiAkEk_Zsemep.webp (reused cache entry) (+2ms) (129/137)
+14:52:13   ▶ /_astro/03-a-traveller-s-keepsakes.CMDoko28_2fkR4b.webp (reused cache entry) (+1ms) (130/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_ZRHiqu.webp (reused cache entry) (+1ms) (131/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_Z21S5We.webp (reused cache entry) (+1ms) (132/137)
+14:52:13   ▶ /_astro/07-a-surveyor-s-tools.w0iZtCA7_1NYpgX.webp (reused cache entry) (+1ms) (133/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_24OJ2l.webp (reused cache entry) (+0ms) (134/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_UDVvB.webp (reused cache entry) (+1ms) (135/137)
+14:52:13   ▶ /_astro/09-rain-over-the-moor.D8U4rFJQ_1tGWTU.webp (reused cache entry) (+1ms) (136/137)
+14:52:13   ▶ /_astro/08-places-on-the-road.CdEpGWqd_1xMBjf.webp (reused cache entry) (+1ms) (137/137)
+14:52:13 ✓ Completed in 29ms.
+
+14:52:13 [build] ✓ Completed in 317ms.
+14:52:13 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+14:52:13 [build] 14 page(s) built in 634ms
+14:52:13 [build] Complete!
+
+> solo-dev-portfolio-website@0.0.0 check
+> astro check
+
+14:52:14 [content] Syncing content
+14:52:14 [content] Synced content
+14:52:14 [types] Generated 275ms
+14:52:14 [check] Getting diagnostics for Astro files in /Users/metekaplan/Documents/VibeCoding/Sites/PortfolioSite/solo-dev-portfolio-website...
+[96mcontrol/cards/a-change-to-the-wrapping-rule-reaches-product-prose-on-a-pla/render.mts[0m:[93m17[0m:[93m20[0m - [93mwarning[0m[90m ts(80007): [0m'await' has no effect on the type of this expression.
+
+[7m17[0m   const { html } = await markdownToHtml(md, { hastPlugins: [satteriTie], features: { gfm: true, smartPunctuation: true } } as never);
+[7m  [0m [93m                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mcontrol/cards/a-header-link-pressed-many-times-leaves-one-back-step/presses.mjs[0m:[93m10[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m10[0m const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
+[7m  [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/a-product-s-icon-travels-with-you-between-its-band-or-tile-a/probe.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/check-plan-0003-landed-and-fix-what-did-not/walk.mjs[0m:[93m146[0m:[93m18[0m - [93mwarning[0m[90m ts(80007): [0m'await' has no effect on the type of this expression.
+
+[7m146[0m     if (browser) await browser.close();
+[7m   [0m [93m                 ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mcontrol/cards/check-plan-0011-landed-and-fix-what-did-not/probe.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/check-plan-0018-landed-and-fix-what-did-not/seam-walk.mjs[0m:[93m10[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m10[0m const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
+[7m  [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/check-plan-0018-landed-and-fix-what-did-not/wide.mjs[0m:[93m10[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m10[0m const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
+[7m  [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/every-page-s-opening-lands-like-the-home-hero-s-and-the-old/probe.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/hovering-a-band-screenshot-brings-the-picture-closer-inside/corners.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/hovering-a-band-screenshot-brings-the-picture-closer-inside/probe.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/no-page-scrolls-sideways-at-any-width-or-text-size/wide.mjs[0m:[93m10[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m10[0m const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
+[7m  [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/product-apps-and-about-text-breaks-where-a-reader-would/breaks.mjs[0m:[93m72[0m:[93m36[0m - [93mwarning[0m[90m ts(6133): [0m'i' is declared but its value is never read.
+
+[7m72[0m     lines.slice(0, -1).forEach((l, i) => {
+[7m  [0m [93m                                   ~[0m
+
+[96mcontrol/cards/the-current-page-pill-in-the-header-glides-to-the-page-you-w/probe.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/the-gallery-s-marker-and-counter-keep-pace-with-the-slide/probe.mjs[0m:[93m8[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m8[0m const require = createRequire(import.meta.url);
+[7m [0m [93m      ~~~~~~~[0m
+
+[96mcontrol/cards/the-waypost-words-phone-rail-always-comes-to-rest-on-a-whole/rail-rest.mjs[0m:[93m19[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'require' is declared but its value is never read.
+
+[7m19[0m const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
+[7m  [0m [93m      ~~~~~~~[0m
+
+[96mscripts/probe/inspect-probe.mjs[0m:[93m381[0m:[93m18[0m - [93mwarning[0m[90m ts(6133): [0m'w' is declared but its value is never read.
+
+[7m381[0m   const { width: w, height: vh } = page.viewportSize();
+[7m   [0m [93m                 ~[0m
+[96mscripts/probe/inspect-probe.mjs[0m:[93m379[0m:[93m40[0m - [93mwarning[0m[90m ts(6133): [0m'dpr' is declared but its value is never read.
+
+[7m379[0m async function tiles(page, cell, docH, dpr, dir) {
+[7m   [0m [93m                                       ~~~[0m
+[96mscripts/probe/inspect-probe.mjs[0m:[93m118[0m:[93m25[0m - [93mwarning[0m[90m ts(6385): [0m'clip' is deprecated.
+
+[7m118[0m       if (cs.clip && cs.clip !== 'auto') return false;
+[7m   [0m [93m                        ~~~~[0m
+[96mscripts/probe/inspect-probe.mjs[0m:[93m118[0m:[93m14[0m - [93mwarning[0m[90m ts(6385): [0m'clip' is deprecated.
+
+[7m118[0m       if (cs.clip && cs.clip !== 'auto') return false;
+[7m   [0m [93m             ~~~~[0m
+
+[96mscripts/probe/smooth-probe.mjs[0m:[93m592[0m:[93m9[0m - [93mwarning[0m[90m ts(6133): [0m't0' is declared but its value is never read.
+
+[7m592[0m   const t0 = await nowIn(page);
+[7m   [0m [93m        ~~[0m
+[96mscripts/probe/smooth-probe.mjs[0m:[93m533[0m:[93m11[0m - [93mwarning[0m[90m ts(2568): [0mProperty 'visibilityAfter' may not exist on type '{ mode: string; route: string; visibility: any; secs: number; taskMs: number | null; procMs: number | null; layouts: number; styles: number; requests: number; infiniteAnims: any; runningClockAnims: any; }'. Did you mean 'visibility'?
+
+[7m533[0m       row.visibilityAfter = await page.evaluate(() => document.visibilityState);
+[7m   [0m [93m          ~~~~~~~~~~~~~~~[0m
+[96mscripts/probe/smooth-probe.mjs[0m:[93m204[0m:[93m14[0m - [93mwarning[0m[90m ts(6133): [0m'k' is declared but its value is never read.
+
+[7m204[0m   for (const k of [1, 2]) {
+[7m   [0m [93m             ~[0m
+
+[96mtests/dist.test.ts[0m:[93m518[0m:[93m24[0m - [93mwarning[0m[90m ts(80007): [0m'await' has no effect on the type of this expression.
+
+[7m518[0m       const { html } = await markdownToHtml(md, {
+[7m   [0m [93m                       ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m519[0m         hastPlugins: [satteriTie],
+[7m   [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m520[0m         features: { gfm: true, smartPunctuation: true },
+[7m   [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m521[0m       } as never);
+[7m   [0m [93m~~~~~~~~~~~~~~~~~[0m
+
+Result (113 files): 
+- 0 errors
+- 0 warnings
+- 23 hints
+
+
+> solo-dev-portfolio-website@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/metekaplan/Documents/VibeCoding/Sites/PortfolioSite/solo-dev-portfolio-website
+
+
+ Test Files  12 passed (12)
+      Tests  154 passed (154)
+   Start at  14:52:20
+   Duration  715ms (transform 60%, import 29%, tests 8%, worker 3%)
+
+
+> solo-dev-portfolio-website@0.0.0 test:dist
+> vitest run --config vitest.dist.config.ts
+
+
+ RUN  v5.0.5 /Users/metekaplan/Documents/VibeCoding/Sites/PortfolioSite/solo-dev-portfolio-website
+
+
+ Test Files  2 passed (2)
+      Tests  59 passed (59)
+   Start at  14:52:21
+   Duration  216ms (tests 69%, import 20%, transform 8%, worker 3%)
+

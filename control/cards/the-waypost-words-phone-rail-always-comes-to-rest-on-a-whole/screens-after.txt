@@ -1,0 +1,10 @@
+Screens named: @waypost-rail @waypost-words — every route is loaded regardless, because one rule compares them against each other.
+
+ RUN  v5.0.5 /Users/metekaplan/Documents/VibeCoding/Sites/PortfolioSite/solo-dev-portfolio-website
+
+
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  15:38:38
+   Duration  63.92s (tests 100%)
+

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   ARRIVED_PX,
+  aimAfterResize,
   arrived,
   clamp,
   firstInView,
@@ -131,3 +132,43 @@ describe('focusHandOff', () => {
     expect(focusHandOff(next, [{ el: prev, off: true }, { el: next, off: true }])).toBeNull();
   });
 });
+
+describe('aimAfterResize', () => {
+  // The rail's real steps, one shot plus its gap, at the sizes a visitor turns
+  // between: 390, 600, 844, 1024 and 1440 wide (fractional, as the browser lays them out).
+  const STEPS = [178, 183.5, 196, 234.25, 236, 272.5];
+  const COUNT = 8;
+
+  it('settles a glide on the shot it was nearest, whatever size it moves between', () => {
+    for (const seen of STEPS) {
+      for (const now of STEPS) {
+        if (now === seen) continue;
+        for (let shot = 0; shot < COUNT; shot++) {
+          for (const drift of [-0.49, -0.25, 0, 0.25, 0.49]) {
+            const at = Math.max(0, shot + drift);
+            const aim = aimAfterResize(null, at, seen, now, COUNT);
+            expect(aim, `${seen} -> ${now}, at ${at}`).toBe(Math.min(shot, COUNT - 1));
+            expect(Number.isInteger(aim)).toBe(true);
+          }
+        }
+      }
+    }
+  });
+
+  it('keeps the shot a press sent the rail to', () => {
+    for (let target = 0; target < COUNT; target++) {
+      expect(aimAfterResize(target, 2.4, 196, 236, COUNT)).toBe(target);
+      expect(aimAfterResize(target, 2.4, 196, 196, COUNT)).toBe(target);
+    }
+  });
+
+  it('leaves a rail alone when its shots did not move', () => {
+    for (const step of STEPS) expect(aimAfterResize(null, 3.4, step, step, COUNT)).toBeNull();
+  });
+
+  it('never aims past the last shot or before the first', () => {
+    expect(aimAfterResize(null, 12, 196, 236, COUNT)).toBe(COUNT - 1);
+    expect(aimAfterResize(null, -1, 196, 236, COUNT)).toBe(0);
+  });
+});
+

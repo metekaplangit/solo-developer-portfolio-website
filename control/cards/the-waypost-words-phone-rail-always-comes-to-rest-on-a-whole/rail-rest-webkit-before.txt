@@ -1,0 +1,12 @@
+instrument: half-way rail reads between (good) at 294px
+webkit: 200 rounds, 10 rests between shots
+{"round":53,"kind":4,"dx":324,"size":[600,900],"x":1176,"step":278,"max":2224,"between":true,"waited":1200}
+{"round":77,"kind":4,"dx":315,"size":[600,900],"x":549,"step":278,"max":2224,"between":true,"waited":950}
+{"round":87,"kind":4,"dx":-53,"size":[1024,768],"x":834,"step":236.40625,"max":1418,"between":true,"waited":1150}
+{"round":98,"kind":4,"dx":-213,"size":[600,900],"x":236,"step":278,"max":2224,"between":true,"waited":900}
+{"round":133,"kind":4,"dx":-276,"size":[390,844],"x":784,"step":183,"max":1464,"between":true,"waited":1100}
+{"round":161,"kind":4,"dx":53,"size":[844,390],"x":882,"step":195.90625,"max":1175,"between":true,"waited":1150}
+{"round":183,"kind":4,"dx":-392,"size":[1440,900],"x":946,"step":294,"max":1764,"between":true,"waited":1050}
+{"round":190,"kind":4,"dx":183,"size":[600,900],"x":1098,"step":278,"max":2224,"between":true,"waited":1150}
+{"round":193,"kind":4,"dx":69,"size":[1440,900],"x":1668,"step":294,"max":1764,"between":true,"waited":1150}
+{"round":194,"kind":2,"dx":183,"x":1668,"step":294,"max":1764,"between":true,"waited":650}

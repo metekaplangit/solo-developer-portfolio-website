@@ -1,5 +1,5 @@
 // What: chaos-project's seeded driver — storms, impossible sequences, held races, grotesque addresses and interruptions against the built site in Playwright, the invariants checked every 25 events.
-// Run: npm run build, then node scripts/probe/chaos-probe.mjs --block=control|storm|sequences|races|grotesque|interrupt|chain [--seed=1] [--events=3000] [--configs=8] [--engine=chromium|webkit] [--replay=<log.jsonl> --upto=<step>]   (always `control` first; uses the global `playwright` install)
+// Run: npm run build, then node scripts/probe/chaos-probe.mjs --block=control|storm|sequences|races|grotesque|interrupt|chain [--seed=1] [--events=3000] [--configs=8] [--engine=chromium|webkit] [--replay=<log.jsonl> --upto=<step> --config=<n> --since=<step> --from=<path> --w= --h=]   (always `control` first; uses the global `playwright` install)
 // Settles: where does the site stop working when a visitor is careless, fast, or interrupted — a gallery whose counter lies, a page that errors, a state with no way out?
 import { createServer } from 'node:http';
 import { appendFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -147,7 +147,11 @@ const SNAPSHOT = () => {
     if (to !== Math.min(s.length, first + perView)) out.problems.push(`rail count ends at ${to}, last shot shown is ${Math.min(s.length, first + perView)}`);
     if (prev.disabled !== (track.scrollLeft <= 1)) out.problems.push(`rail Previous ${prev.disabled ? 'off' : 'on'} at ${track.scrollLeft}px`);
     if (next.disabled !== (track.scrollLeft >= max - 1)) out.problems.push(`rail Next ${next.disabled ? 'off' : 'on'} at ${track.scrollLeft}px of ${max}`);
-    if (max > 1 && Math.abs(track.scrollLeft - first * step) > 2 && track.scrollLeft < max - 1) out.problems.push(`rail left between shots at ${track.scrollLeft}px`);
+    // Each shot's exact left edge: offsetLeft rounds, and a step of 272.5 read as
+    // 273 put shot 6 3 px off and read a rail at rest as between shots.
+    const box = track.getBoundingClientRect().left;
+    const off = Math.min(...s.map((p) => Math.abs(track.scrollLeft - (p.getBoundingClientRect().left - box + track.scrollLeft))));
+    if (max > 1 && off > 2 && track.scrollLeft < max - 1) out.problems.push(`rail left between shots at ${track.scrollLeft}px`);
   }
   return out;
 };
@@ -290,8 +294,11 @@ async function storm() {
 }
 
 async function replay() {
-  const lines = readFileSync(REPLAY, 'utf-8').trim().split('\n').map((l) => JSON.parse(l)).filter((e) => e.step <= UPTO);
-  const cfgOf = lines[0].config;
+  // `--config` picks the storm config to replay and `--since` the step to start
+  // from; without them only config 0 was ever replayed, whatever the break's config.
+  const since = Number(arg('since', 0));
+  const lines = readFileSync(REPLAY, 'utf-8').trim().split('\n').map((l) => JSON.parse(l)).filter((e) => e.step <= UPTO && e.step >= since);
+  const cfgOf = Number(arg('config', lines[0].config));
   say(`replaying ${lines.length} events of ${REPLAY}`);
   const first = arg('from', '/');
   const { ctx, page, errors } = await fresh({ width: Number(arg('w', 1440)), height: Number(arg('h', 900)), reduced: arg('reduced', '') === '1' });

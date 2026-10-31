@@ -6,7 +6,7 @@
 - Found by: session (plan 0019's loop card)
 - Filed: 2026-10-31
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.31, card the-waypost-words-phone-rail-always-comes-to-rest-on-a-whole
 
 Doubt: seen once in 3,000 storm events and not again in 3 replays; reach is
 filed `player` because the storm drives the rail only with ordinary presses

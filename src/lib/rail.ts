@@ -66,3 +66,18 @@ export function focusHandOff<T>(focused: unknown, arrows: ReadonlyArray<{ el: T;
   if (!arrows.some((a) => a.el === focused && a.off)) return null;
   return arrows.find((a) => !a.off)?.el ?? null;
 }
+
+/**
+ * Which shot the phone rail settles on when its size changes (issue 0026). A
+ * resize moves every shot, and a glide begun by a swipe, a wheel or a trackpad
+ * has no aim of its own: it finished at its old destination, which was now
+ * between two shots. It settles on the shot it was nearest in the layout it was
+ * seen in, `at` being that position in shots; a press's own aim wins. `null`
+ * when nothing needs re-aiming: no aim, and the shots did not move.
+ */
+export function aimAfterResize(target: number | null, at: number, seenStep: number, step: number, count: number): number | null {
+  if (target !== null) return target;
+  if (seenStep <= 0 || Math.abs(step - seenStep) < 0.5) return null;
+  return clamp(Math.round(at), 0, count - 1);
+}
+

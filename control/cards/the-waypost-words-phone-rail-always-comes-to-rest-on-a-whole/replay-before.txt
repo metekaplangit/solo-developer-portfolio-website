@@ -1,0 +1,4 @@
+replay clean
+done control chromium seed 1 in 6s, 0 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/control-chromium-seed1.jsonl
+replay clean
+done control chromium seed 1 in 5s, 0 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/control-chromium-seed1.jsonl

@@ -1,0 +1,4 @@
+instrument: half-way rail reads between (good) at 290px
+chromium: 200 rounds, 2 rests between shots
+{"round":7,"kind":4,"dx":257,"size":[1024,768],"x":724,"step":233.65625,"max":1402,"between":true,"waited":700}
+{"round":75,"kind":4,"dx":91,"size":[600,900],"x":636,"step":272.5,"max":2180,"between":true,"waited":700}

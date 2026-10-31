@@ -517,6 +517,7 @@ const PHONES_WIDE = 4;
   // Progressive enhancement: wire arrows, dots, keyboard, and the live counter to
   // the native scroll-snap track. Falls back to plain swipe/scroll if this never runs.
   import {
+    aimAfterResize,
     arrived,
     clamp,
     firstInView,
@@ -677,14 +678,27 @@ const PHONES_WIDE = 4;
     const slides = Array.from(track?.querySelectorAll<HTMLElement>('.phone') ?? []);
     if (!track || !prev || !next || slides.length < 3) return;
 
-    const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+    // Read from the layout itself: offsetLeft rounds to whole pixels, so a step of
+    // 272.5 read as 273 aimed shot 6 3 px past where it snaps, and never arrived.
+    const step = () => slides[1].getBoundingClientRect().left - slides[0].getBoundingClientRect().left;
     const perView = () => shotsInView(track.clientWidth, step(), slides[0].offsetWidth);
     const max = () => track.scrollWidth - track.clientWidth;
     // A press pages on from the first shot the last press sent the rail to, to a
     // whole shot, rather than by an offset from wherever a glide had got to: that
     // added to a half-way point, so 2 quick taps on Next stopped short of the end
     // and Safari left the rail resting part-way across a shot (chaos-project 0001).
+    // Where the rail was, in shots, and the step it was measured in, as of the
+    // last frame: a resize reads them to know which shot the rail was on before
+    // the shots moved (issue 0026).
+    let seenAt = 0;
+    let seenStep = 0;
     const render = () => {
+      // A frame that finds the shots moved is a resize, whichever the browser
+      // delivers first: WebKit can scroll the rail to a place of its own and run
+      // this frame before the window's resize event (issue 0026).
+      if (seenStep > 0 && Math.abs(step() - seenStep) >= 0.5) reaim();
+      seenStep = step();
+      seenAt = seenStep > 0 ? track.scrollLeft / seenStep : 0;
       const first = firstInView(track.scrollLeft, step());
       if (from) from.textContent = String(first + 1);
       if (to) to.textContent = String(Math.min(slides.length, first + perView()));
@@ -702,10 +716,15 @@ const PHONES_WIDE = 4;
     count?.removeAttribute('hidden');
     prev.addEventListener('click', () => page(-1));
     next.addEventListener('click', () => page(1));
-    // A size change mid-glide re-aims at the same shot, which now sits elsewhere.
+    // A size change mid-glide re-aims at the same shot, which now sits elsewhere —
+    // the shot a press sent the rail to, or the one a swipe or wheel had it
+    // nearest, since that glide would otherwise end between two shots.
+    const reaim = () => {
+      const target = aimAfterResize(aim.target(), seenAt, seenStep, step(), slides.length);
+      if (target !== null) aim.send(target);
+    };
     const onResize = () => {
-      const target = aim.target();
-      if (target !== null) track.scrollTo({ left: railOffset(target, step(), max()) });
+      reaim();
       aim.nudge();
     };
     window.addEventListener('resize', onResize);

@@ -1,0 +1,10 @@
+config 0 [clickRandom,dblclick,wheelX,key,tab,resize,reload,goto,dot,arrow] 1920x1080 from /privacy/wander-words/ fast
+config 1 [clickControl,wheel,wheelX,key,tab,forward,hover,drag,reload,goto,arrow] 844x390 from /privacy/sole-focus/ gapped
+config 2 [clickRandom,wheel,wheelX,key,tab,back,forward,resize,drag,reload,goto,dot,arrow] 1920x1080 from /apps/ fast
+config 3 [clickRandom,clickControl,dblclick,wheel,wheelX,key,tab,back,forward,resize,hover,drag,reload,goto,dot] 390x844 reduced from /privacy/sole-focus/ fast
+  BREAK seed 3 step 1199 on /apps/waypost-words/: rail left between shots at 193px
+config 4 [clickControl,dblclick,wheelX,tab,back,forward,resize,hover,reload,goto,dot,arrow] 1024x768 from /privacy/wander-words/ fast
+config 5 [clickControl,wheel,wheelX,key,tab,back,forward,resize,hover,drag,reload,dot,arrow] 1920x1080 reduced from /apps/waypost-words/ fast
+config 6 [clickRandom,clickControl,wheel,wheelX,tab,forward,hover,drag,goto] 1024x768 from /privacy/sole-focus/ gapped
+config 7 [clickRandom,clickControl,key,tab,back,forward,resize,goto,dot,arrow] 320x568 reduced from /support/ gapped
+done storm chromium seed 3 in 401s, 1 invariant breaks, log /var/folders/j7/lym573m92xx4b77y8_td_ybh0000gn/T/portfolio-chaos/storm-chromium-seed3.jsonl

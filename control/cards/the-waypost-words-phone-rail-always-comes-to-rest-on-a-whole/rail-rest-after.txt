@@ -1,0 +1,8 @@
+chromium reduced=0 seed=1: chromium: 200 rounds, 0 rests between shots
+chromium reduced=0 seed=3: chromium: 200 rounds, 0 rests between shots
+chromium reduced=1 seed=1: chromium: 200 rounds, 0 rests between shots
+chromium reduced=1 seed=3: chromium: 200 rounds, 0 rests between shots
+webkit reduced=0 seed=1: webkit: 200 rounds, 0 rests between shots
+webkit reduced=0 seed=3: webkit: 200 rounds, 0 rests between shots
+webkit reduced=1 seed=1: webkit: 200 rounds, 0 rests between shots
+webkit reduced=1 seed=3: webkit: 200 rounds, 0 rests between shots
