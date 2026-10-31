@@ -12,6 +12,10 @@ Semantic Versioning (pre-1.0 `0.MINOR.PATCH`). Internal-only work (docs,
 checkpoints, refactors, this initialization) is traceable via Step IDs and
 commits and does **not** consume a product version.
 
+## v0.66.20
+
+- No page scrolls sideways at any width or text size
+
 ## v0.66.19
 
 - A change to the wrapping rule reaches product prose on a plain build

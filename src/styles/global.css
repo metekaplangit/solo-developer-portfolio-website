@@ -332,6 +332,25 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* A word longer than its column breaks rather than pushing the page wider
+     (issue 0022). `anywhere`, not `break-word`, because only `anywhere` lowers
+     a box's min-content width: an email address or a tied run otherwise held
+     every grid and flex row it sat in at its full length, and below ~270px or
+     at large text sizes the page slid sideways. A word that fits never breaks. */
+  overflow-wrap: anywhere;
+}
+/* …except a heading on a wide screen. A tied heading can run past the 15rem
+   label rail into the gutter beside it ("and something to watch" on Waypost
+   Words), where it reads whole; breaking it there split a word in two. On a
+   narrow screen the heading spans the column and its gutter is the window's
+   edge, so it breaks with the body. */
+:is(h1, h2, h3, h4) {
+  overflow-wrap: normal;
+}
+@media (max-width: 40rem) {
+  :is(h1, h2, h3, h4) {
+    overflow-wrap: anywhere;
+  }
 }
 
 main {
@@ -687,7 +706,9 @@ img {
   color: var(--muted);
   font-size: var(--text-xs);
   line-height: var(--leading-ui);
-  white-space: nowrap;
+  /* No `nowrap`: an inline-block is never split across lines anyway, so the
+     only thing nowrap ever did was let a chip wider than its column push the
+     page sideways (issue 0022). A chip that fits stays on one line. */
 }
 /* The at-a-glance row: same pill, deliberately louder. */
 .chip-lg {

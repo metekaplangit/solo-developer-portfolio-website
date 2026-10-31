@@ -6,7 +6,7 @@
 - Found by: chaos-project 0001
 - Filed: 2026-10-30
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.20, card no-page-scrolls-sideways-at-any-width-or-text-size
 
 Doubt: whether a real phone's text-size or page-zoom setting reaches these
 sizes in the way the probe imitated them; Severity rounded up to `medium`
@@ -39,3 +39,4 @@ No page scrolls sideways at any width or text size; DESIGN rule and the
   routes measured. 1440 px: clean to 175%, Magic Notes 1445 px at 200%.
 - assets/0022/01-waypost-390px-text-150.png — Waypost Words at 390 px, text 150%: the header cut after "Su".
 - assets/0022/02-home-390px-text-200.png — home at 390 px, text 200%.
+- assets/0022/03-waypost-390px-text-150-after.png and 04-home-390px-text-200-after.png — the same two views after the fix: nothing past the edge, the header on 2 rows.

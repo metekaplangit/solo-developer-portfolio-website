@@ -848,6 +848,46 @@ type PressStep = { what: string; expected: string; showing: string; counter: str
 const presses = new Map<string, PressStep[]>();
 
 /**
+ * Narrow windows and large text (issue 0022). Below ~270px, or with text at
+ * 150% and more on a phone, pages grew wider than the window and slid sideways:
+ * an email address, a chip or a tied run held its grid row at full length. Each
+ * window size and text size here was measured red on every route it names in
+ * the issue. Text is raised the way the issue raised it, on the root element.
+ * One page per size walks every route, keyed `<width>@<text>% <path>`.
+ */
+const SIDEWAYS_SIZES: Array<[number, number]> = [
+  [200, 100], [240, 100], [260, 100], [390, 150], [390, 200], [390, 300], [1440, 200],
+];
+const sideways = new Map<string, number>();
+
+async function readSideways(chrome: Chrome, base: string, width: number, text: number): Promise<void> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    try {
+      page = await chrome.page();
+      page.setDefaultTimeout(30_000);
+      await page.setViewport({ width, height: 800, deviceScaleFactor: 1 });
+      for (const route of ROUTES) {
+        await page.goto(base + route.path, { waitUntil: 'load', timeout: 30_000 });
+        const over = await page.evaluate((t) => {
+          document.documentElement.style.fontSize = `${t}%`;
+          return document.documentElement.scrollWidth - window.innerWidth;
+        }, text);
+        sideways.set(`${width}@${text}% ${route.path}`, over);
+      }
+      await page.close().catch(() => {});
+      return;
+    } catch (error) {
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not read ${width}px at ${text}% text in 4 attempts: ${String(lastError).slice(0, 160)}`);
+}
+
+/**
  * Press a gallery's or the rail's controls several times in one burst — every
  * press in the same moment, so no clock decides the result — then read where it
  * came to rest (chaos-project 0001). Each press used to aim at the picture after
@@ -1164,6 +1204,9 @@ beforeAll(async () => {
   for (const route of BUTTON_ROUTES) {
     buttonFeel.set(route, await readButtonFeel(chrome, started.base + route));
   }
+  for (const [width, text] of SIDEWAYS_SIZES) {
+    await readSideways(chrome, started.base, width, text);
+  }
   for (const route of CONTRAST_ROUTES) {
     for (const value of ['more', 'no-preference'] as const) {
       contrast.set(`${value} ${route}`, await readContrast(chrome, started.base + route, value));
@@ -1390,6 +1433,15 @@ test('a Mac set to Increase contrast gets stronger text, hairlines and edges @in
   // The home page holds no lifted surface; the other two hold all four kinds.
   const checked = CONTRAST_ROUTES.reduce((n, route) => n + contrast.get(`more ${route}`)!.surfaces.length, 0);
   if (checked === 0) bad.push('no lifted surface found to check');
+  expect(bad).toEqual([]);
+});
+
+// No page scrolls sideways at any window or text size (issue 0022). DESIGN and
+// `Nav.astro` both call a horizontal page scroll never acceptable; the standard
+// widths above check it at 320 and up, and this checks below it and at large text.
+test('no page scrolls sideways in a narrow window or at large text @narrow-and-large-text', () => {
+  const bad = [...sideways].filter(([, over]) => over > 0).map(([at, over]) => `${at}: ${over}px wider than the window`);
+  expect(sideways.size).toBe(SIDEWAYS_SIZES.length * ROUTES.length);
   expect(bad).toEqual([]);
 });
 

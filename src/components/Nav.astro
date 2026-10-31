@@ -176,17 +176,20 @@ function isCurrent(href: string): boolean {
       width: 100%;
     }
     .nav-list {
-      flex-wrap: nowrap;
+      /* One row whenever the four fit — from ~360px up at normal text
+         (measured: 0px hidden at 390 and 430). Where they cannot — a narrower
+         window, or text raised to 150% and more — the row wraps rather than
+         scrolling: a scrolled row hid Support and About past the edge with
+         nothing showing they were there (issue 0022), and a second row costs
+         height only on the screens that could not show the first one whole. */
+      flex-wrap: wrap;
       justify-content: space-between;
       gap: var(--space-1);
       font-size: var(--text-sm);
-      /* Safety valve, not the design. Four items fit without scrolling from
-         ~360px up (measured: 0px hidden at 390 and 430). Below that they
-         genuinely cannot fit, and without this the row pushed the DOCUMENT
-         39px wide at 320px — a horizontal page scroll, which is the one thing
-         that is never acceptable. Scrolling a nav is a poor outcome; scrolling
-         the page sideways is a broken one. No mask here: the fade it used to
-         draw read as a rendering glitch rather than an affordance. */
+      /* Safety valve, not the design: only a single link wider than the whole
+         row could reach it. Scrolling a nav is a poor outcome; scrolling the
+         page sideways is a broken one. No mask here: the fade it used to draw
+         read as a rendering glitch rather than an affordance. */
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
