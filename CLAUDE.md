@@ -77,15 +77,11 @@ Two tiers run by the control, and a third you run by hand.
 - **Fast checks — `npm run headless`.** `npm audit --omit=dev`, the build,
   `astro check`, the unit suite and the built-output suite, in that order.
   Every card runs all of it.
-- **Screens — `tests/screens/site.spec.ts`.** A real Chrome over 12 routes at 4
-  widths plus a phone pass, about a minute. One `test()` per route, and the
-  `@tag` at the end of each title is what a card names:
-
-      @home  @apps  @sole-focus  @magic-notes  @waypost-words  @about
-      @support  @privacy-index  @privacy-sole-focus  @privacy-magic-notes
-      @privacy-waypost-words
-      @waypost-rail
-      @not-found  @every-route  @page-top
+- **Screens — `tests/screens/site.spec.ts`.** A real Chrome over every route in
+  `scripts/routes.mjs` at 4 widths plus a phone pass, about a minute. The `@tag`
+  at the end of each `test()` title is what a card names: one per route, its tag
+  taken from `scripts/routes.mjs`, and the rest written into their titles in the
+  spec itself.
 
 A card that touches anything under `src/` or `public/` names the screens it
 changed and photographs them:
