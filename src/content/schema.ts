@@ -218,6 +218,8 @@ export const privacyPolicyEntrySchema = z.object({
    */
   sections: z
     .object({
+      /** "What we collect", when the policy collects nothing. */
+      collected: z.string().min(1).optional(),
       /** "How your data is protected". */
       protection: z.string().min(1).optional(),
       /** "Children's privacy". */

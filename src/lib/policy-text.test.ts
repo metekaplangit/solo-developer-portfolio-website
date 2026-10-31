@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { privacyPolicyEntrySchema } from '../content/schema';
 import {
   policyFacts,
+  collectedNothingText,
   protectionText,
   childrenText,
   rightsText,
@@ -36,6 +37,14 @@ describe('policyFacts', () => {
 });
 
 describe('the generated defaults', () => {
+  it('names the policy\u2019s own subject when nothing is collected (issue 0020)', () => {
+    for (const productId of [GLOBAL_POLICY_ID, 'sole-focus']) {
+      const facts = policyFacts(parse({ productId }));
+      expect(collectedNothingText(facts)).toBe(`Nothing. ${facts.subject} doesn't collect personal data.`);
+      expect(collectedNothingText(facts)).not.toMatch(/product/i);
+    }
+  });
+
   it('makes the strongest honest claim available for local-only storage', () => {
     const t = protectionText({ collectsData: true, storesLocally: true, subject: 'This app' });
     expect(t).toContain('stays on your device');

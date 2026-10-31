@@ -5,6 +5,7 @@ import ProductAvatar from './ProductAvatar.astro';
 import SupportEmail from './SupportEmail.astro';
 import {
   policyFacts,
+  collectedNothingText,
   protectionText,
   childrenText,
   rightsText,
@@ -45,6 +46,7 @@ const hasThirdParties = policy.thirdPartyServices.length > 0;
 const facts = policyFacts(policy);
 const o = policy.sections;
 const text = {
+  collected: resolveSection(o.collected, collectedNothingText(facts)),
   protection: resolveSection(o.protection, protectionText(facts)),
   children: resolveSection(o.children, childrenText(facts)),
   rights: resolveSection(o.rights, rightsText(facts)),
@@ -113,7 +115,7 @@ const chips: { label: string; ok: boolean }[] = [
         collectsData ? (
           <ul>{list.dataCollected.map((d) => <li>{d}</li>)}</ul>
         ) : (
-          <p class="sec-plain">{tie("Nothing. This product doesn't collect personal data.")}</p>
+          <p class="sec-plain">{text.collected}</p>
         )
       }
       </div>

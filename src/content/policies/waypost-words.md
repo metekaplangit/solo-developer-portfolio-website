@@ -36,6 +36,8 @@ effectiveScope: The Waypost Words game for iPhone and iPad, as first released on
 # that changes any of this.
 reviewStatus: reviewed
 sections:
+  # Named as the rest of this policy names it, not by the default's "This app".
+  collected: "Nothing. Waypost Words doesn't collect personal data."
   # General audience, not child-directed (owner's decision, 2026-09-22). "All
   # ages, children included" would read as a child-directed service under COPPA
   # once advertising is added, which limits the ads allowed and can require

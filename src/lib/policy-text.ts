@@ -45,6 +45,16 @@ export function policyFacts(policy: PrivacyPolicyEntry): PolicyFacts {
 }
 
 /**
+ * "What we collect", for a policy whose `dataCollected` is empty. A policy that
+ * does collect lists what, so this sentence is only ever the empty case. It
+ * names the policy's own subject, because the same component renders the
+ * website's policy and every product's (issue 0020).
+ */
+export function collectedNothingText({ subject }: PolicyFacts): string {
+  return `Nothing. ${subject} doesn't collect personal data.`;
+}
+
+/**
  * "How your data is protected".
  *
  * Three cases, in order of how much they can promise. Local-only storage is the

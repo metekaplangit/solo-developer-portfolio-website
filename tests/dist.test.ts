@@ -700,3 +700,34 @@ describe('newest release first (owner, 2026-10-29)', () => {
     });
   }
 });
+
+describe('every policy names what it covers (issue 0020)', () => {
+  // One component renders the website's own policy and every product's, so a
+  // fixed sentence in it speaks for all of them. Each policy's "What we collect"
+  // row must name the same thing the rest of that policy names — "This website"
+  // on the studio's own, the product's subject on a product's — never a word
+  // that fits none of them.
+  const plain = (html: string) =>
+    html.replace(/<[^>]*>/g, ' ').replace(/&nbsp;| /g, ' ').replace(/&#39;|&#x27;|’/g, "'").replace(/\s+/g, ' ');
+  const policies = () => built.filter(([, html]) => html.includes('What we collect'));
+
+  it('has policies to check', () => {
+    expect(policies().length).toBeGreaterThan(1);
+  });
+
+  it("names the policy's own subject in the What we collect row", () => {
+    const wrong: string[] = [];
+    for (const [route, html] of policies()) {
+      const text = plain(html);
+      const subject = text.match(/(This \w+) isn't directed at children/)?.[1];
+      const row = text.match(/What we collect (.{0,120})/)?.[1] ?? '';
+      if (/\bthis product\b/i.test(text)) wrong.push(`${route}: says "this product"`);
+      // A policy that rewrote its children section names itself in its own
+      // words there, so only the "this product" check above applies to it.
+      if (subject && row.startsWith('Nothing.') && !row.startsWith(`Nothing. ${subject} `)) {
+        wrong.push(`${route}: "${row.slice(0, 50)}" against "${subject}"`);
+      }
+    }
+    expect(wrong).toEqual([]);
+  });
+});
