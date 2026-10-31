@@ -30,6 +30,14 @@ export default defineConfig({
   site: 'https://metkapstudio.com',
   base: '/',
   trailingSlash: 'ignore',
+  // Every link's page is fetched once it scrolls into view, so a first visit
+  // to a page answers from the cache instead of waiting 250–450 ms on the
+  // network (issue 0018). The pages are 8–28 KB of HTML each. Astro falls back
+  // to fetching on tap for a visitor on data saver or a slow connection, and
+  // Safari, which has no `<link rel="prefetch">`, fetches into the HTTP cache
+  // that GitHub Pages' 600 s max-age then serves.
+  // https://docs.astro.build/en/guides/prefetch/ (read 2026-10-31)
+  prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   build: {
     format: 'directory',
   },

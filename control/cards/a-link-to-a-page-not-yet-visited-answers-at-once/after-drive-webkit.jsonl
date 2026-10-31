@@ -1,0 +1,56 @@
+{"i":"home hero button hover","kind":"hover","transform":"matrix(1, 0, 0, 1, 0, -1)","frames":{"n":36,"worst":19,"p95":17,"over33":0},"longFrames":[]}
+{"i":"home band screenshot hover","kind":"hover","transform":"none","frames":{"n":36,"worst":22,"p95":18,"over33":0},"longFrames":[]}
+{"i":"home tile hover","kind":"hover","missing":".tile"}
+{"i":"home scroll","kind":"scroll","px":2477,"ms":2529,"frames":{"n":152,"worst":19,"p95":17,"over33":0},"longFrames":[]}
+{"i":"home → apps (header, 1st page change)","kind":"page change","to":"/apps/","vt":true,"toResponse":262,"toFirstFrame":289,"toDone":981,"frames":{"n":42,"worst":26,"p95":17,"over33":0},"longFrames":[]}
+{"i":"apps card hover","kind":"hover","transform":"matrix(1, 0, 0, 1, 0, -2)","frames":{"n":36,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"apps scroll","kind":"scroll","px":1733,"ms":2257,"frames":{"n":136,"worst":24,"p95":18,"over33":0},"longFrames":[]}
+{"i":"apps → home (header, 2nd page change)","kind":"page change","to":"/","vt":true,"toResponse":260,"toFirstFrame":285,"toDone":1037,"frames":{"n":46,"worst":20,"p95":18,"over33":0},"longFrames":[]}
+{"i":"home → product (band, icon travels)","kind":"page change","to":"/apps/waypost-words/","vt":true,"toResponse":256,"toFirstFrame":282,"toDone":966,"frames":{"n":42,"worst":20,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","mouseover:16","mousedown:16","pointerdown:16","pointerup:16","mouseup:16"],"toDone":263,"frames":{"n":21,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (2nd)","kind":"in page","feedback":16,"events":["mousedown:16","pointerdown:16","pointerup:16","mouseup:16","click:16","pointerout:16"],"toDone":262,"frames":{"n":21,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail prev","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16","mousedown:16","pointerdown:16"],"toDone":266,"frames":{"n":22,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail key right","kind":"in page","feedback":"<16","events":[],"toDone":222,"frames":{"n":17,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail swipe","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16"],"toDone":null,"frames":{"n":46,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ scroll","kind":"scroll","px":2356,"ms":2473,"frames":{"n":149,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"product → back","kind":"back","to":"/","bfcache":false,"toFirstFrame":295,"notRestored":"null"}
+{"i":"home → apps","kind":"page change","to":"/apps/","vt":true,"toResponse":259,"toFirstFrame":280,"toDone":973,"frames":{"n":42,"worst":25,"p95":18,"over33":0},"longFrames":[]}
+{"i":"apps → sole-focus","kind":"page change","to":"/apps/sole-focus/","vt":true,"toResponse":265,"toFirstFrame":289,"toDone":973,"frames":{"n":42,"worst":19,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","mouseover:16","mousedown:16","pointerdown:16","pointerup:16","mouseup:16"],"toDone":263,"frames":{"n":21,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery next (2nd)","kind":"in page","feedback":"<16","events":[],"toDone":265,"frames":{"n":21,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery prev","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16","mousedown:16","pointerdown:16"],"toDone":262,"frames":{"n":19,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery dot","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16","mousedown:16","pointerdown:16"],"toDone":269,"frames":{"n":21,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery key left","kind":"in page","feedback":"<16","events":[],"toDone":233,"frames":{"n":17,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery swipe","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16"],"toDone":996,"frames":{"n":64,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery end position","kind":"state","left":2300,"counter":"3"}
+{"i":"/apps/sole-focus/ scroll","kind":"scroll","px":3229,"ms":2791,"frames":{"n":168,"worst":20,"p95":18,"over33":0},"longFrames":[]}
+{"i":"→ apps","kind":"page change","to":"/apps/","vt":true,"toResponse":261,"toFirstFrame":281,"toDone":976,"frames":{"n":42,"worst":26,"p95":18,"over33":0},"longFrames":[]}
+{"i":"apps → magic-notes","kind":"page change","to":"/apps/magic-notes/","vt":true,"toResponse":261,"toFirstFrame":282,"toDone":971,"frames":{"n":43,"worst":22,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","mouseover:16","mousedown:16","pointerdown:16","pointerup:16","mouseup:16"],"toDone":262,"frames":{"n":20,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery next (2nd)","kind":"in page","feedback":16,"events":["mousedown:16","pointerdown:16","pointerup:16","mouseup:16","click:16"],"toDone":267,"frames":{"n":22,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery prev","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16","mousedown:16","pointerdown:16"],"toDone":256,"frames":{"n":20,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery dot","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16","mousedown:16","pointerdown:16"],"toDone":256,"frames":{"n":20,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery key left","kind":"in page","feedback":"<16","events":[],"toDone":230,"frames":{"n":17,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery swipe","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16"],"toDone":998,"frames":{"n":64,"worst":19,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery end position","kind":"state","left":3450,"counter":"4"}
+{"i":"/apps/magic-notes/ scroll","kind":"scroll","px":3753,"ms":2989,"frames":{"n":180,"worst":19,"p95":18,"over33":0},"longFrames":[]}
+{"i":"→ apps","kind":"page change","to":"/apps/","vt":true,"toResponse":255,"toFirstFrame":268,"toDone":965,"frames":{"n":43,"worst":20,"p95":18,"over33":0},"longFrames":[]}
+{"i":"apps → waypost-words","kind":"page change","to":"/apps/waypost-words/","vt":true,"toResponse":256,"toFirstFrame":270,"toDone":965,"frames":{"n":43,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","mouseover:16","mousedown:16","pointerdown:16","pointerup:16","mouseup:16"],"toDone":262,"frames":{"n":20,"worst":17,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (2nd)","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16"],"toDone":262,"frames":{"n":21,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail prev","kind":"in page","feedback":16,"events":["pointerout:16","mouseout:16","pointerover:16","mouseover:16","mousedown:16","pointerdown:16"],"toDone":262,"frames":{"n":21,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail key right","kind":"in page","feedback":"<16","events":[],"toDone":229,"frames":{"n":17,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail swipe","kind":"in page","feedback":"<16","events":[],"toDone":null,"frames":{"n":46,"worst":19,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ scroll","kind":"scroll","px":2356,"ms":2462,"frames":{"n":148,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"→ about (header)","kind":"page change","to":"/about/","vt":true,"toResponse":261,"toFirstFrame":281,"toDone":976,"frames":{"n":42,"worst":25,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/about/ scroll","kind":"scroll","px":207,"ms":1695,"frames":{"n":102,"worst":18,"p95":17,"over33":0},"longFrames":[]}
+{"i":"→ support (header)","kind":"page change","to":"/support/","vt":true,"toResponse":264,"toFirstFrame":285,"toDone":978,"frames":{"n":41,"worst":40,"p95":17,"over33":1},"longFrames":[]}
+{"i":"/support/ scroll","kind":"scroll","px":179,"ms":1691,"frames":{"n":102,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"→ privacy (footer)","kind":"page change","to":"/privacy/","vt":true,"toResponse":267,"toFirstFrame":289,"toDone":920,"frames":{"n":39,"worst":18,"p95":18,"over33":0},"longFrames":[]}
+{"i":"/privacy/ scroll","kind":"scroll","px":1285,"ms":2098,"frames":{"n":126,"worst":20,"p95":17,"over33":0},"longFrames":[]}
+{"i":"privacy → a policy","kind":"page change","to":"/privacy/waypost-words/","vt":true,"toResponse":264,"toFirstFrame":285,"toDone":919,"frames":{"n":39,"worst":19,"p95":17,"over33":0},"longFrames":[]}
+{"i":"/privacy/waypost-words/ scroll","kind":"scroll","px":1022,"ms":1994,"frames":{"n":120,"worst":22,"p95":18,"over33":0},"longFrames":[]}
+{"i":"policy → back","kind":"back","to":"/privacy/","bfcache":false,"toFirstFrame":281,"notRestored":"null"}
+{"i":"404 → home","kind":"page change","to":"/","vt":false,"toResponse":257,"toFirstFrame":281,"toDone":875,"frames":{"n":36,"worst":21,"p95":19,"over33":0},"longFrames":[]}
+{"i":"resize 1440 → 390","kind":"resize","frames":{"n":60,"worst":36,"p95":19,"over33":1},"longFrames":[]}
+{"i":"heap at end (KB)","kind":"state","mem":null}

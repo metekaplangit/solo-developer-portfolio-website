@@ -858,6 +858,57 @@ type PressStep = { what: string; expected: string; showing: string; counter: str
 const presses = new Map<string, PressStep[]>();
 
 /**
+ * Links fetched before the tap (issue 0018). A first visit to a page waited the
+ * whole network round trip before anything moved; Astro's prefetch now fetches
+ * each link's page as it comes into view. Every page's header links are in view
+ * from the start, so each must have its page fetched — a `<link rel="prefetch">`
+ * in Chrome — without anybody hovering or tapping. Keyed by route, the header
+ * links (other than the page itself) that were never fetched.
+ */
+const notPrefetched = new Map<string, string[]>();
+
+async function readPrefetch(chrome: Chrome, base: string, path: string): Promise<string[]> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    let page: import('puppeteer-core').Page | undefined;
+    try {
+      page = await chrome.page();
+      page.setDefaultTimeout(30_000);
+      await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+      await page.goto(base + path, { waitUntil: 'load', timeout: 30_000 });
+      const wanted = await page.evaluate(() =>
+        [...new Set([...document.querySelectorAll<HTMLAnchorElement>('header a[href^="/"]')]
+          .map((a) => new URL(a.href).pathname)
+          .filter((p) => p !== location.pathname))],
+      );
+      // Waits on the condition, never on the clock: done the moment every
+      // header link has its prefetch, failed only by the timeout.
+      await page
+        .waitForFunction(
+          (paths: string[]) => {
+            const got = new Set([...document.querySelectorAll<HTMLLinkElement>('link[rel="prefetch"]')].map((l) => new URL(l.href).pathname));
+            return paths.every((p) => got.has(p));
+          },
+          { timeout: 5_000 },
+          wanted,
+        )
+        .catch(() => {});
+      const missing = await page.evaluate((paths: string[]) => {
+        const got = new Set([...document.querySelectorAll<HTMLLinkElement>('link[rel="prefetch"]')].map((l) => new URL(l.href).pathname));
+        return paths.filter((p) => !got.has(p));
+      }, wanted);
+      await page.close().catch(() => {});
+      return wanted.length ? missing : ['(no header links found)'];
+    } catch (error) {
+      lastError = error;
+      await page?.close().catch(() => {});
+      await chrome.discard();
+    }
+  }
+  throw new Error(`could not read prefetch on ${path} in 4 attempts: ${String(lastError).slice(0, 160)}`);
+}
+
+/**
  * Narrow windows and large text (issue 0022). Below ~270px, or with text at
  * 150% and more on a phone, pages grew wider than the window and slid sideways:
  * an email address, a chip or a tied run held its grid row at full length. Each
@@ -1283,6 +1334,9 @@ beforeAll(async () => {
   for (const [width, text] of SIDEWAYS_SIZES) {
     await readSideways(chrome, started.base, width, text);
   }
+  for (const route of ROUTES) {
+    notPrefetched.set(route.path, await readPrefetch(chrome, started.base, route.path));
+  }
   await walkFocus(chrome, started.base, '/apps/waypost-words/', '[data-phones]');
   await walkFocus(chrome, started.base, '/apps/sole-focus/', '.gallery');
   for (const route of CONTRAST_ROUTES) {
@@ -1521,6 +1575,13 @@ test('a gallery arrow at the end keeps keyboard focus in the gallery @gallery-fo
     .filter((w) => !w.inside || !w.ring || !w.moved)
     .map((w) => `${w.path} ${w.arrow} to the end: focus ${w.inside ? 'inside' : 'lost'}, ring ${w.ring ? 'shown' : 'not shown'}, arrow key ${w.moved ? 'moved it' : 'did nothing'}`);
   expect(focusWalks.length).toBe(4);
+  expect(bad).toEqual([]);
+});
+
+// Every page fetches its header links before the tap (issue 0018).
+test('every page fetches the pages its header links to before the tap @prefetch', () => {
+  const bad = [...notPrefetched].filter(([, missing]) => missing.length).map(([path, missing]) => `${path}: never fetched ${missing.join(', ')}`);
+  expect(notPrefetched.size).toBe(ROUTES.length);
   expect(bad).toEqual([]);
 });
 

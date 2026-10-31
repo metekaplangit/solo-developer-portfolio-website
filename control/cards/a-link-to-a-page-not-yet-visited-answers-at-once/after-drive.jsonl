@@ -1,0 +1,56 @@
+{"i":"home hero button hover","kind":"hover","transform":"matrix(1, 0, 0, 1, 0, -1)","frames":{"n":36,"worst":16.7,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"home band screenshot hover","kind":"hover","transform":"none","frames":{"n":36,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"home tile hover","kind":"hover","missing":".tile"}
+{"i":"home scroll","kind":"scroll","px":2477,"ms":2716.4,"frames":{"n":163,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"home → apps (header, 1st page change)","kind":"page change","to":"/apps/","vt":true,"toResponse":8.7,"toFirstFrame":12.3,"toDone":729,"frames":{"n":44,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"apps card hover","kind":"hover","transform":"matrix(1, 0, 0, 1, 0, -2)","frames":{"n":36,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"apps scroll","kind":"scroll","px":1733,"ms":2422.8,"frames":{"n":144,"worst":33.3,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"apps → home (header, 2nd page change)","kind":"page change","to":"/","vt":true,"toResponse":6.5,"toFirstFrame":13.1,"toDone":789.7,"frames":{"n":47,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"home → product (band, icon travels)","kind":"page change","to":"/apps/waypost-words/","vt":true,"toResponse":9.1,"toFirstFrame":29.1,"toDone":745.8,"frames":{"n":44,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","pointerenter:16","pointerenter:16","pointerenter:16","pointerenter:16","pointerenter:16"],"toDone":647.1,"frames":{"n":42,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (2nd)","kind":"in page","feedback":16,"events":["pointerdown:16","mousedown:16","pointerup:16","mouseup:16","click:16"],"toDone":470.1,"frames":{"n":32,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail prev","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16"],"toDone":639.5,"frames":{"n":42,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail key right","kind":"in page","feedback":16,"events":["keydown:16"],"toDone":616.2,"frames":{"n":40,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail swipe","kind":"in page","feedback":"<16","events":[],"toDone":null,"frames":{"n":45,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ scroll","kind":"scroll","px":2356,"ms":2476.6,"frames":{"n":148,"worst":33.3,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"product → back","kind":"back","to":"/","bfcache":true,"toFirstFrame":21.8,"notRestored":null}
+{"i":"home → apps","kind":"page change","to":"/apps/","vt":true,"toResponse":4.9,"toFirstFrame":10.7,"toDone":727.3,"frames":{"n":44,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"apps → sole-focus","kind":"page change","to":"/apps/sole-focus/","vt":true,"toResponse":9.7,"toFirstFrame":26,"toDone":742.6,"frames":{"n":44,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","pointerenter:16","pointerenter:16","pointerenter:16","pointerenter:16","pointerenter:16"],"toDone":631.1,"frames":{"n":41,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery next (2nd)","kind":"in page","feedback":16,"events":["pointerdown:16","mousedown:16","pointerup:16","mouseup:16","click:16"],"toDone":636.3,"frames":{"n":42,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery prev","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16","pointerenter:16"],"toDone":636,"frames":{"n":42,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery dot","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16"],"toDone":1047.3,"frames":{"n":66,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery key left","kind":"in page","feedback":16,"events":["keydown:16"],"toDone":597.6,"frames":{"n":39,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery swipe","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerleave:16","pointerleave:16","pointerleave:16"],"toDone":165.3,"frames":{"n":12,"worst":33.3,"p95":33.3,"over33":0},"longFrames":[]}
+{"i":"/apps/sole-focus/ gallery end position","kind":"state","left":2300,"counter":"3"}
+{"i":"/apps/sole-focus/ scroll","kind":"scroll","px":3229,"ms":2793.2,"frames":{"n":167,"worst":33.4,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"→ apps","kind":"page change","to":"/apps/","vt":true,"toResponse":10.2,"toFirstFrame":61.2,"toDone":761.2,"frames":{"n":43,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"apps → magic-notes","kind":"page change","to":"/apps/magic-notes/","vt":true,"toResponse":12.9,"toFirstFrame":27.8,"toDone":744.5,"frames":{"n":44,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery next (1st)","kind":"in page","feedback":16,"events":["pointerover:16","pointerenter:16","pointerenter:16","pointerenter:16","pointerenter:16","pointerenter:16"],"toDone":630.5,"frames":{"n":41,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery next (2nd)","kind":"in page","feedback":16,"events":["pointerdown:16","mousedown:16","pointerup:16","mouseup:16","click:16"],"toDone":634.2,"frames":{"n":41,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery prev","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16","pointerenter:16"],"toDone":633.6,"frames":{"n":41,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery dot","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16"],"toDone":1200.6,"frames":{"n":75,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery key left","kind":"in page","feedback":"<16","events":[],"toDone":593.8,"frames":{"n":39,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery swipe","kind":"in page","feedback":"<16","events":[],"toDone":159.2,"frames":{"n":12,"worst":33.4,"p95":33.4,"over33":1},"longFrames":[]}
+{"i":"/apps/magic-notes/ gallery end position","kind":"state","left":3450,"counter":"4"}
+{"i":"/apps/magic-notes/ scroll","kind":"scroll","px":3753,"ms":3021.2,"frames":{"n":180,"worst":33.3,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"→ apps","kind":"page change","to":"/apps/","vt":true,"toResponse":10.5,"toFirstFrame":43.5,"toDone":760.2,"frames":{"n":43,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"apps → waypost-words","kind":"page change","to":"/apps/waypost-words/","vt":true,"toResponse":12.3,"toFirstFrame":27.5,"toDone":727.4,"frames":{"n":43,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (1st)","kind":"in page","feedback":24,"events":["pointerover:24","pointerenter:24","pointerenter:24","pointerenter:24","pointerenter:24","pointerenter:24"],"toDone":640.9,"frames":{"n":42,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail next (2nd)","kind":"in page","feedback":16,"events":["pointerdown:16","mousedown:16","pointerup:16","mouseup:16","click:16"],"toDone":473.1,"frames":{"n":32,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail prev","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16"],"toDone":644.2,"frames":{"n":42,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail key right","kind":"in page","feedback":16,"events":["keydown:16","keyup:16"],"toDone":617.8,"frames":{"n":40,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ phone rail swipe","kind":"in page","feedback":16,"events":["pointerout:16","pointerleave:16","pointerleave:16","pointerover:16","pointerenter:16","mouseout:16"],"toDone":null,"frames":{"n":45,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/apps/waypost-words/ scroll","kind":"scroll","px":2356,"ms":2475.7,"frames":{"n":148,"worst":33.3,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"→ about (header)","kind":"page change","to":"/about/","vt":true,"toResponse":11.5,"toFirstFrame":25.4,"toDone":758.7,"frames":{"n":44,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/about/ scroll","kind":"scroll","px":207,"ms":1693.8,"frames":{"n":100,"worst":33.4,"p95":16.7,"over33":1},"longFrames":[]}
+{"i":"→ support (header)","kind":"page change","to":"/support/","vt":true,"toResponse":13.7,"toFirstFrame":13.5,"toDone":763.5,"frames":{"n":45,"worst":33.3,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/support/ scroll","kind":"scroll","px":179,"ms":1700.7,"frames":{"n":100,"worst":33.4,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"→ privacy (footer)","kind":"page change","to":"/privacy/","vt":true,"toResponse":7.9,"toFirstFrame":9.8,"toDone":683.1,"frames":{"n":41,"worst":16.8,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"/privacy/ scroll","kind":"scroll","px":1285,"ms":2102.7,"frames":{"n":124,"worst":33.4,"p95":16.7,"over33":0},"longFrames":[]}
+{"i":"privacy → a policy","kind":"page change","to":"/privacy/waypost-words/","vt":true,"toResponse":10.4,"toFirstFrame":14.5,"toDone":654.5,"frames":{"n":39,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"/privacy/waypost-words/ scroll","kind":"scroll","px":1022,"ms":2000,"frames":{"n":118,"worst":33.4,"p95":16.8,"over33":2},"longFrames":[]}
+{"i":"policy → back","kind":"back","to":"/privacy/","bfcache":true,"toFirstFrame":12.9,"notRestored":null}
+{"i":"404 → home","kind":"page change","to":"/","vt":false,"toResponse":9.9,"toFirstFrame":28.4,"toDone":628.4,"frames":{"n":36,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"resize 1440 → 390","kind":"resize","frames":{"n":60,"worst":16.8,"p95":16.8,"over33":0},"longFrames":[]}
+{"i":"heap at end (KB)","kind":"state","mem":8145}

@@ -751,3 +751,30 @@ describe('every policy names what it covers (issue 0020)', () => {
     expect(wrong).toEqual([]);
   });
 });
+
+describe('every page loads its links before the tap (issue 0018)', () => {
+  // A first visit to a page waited the whole network round trip — 250–450 ms
+  // on the live site — before anything moved. Astro's prefetch fetches each
+  // link's page once it scrolls into view, so the tap answers from the cache.
+  // That only holds where a page ships the prefetch client and no link opts
+  // out, so both are held on every built page.
+  const moduleSources = (html: string) =>
+    [...html.matchAll(/<script type="module" src="(\/_astro\/[^"]+\.js)"/g)].map((m) =>
+      readFileSync(join(DIST, m[1]), 'utf-8'),
+    );
+
+  it('ships the prefetch client on every page', () => {
+    const missing = built
+      .filter(([route]) => !MOVED.some(([from]) => from === route))
+      .filter(([, html]) => !moduleSources(html).some((js) => js.includes('astroPrefetch')))
+      .map(([route]) => route);
+    expect(missing, 'pages that would make a first visit wait on the network').toEqual([]);
+  });
+
+  it('lets no link on the site opt out', () => {
+    const optedOut = built
+      .filter(([, html]) => /data-astro-prefetch="false"/.test(html))
+      .map(([route]) => route);
+    expect(optedOut).toEqual([]);
+  });
+});

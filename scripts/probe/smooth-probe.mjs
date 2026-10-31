@@ -19,7 +19,7 @@ const BASE = opt('base', 'https://metkapstudio.com').replace(/\/$/, '');
 const ENGINE = opt('engine', 'chrome');
 const WEAK = argv.includes('--weak');
 const MINUTES = Number(opt('minutes', '5'));
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const CHROME = process.env.PUPPETEER_EXECUTABLE_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const WEBKIT = execSync('ls -d ~/Library/Caches/ms-playwright/webkit-* | tail -1').toString().trim() + '/pw_run.sh';
 
 // The weak device, from step 2's research: Lighthouse's mobile profile (4x CPU, 150 ms RTT,

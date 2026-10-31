@@ -6,7 +6,7 @@
 - Found by: smooth-project 0001
 - Filed: 2026-10-29
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.28, card a-link-to-a-page-not-yet-visited-answers-at-once
 
 ## What happens
 Tapping a link to a page the visitor has not opened yet leaves the old page
@@ -30,3 +30,5 @@ page already in the cache, fetched while the link was in view or hovered.
   shows its own progress, which is why smooth-project 0001 left it a line.
 - Stack idea from that run: Astro's built-in `prefetch` (HTML only; Safari
   falls back to `fetch()`, which the 600 s cache then serves).
+- assets/0018/01-page-changes-before.jsonl — smooth probe, Chromium, dist served with 250 ms delay: first visits 264–291 ms to a first frame
+- assets/0018/02-page-changes-after.jsonl — the same with prefetch on: every page change 10–61 ms
