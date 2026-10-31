@@ -127,7 +127,7 @@ export default defineConfig({
       // script it ships") fails until the new hash is pasted in.
       scriptDirective: {
         hashes: [
-          'sha256-5PKbTT5ArF9/xXrIgXZOQGUP4ETA070CXH1yu6CWMk0=',
+          'sha256-Z1bJ+MdQ8xAkmXhNP5BJRua3hF4CiZMGudpSIXECJhw=',
           'sha256-ykkb2FQVcNkQFoDoNenW8RmbgApRGL6+89mbksOj1Yc=',
         ],
       },

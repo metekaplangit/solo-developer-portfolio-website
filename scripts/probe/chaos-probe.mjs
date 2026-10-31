@@ -68,7 +68,7 @@ const breaks = [];
 const engine = ENGINE === 'webkit' ? webkit : chromium;
 const launchOpts = ENGINE === 'webkit'
   ? { executablePath: execSync('ls -d ~/Library/Caches/ms-playwright/webkit-* | tail -1').toString().trim() + '/pw_run.sh' }
-  : { executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', ignoreDefaultArgs: ['--disable-back-forward-cache'] };
+  : { executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', ignoreDefaultArgs: ['--disable-back-forward-cache'] };
 let browser = await engine.launch(launchOpts);
 
 async function fresh({ width = 1440, height = 900, reduced = false, js = true, touch = false } = {}) {

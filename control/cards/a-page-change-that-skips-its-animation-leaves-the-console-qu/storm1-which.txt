@@ -1,0 +1,90 @@
+config 0 [clickRandom,dblclick,wheel,wheelX,tab,back,forward,resize,hover,drag,goto] 600x900 from /apps/wander-words/ gapped
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 24 on /privacy/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 49 on /apps/sole-focus/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen pagereveal,pagereveal) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 74 on /privacy/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen pagereveal,pagereveal) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen pagereveal,pagereveal) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen pagereveal,pagereveal) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 99 on /support/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+config 1 [clickRandom,dblclick,wheel,back,forward,resize,reload,goto,dot] 1920x1080 from /support/ fast
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 124 on /about/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 149 on /privacy/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/wander-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 174 on /privacy/magic-notes/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/waypost-words/ :: Transition was aborted because of invalid state. Document hidden
+WHICH unknown promise (seen none) :: /privacy/magic-notes/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+WHICH unknown promise (seen none) :: /privacy/magic-notes/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+  BREAK seed 1 step 199 on /privacy/magic-notes/: pageerror Transition was aborted because of invalid state. Document hidden | pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled | pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled
+config 2 [clickRandom,clickControl,dblclick,wheel,key,forward,drag,reload] 390x844 from /privacy/wander-words/ gapped
+WHICH unknown promise (seen none) :: /privacy/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 224 on /apps/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /about/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 249 on /about/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+WHICH unknown promise (seen none) :: /about/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 274 on /about/: pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: / :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 299 on /about/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+config 3 [clickRandom,clickControl,wheel,wheelX,key,back,forward,resize,hover,drag,reload,goto] 390x844 from / gapped
+WHICH unknown promise (seen none) :: / :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /support/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 324 on /support/: pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /support/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 349 on /about/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+WHICH unknown promise (seen none) :: / :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: / :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 374 on /: pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: / :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: / :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 399 on /apps/waypost-words/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+config 4 [clickRandom,dblclick,wheel,wheelX,key,back,forward,hover,reload,dot] 1024x768 from /privacy/sole-focus/ gapped
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 424 on /apps/waypost-words/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 449 on /apps/waypost-words/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 474 on /apps/waypost-words/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 499 on /apps/sole-focus/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed
+config 5 [clickRandom,clickControl,dblclick,wheelX,key,resize,reload,goto] 600x900 from /support/ fast
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 549 on /apps/waypost-words/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+WHICH unknown promise (seen none) :: /support/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+  BREAK seed 1 step 574 on /apps/wander-words/: pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled | pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled
+WHICH unknown promise (seen none) :: /privacy/waypost-words/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+  BREAK seed 1 step 599 on /apps/magic-notes/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled
+config 6 [wheel,wheelX,tab,back,resize,drag,reload,goto] 1024x768 from /apps/sole-focus/ fast
+config 7 [clickControl,wheel,wheelX,back,forward,resize,goto,dot] 390x844 from /support/ fast
+WHICH unknown promise (seen none) :: /support/ :: Transition was aborted because of invalid state. Page already revealed
+  BREAK seed 1 step 724 on /support/: pageerror Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /privacy/ :: Transition was aborted because of invalid state. Page already revealed
+WHICH unknown promise (seen none) :: /apps/waypost-words/ :: Transition was aborted because of invalid state. ViewTransition opt-in disabled
+  BREAK seed 1 step 799 on /about/: pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. Page already revealed | pageerror Transition was aborted because of invalid state. ViewTransition opt-in disabled
+done storm chromium seed 1 in 194s, 56 invariant breaks, log control/cards/a-page-change-that-skips-its-animation-leaves-the-console-qu/logs/storm-chromium-seed1.jsonl

@@ -57,8 +57,15 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
     {/* Marks an arrival that came through a view transition, so the opening
         waits for the old page to leave (global.css, `.vt-in [data-land]`).
         Classic and inline on purpose: `pagereveal` fires before the first
-        frame, which a deferred module script would miss. */}
-    <script is:inline>addEventListener('pagereveal', (e) => { if (e.viewTransition) document.documentElement.classList.add('vt-in'); });</script>
+        frame, which a deferred module script would miss. A transition the
+        browser skips (a reload, Back, a resize, a second link) rejects its
+        `ready`: caught, so it is not an uncaught error, and the mark comes off,
+        so the opening does not wait for a hand-off that never ran (issue 0023).
+        Chrome also aborts transitions it never hands to any page, and reports
+        their rejection here, where nothing can catch it: only those notices,
+        named by the browser as a transition's abort or skip, are marked
+        handled, and every other rejection stays in the console. */}
+    <script is:inline>addEventListener('pagereveal', (e) => { const t = e.viewTransition; if (t) { document.documentElement.classList.add('vt-in'); t.ready.catch(() => document.documentElement.classList.remove('vt-in')); } }); addEventListener('unhandledrejection', (e) => { const r = e.reason; if (r && (r.name === 'InvalidStateError' || r.name === 'AbortError') && /transition/i.test(r.message)) e.preventDefault(); });</script>
     {leaveWithoutTransition && <script is:inline>addEventListener('pageswap', (e) => e.viewTransition?.skipTransition());</script>}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />

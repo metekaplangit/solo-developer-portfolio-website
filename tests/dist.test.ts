@@ -18,6 +18,7 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { createHash } from 'node:crypto';
+import { runInNewContext } from 'node:vm';
 import { ROUTES, builtFile } from '../scripts/routes.mjs';
 import { markdownToHtml } from 'satteri';
 import satteriTie from '../src/lib/satteri-tie';
@@ -776,5 +777,92 @@ describe('every page loads its links before the tap (issue 0018)', () => {
       .filter(([, html]) => /data-astro-prefetch="false"/.test(html))
       .map(([route]) => route);
     expect(optedOut).toEqual([]);
+  });
+});
+
+describe('a skipped page-change animation stays quiet (issue 0023)', () => {
+  // The `pagereveal` script reads the arriving page's view transition. When the
+  // browser skips that transition — a reload, Back, a hidden tab, a resize, a
+  // second link pressed — its `ready` promise rejects, and a promise the page
+  // was handed and never caught is an uncaught error in the console: 130 in
+  // 3,000 storm events. This runs the exact script each built page ships
+  // against a skipped transition, a running one and none, with stand-ins that
+  // record what it does, so nothing waits on a clock.
+  type Reveal = { handled: boolean; classes: Set<string> };
+  const reveal = (script: string, vt: 'skipped' | 'running' | 'none'): Reveal => {
+    const classes = new Set<string>();
+    const handlers: Array<(e: unknown) => void> = [];
+    let onRejected: ((err: unknown) => void) | null = null;
+    const ready = {
+      then: (_ok?: unknown, bad?: (err: unknown) => void) => { if (bad) onRejected = bad; return ready; },
+      catch: (bad: (err: unknown) => void) => { onRejected = bad; return ready; },
+      finally: () => ready,
+    };
+    runInNewContext(script, {
+      addEventListener: (type: string, fn: (e: unknown) => void) => { if (type === 'pagereveal') handlers.push(fn); },
+      document: { documentElement: { classList: { add: (c: string) => classes.add(c), remove: (c: string) => classes.delete(c) } } },
+    });
+    const event = { viewTransition: vt === 'none' ? null : { ready, finished: ready, updateCallbackDone: ready } };
+    handlers.forEach((fn) => fn(event));
+    const handled = onRejected !== null;
+    if (vt === 'skipped' && onRejected) (onRejected as (err: unknown) => void)(new Error('Transition was aborted because of invalid state.'));
+    return { handled, classes };
+  };
+  const scripts = () =>
+    built.map(([route, html]) => [route, [...html.matchAll(/<script>(addEventListener\('pagereveal'[\s\S]*?)<\/script>/g)].map((m) => m[1])] as const);
+
+  it('ships the pagereveal script on every page', () => {
+    expect(scripts().filter(([, s]) => s.length !== 1).map(([r]) => r)).toEqual([]);
+  });
+
+  // Most of the storm's errors came from transitions Chrome aborts without
+  // ever handing them to the page — no pagereveal sees them, so nothing can
+  // catch their promise. The page marks exactly those rejections handled and
+  // leaves every other one loud.
+  const rejection = (script: string, reason: unknown): boolean => {
+    let quieted = false;
+    const handlers: Array<(e: unknown) => void> = [];
+    runInNewContext(script, {
+      addEventListener: (type: string, fn: (e: unknown) => void) => { if (type === 'unhandledrejection') handlers.push(fn); },
+      document: { documentElement: { classList: { add: () => {}, remove: () => {} } } },
+    });
+    handlers.forEach((fn) => fn({ reason, preventDefault: () => { quieted = true; } }));
+    return quieted;
+  };
+
+  it('quiets the browser\u2019s own skipped-transition notices, and nothing else', () => {
+    const skips = [
+      new DOMException('Transition was aborted because of invalid state. Page already revealed', 'InvalidStateError'),
+      new DOMException('Transition was aborted because of invalid state. ViewTransition opt-in disabled', 'InvalidStateError'),
+      new DOMException('Transition was aborted because of invalid state. Document hidden', 'InvalidStateError'),
+      new DOMException('Transition was aborted because of invalid state. Viewport size changed', 'InvalidStateError'),
+      new DOMException('Transition was skipped. Navigation aborted', 'AbortError'),
+      new DOMException('Skipping view transition because viewport size changed.', 'InvalidStateError'),
+    ];
+    const real = [
+      new TypeError('Cannot read properties of undefined'),
+      new DOMException('The object is in an invalid state.', 'InvalidStateError'),
+      new DOMException('The operation was aborted.', 'AbortError'),
+      'a plain string',
+      undefined,
+    ];
+    const wrong: string[] = [];
+    for (const [route, [script]] of scripts()) {
+      for (const r of skips) if (!rejection(script, r)) wrong.push(`${route}: left loud — ${r.message}`);
+      for (const r of real) if (rejection(script, r)) wrong.push(`${route}: hid a real error — ${String((r as Error)?.message ?? r)}`);
+    }
+    expect(wrong).toEqual([]);
+  });
+
+  it('catches a skipped transition, and drops the arrival mark it set', () => {
+    const wrong: string[] = [];
+    for (const [route, [script]] of scripts()) {
+      const skipped = reveal(script, 'skipped');
+      if (!skipped.handled) wrong.push(`${route}: a skipped transition's rejection is left uncaught`);
+      if (skipped.classes.has('vt-in')) wrong.push(`${route}: the opening still waits for a transition that was skipped`);
+      if (!reveal(script, 'running').classes.has('vt-in')) wrong.push(`${route}: a running transition no longer marks the arrival`);
+      if (reveal(script, 'none').classes.size) wrong.push(`${route}: a plain load is marked as a transition`);
+    }
+    expect(wrong).toEqual([]);
   });
 });

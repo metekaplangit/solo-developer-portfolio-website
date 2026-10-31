@@ -1,0 +1,13 @@
+config 0 [clickRandom,wheel,wheelX,key,tab,back,forward,hover,reload,goto,dot] 390x844 from /privacy/ gapped
+  BREAK seed 2 step 124 on /apps/waypost-words/: pageerror /127.0.0.1:52069/ due to access control checks. | pageerror /127.0.0.1:52069/apps/ due to access control checks. | pageerror /127.0.0.1:52069/privacy/ due to access control checks. | pageerror /127.0.0.1:52069/support/ due to access control checks. | pageerror /127.0.0.1:52069/about/ due to access control checks.
+  BREAK seed 2 step 199 on /privacy/magic-notes/: pageerror /127.0.0.1:52069/ due to access control checks. | pageerror /127.0.0.1:52069/apps/ due to access control checks. | pageerror /127.0.0.1:52069/privacy/ due to access control checks. | pageerror /127.0.0.1:52069/support/ due to access control checks. | pageerror /127.0.0.1:52069/about/ due to access control checks. | pageerror /127.0.0.1:52069/apps/magic-notes/ due to access control checks.
+config 1 [clickRandom,clickControl,dblclick,wheelX,resize,hover,drag,reload,dot] 844x390 reduced from /apps/ fast
+  BREAK seed 2 step 674 on /apps/waypost-words/: rail count starts at 1, first shot shown is NaN | rail count ends at 4, last shot shown is NaN | rail Previous on at 0px | rail Next on at 0px of 0
+config 2 [clickControl,wheelX,key,back,resize,hover,reload,dot,arrow] 1440x900 reduced from /apps/ fast
+config 3 [clickRandom,clickControl,dblclick,wheelX,key,tab,back,forward,hover,drag,reload,dot,arrow] 1024x768 reduced from /about/ fast
+config 4 [clickRandom,wheel,key,tab,back,forward,resize,drag,reload,goto,dot] 600x900 from /apps/sole-focus/ gapped
+  BREAK seed 2 step 1824 on /privacy/waypost-words/: pageerror /127.0.0.1:52069/ due to access control checks. | pageerror /127.0.0.1:52069/apps/ due to access control checks. | pageerror /127.0.0.1:52069/privacy/ due to access control checks. | pageerror /127.0.0.1:52069/support/ due to access control checks. | pageerror /127.0.0.1:52069/about/ due to access control checks. | pageerror /127.0.0.1:52069/privacy/magic-notes/ due to access control checks.
+config 5 [dblclick,key,back,forward,resize,hover,drag,reload,goto] 320x568 reduced from /about/ gapped
+config 6 [clickRandom,dblclick,wheel,wheelX,back,hover,drag,reload,dot,arrow] 600x900 from /apps/sole-focus/ gapped
+config 7 [clickControl,dblclick,wheel,wheelX,key,tab,forward,resize,drag,reload,goto,dot] 600x900 from /privacy/magic-notes/ fast
+done storm webkit seed 2 in 165s, 21 invariant breaks, log control/cards/a-page-change-that-skips-its-animation-leaves-the-console-qu/logs/storm-webkit-seed2.jsonl

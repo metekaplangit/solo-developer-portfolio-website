@@ -6,7 +6,7 @@
 - Found by: chaos-project 0001
 - Filed: 2026-10-30
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.29, card a-page-change-that-skips-its-animation-leaves-the-console-qu
 
 Doubt: the cause was not found; whether the site's own `pagereveal` script
 has any part in it is unknown.
@@ -34,3 +34,4 @@ among these.
   without the site's `pagereveal` line, driven by clicks, reloads and Back,
   logged none, so the trigger is something the storm does that the bare test
   did not.
+- Card a-page-change-that-skips-its-animation-leaves-the-console-qu: storm seed 1 (Chromium) 278 invariant breaks before, 1 after, 0 transition errors; storm seed 2 (WebKit) 0 transition errors

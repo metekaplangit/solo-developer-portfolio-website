@@ -1,0 +1,9 @@
+config 0 [clickRandom,wheel,wheelX,key,tab,back,forward,hover,reload,goto,dot] 390x844 from /privacy/ gapped
+config 1 [clickRandom,clickControl,dblclick,wheelX,resize,hover,drag,reload,dot] 844x390 from /privacy/magic-notes/ gapped
+config 2 [clickControl,wheelX,key,back,resize,hover,reload,dot,arrow] 600x900 from /apps/waypost-words/ fast
+config 3 [clickRandom,clickControl,dblclick,wheelX,key,tab,back,forward,hover,drag,reload,dot,arrow] 1024x768 from /apps/sole-focus/ fast
+config 4 [clickRandom,wheel,key,tab,back,forward,resize,drag,reload,goto,dot] 390x844 reduced from /apps/sole-focus/ gapped
+config 5 [dblclick,key,back,forward,resize,hover,drag,reload,goto] 390x844 from / gapped
+config 6 [clickRandom,dblclick,wheel,wheelX,back,hover,drag,reload,dot,arrow] 1024x768 from /privacy/waypost-words/ gapped
+config 7 [clickControl,dblclick,wheel,wheelX,key,tab,forward,resize,drag,reload,goto,dot] 600x900 from /apps/magic-notes/ fast
+done storm webkit seed 2 in 169s, 0 invariant breaks, log control/cards/a-page-change-that-skips-its-animation-leaves-the-console-qu/logs/storm-webkit-seed2.jsonl

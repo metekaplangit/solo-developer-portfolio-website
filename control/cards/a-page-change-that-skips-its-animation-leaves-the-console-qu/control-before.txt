@@ -1,0 +1,6 @@
+control seed replay: same
+control error heard: yes
+control gallery truth: clean; lie: caught
+control surface after click: /support/
+control scroll survival: stayed up
+done control chromium seed 1 in 6s, 0 invariant breaks, log control/cards/a-page-change-that-skips-its-animation-leaves-the-console-qu/logs/control-chromium-seed1.jsonl
