@@ -1485,10 +1485,8 @@ test('every page title starts on the rail or at the one shared lockup indent @ev
 // moving between pages nothing jumps (DESIGN.md's Page-Top Rule). A route still
 // known to break it is listed with its issue, and the test fails the day it
 // agrees, so the list cannot outlive the fault.
-const PAGE_TOP_KNOWN: Record<string, string> = {
-  '/privacy/': 'issue 0010 — the privacy overview starts higher than the rest',
-};
-test('every page starts on the one page-top line @every-route', () => {
+const PAGE_TOP_KNOWN: Record<string, string> = {};
+test('every page starts on the one page-top line @page-top', () => {
   const byWidth = new Map<string, Array<[string, number]>>();
   for (const { route, width, r } of each()) {
     if (r.pageTop === null) continue;

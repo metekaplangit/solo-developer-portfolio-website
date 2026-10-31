@@ -85,7 +85,7 @@ Two tiers run by the control, and a third you run by hand.
       @support  @privacy-index  @privacy-sole-focus  @privacy-magic-notes
       @privacy-waypost-words
       @waypost-rail
-      @not-found  @every-route
+      @not-found  @every-route  @page-top
 
 A card that touches anything under `src/` or `public/` names the screens it
 changed and photographs them:

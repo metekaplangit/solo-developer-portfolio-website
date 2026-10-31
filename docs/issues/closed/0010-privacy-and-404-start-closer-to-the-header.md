@@ -6,7 +6,7 @@
 - Found by: retouch-project 0002
 - Filed: 2026-10-28
 - Tried by: plan 0009 card A fixed the 404 half (its kicker now sets at body leading: 50 px at 1440, 34 px at 390) and added the `@every-route` page-top test, which lists `/privacy/` as this issue and fails the day it agrees
-- Closed by: —
+- Closed by: v0.66.21, card the-privacy-overview-starts-on-the-same-page-top-line-as-eve
 
 ## What happens
 The first content on every route sits 50–51 px below the header at 1440 px and 34–35 px at 390 px — except `/privacy/` (40 px and 27 px) and `/404` (45 px and 29 px). Moving between pages, those two jump up. DESIGN.md's Page-Top Rule says every page begins the same distance below the header.
@@ -27,3 +27,4 @@ Both routes start their first content on the same `--page-top` line as the rest.
 
 ## Evidence
 - assets/0010/01-privacy-vs-support-top.png — the top of `/privacy/` above the top of `/support/` at 1440; the privacy title starts higher
+- assets/0010/02-privacy-top-1440-after.png — `/privacy/` at 1440 after the fix: the "Privacy" eyebrow on the page-top line
