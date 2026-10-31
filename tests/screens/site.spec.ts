@@ -659,6 +659,16 @@ async function readOnce(chrome: Chrome, url: string, phone: boolean, width?: num
       else await page.setViewport({ width: width!, height: 900, deviceScaleFactor: 1 });
       await page.goto(url, { waitUntil: 'load', timeout: 60_000 });
       await new Promise((r) => setTimeout(r, 400));
+      // The home intro rises for 420 ms, so at 400 it was still moving, and on a
+      // busy machine the page-top test read its line 4–12 px low. Every
+      // clock-driven animation is played to its end before reading, so a
+      // reading is of the page at rest, never of how far a motion got.
+      // Scroll-driven ones have no clock to run out and are left alone.
+      await page.evaluate(() => {
+        for (const a of document.getAnimations()) {
+          if (a.timeline === document.timeline && a.effect?.getComputedTiming().endTime !== Infinity) a.finish();
+        }
+      });
       const reading = await page.evaluate(PROBE, LIMITS);
       await page.close().catch(() => {});
       return reading;
