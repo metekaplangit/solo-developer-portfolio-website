@@ -36,8 +36,15 @@ interface Props {
    * for about 380 ms (issue 0017).
    */
   leaveWithoutTransition?: boolean;
+  /**
+   * The page has no address of its own: the not-found page, served for every
+   * mistyped address. It names no canonical or og:url, since any it named
+   * would be an address nothing is built at, and stays out of the index
+   * (issue 0021).
+   */
+  noAddress?: boolean;
 }
-const { title, description = site.description, schema, bleed = false, movedTo, leaveWithoutTransition = false } = Astro.props;
+const { title, description = site.description, schema, bleed = false, movedTo, leaveWithoutTransition = false, noAddress = false } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 const canonical = new URL(movedTo ?? Astro.url.pathname, Astro.site ?? Astro.url).href;
 const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
@@ -62,13 +69,13 @@ const ogImage = new URL('/og-image.png', Astro.site ?? Astro.url).href;
     <link rel="manifest" href={withBase('/site.webmanifest')} />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {!noAddress && <link rel="canonical" href={canonical} />}
     {movedTo && <meta http-equiv="refresh" content={`0; url=${withBase(movedTo)}`} />}
-    {movedTo && <meta name="robots" content="noindex" />}
+    {(movedTo || noAddress) && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noAddress && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content={site.name} />
     <meta name="twitter:card" content="summary_large_image" />

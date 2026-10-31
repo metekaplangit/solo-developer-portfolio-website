@@ -250,18 +250,38 @@ describe('every built page', () => {
 
   it('carries exactly one canonical URL, and it matches the route', () => {
     for (const [route, html] of built) {
+      // The not-found page answers for every mistyped address, so it has no
+      // address of its own to name (issue 0021); the next test holds it.
+      if (route === '/404') continue;
       const found = [...html.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map((m) => m[1]);
       expect(found, `${route}: canonical count`).toHaveLength(1);
-      // 404 is the one page with no meaningful canonical target of its own.
       const moved = MOVED.find(([from]) => from === route);
       if (moved) {
         expect(found[0], `${route}: canonical points at the new page`).toBe(SITE + moved[1]);
-      } else if (route !== '/404') {
+      } else {
         expect(found[0], `${route}: canonical target`).toBe(
           SITE + (route === '/' ? '/' : route.replace(/\/$/, '/')),
         );
       }
     }
+  });
+
+  // Issue 0021. A canonical or og:url is a page telling search engines and link
+  // previews its own address, so it must be an address the build serves. Until
+  // 2026-10-31 the test above exempted the not-found page instead of holding
+  // it, and it shipped naming /404/, which nothing is built at.
+  it('names only addresses the build serves, and the not-found page names none', () => {
+    const served = new Set(built.map(([r]) => SITE + r));
+    const wrong: string[] = [];
+    for (const [route, html] of built) {
+      for (const m of html.matchAll(/(?:rel="canonical" href|property="og:url" content)="([^"]+)"/g)) {
+        if (!served.has(m[1])) wrong.push(`${route} names ${m[1]}`);
+      }
+    }
+    expect(wrong).toEqual([]);
+    const [, notFound] = built.find(([r]) => r === '/404')!;
+    expect(notFound).not.toMatch(/rel="canonical"|property="og:url"/);
+    expect(notFound).toContain('<meta name="robots" content="noindex">');
   });
 
   it('never points a canonical or og:url at localhost or a bare path', () => {

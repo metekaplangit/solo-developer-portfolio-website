@@ -6,7 +6,7 @@
 - Found by: hunt-project 0001
 - Filed: 2026-10-29
 - Tried by: —
-- Closed by: —
+- Closed by: v0.66.27, card the-not-found-page-claims-no-address-of-its-own
 
 ## What happens
 `dist/404.html` carries `<link rel="canonical" href="https://metkapstudio.com/404/">`
