@@ -399,7 +399,6 @@ inside a set. A one-off height on a single button is the failure this names.
   recipe with the strong hairline and a 20-unit chevron. The dot marks are `7px`,
   the current one a `22 × 7px` pill in the product hue, in `28px` hit areas
   (`44px` on touch).
-- A native `<details>` transcript below lists every screenshot as text.
 
 ### Facts Line (signature component)
 - A single quiet middot-separated row of decision facts beneath the download
