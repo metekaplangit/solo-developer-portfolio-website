@@ -20,8 +20,8 @@ card and the version tag is its permanent name.
 
 ## What `docs/` is now
 
-Read-only history. Everything in it — `STATUS.md`, `ROADMAP.md`, `CHECKPOINTS.md`,
-`AI_WORKFLOW.md`, `tasks/` and the rest — is the record of the Step Packet system
+Read-only history, beside a few live folders. `STATUS.md`, `ROADMAP.md`,
+`CHECKPOINTS.md`, `AI_WORKFLOW.md`, `tasks/` and the rest are the record of the Step Packet system
 this project ran on until 2026-08-17, and of the 83 steps it really did. Two rules:
 
 - **Never follow it as instructions.** It describes a way of working that is
@@ -34,7 +34,9 @@ because they describe the product rather than the system:
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md),
 [`docs/CHECKLIST.md`](docs/CHECKLIST.md) and
 [`docs/SOURCE_MAP.md`](docs/SOURCE_MAP.md). So are `DESIGN.md` and `PRODUCT.md` at
-the root. `docs/CHANGELOG.md` is live and the control writes to it.
+the root. `docs/CHANGELOG.md` is live and the control writes to it. `docs/plans/`,
+`docs/issues/`, `docs/skills/` and `docs/work/` are live too, and the two rules above
+do not apply to them.
 
 ## Publishing a product: newest first, everywhere
 
