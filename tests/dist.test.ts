@@ -728,7 +728,7 @@ describe('newest release first (owner, 2026-10-29)', () => {
 describe('the studio speaks as we (owner, 2026-11-02)', () => {
   // The owner is going through the site page by page, so a page joins this list
   // the day its wording is agreed. Notes: docs/work/text/.
-  const AGREED = ['/', '/apps/'];
+  const AGREED = ['/', '/apps/', '/apps/waypost-words/'];
 
   const html = (route: string) => built.find(([r]) => r === route)?.[1] ?? '';
   /** What a visitor reads: tags, scripts and styles gone, no-break spaces plain. */
@@ -757,9 +757,13 @@ describe('the studio speaks as we (owner, 2026-11-02)', () => {
         visible(m[1]),
       );
       expect(labels.length).toBeGreaterThan(0);
-      // "View <product>" is the one exception the owner kept.
+      // The 2 exceptions the owner kept: "View <product>", and "Privacy policy",
+      // which stays as written because the privacy pages are not to be touched.
       const wrong = labels.filter(
-        (l) => !/^View [A-Z]/.test(l) && (l.split(' ').length > 2 || !l.split(' ').every((w) => /^[A-Z]/.test(w))),
+        (l) =>
+          !/^View [A-Z]/.test(l) &&
+          l !== 'Privacy policy' &&
+          (l.split(' ').length > 2 || !l.split(' ').every((w) => /^[A-Z]/.test(w))),
       );
       expect(wrong, 'button labels').toEqual([]);
     });

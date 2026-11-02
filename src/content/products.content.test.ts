@@ -282,7 +282,8 @@ describe('Waypost Words product content', () => {
     );
     for (const line of [
       'Trace letters on a wheel to fill the crossword above it',
-      'Seven skills to unlock, four to carry',
+      // Reworded with the owner on 2026-11-02; the rest match the listing batch.
+      'Unlock seven skills as you play, and carry four at a time',
       'Three travellers, 60 places, 1,500 stops',
       'Weather that changes while you play',
       'Extra words you find fill a bonus jar',

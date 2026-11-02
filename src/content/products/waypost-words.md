@@ -138,10 +138,11 @@ screenshots:
 # The seven website bullets are all here; the eighth, "26 skies to buy with
 # your coins", is the App Store description's own (§3, Your way), added because
 # seven cards cannot fill even rows (src/lib/grid.ts) and fell into one column.
-# Nothing here is a promise about a later release.
+# Nothing here is a promise about a later release. The second line was reworded
+# with the owner on 2026-11-02 and no longer matches the batch.
 features:
   - Trace letters on a wheel to fill the crossword above it
-  - Seven skills to unlock, four to carry
+  - Unlock seven skills as you play, and carry four at a time
   - Three travellers, 60 places, 1,500 stops
   - Weather that changes while you play
   - Extra words you find fill a bonus jar
@@ -156,11 +157,11 @@ seo:
 
 ## Spell it. Strike it. Rain letters on it.
 
-Waypost Words is a crossword word game with a road to walk. Letters sit on a
+Waypost Words is a crossword game with a road to walk. Letters sit on a
 wheel. Trace them to spell a word and it drops into the crossword above. Fill
 every answer and you move on to the next stop.
 
-## Seven skills, and something to watch
+## Seven skills for when you’re stuck
 
 Lightning reveals a letter. A meteor opens the square you pick. A cloudburst
 rains letters across the crossword, and Keystone opens the square two answers
@@ -181,7 +182,7 @@ filling anything and the game offers a hand.
 
 Halden walks home to the village he left twenty years ago. Nell Harrow follows
 an old survey line to win back its names. Ada Pellow runs her boat route one
-final time. Each road runs twenty places of twenty-five stops.
+final time. Each road has 20 places, with 25 stops in each.
 
 ## Weather with a mind of its own
 
@@ -193,5 +194,5 @@ leaves, and a storm brings lightning. A new sky every time you open the game.
 Chests in the crossword, a mystery box, a wheel to spin, three crates, a
 pedlar, and a bonus jar for every extra word you find.
 
-_If something in the game does not work the way you expected, write to me. I
+_If something in the game does not work the way you expected, write to us. We
 read every message._
