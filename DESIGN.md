@@ -233,9 +233,8 @@ cell (measured 2026-10-28, after the even ramp and the One Light Rule).
 **Mono Font:** `ui-monospace`, `SF Mono`, `Menlo` — reserved for code only, never
 as decoration.
 
-**Character:** One family, carried entirely by weight and size contrast. On a Mac
-site for Mac software, the operating system's own typeface is not a fallback —
-it is the correct choice: it renders natively, costs nothing to load, and makes
+**Character:** One family, carried entirely by weight and size contrast. The
+operating system's own typeface is not a fallback — it is the correct choice: it renders natively, costs nothing to load, and makes
 the page feel like part of the platform rather than a visitor to it. A downloaded
 display face would be the first thing that felt bolted on.
 
