@@ -59,8 +59,8 @@ no-third-party constraint:
 3. No secret, API key, credential, or private data anywhere in the repo or build.
 4. Stay inside GitHub Pages limits (≤1 GB site, no large binaries/video in-repo).
 
-A change violating 1–4 is `Needs Repair` and blocks merge. When a fitness-check
-script exists (`TOOL_CREATION.md`), these become automated grep/config checks.
+A change violating 1–4 does not merge. No script checks them today; the retired
+validator in `scripts/retired/` did.
 
 ## Platform rule
 
