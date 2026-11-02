@@ -50,6 +50,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.35
     letterSpacing: "normal"
+  action:
+    fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Text, system-ui, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "normal"
 rounded:
   sm: "10px"
   md: "18px"
@@ -72,19 +78,19 @@ components:
   button-primary:
     backgroundColor: "{colors.accent}"
     textColor: "{colors.accent-contrast}"
-    typography: "{typography.label}"
+    typography: "{typography.action}"
     rounded: "{rounded.pill}"
-    padding: "0.5rem 1.35rem"
-    height: "3rem"
+    padding: "0.5rem 1.4rem"
+    height: "2.75rem"
   button-primary-hover:
     backgroundColor: "{colors.accent-hover}"
     textColor: "{colors.accent-contrast}"
   button-secondary:
     textColor: "{colors.text}"
-    typography: "{typography.label}"
+    typography: "{typography.action}"
     rounded: "{rounded.pill}"
-    padding: "0.5rem 1.35rem"
-    height: "3rem"
+    padding: "0.5rem 1.4rem"
+    height: "2.75rem"
   button-secondary-hover:
     backgroundColor: "{colors.surface-2}"
     textColor: "{colors.text-strong}"
@@ -93,8 +99,8 @@ components:
     textColor: "{colors.accent-contrast}"
     typography: "{typography.body}"
     rounded: "{rounded.pill}"
-    padding: "0.5rem 1.6rem"
-    height: "3rem"
+    padding: "0.5rem 1.75rem"
+    height: "3.25rem"
   card:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text}"
@@ -248,8 +254,8 @@ display face would be the first thing that felt bolted on.
 - **Title** (600, `1.5rem`, 1.12): Section titles, card names, panel headings.
 - **Body** (400, `1.0625rem`, 1.6): All prose. The 17px base matches Apple's own
   body size. Measure is capped at the reading column (`43rem`, ~82ch).
-- **Label** (600, `0.8125rem`, 1.35): Badges, chips, buttons, metadata. Uppercase
-  labels track at `--track-caps` (`0.08em`).
+- **Label** (600, `0.8125rem`, 1.35): Badges, chips, small buttons, metadata. A
+  page-action button is `0.9375rem` at 1.2. Uppercase labels track at `--track-caps` (`0.08em`).
 
 **The Type Role Rule.** *(Added 2026-10-28, style-project 0001.)* Weight, leading
 and tracking come from tokens in `global.css`, never typed per component: three
