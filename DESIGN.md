@@ -22,7 +22,7 @@ colors:
 typography:
   display:
     fontFamily: "-apple-system, BlinkMacSystemFont, SF Pro Display, system-ui, sans-serif"
-    fontSize: "clamp(2.75rem, 7vw, 4.75rem)"
+    fontSize: "clamp(2.75rem, 8.5vw, 7rem)"
     fontWeight: 700
     lineHeight: 0.96
     letterSpacing: "-0.04em"
@@ -239,10 +239,13 @@ the page feel like part of the platform rather than a visitor to it. A downloade
 display face would be the first thing that felt bolted on.
 
 ### Hierarchy
-- **Display** (700, `clamp(2.75rem, 7vw, 4.75rem)`, 0.96, `-0.04em`): The studio
-  name on the home hero. One per page, maximum.
-- **Headline** (600, `2rem`, 1.12): Page and section titles.
-- **Title** (600, `1.5rem`, 1.12): Card names, panel headings, sub-sections.
+- **Display** (700, 0.96, `-0.04em`): Three steps. `--display-1`
+  (`clamp(2.75rem, 8.5vw, 7rem)`) is the home headline, one per site; `--display-2`
+  (`clamp(2.25rem, 5.5vw, 4.25rem)`) a page masthead; `--display-3`
+  (`clamp(2.25rem, 4.6vw, 3.75rem)`) a product's name.
+- **Headline** (600, `2rem`, 1.12): The few section titles set large, such as the
+  note from the studio.
+- **Title** (600, `1.5rem`, 1.12): Section titles, card names, panel headings.
 - **Body** (400, `1.0625rem`, 1.6): All prose. The 17px base matches Apple's own
   body size. Measure is capped at the reading column (`43rem`, ~82ch).
 - **Label** (600, `0.8125rem`, 1.35): Badges, chips, buttons, metadata. Uppercase
