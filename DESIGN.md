@@ -161,10 +161,10 @@ authored in that product's content file (`hue`, resolved by `productHue()` in
 `src/lib/products.ts`).
 
 ### Studio chrome — achromatic
-- **Full White** (`#ffffff`): the chrome signal. Focus rings, the current nav
-  pill, the neutral action fill, headings. This is `--accent`; the token name is
+- **Full White** (`#ffffff`): the chrome signal. Focus rings, the neutral
+  action fill, headings. This is `--accent`; the token name is
   kept so every component keeps working, but it no longer carries a hue.
-- **Chrome Wash** (`#ffffff1a`): the active nav pill and other 10% tints.
+- **Chrome Wash** (`#ffffff1a`): the accent chip and other 10% tints.
 - **Near-White** (`#f2f3f6`): body text. Not `#ffffff`, so long prose does not
   vibrate against a near-black ground.
 - **Muted Slate** (`#a2a7b3`): supporting prose, summaries, descriptions.
@@ -371,15 +371,15 @@ inside a set. A one-off height on a single button is the failure this names.
 - **Internal Padding:** `1.5rem`, scaling up with `clamp()` on large panels.
 
 ### Badges / Chips
-- **Style:** Pill, Lifted Graphite fill, label typography, `0.25rem 0.6rem`.
-- **Accent variant:** Signal Wash background with Periwinkle Raised text — used
+- **Style:** Pill, Lifted fill, label typography, `0.25rem 0.6rem`.
+- **Accent variant:** Chrome Wash background with Full White text — used
   for the product-type badge only.
 
 ### Navigation
 - **Style:** Sticky, translucent (`72%` of the ground) with a `16px` backdrop
   blur, over a hairline bottom border.
-- **States:** Muted by default; the current page is a Signal Wash pill with white
-  text. On narrow screens the links become a single horizontally scrollable row
+- **States:** Muted by default, a Lifted pill on hover; the current page is white
+  and bold, with no pill. On narrow screens the links become a single horizontally scrollable row
   with a right-edge fade — never a wrapped multi-row block.
 
 ### Screenshot Gallery (signature component)
