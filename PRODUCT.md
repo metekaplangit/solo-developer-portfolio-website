@@ -34,7 +34,9 @@ matter, but trust is the goal the site is optimized for.
 
 ## Positioning
 
-A one-person studio shipping quietly excellent software.
+A small studio shipping quietly excellent software. It speaks as we, us, our and
+MetKap Studio, never as I or by a person's name, and it never states its size
+(owner, 2026-11-02).
 
 Owner-directed (2026-07-18): the positioning is deliberately **platform
 neutral**. The first shipped product is Mac-only, but the studio is not, and
@@ -49,10 +51,8 @@ platform requirements (e.g. "macOS 10.15 or later").
   flagged by hand; see "Publishing a product" in CLAUDE.md.
 - **Secondary fallback:** not yet decided — open question for the owner
   (candidates: open the product page, or read the privacy/support pages).
-- **The line a visitor should remember after ten seconds:** *a one-person Mac
-  studio making calm, native software that does one thing well, with a real
-  person answering support.* Derived from the confirmed positioning and product
-  facts; owner has not yet ratified this exact wording. It read "free, no
+- **The line a visitor should remember after ten seconds:** the motto, *Small
+  studio. Serious craft.* (owner, 2026-11-02). It read "free, no
   account, no tracking, no subscription" until 2026-09-10, when every claim of
   that kind came off the site: they are promises about what the studio will never
   do, and the studio keeps the option to add advertising, in-app purchases,
@@ -72,8 +72,9 @@ platform requirements (e.g. "macOS 10.15 or later").
 
 Quiet, exacting, honest.
 
-The voice is plain and unhurried, first person only where it is genuinely the
-maker speaking. No hype, no urgency, no exclamation marks, no growth-marketing
+The voice is plain and unhurried: "you" for what the reader gets, "we" for our
+side. Lines about the studio name no platforms. Buttons are 1 or 2 words, each
+starting with a capital. No hype, no urgency, no exclamation marks, no growth-marketing
 cadence. Claims are literal and checkable — a price, a system requirement, a
 thing the app does not collect — because this audience verifies. Confidence shows
 through precision, not volume.

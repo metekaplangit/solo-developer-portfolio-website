@@ -11,18 +11,9 @@ const year = new Date().getFullYear();
         <li><a href={withBase('/privacy/')}>Privacy</a></li>
         <li><a href={withBase('/support/')}>Support</a></li>
         <li><a href={withBase('/about/')}>About</a></li>
-        {
-          site.social.map((s) => (
-            <li>
-              <a href={s.url} rel="me noopener" target="_blank">
-                {s.label}
-              </a>
-            </li>
-          ))
-        }
       </ul>
     </nav>
-    <p class="footer-meta">© {year} {site.name}. Built as a static site.</p>
+    <p class="footer-meta">© {year} {site.name}.</p>
   </div>
 </footer>
 

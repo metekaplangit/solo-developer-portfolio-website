@@ -36,8 +36,6 @@ export function organizationSchema() {
     url: abs('/'),
     logo: abs('/icon-512.png'),
     description: site.description,
-    founder: { '@type': 'Person', name: site.person },
-    sameAs: site.social.map((s) => s.url),
     email: site.supportEmail,
   };
 }

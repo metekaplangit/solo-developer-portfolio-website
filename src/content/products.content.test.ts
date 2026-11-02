@@ -18,6 +18,22 @@ function frontmatter(relPath: string): unknown {
   return parse(match[1]);
 }
 
+describe('the home page blocks', () => {
+  // The home page features whatever was released last, and its 3 blocks are
+  // written by hand. Cutting them from the product's prose left fragments such
+  // as "Lightning reveals a letter." So a release cannot reach the home page
+  // without its own 3.
+  it('the newest release carries its 3 home blocks', () => {
+    const products = ['magic-notes', 'sole-focus', 'waypost-words'].map((slug) =>
+      productSchema.parse(frontmatter(`src/content/products/${slug}.md`)),
+    );
+    const newest = products
+      .filter((p) => p.status === 'released' && p.releaseDate)
+      .sort((a, b) => b.releaseDate!.getTime() - a.releaseDate!.getTime())[0]!;
+    expect(newest.homeStatements, newest.name).toHaveLength(3);
+  });
+});
+
 describe('Sole Focus product content', () => {
   const product = productSchema.parse(frontmatter('src/content/products/sole-focus.md'));
 

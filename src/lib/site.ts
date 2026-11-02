@@ -10,7 +10,9 @@ export const site = {
   // `tie()` on the strings that are rendered as multi-line prose — the wrapping
   // rule (STEP-0062). Not on `name`, `description` or the social labels: those
   // are a word, a <meta> string and link labels respectively, none of which wrap.
-  tagline: tie('Apps and games for Mac, iPhone and iPad'),
+  // No platforms in a line about the studio: it is cross-platform (owner,
+  // 2026-11-02). A product's own lines name its own.
+  tagline: tie('MetKap Studio makes apps and games.'),
   /** Home hero headline. Owner-directed (2026-07-18): deliberately platform
    *  neutral — the studio is not Mac-only, even though the first shipped
    *  product is. Kept here, not inline, so the wording has one owner. */
@@ -19,14 +21,11 @@ export const site = {
    *  like one; this is the same substance written for a person. Platform
    *  neutral for the same reason as `headline`. */
   lede: tie(
-    'Software that does one thing well, made by one person who also answers your email.',
+    'Every app and game has its own privacy page, and when you write to us, you usually hear back within 2–3 business days.',
   ),
   description:
-    'MetKap Studio — the apps and games of an independent studio, with clear privacy and support pages for every product.',
+    'MetKap Studio makes apps and games. Every one has its own privacy page, and when you write to us, you usually hear back within 2–3 business days.',
   supportEmail: 'support@metkapstudio.com',
-  social: [
-    { label: 'GitHub', url: 'https://github.com/metekaplangit' },
-  ],
 } as const;
 
 export const nav = [

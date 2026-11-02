@@ -11,7 +11,15 @@ type: game
 # that name. The old addresses forward here (src/pages/*/wander-words.astro),
 # because a build of the game already carries them.
 status: released
-summary: A crossword game for iPhone and iPad. Trace every answer yourself, or reach for a skill — seven to unlock, four to carry.
+summary: A crossword game for iPhone and iPad. Trace every answer yourself, or call in lightning to reveal a letter.
+# The home page's 3 blocks, agreed line by line with the owner on 2026-11-02.
+homeStatements:
+  - title: Spell it. Strike it. Rain letters on it.
+    text: Trace letters on a wheel to spell a word, then fill every answer to reach the next stop.
+  - title: Seven skills for when you’re stuck
+    text: Lightning reveals a letter, a meteor opens the square you pick, and each one costs coins you earn as you play.
+  - title: Three travellers
+    text: Halden walks home, Nell follows an old survey line, and Ada runs her boat route one final time.
 # iPhone and iPad from one universal build: TARGETED_DEVICE_FAMILY "1,2" in the
 # game's Xcode project and "Shipping now: iOS on iPhone and iPad" in its
 # docs/architecture/platform.md, both read 2026-09-29.

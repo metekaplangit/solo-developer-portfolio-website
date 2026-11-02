@@ -129,6 +129,14 @@ export const productSchema = z.object({
   // First-person maker's note paragraphs opening the description (taste-round
   // T5). Published only with the maker's explicit approval of the exact copy.
   makerNote: z.array(prose(z.string().min(1))).default([]),
+  // The 3 blocks the home page shows while this is the newest release, written
+  // by hand and agreed with the owner (2026-11-02). They were cut from the
+  // product's prose until then, which left fragments. A heading balances, so
+  // only the sentence is tied.
+  homeStatements: z
+    .array(z.object({ title: z.string().min(1), text: prose(z.string().min(1)) }))
+    .length(3)
+    .optional(),
   // There is deliberately no field here for a privacy or business-model line.
   // One existed — `privacyFacts`, carrying "Works offline — no account, no
   // cloud, no tracking" onto every facts row — and it was removed on 2026-09-10

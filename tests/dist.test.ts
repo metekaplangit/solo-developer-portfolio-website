@@ -243,7 +243,10 @@ describe('every built page', () => {
     const home = built.find(([r]) => r === '/')![1].replace(/\u00a0/g, ' ');
     expect(home).not.toContain('native Mac software');
     expect(home).not.toContain('not wrapped from something else');
-    expect(home).toContain('for Mac, iPhone and iPad');
+    // A line about the studio names no platforms at all (owner, 2026-11-02): it
+    // read "for Mac, iPhone and iPad" until then.
+    expect(home).toContain('MetKap Studio makes apps and games.');
+    expect(home).not.toContain('for Mac, iPhone and iPad');
     // The hero's button names the store of whatever was released last — the
     // Mac App Store for a Mac app, the App Store for an iPhone game.
     expect(home).toMatch(/>\s*(?:Mac )?App Store\s*</);
@@ -720,6 +723,57 @@ describe('newest release first (owner, 2026-10-29)', () => {
       expect(order(route)).toEqual(releases);
     });
   }
+});
+
+describe('the studio speaks as we (owner, 2026-11-02)', () => {
+  // The owner is going through the site page by page, so a page joins this list
+  // the day its wording is agreed. Notes: docs/work/text/.
+  const AGREED = ['/'];
+
+  const html = (route: string) => built.find(([r]) => r === route)?.[1] ?? '';
+  /** What a visitor reads: tags, scripts and styles gone, no-break spaces plain. */
+  const visible = (markup: string) =>
+    markup
+      .replace(/<(script|style|svg)\b[\s\S]*?<\/\1>/g, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&#x27;|&#39;/g, "'")
+      .replace(/ |&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  for (const route of AGREED) {
+    it(`says no "I", "me" or "one person" on ${route}`, () => {
+      const said = visible(html(route)).match(/\b(?:I|I'm|I’m|I've|I’ve|me|my|mine|myself)\b|one person|one-person/g);
+      expect(said, 'first-person words on the page').toBeNull();
+    });
+
+    it(`names no person on ${route}, in the page or its hidden data`, () => {
+      expect(html(route)).not.toContain('Mete Kaplan');
+      expect(html(route)).not.toContain('metekaplan');
+    });
+
+    it(`keeps its buttons to 1 or 2 words, each with a capital, on ${route}`, () => {
+      const labels = [...html(route).matchAll(/<a\b[^>]*class="[^"]*\bbtn\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g)].map((m) =>
+        visible(m[1]),
+      );
+      expect(labels.length).toBeGreaterThan(0);
+      // "View <product>" is the one exception the owner kept.
+      const wrong = labels.filter(
+        (l) => !/^View [A-Z]/.test(l) && (l.split(' ').length > 2 || !l.split(' ').every((w) => /^[A-Z]/.test(w))),
+      );
+      expect(wrong, 'button labels').toEqual([]);
+    });
+  }
+
+  it('links to no personal account from the footer', () => {
+    for (const [route, page] of built) {
+      expect(page.match(/<footer[\s\S]*<\/footer>/)?.[0] ?? '', route).not.toContain('github.com');
+    }
+  });
+
+  it('says the same thing about reply time and privacy pages in the search description', () => {
+    expect(html('/')).toContain('Every one has its own privacy page');
+  });
 });
 
 describe('every policy names what it covers (issue 0020)', () => {

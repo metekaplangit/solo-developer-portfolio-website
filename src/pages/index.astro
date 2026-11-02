@@ -16,8 +16,7 @@ import {
 } from '../lib/products';
 import { organizationSchema, websiteSchema } from '../lib/schema';
 import { tie } from '../lib/typography';
-import { resolveScreenshot, screenshotTitle } from '../lib/screenshots';
-import { bodySections, firstSentence } from '../lib/prose';
+import { resolveScreenshot } from '../lib/screenshots';
 
 const entries = await getCollection('products');
 const products = entries.map((e) => e.data);
@@ -28,7 +27,6 @@ const featured = newest ? [newest] : [];
 const showcase = featured.length > 0 ? featured : sortProducts(products).slice(0, 3);
 
 const spotlight = showcase[0];
-const spotlightEntry = spotlight ? entries.find((e) => e.data.id === spotlight.id) : undefined;
 const rest = showcase.slice(1);
 
 const shots = spotlight?.screenshots ?? [];
@@ -64,20 +62,11 @@ const hasCatalog = products.length > 1;
    anything in particular. */
 const heroOwnsHue = featured.length === 1 && spotlight != null;
 
-// Three statements from the product's own approved prose — the FAQ is a
-// different surface and the closing sign-off is not body copy.
-//
-// Opening sentence only (STEP-0062). The full sections run 7, 7 and 4 lines,
-// so side by side the third column stopped 74px short of the other two. The
-// sections stay long where length belongs — the product page — and the three
-// opening sentences are written to a matching length, so these columns are
-// three lines each and end level. Truncating with an ellipsis would have
-// matched the heights too, and read as a page that ran out of room.
-const statements = spotlightEntry
-  ? bodySections(spotlightEntry.body ?? '', ['Common questions'])
-      .slice(0, 3)
-      .map((s) => ({ ...s, text: firstSentence(s.text) }))
-  : [];
+// Three blocks written by hand for this page (owner, 2026-11-02). They were the
+// opening sentence of each section of the product's prose until then, which
+// left fragments like "Lightning reveals a letter." under a heading about seven
+// skills. `products.content.test.ts` fails if the newest release has none.
+const statements = spotlight?.homeStatements ?? [];
 
 const makerLines = spotlight?.makerNote ?? [];
 const hue = spotlight ? productHue(spotlight) : undefined;
@@ -101,7 +90,7 @@ const hue = spotlight ? productHue(spotlight) : undefined;
       <div class="actions" data-land="4">
         {heroHasDownload && <DownloadButton product={spotlight} label={downloadLabel(spotlight)} />}
         <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
-          See {spotlight?.name ?? 'the app'}
+          Newest {spotlight?.type === 'game' ? 'Game' : 'App'}
         </a>
       </div>
       </div>
@@ -165,7 +154,6 @@ const hue = spotlight ? productHue(spotlight) : undefined;
                   quality={78}
                   loading="lazy"
                 />
-                <figcaption>{tie(screenshotTitle(s.path))}</figcaption>
               </figure>
             ) : null;
           })}
@@ -190,24 +178,6 @@ const hue = spotlight ? productHue(spotlight) : undefined;
       </section>
     )
   }
-
-  <!-- BAND 5 — the deal, stated as checkable facts. It said "Free. No in-app
-       purchases, no subscription." and "Offline. No account, no cloud, no
-       tracking." until 2026-09-10. Those were not facts about the products, they
-       were promises about what the studio would never do, and the studio keeps
-       the option to add advertising, purchases, subscriptions and network
-       features to a future release. What replaced them is checkable and stays
-       true whatever the business model becomes. -->
-  <section class="band-promise" aria-labelledby="promise-h">
-    <div class="rail">
-      <h2 id="promise-h" class="over">The deal</h2>
-      <ul role="list">
-        <li>{tie('Personal. Designed, built and supported by one person.')}</li>
-        <li>{tie('Documented. For every product, a dated privacy page.')}</li>
-        <li>{tie('Answered. I usually reply within 2–3 business days.')}</li>
-      </ul>
-    </div>
-  </section>
 
   {
     makerLines.length > 0 && spotlight && (
@@ -371,41 +341,10 @@ const hue = spotlight ? productHue(spotlight) : undefined;
     border-radius: var(--radius);
     box-shadow: var(--shadow-md);
   }
-  .mosaic-in figcaption {
-    margin-top: var(--space-3);
-    font-size: var(--text-xs);
-    letter-spacing: var(--track-caps);
-    text-transform: uppercase;
-    color: var(--faint);
-  }
 
   /* Catalog (dormant until a second product exists) */
   .band-catalog {
     padding-bottom: var(--band-y);
-  }
-
-  /* BAND 5 — the deal */
-  .band-promise {
-    padding-block: var(--band-y);
-    border-top: 1px solid var(--border);
-  }
-  .band-promise ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-2);
-  }
-  .band-promise li {
-    font-size: clamp(1.375rem, 3.2vw, 2.5rem);
-    font-weight: var(--weight-strong);
-    letter-spacing: var(--track-optical);
-    line-height: var(--leading-heading);
-    color: var(--text-strong);
-    text-wrap: balance;
-  }
-  .band-promise li + li {
-    color: var(--muted);
   }
 
   .band-maker {

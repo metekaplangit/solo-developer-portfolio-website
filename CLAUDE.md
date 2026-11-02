@@ -48,6 +48,8 @@ site is one edit to its file in `src/content/products/`:
 
 - `status: released`, its store link `available`, and `releaseDate:` — the real
   date from the store's own listing, never the submission date.
+- `homeStatements:` the 3 blocks the home page shows, written by hand. The fast
+  checks fail until the newest release has them.
 - Nothing else. There is no `featured` flag and no hand-set order; every list
   goes through `sortProducts()` and the home page through `newestRelease()`
   (`src/lib/products.ts`). Never sort a product list any other way.
