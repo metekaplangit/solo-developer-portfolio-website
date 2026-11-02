@@ -1,7 +1,7 @@
 {
   "@about": "v0.66.38",
-  "@apps": "v0.66.34",
-  "@button-press": "v0.66.34",
+  "@apps": "v0.66.39",
+  "@button-press": "v0.66.39",
   "@every-route": "v0.66.35",
   "@gallery-focus": "v0.66.35",
   "@gallery-presses": "v0.66.38",
@@ -18,7 +18,7 @@
   "@privacy-sole-focus": "v0.66.37",
   "@privacy-waypost-words": "v0.66.37",
   "@sole-focus": "v0.66.37",
-  "@support": "v0.66.33",
-  "@waypost-rail": "v0.66.33",
+  "@support": "v0.66.39",
+  "@waypost-rail": "v0.66.39",
   "@waypost-words": "v0.66.35"
 }
