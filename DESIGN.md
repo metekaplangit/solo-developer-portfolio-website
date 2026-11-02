@@ -111,12 +111,12 @@ components:
     textColor: "{colors.text}"
     typography: "{typography.label}"
     rounded: "{rounded.pill}"
-    padding: "0.25rem 0.6rem"
+    padding: "0.25rem 0.75rem"
   badge-accent:
     backgroundColor: "{colors.accent-soft}"
     textColor: "{colors.accent-hover}"
     rounded: "{rounded.pill}"
-    padding: "0.25rem 0.6rem"
+    padding: "0.25rem 0.75rem"
 ---
 
 # Design System: MetKap Studio
@@ -380,7 +380,7 @@ inside a set. A one-off height on a single button is the failure this names.
 - **Internal Padding:** `1.5rem`, scaling up with `clamp()` on large panels.
 
 ### Badges / Chips
-- **Style:** Pill, Lifted fill, label typography, `0.25rem 0.6rem`.
+- **Style:** Pill, Lifted fill, label typography, `0.25rem 0.75rem`.
 - **Accent variant:** Chrome Wash background with Full White text — used
   for the product-type badge only.
 
