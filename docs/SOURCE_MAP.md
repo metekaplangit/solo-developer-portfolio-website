@@ -47,10 +47,12 @@ product.
 | `src/lib/**` | Pure domain helpers (tested) |
 | `src/layouts/**` `src/components/**` `src/pages/**` | Presentation + routes |
 | `src/styles/**` | Design tokens |
-| `public/**` | Static assets (icons, screenshots, CNAME at M4) |
+| `public/**` | Static assets (icons, screenshots, CNAME) |
 | `tests/dist.test.ts` | Assertions about the HTML a visitor is sent (`npm run test:dist`) |
 | `tests/screens/site.spec.ts` | Assertions about what the browser lays that HTML out as (`npm run test:ui`) |
 | `vitest.dist.config.ts` / `vitest.ui.config.ts` | The two slow suites' configs, each kept out of `npm test` |
+| `scripts/routes.mjs` | Every route, its screen tag and its built file |
+| `scripts/capture.mjs` / `scripts/rendered.mjs` / `scripts/live.mjs` | Card pictures, the screen tier, the live tier |
 | `scripts/retired/validate-governance.py.retired` | The retired governance validator, kept as history |
 | `.github/workflows/**` | `deploy.yml` only — build + Lighthouse a11y gate + Pages publish |
 | `.github/ISSUE_TEMPLATE/**` | Issue forms + security route |
@@ -60,5 +62,5 @@ product.
 ## Key commands
 
 `npm run dev` · `npm run build` · `npm run check` · `npm test` (STEP-0001+) ·
-`npm run test:dist` (STEP-0068) · `npm run test:ui` (STEP-0080) ·
+`npm run test:dist` (STEP-0068) · `npm run test:ui` (STEP-0080) · `npm run test:live` ·
 `npm run headless` · `python3 control/loop.py start | check | finish`
