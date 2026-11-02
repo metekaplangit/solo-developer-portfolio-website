@@ -773,6 +773,17 @@ describe('the studio speaks as we (owner, 2026-11-02)', () => {
     });
   }
 
+  // It has no button and said nothing in the first person, so the rules above have
+  // nothing to hold it to. It promised "every page is one click from here" while
+  // linking only the 5 main pages, and a product's own page takes 2.
+  it('promises only what its links do on the not-found page, and speaks as we', () => {
+    const page = html('/404');
+    expect(visible(page)).toContain('Try one of these pages instead.');
+    expect(visible(page)).not.toContain('one click');
+    expect(page).toContain('We can’t find that page. Try one of our main pages instead.');
+    expect(page).not.toMatch(/Mete(?:\s|&nbsp;|&#160;)Kaplan/);
+  });
+
   it('links to no personal account from the footer', () => {
     for (const [route, page] of built) {
       expect(page.match(/<footer[\s\S]*<\/footer>/)?.[0] ?? '', route).not.toContain('github.com');
