@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config';
 // The rendered-geometry suite (STEP-0080) — assertions about what the browser
 // actually lays out, which needs a build first and a real engine to read.
 //
-// Its own config for the same reason `vitest.dist.config.ts` has one: vitest 4
+// Its own config for the same reason `vitest.dist.config.ts` has one: vitest
 // has no per-run include flag, and a second config states the separation where
 // someone will see it. Kept out of BOTH `npm test` and `npm run test:dist` on
 // purpose — this one launches a browser per route and takes tens of seconds,

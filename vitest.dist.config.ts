@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
 // The build-output suite (STEP-0068) — assertions against `dist/`, which needs a
-// build first. Its own config rather than a `--include` flag: vitest 4 has no
+// build first. Its own config rather than a `--include` flag: vitest has no
 // such CLI option, and a second config states the separation where someone will
 // actually see it.
 //
