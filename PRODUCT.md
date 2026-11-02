@@ -35,8 +35,8 @@ matter, but trust is the goal the site is optimized for.
 ## Positioning
 
 A small studio shipping quietly excellent software. It speaks as we, us, our and
-MetKap Studio, never as I or by a person's name, and it never states its size
-(owner, 2026-11-02).
+MetKap Studio, never as I or by a person's name, and it never gives a headcount
+or says "our team" (owner, 2026-11-02).
 
 Owner-directed (2026-07-18): the positioning is deliberately **platform
 neutral**. The first shipped product is Mac-only, but the studio is not, and
