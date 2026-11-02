@@ -31,7 +31,7 @@ rather than against a component in isolation:
   a rule "read by a person" is a rule enforced when someone remembers, and two
   defects had already survived exactly that.
 
-They fail the packet, not a report someone has to remember to read.
+They fail the card, not a report someone has to remember to read.
 
 ## T — Text
 
