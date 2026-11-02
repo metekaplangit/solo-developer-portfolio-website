@@ -5,8 +5,6 @@ import { tie } from './typography';
 export const site = {
   name: 'MetKap Studio',
   brand: 'MetKap Studio',
-  /** The person behind the studio (used on the About page). */
-  person: 'Mete Kaplan',
   // `tie()` on the strings that are rendered as multi-line prose — the wrapping
   // rule (STEP-0062). Not on `name`, `description` or the social labels: those
   // are a word, a <meta> string and link labels respectively, none of which wrap.

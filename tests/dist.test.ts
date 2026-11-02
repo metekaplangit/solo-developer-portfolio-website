@@ -728,7 +728,7 @@ describe('newest release first (owner, 2026-10-29)', () => {
 describe('the studio speaks as we (owner, 2026-11-02)', () => {
   // The owner is going through the site page by page, so a page joins this list
   // the day its wording is agreed. Notes: docs/work/text/.
-  const AGREED = ['/', '/apps/', '/apps/waypost-words/', '/apps/magic-notes/', '/apps/sole-focus/'];
+  const AGREED = ['/', '/apps/', '/apps/waypost-words/', '/apps/magic-notes/', '/apps/sole-focus/', '/about/'];
 
   const html = (route: string) => built.find(([r]) => r === route)?.[1] ?? '';
   /** What a visitor reads: tags, scripts and styles gone, no-break spaces plain. */
@@ -751,7 +751,8 @@ describe('the studio speaks as we (owner, 2026-11-02)', () => {
     });
 
     it(`names no person on ${route}, in the page or its hidden data`, () => {
-      expect(html(route)).not.toContain('Mete Kaplan');
+      // \s also matches the no-break space the wrapping rule can put in a name.
+      expect(html(route)).not.toMatch(/Mete(?:\s|&nbsp;|&#160;)Kaplan/);
       expect(html(route)).not.toContain('metekaplan');
     });
 
