@@ -728,7 +728,7 @@ describe('newest release first (owner, 2026-10-29)', () => {
 describe('the studio speaks as we (owner, 2026-11-02)', () => {
   // The owner is going through the site page by page, so a page joins this list
   // the day its wording is agreed. Notes: docs/work/text/.
-  const AGREED = ['/', '/apps/', '/apps/waypost-words/'];
+  const AGREED = ['/', '/apps/', '/apps/waypost-words/', '/apps/magic-notes/'];
 
   const html = (route: string) => built.find(([r]) => r === route)?.[1] ?? '';
   /** What a visitor reads: tags, scripts and styles gone, no-break spaces plain. */
@@ -743,7 +743,10 @@ describe('the studio speaks as we (owner, 2026-11-02)', () => {
 
   for (const route of AGREED) {
     it(`says no "I", "me" or "one person" on ${route}`, () => {
-      const said = visible(html(route)).match(/\b(?:I|I'm|I’m|I've|I’ve|me|my|mine|myself)\b|one person|one-person/g);
+      // Not the studio speaking: a feature's name in the app, and a reader's question.
+      const said = visible(html(route))
+        .replace(/What\sCan\sI\sWrite\?|Where\sdo\smy\snotebooks\slive\?/g, '')
+        .match(/\b(?:I|I'm|I’m|I've|I’ve|me|my|mine|myself)\b|one person|one-person/g);
       expect(said, 'first-person words on the page').toBeNull();
     });
 

@@ -26,7 +26,7 @@ price: "0"
 # site's stage matches. See docs/tasks/STEP-0069.md for why the app's default
 # accent (a burnt orange) was not used.
 hue: "#B2BBC5"
-fitFor: "You want to see the working behind budgets, quotes and loans."
+fitFor: "You want to see how your budgets, quotes and loans add up."
 fitNotFor: "You need a spreadsheet or a programmable calculator."
 requirements: macOS 15 or later
 supportUrl: /support/
@@ -94,17 +94,17 @@ screenshots:
     dimensions: { width: 2880, height: 1800 }
     licenseOrOwnership: owned
 features:
-  - Plain sentences in, answers out, live as you type
+  - Write plain sentences and see the answers as you type
   - Money, percentages, units and cooking measures
   - Dates, times, durations, loans and interest rates
   - Powers, roots, rounding, number bases and statistics
-  - Name a value, total a section, ask about lines above
+  - Name a value, total a section, or ask about the lines above
   - 765 worked examples to insert with one press
   - English or Turkish, chosen by you, not by region
-  - Your own units, and exchange rates with dates
+  - Add your own units, and exchange rates with the date each was true
   - Folders, pins, search, and replace with a preview
   - Undo all the way back, and backups that restore safely
-  - Export to text, Markdown, PDF, print or a bundle
+  - Export to text, Markdown, PDF, print or a bundle of your whole library
   - Zen mode, Shortcuts, and Spotlight if you turn it on
 releaseDate: 2026-08-16
 lastUpdated: 2026-08-17
@@ -114,43 +114,38 @@ seo:
 ---
 
 Write "rent 1,450 a month" and the year appears beside it. Write "12% of that"
-and it knows what "that" was. Magic Notes reads ordinary sentences, keeps the
-working in front of you, and goes no further than an honest answer.
+and it knows what "that" was. Magic Notes reads ordinary sentences and keeps
+every step on the page, so you can check the answer.
 
 ## Exact, or it says so
 
 Every answer is exact, or clearly marked with ≈.
 
-Approximate answers show the
-precision you chose, and a written request such as "to 6 decimal places"
-overrides it on its own line.
+Approximate answers show the precision you chose. Write "to 6 decimal places" on
+a line to change it for that line.
 
-Anything impossible is refused **on the line**, with the reason and a hint you
-can open. Most calculators round quietly and hand you something that looks
-exact. You are never left holding a confident wrong number.
+If a line can't be worked out, it tells you why and gives you a hint you can
+open.
 
-## Written in words, not in syntax
+## Write in words, not formulas
 
-Money, dates, units and loans, in plain sentences. It also reads percentages,
-cooking measures, times and durations, interest, and rates such as an amount per
-week. Powers and roots, rounding, factors, combinations, number bases and
-statistics over the lines above work too.
+Money, dates, units and loans all work in plain sentences, and so do rates such
+as an amount per week.
 
 Name a value and use it further down. Total a section. Ask a question of the
 lines above it. Change one number at the top and watch the whole page follow.
 
-The built-in guide, **What Can I Write?**, holds 765 worked examples in twenty
-categories — filter it, then press Insert to drop one straight into your sheet.
-Every example is run against the real engine by the test suite, so nothing in
-the guide teaches a form the app does not have.
+The built-in guide, **What Can I Write?**, has 765 worked examples in 20
+categories. Filter it, then press Insert to add one to your sheet. We test every
+example against the app itself, so each one in the guide works.
 
 ## Your rates, your dates
 
-You set each exchange rate, and the date it was true. A conversion names the
-exact snapshot it used.
+You set each exchange rate, and the date it was true. Each conversion shows
+which rate and date it used.
 
-Nothing is interpolated or invented — so a figure you show someone else is a
-figure you can account for.
+The app doesn't estimate a rate between two dates, so you can explain any figure
+you show someone.
 
 ## A notebook, not a scratchpad
 
@@ -158,32 +153,30 @@ Keep as many sheets as you like, in folders, pinned and sorted the way you work.
 Search the whole library. Find and replace with a preview first. Duplicate a
 sheet as a starting point, and archive the sheets you are finished with.
 
-Undo and redo go back as far as you need, every sheet keeps a revision timeline,
-and backups restore under a guard that checks before it replaces anything. Take
-the work with you as plain text, Markdown, print, PDF, or a portable bundle of
-the whole library.
+Undo and redo go back as far as you need, and every sheet keeps a history of its
+changes. Before a backup replaces anything, the app checks it first. Take the
+work with you as plain text, Markdown, print, PDF, or a portable bundle of the
+whole library.
 
-## Your notebooks, and what is done with them
+## What happens to your notebooks
 
-Spotlight indexing is off until you turn it on, and covers only sheet titles and
+Spotlight search is off until you turn it on, and it only covers sheet titles and
 the text you wrote.
 
-The privacy policy says what Magic Notes stores and why. It is dated, and it
-changes in the same release as the app.
+The privacy policy says what Magic Notes stores and why. It is dated, so you can
+see when it last changed.
 
 ## Common questions
 
-**Where do my notebooks live?** In a folder on your own Mac, backed up locally
-and restorable under a guard that checks before it replaces anything. Export to
-plain text, Markdown, print, PDF, or a bundle of the whole library at any time.
+**Where do my notebooks live?** In a folder on your Mac, with backups kept on
+your Mac too. You can export them at any time.
 
-**What if it cannot answer a line?** It refuses that line where you wrote it and
-tells you why, rather than rounding quietly or returning a number that only
-looks right.
+**What if it can't answer a line?** It tells you why, right on that line, instead
+of giving you a number that only looks right.
 
 **Which languages does it read?** English or Turkish, whichever you pick in
 Settings. The choice is never guessed from your region, and changing it never
 rewrites what you have already written.
 
-_If a line gives an answer you did not expect, write to me. I read every
+_If a line gives an answer you did not expect, write to us. We read every
 message._
