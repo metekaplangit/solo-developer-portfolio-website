@@ -1163,7 +1163,7 @@ img {
    `@view-transition` is the native at-rule for same-origin, cross-document
    navigation — Chrome 126+, Safari 18.2+, Firefox in progress. Both the
    outgoing and the incoming page must opt in, which is automatic here because
-   this stylesheet is on all eight routes. Where it is unsupported the
+   this stylesheet is on every route. Where it is unsupported the
    navigation is an ordinary page load, exactly as before.
 
    Astro's `ClientRouter` was deliberately NOT used: it turns a static

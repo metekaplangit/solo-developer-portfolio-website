@@ -9,7 +9,7 @@
 //
 // IT RUNS EVERY ROUTE WHATEVER IT IS GIVEN, and that is deliberate. One rule in
 // the suite compares the page-title indent of every route against every other,
-// so a run that loaded three of them could not check it at all. Loading all nine
+// so a run that loaded three of them could not check it at all. Loading all of them
 // costs about a minute, which is the price of the tier and is paid only by a
 // card that touched something a visitor can see.
 //
