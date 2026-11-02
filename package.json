@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
-  "description": "Static-first premium-minimal solo developer portfolio and store-support website.",
+  "description": "The static website of MetKap Studio: its apps and games, privacy pages and support.",
   "engines": {
     "node": ">=22.12.0"
   },
