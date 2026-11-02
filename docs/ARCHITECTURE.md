@@ -21,6 +21,9 @@ src/
 public/           # Static assets served as-is (icons, screenshots, CNAME)
 docs/             # Retired governance record, plus live reference pages (see CLAUDE.md)
 scripts/          # Capture, screen and live-check scripts, probes, and the retired validator
+tests/            # Built-output suite and screen suite; unit tests sit beside the code in src/
+control/          # The work loop and every finished card (see control/README.md)
+store-assets/     # Studio icons and covers, none of them served by the site
 ```
 
 ## Layer boundaries (Ports & Adapters, scaled to a static site)
@@ -41,7 +44,7 @@ scripts/          # Capture, screen and live-check scripts, probes, and the reti
   (rule-of-three-at-two).
 - **DRY on product facts:** a product's name, links, and policy live once in the
   content model and are rendered everywhere from there.
-- **Testability:** `lib/` functions are pure and unit-tested (see `TESTING.md`).
+- **Testability:** `lib/` functions are pure and unit-tested beside the code.
 
 ## Zero-cost guardrails (merge-critical fitness checks)
 
