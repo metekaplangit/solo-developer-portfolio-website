@@ -73,15 +73,15 @@ describe('Sole Focus product content', () => {
   // the copy was explicitly user-approved — pin it so changes are deliberate.
   it('carries the approved fit statement', () => {
     // The wording is pinned, not where the wrapping rule put its no-break spaces.
-    expect((product.fitFor ?? '').replace(/\u00a0/g, ' ')).toContain('calm, native Mac timer');
+    expect((product.fitFor ?? '').replace(/\u00a0/g, ' ')).toContain('calm Mac timer');
     expect(product.fitNotFor).toContain('website blocker');
   });
 
   it('carries the approved maker note', () => {
     expect(product.makerNote).toHaveLength(2);
-    // "I" is bound to "built" by the wrapping rule (STEP-0062) — the schema
-    // ties every prose field as it is read.
-    expect(product.makerNote[0]?.replace(/ /g, ' ')).toContain('I built Sole Focus');
+    // Short words are bound to the next by the wrapping rule (STEP-0062) — the
+    // schema ties every prose field as it is read.
+    expect(product.makerNote[0]?.replace(/ /g, ' ')).toContain('We built Sole Focus');
   });
 
   it('carries the first-glance facts fields', () => {

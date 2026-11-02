@@ -19,11 +19,11 @@ price: "0"
 # orange clock rim), so the site is coloured by the software rather than by a
 # palette chosen for the site.
 hue: "#ff9245"
-fitFor: "You want a calm, native Mac timer that waits in your menu bar."
+fitFor: "You want a calm Mac timer that waits in your menu bar."
 fitNotFor: "You need a website blocker, team tracking or sync across devices."
 makerNote:
-  - "I built Sole Focus because every timer I tried wanted to be more than a timer — a dashboard, a setup screen, streaks that punish you for resting."
-  - "So this one stays small on purpose: a quiet window, your minutes, and a timer that is already running two seconds after you open it."
+  - "We built Sole Focus because every timer we tried wanted to be more than a timer: a dashboard, a setup screen, streaks that punish you for resting."
+  - "So this one stays small on purpose: a quiet window, your minutes, and a timer you can start as soon as you open it."
 requirements: macOS 10.15 or later
 supportUrl: /support/
 privacyPolicyUrl: /privacy/sole-focus/
@@ -34,7 +34,7 @@ features:
   - Pause, skip and finish from the menu bar
   - Zen mode, a small window that stays on top
   - Study mode, a slim strip with one quote
-  - Statistics and a light leveling system
+  - Statistics, and levels you earn as you focus
   # Restates the appearance options already described in "Always in reach"
   # below — no new claim (DESIGN.md §6: never fabricate proof). Keeps the
   # grid's last row full; see docs/tasks/STEP-0063.md.
@@ -87,7 +87,7 @@ releaseDate: 2026-07-15
 lastUpdated: 2026-07-15
 seo:
   title: Sole Focus — Pomodoro & Stopwatch Timer for Mac
-  description: A calm Pomodoro and stopwatch timer for macOS. Menu-bar focus sessions, named task presets, statistics, and a light rank ladder.
+  description: A calm Pomodoro and stopwatch timer for macOS. Menu-bar focus sessions, named task presets, statistics, and levels you earn as you focus.
 ---
 
 Sole Focus opens to a timer that is ready to start. It lives in your menu bar,
@@ -117,25 +117,24 @@ five completion sounds, light and dark themes, accent colors and sizes.
 
 ## See your progress
 
-Statistics add up your focus time, and a light leveling system turns it into
-progress you can see.
+Statistics add up your focus time, and you earn levels as you go.
 
-It is a nudge to keep going, never a streak that punishes a day off.
+It is a nudge to keep going, not a streak that punishes a day off.
 
 ## Yours to erase
 
 Every setting, session and preset can be erased at any time, from Settings ▸
 General ▸ Danger zone.
 
-The privacy policy says what Sole Focus stores and why. It is dated, and it
-changes in the same release as the app.
+The privacy policy says what Sole Focus stores and why. It is dated, so you can
+see when it last changed.
 
 ## Common questions
 
-**Is it free?** Yes. Sole Focus is free on the Mac App Store.
+**Is it free?** Yes. Sole Focus is free on the App Store.
 
-**Does it block apps or websites?** No. Sole Focus is a calm timer, not a
-blocker; it keeps you focused with gentle cues, not lockouts.
+**Does it block apps or websites?** No. Sole Focus is a calm timer and doesn't
+lock anything.
 
-_If something does not work the way you expected, write to me. I read every
+_If something does not work the way you expected, write to us. We read every
 message._
