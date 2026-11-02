@@ -31,7 +31,8 @@ store-assets/     # Studio icons and covers, none of them served by the site
 - **Content/data layer** (`src/content/`, schemas): the single source of product
   and policy facts. Nothing else re-declares product facts.
 - **Domain logic** (`src/lib/`): pure, testable functions (e.g. resolve store
-  links, pick canonical privacy URL, format dates). No Astro/DOM imports.
+  links, pick canonical privacy URL, format dates). No Astro/DOM imports, except `screenshots.ts`, which resolves
+  image assets at build time.
 - **Presentation** (`layouts/`, `components/`, `pages/`): render validated data.
   Read from content collections + `lib/`; never hardcode product facts.
 - **Dependency direction:** presentation → domain → data. Domain never imports
