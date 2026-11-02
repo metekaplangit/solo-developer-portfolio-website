@@ -4,7 +4,7 @@ name: Sole Focus
 slug: sole-focus
 type: app
 status: released
-summary: A focus timer for Mac that stays out of your way. Use Pomodoro sessions or a stopwatch, from one small window.
+summary: A focus timer for Mac. Use Pomodoro sessions or a stopwatch, from one small window.
 platforms: [macos]
 storeLinks:
   - store: mac-app-store

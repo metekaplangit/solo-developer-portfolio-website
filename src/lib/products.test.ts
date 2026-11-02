@@ -122,7 +122,7 @@ describe('relatedProducts', () => {
 
 describe('labels', () => {
   it('maps store and status enums to display labels', () => {
-    expect(storeLabel('mac-app-store')).toBe('Mac App Store');
+    expect(storeLabel('mac-app-store')).toBe('App Store');
     expect(statusLabel('in-development')).toBe('In development');
   });
 
@@ -147,7 +147,7 @@ describe('productHue', () => {
 });
 
 describe('downloadLabel', () => {
-  it('names the store the button opens, so an iPhone game never reads "Mac App Store"', () => {
+  it('says App Store on the button of either Apple store, in 2 words (owner, 2026-11-02)', () => {
     const ios = make({
       storeLinks: [{ store: 'app-store', url: 'https://apps.apple.com/app/id1', status: 'available' }],
     });
@@ -155,7 +155,7 @@ describe('downloadLabel', () => {
       storeLinks: [{ store: 'mac-app-store', url: 'https://apps.apple.com/app/id2', status: 'available' }],
     });
     expect(downloadLabel(ios)).toBe('App Store');
-    expect(downloadLabel(mac)).toBe('Mac App Store');
+    expect(downloadLabel(mac)).toBe('App Store');
   });
 
   it('is undefined when nothing can be downloaded yet', () => {

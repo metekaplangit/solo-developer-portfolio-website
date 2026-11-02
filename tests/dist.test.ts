@@ -247,9 +247,9 @@ describe('every built page', () => {
     // read "for Mac, iPhone and iPad" until then.
     expect(home).toContain('MetKap Studio makes apps and games.');
     expect(home).not.toContain('for Mac, iPhone and iPad');
-    // The hero's button names the store of whatever was released last — the
-    // Mac App Store for a Mac app, the App Store for an iPhone game.
-    expect(home).toMatch(/>\s*(?:Mac )?App Store\s*</);
+    // The hero's button names the store of whatever was released last. Both
+    // Apple stores read App Store (owner, 2026-11-02).
+    expect(home).toMatch(/>\s*App Store\s*</);
   });
 
   it('carries exactly one canonical URL, and it matches the route', () => {
@@ -728,7 +728,7 @@ describe('newest release first (owner, 2026-10-29)', () => {
 describe('the studio speaks as we (owner, 2026-11-02)', () => {
   // The owner is going through the site page by page, so a page joins this list
   // the day its wording is agreed. Notes: docs/work/text/.
-  const AGREED = ['/'];
+  const AGREED = ['/', '/apps/'];
 
   const html = (route: string) => built.find(([r]) => r === route)?.[1] ?? '';
   /** What a visitor reads: tags, scripts and styles gone, no-break spaces plain. */

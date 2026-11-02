@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductBand from '../../components/ProductBand.astro';
 import { sortProducts } from '../../lib/products';
-import { withBase } from '../../lib/url';
 import { tie } from '../../lib/typography';
 import { breadcrumbSchema, itemListSchema } from '../../lib/schema';
 
@@ -21,7 +20,7 @@ const schema = [
 
 <BaseLayout
   title="Apps & Games"
-  description="Every app and game from MetKap Studio, each with its own privacy page and a real person answering support."
+  description="Every app and game from MetKap Studio, newest first. Each has its own privacy page, and you can email us about any of them."
   schema={schema}
   bleed
 >
@@ -33,7 +32,7 @@ const schema = [
       </div>
       <div class="opening-side">
       <p class="lede" data-land="3">
-        {tie('Every app and game the studio makes. Each product has its own privacy page, and one person answers support for all of them.')}
+        {tie('Everything we’ve released so far, newest first. Each one has its own privacy page, and you can email us about any of them.')}
       </p>
       </div>
     </div>
@@ -53,8 +52,7 @@ const schema = [
   <section class="tail">
     <div class="rail">
       <p class="prose">
-        {tie('More is in progress. Nothing is announced here until you can install it — ')}<a
-          href={withBase('/support/')}>get&nbsp;in&nbsp;touch</a>{tie(' to hear when that is.')}
+        {tie('We’re working on more, and it appears here once you can install it.')}
       </p>
     </div>
   </section>

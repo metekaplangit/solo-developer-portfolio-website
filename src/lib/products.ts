@@ -25,7 +25,9 @@ const STATUS_RANK: Record<Product['status'], number> = {
 
 const STORE_LABELS: Record<StoreLink['store'], string> = {
   'app-store': 'App Store',
-  'mac-app-store': 'Mac App Store',
+  // Buttons are 1 or 2 words (owner, 2026-11-02), and on a Mac the store is
+  // called App Store too. The enum stays apart because the links are different.
+  'mac-app-store': 'App Store',
   'google-play': 'Google Play',
   steam: 'Steam',
   github: 'GitHub',
