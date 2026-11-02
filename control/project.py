@@ -5,7 +5,7 @@ four to update the control, and nothing here moves. This file and `cards/` are o
 
 Written by `detect` on 2026-08-17 and corrected by hand in the same sitting.
 Detection reads the ordinary conventions; three things here are not ordinary — the
-fast checks are four npm scripts rather than one, the changelog lives under `docs/`,
+fast checks are several npm scripts rather than one, the changelog lives under `docs/`,
 and this project sits one folder deeper than the walk that finds the other copies.
 """
 from __future__ import annotations
@@ -14,8 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# 1. Everything fast that renders nothing. Four commands, so `package.json` chains
-#    them behind one name: the static build, `astro check`, the unit suite under
+# 1. Everything fast that renders nothing. Several commands, so `package.json` chains
+#    them behind one name: `npm audit`, the static build, `astro check`, the unit suite under
 #    `src/`, and the suite that reads the built `dist/` HTML. The last one needs the
 #    build, which is why the order is fixed and why it is one script rather than a
 #    list somebody has to keep in step.
@@ -50,10 +50,10 @@ RENDERED_TESTS = ROOT / "tests" / "screens"
 INTERFACE = ("src/", "public/")
 NOT_INTERFACE: tuple[str, ...] = ()
 
-# 5. What a visitor would never notice changing. `docs/` is the whole of the previous
+# 5. What a visitor would never notice changing. `docs/` holds the previous
 #    control — Step Packets, STATUS, ROADMAP, CHECKPOINTS and the rest — kept as the
-#    record of work that was really done. It is read, never edited, and nothing in it
-#    is product.
+#    record of work that was really done and never edited, beside the live plans,
+#    issues, run reports and changelog. Nothing in it is product.
 #
 #    `scripts/` as a whole is NOT here, and that is on purpose: it holds the screen
 #    runner and the capture script, and a card that changes how screens are proved
