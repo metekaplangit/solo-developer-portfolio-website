@@ -440,7 +440,7 @@ const schema = [
   }
   @media (min-width: 64rem) {
     .features {
-      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+      grid-template-columns: minmax(0, var(--rail)) minmax(0, 1fr);
       align-items: start;
     }
   }
@@ -541,7 +541,7 @@ const schema = [
   @media (min-width: 64rem) {
     .story {
       display: grid;
-      grid-template-columns: minmax(0, 15rem) minmax(0, var(--measure-mid));
+      grid-template-columns: minmax(0, var(--rail)) minmax(0, var(--measure-mid));
       column-gap: var(--gutter);
       align-items: start;
     }
@@ -575,7 +575,7 @@ const schema = [
     }
     .story-note :global(.maker-note) {
       display: grid;
-      grid-template-columns: minmax(0, 15rem) minmax(0, var(--measure-mid));
+      grid-template-columns: minmax(0, var(--rail)) minmax(0, var(--measure-mid));
       column-gap: var(--gutter);
       align-items: start;
     }

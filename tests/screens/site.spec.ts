@@ -1345,10 +1345,11 @@ afterAll(async () => {
  * Bad breaks that only new words would mend, and the words are not ours to
  * change. Each names its open issue; drop the line when the issue closes.
  */
-const BREAKS_KNOWN = [
-  // Issue 0015: the Waypost Words heading is its App Store listing's words; in
-  // the 240px label rail its ties leave only "Weather with a mind / of its own".
-  'Weather with a mind of its own',
+const BREAKS_KNOWN: Array<{ text: string; widths: string[] }> = [
+  // Issue 0031: on a 320px phone the Waypost Words heading needs 315px whole in
+  // a 280px column, and its ties leave only "Weather with a mind / of its own".
+  // Wide screens are mended by the 22rem rail (issue 0015); this is 320 only.
+  { text: 'Weather with a mind of its own', widths: ['320'] },
 ];
 
 function faults(width: string, r: Reading): string[] {
@@ -1400,7 +1401,7 @@ function faults(width: string, r: Reading): string[] {
   }
 
   for (const b of r.badBreaks) {
-    if (BREAKS_KNOWN.some((k) => b.text.startsWith(k))) continue;
+    if (BREAKS_KNOWN.some((k) => b.text.startsWith(k.text) && k.widths.includes(String(width)))) continue;
     bad.push(`@${width} bad line break — ${b.kind}: "${b.line}" in "${b.text}"`);
   }
 

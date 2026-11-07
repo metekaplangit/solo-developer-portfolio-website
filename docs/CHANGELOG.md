@@ -13,6 +13,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.67.7
+
+- Story headings sit on one line beside the text on wide screens
+
 ## v0.67.6
 
 - Check plan 0021 landed, and fix what did not

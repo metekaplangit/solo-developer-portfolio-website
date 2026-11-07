@@ -191,6 +191,13 @@
      Convention: reading columns are CENTERED within the shell
      (`margin-inline: auto`), so content sits balanced, not pushed left. */
   --maxw: 86rem;
+  /* The label rail: the left track every two-column section shares, so each
+     section opens on one hairline across both tracks. 15rem, widened to 22rem
+     from 80rem up, where the page has the room: at 15rem (240px) a story
+     heading's ties left it no even break — "Weather with a mind / of its own",
+     211 over 99px, needs 315px whole (issue 0015). At 22rem every story heading
+     sits on 1 line. Change it here only; every rail grid reads it. */
+  --rail: 15rem;
   /* Reading column ~82ch at 17px body — still inside the comfortable range,
      a touch wider than before so prose doesn't feel cramped. */
   --maxw-prose: 43rem;
@@ -259,6 +266,11 @@
   --dur: 220ms;
   --dur-slow: 420ms;
   --dur-leave: 160ms;
+}
+@media (min-width: 80rem) {
+  :root {
+    --rail: 22rem;
+  }
 }
 
 /* Every element that OWNS a hue re-derives the two washes from it (STEP-0083).
@@ -339,7 +351,7 @@ body {
      at large text sizes the page slid sideways. A word that fits never breaks. */
   overflow-wrap: anywhere;
 }
-/* …except a heading on a wide screen. A tied heading can run past the 15rem
+/* …except a heading on a wide screen. A tied heading can run past the
    label rail into the gutter beside it ("and something to watch" on Waypost
    Words), where it reads whole; breaking it there split a word in two. On a
    narrow screen the heading spans the column and its gutter is the window's
@@ -541,7 +553,7 @@ img {
   .opening {
     display: grid;
     grid-template-columns:
-      minmax(0, 15rem) var(--gutter) minmax(0, 1fr) var(--space-8) minmax(0, 1fr);
+      minmax(0, var(--rail)) var(--gutter) minmax(0, 1fr) var(--space-8) minmax(0, 1fr);
     align-items: start;
   }
   .opening-head {
@@ -928,7 +940,7 @@ img {
 @media (min-width: 56rem) {
   .row-stack .card {
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, var(--rail)) minmax(0, 1fr);
     gap: var(--gutter);
     align-items: start;
   }
