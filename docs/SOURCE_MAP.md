@@ -47,7 +47,8 @@ product.
 | `src/lib/**` | Pure domain helpers (tested) |
 | `src/layouts/**` `src/components/**` `src/pages/**` | Presentation + routes |
 | `src/styles/**` | Design tokens |
-| `public/**` | Static assets (icons, screenshots, CNAME) |
+| `src/assets/**` | Images and marks the build reads (product screenshots, the social marks) |
+| `public/**` | Static assets (icons, CNAME) |
 | `tests/dist.test.ts` | Assertions about the HTML a visitor is sent (`npm run test:dist`) |
 | `tests/screens/site.spec.ts` | Assertions about what the browser lays that HTML out as (`npm run test:ui`) |
 | `vitest.dist.config.ts` / `vitest.ui.config.ts` | The two slow suites' configs, each kept out of `npm test` |
