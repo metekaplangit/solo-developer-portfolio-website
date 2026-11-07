@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 #    list somebody has to keep in step.
 HEADLESS = ["npm", "run", "headless"]
 
-# 2. One named screen test, driven in a real Chrome against the built site. Every
+# 2. One named screen test, driven in Playwright's own Chromium against the built site. Every
 #    argument after these is one screen tag from the card.
 #
 #    The runner loads every route whatever it is given: one rule in the suite
