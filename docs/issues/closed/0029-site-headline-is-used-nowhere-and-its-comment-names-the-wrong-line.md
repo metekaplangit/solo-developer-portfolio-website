@@ -6,7 +6,7 @@
 - Found by: health-project 0003 (left alone by health-project 0001 and 0002 too)
 - Filed: 2026-10-31
 - Tried by: —
-- Closed by: —
+- Closed by: v0.67.4, card site-ts-holds-only-wording-the-site-shows
 
 ## What happens
 `src/lib/site.ts`:14-17 declares `headline: 'Brilliant Products for All'` with

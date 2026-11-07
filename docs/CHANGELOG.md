@@ -13,6 +13,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.67.4
+
+- site.ts holds only wording the site shows
+
 ## v0.67.1
 
 - Every probe and screen tool runs only Playwright's own browsers
