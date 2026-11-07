@@ -81,8 +81,8 @@ Two tiers run by the control, and a third you run by hand.
 - **Fast checks — `npm run headless`.** `npm audit --omit=dev`, the build,
   `astro check`, the unit suite and the built-output suite, in that order.
   Every card runs all of it.
-- **Screens — `tests/screens/site.spec.ts`.** A real Chrome over every route in
-  `scripts/routes.mjs` at 4 widths plus a phone pass, about a minute. The `@tag`
+- **Screens — `tests/screens/site.spec.ts`.** Playwright's own Chromium over every
+  route in `scripts/routes.mjs` at 4 widths plus a phone pass, about a minute. The `@tag`
   at the end of each `test()` title is what a card names: one per route, its tag
   taken from `scripts/routes.mjs`, and the rest written into their titles in the
   spec itself.
