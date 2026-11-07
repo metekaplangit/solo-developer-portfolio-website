@@ -24,6 +24,12 @@ export const site = {
   description:
     'MetKap Studio makes apps and games. Every one has its own privacy page, and when you write to us, you usually hear back within 2–3 business days.',
   supportEmail: 'support@metkapstudio.com',
+  /** The studio's own accounts, checked live on 2026-11-07 (owner, 2026-11-07). */
+  social: [
+    { name: 'Facebook', href: 'https://www.facebook.com/metkapstudio' },
+    { name: 'Instagram', href: 'https://www.instagram.com/metkapstudio/' },
+    { name: 'X', href: 'https://x.com/metkapstudio' },
+  ],
 } as const;
 
 export const nav = [

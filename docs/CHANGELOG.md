@@ -13,6 +13,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.66.41
+
+- Search engines can tie the studio's Facebook, Instagram and X accounts to its site
+
 ## v0.66.40
 
 - The not-found page speaks as we and reads clearly

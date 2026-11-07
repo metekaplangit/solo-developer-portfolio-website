@@ -684,6 +684,23 @@ describe('the accent panel', () => {
   });
 });
 
+describe('the studio names its own accounts (owner, 2026-11-07)', () => {
+  // The 3 channels the studio posts to, checked live on 2026-11-07. Search
+  // engines read `sameAs` to know these accounts and this site are one studio.
+  it('lists Facebook, Instagram and X in the home page Organization', () => {
+    const page = built.find(([r]) => r === '/')![1];
+    const graphs = [...page.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap((m) =>
+      [JSON.parse(m[1]!)].flat(),
+    );
+    const org = graphs.find((g) => g['@type'] === 'Organization');
+    expect(org?.sameAs).toEqual([
+      'https://www.facebook.com/metkapstudio',
+      'https://www.instagram.com/metkapstudio/',
+      'https://x.com/metkapstudio',
+    ]);
+  });
+});
+
 describe('newest release first (owner, 2026-10-29)', () => {
   // Whatever the studio published last takes first place on every page, and the
   // rest follow by release date. Read from the product files themselves, so a

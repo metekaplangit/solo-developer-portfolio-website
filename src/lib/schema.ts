@@ -37,6 +37,7 @@ export function organizationSchema() {
     logo: abs('/icon-512.png'),
     description: site.description,
     email: site.supportEmail,
+    sameAs: site.social.map((s) => s.href),
   };
 }
 
