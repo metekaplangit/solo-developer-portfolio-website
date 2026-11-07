@@ -13,12 +13,13 @@
 src/
   content/        # Typed content + schema.ts contracts (products, policies)
   content.config.ts  # Astro collection loaders/wiring
+  assets/         # Images and marks the build reads (product screenshots, the social marks)
   layouts/        # Page shells — presentation
   components/     # Reusable UI units (cards, badges, nav, footer)
   pages/          # Route files → generated static routes
   lib/            # Pure helpers (formatting, link resolution) — domain logic
   styles/         # Design tokens + global CSS
-public/           # Static assets served as-is (icons, screenshots, CNAME)
+public/           # Static assets served as-is (icons, CNAME)
 docs/             # Retired governance record, plus live reference pages (see CLAUDE.md)
 scripts/          # Capture, screen and live-check scripts, probes, and the retired validator
 tests/            # Built-output suite and screen suite; unit tests sit beside the code in src/
