@@ -50,6 +50,7 @@ product.
 | `src/assets/**` | Images and marks the build reads (product screenshots, the social marks) |
 | `public/**` | Static assets (icons, CNAME) |
 | `tests/dist.test.ts` | Assertions about the HTML a visitor is sent (`npm run test:dist`) |
+| `tests/no-business-model-claims.test.ts` | No page promises what a product will never do (runs with `npm run test:dist`) |
 | `tests/screens/site.spec.ts` | Assertions about what the browser lays that HTML out as (`npm run test:ui`) |
 | `vitest.dist.config.ts` / `vitest.ui.config.ts` | The two slow suites' configs, each kept out of `npm test` |
 | `scripts/routes.mjs` | Every route, its screen tag and its built file |
