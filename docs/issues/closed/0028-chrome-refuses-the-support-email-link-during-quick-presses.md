@@ -6,7 +6,7 @@
 - Found by: session (plan 0020, card A)
 - Filed: 2026-10-31
 - Tried by: —
-- Closed by: —
+- Closed by: not reproduced by card the-support-email-link-opens-the-mail-app-on-every-press, 2026-11-07 — 44 real presses on 4 pages, 0 refused; storm seed 1, 478s, 0 breaks, no mailto line
 
 Doubt: only the console line was seen; whether a visitor's press on the link
 ever fails to open their mail app is not known. Reach is rounded up to
