@@ -5,7 +5,7 @@
 - Area: Waypost Words page, Magic Notes page
 - Found by: text-project 0003
 - Filed: 2026-10-29
-- Tried by: card product-apps-and-about-text-breaks-where-a-reader-would, 2026-10-30 — the Magic Notes break is mended; the Waypost heading cannot be mended by layout: its ties leave only "Weather with a mind / of its own" in the 240px label rail, so only new words (the owner's, from the App Store listing) close it
+- Tried by: card product-apps-and-about-text-breaks-where-a-reader-would, 2026-10-30 — the Magic Notes break is mended; the Waypost heading cannot be mended by layout: its ties leave only "Weather with a mind / of its own" in the 240px label rail, so only new words (the owner's, from the App Store listing) close it; card the-waypost-words-weather-heading-breaks-into-even-lines-at, 2026-11-07 — the words are fixed (owner: "Stay.", 2026-11-02), and no layout inside the 15rem label rail can mend it: the heading needs 315px on 1 line in a 240px box at every width from 1024 to 1920, and its ties leave only 2 places to break (211/99 px, or 7 over 22 characters). The rail is a site-wide token (8 grids, privacy, About, maker note), so only the owner can choose new words or a wider rail
 - Closed by: —
 
 Doubt: it could read `low` (only seen); it is filed `medium` to match issue 0007, which holds the same kind of fault, and doubt rounds up.
@@ -30,3 +30,4 @@ The heading splits into 2 even lines, or sits on 1. No line of the paragraph end
 - assets/0015/03-magic-notes-opening-390-after.png — the same paragraph at 390 px after the rewording; no bad break
 - assets/0015/04-weather-heading-1536-unchanged.png — the Waypost Words heading at 1536 px, still 19 / 10 characters
 - docs/skills/text-project/0003-2026-10-29.md — readings for both
+- control/cards/the-waypost-words-weather-heading-breaks-into-even-lines-at/measure-headings.mjs, 2026-11-07, Playwright's Chromium: "Weather with a mind of its own" box 240, natural 315, lines 211/99 at 1024, 1280, 1440, 1536 and 1920. In the same rail "Something waiting on the road" reads 193/116 and "Seven skills for when you're stuck" 120/220.
