@@ -1,6 +1,7 @@
 ---
 import { site } from '../lib/site';
 import { withBase } from '../lib/url';
+import SocialLinks from './SocialLinks.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -13,7 +14,12 @@ const year = new Date().getFullYear();
         <li><a href={withBase('/about/')}>About</a></li>
       </ul>
     </nav>
-    <p class="footer-meta">© {year} {site.name}.</p>
+    {/* After the nav, so the footer's first link is still Privacy, which the
+        left-rail check measures. */}
+    <div class="footer-end">
+      <p class="footer-meta">© {year} {site.name}.</p>
+      <SocialLinks />
+    </div>
   </div>
 </footer>
 
@@ -55,6 +61,14 @@ const year = new Date().getFullYear();
   }
   .footer-links a:hover {
     color: var(--text-strong);
+  }
+  .footer-end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    /* The last mark's tap area reaches 10px past its drawing; this puts the
+       drawing itself on the right edge of the page column. */
+    margin-inline-end: -10px;
   }
   .footer-meta {
     margin: 0;

@@ -1,0 +1,73 @@
+---
+// The studio's 3 accounts, each shown as its platform's own white mark (owner,
+// 2026-11-07). The drawings are the platforms' official files, unchanged, in
+// src/assets/brand/: Instagram's white glyph and X's logo from their brand packs,
+// and Facebook's white secondary logo read out of its official Illustrator file
+// (it matched the official PNG with 0 differing pixels away from the edges).
+// They are drawn inline so they stay vector-sharp at any zoom, and white is the
+// one colour all 3 brands allow — never tinted, never named in text beside the
+// mark (Meta's logo rules). See DESIGN.md, "The Official Marks Rule".
+import { site } from '../lib/site';
+import facebook from '../assets/brand/facebook.svg?raw';
+import instagram from '../assets/brand/instagram.svg?raw';
+import x from '../assets/brand/x.svg?raw';
+
+/** The viewBox and every path of an official file, attributes as written. */
+function mark(svg: string) {
+  return {
+    viewBox: svg.match(/viewBox="([^"]+)"/)![1],
+    paths: [...svg.matchAll(/<path\b([^>]*?)\/?>/g)].map(([, attrs]) => ({
+      d: attrs!.match(/\bd="([^"]+)"/)![1],
+      transform: attrs!.match(/\btransform="([^"]+)"/)?.[1],
+      rule: attrs!.match(/\bfill-rule="(nonzero|evenodd)"/)?.[1] as 'nonzero' | 'evenodd' | undefined,
+    })),
+  };
+}
+const marks = { facebook: mark(facebook), instagram: mark(instagram), x: mark(x) };
+---
+
+<ul class="social" role="list">
+  {
+    site.social.map((s) => {
+      const m = marks[s.icon];
+      return (
+        <li>
+          <a href={s.href} rel="me noopener" target="_blank" aria-label={`${site.name} on ${s.name}`} data-social={s.icon}>
+            <svg viewBox={m.viewBox} width="24" height="24" aria-hidden="true" focusable="false">
+              {m.paths.map((p) => <path d={p.d} transform={p.transform} fill-rule={p.rule} />)}
+            </svg>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .social {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* A 44px tap area around a 24px mark: 10px of air on every side, more than the
+     half-a-logo clear space Facebook asks between its mark and anything else. */
+  .social a {
+    display: grid;
+    place-items: center;
+    inline-size: 44px;
+    block-size: 44px;
+    border-radius: var(--radius-pill);
+    color: #ffffff;
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  /* The mark never changes; only the ground behind it lifts, as the header's
+     links do. */
+  .social a:hover {
+    background: var(--surface-2);
+  }
+  .social svg {
+    display: block;
+    fill: currentColor;
+  }
+</style>

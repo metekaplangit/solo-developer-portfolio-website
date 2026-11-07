@@ -1,15 +1,15 @@
 {
-  "@about": "v0.66.38",
+  "@about": "v0.67.0",
   "@apps": "v0.66.39",
   "@button-press": "v0.66.39",
   "@every-route": "v0.66.40",
-  "@gallery-focus": "v0.66.35",
+  "@gallery-focus": "v0.67.0",
   "@gallery-presses": "v0.66.38",
   "@gallery-resize": "v0.66.40",
-  "@home": "v0.66.38",
+  "@home": "v0.67.0",
   "@increased-contrast": "v0.66.40",
   "@magic-notes": "v0.66.36",
-  "@narrow-and-large-text": "v0.66.35",
+  "@narrow-and-large-text": "v0.67.0",
   "@not-found": "v0.66.40",
   "@page-top": "v0.66.36",
   "@prefetch": "v0.66.38",
@@ -20,5 +20,5 @@
   "@sole-focus": "v0.66.37",
   "@support": "v0.66.39",
   "@waypost-rail": "v0.66.39",
-  "@waypost-words": "v0.66.35"
+  "@waypost-words": "v0.67.0"
 }

@@ -391,6 +391,16 @@ inside a set. A one-off height on a single button is the failure this names.
   pill with bold white text. On narrow screens the links become a single horizontally scrollable row
   with a right-edge fade — never a wrapped multi-row block.
 
+### Social Marks
+**The Official Marks Rule.** *(Added 2026-11-07.)* The studio's Facebook,
+Instagram and X links are drawn with each platform's own official mark, the file
+in `src/assets/brand/` unchanged, at 24px inside a 44px tap area. Always white:
+it is the one colour all 3 brands allow, and it keeps the chrome achromatic.
+Never tinted, outlined, redrawn or set beside the platform's name in text (the
+name lives in the link's `aria-label`); hover lifts the ground behind the mark,
+never the mark. They appear in 2 places only: the footer of every page and
+"Follow us" in the About page's contact panel (`SocialLinks.astro`).
+
 ### Screenshot Gallery (signature component)
 - One large frame at a time (`72rem` max, `2880/1800` ratio), CSS scroll-snap so
   swipe and trackpad work with no JavaScript; arrows, dots, a live counter, and

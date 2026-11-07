@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../lib/site';
 import { withBase } from '../../lib/url';
 import SupportEmail from '../../components/SupportEmail.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
 import { tie } from '../../lib/typography';
 
 /* Values — how the studio works, not what it promises never to do. Two of these
@@ -85,6 +86,10 @@ const values = [
           <li><a href={withBase('/apps/')}>Apps &amp; Games</a></li>
           <li><a href={withBase('/privacy/')}>Privacy</a></li>
         </ul>
+        <div class="follow">
+          <p>Follow us</p>
+          <SocialLinks />
+        </div>
       </div>
       <div class="contact-actions">
         <a class="btn btn-primary" href={withBase('/support/')}>Contact Support</a>
@@ -215,6 +220,17 @@ const values = [
   }
   .elsewhere a {
     color: var(--muted);
+  }
+  /* "Follow us" and the 3 marks on one line under the links. The first mark's
+     tap area starts 10px before its drawing, so the label sits that much closer. */
+  .follow {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--space-4) - 10px);
+    margin-top: var(--space-3);
+  }
+  .contact-copy .follow p {
+    font-size: var(--text-sm);
   }
   .elsewhere a:hover {
     color: var(--text-strong);

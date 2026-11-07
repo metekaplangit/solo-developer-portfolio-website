@@ -699,6 +699,52 @@ describe('the studio names its own accounts (owner, 2026-11-07)', () => {
       'https://x.com/metkapstudio',
     ]);
   });
+
+  // Visitors reach the same 3 accounts from the footer of every page and from
+  // the About page's contact panel, each shown as its platform's official mark.
+  const ACCOUNTS = [
+    ['facebook', 'https://www.facebook.com/metkapstudio', 'MetKap Studio on Facebook'],
+    ['instagram', 'https://www.instagram.com/metkapstudio/', 'MetKap Studio on Instagram'],
+    ['x', 'https://x.com/metkapstudio', 'MetKap Studio on X'],
+  ] as const;
+  /** Every path drawing in an official file, in order. */
+  const official = (name: string) =>
+    [...readFileSync(`src/assets/brand/${name}.svg`, 'utf-8').matchAll(/<path\b[^>]*?\sd="([^"]+)"/g)].map((m) => m[1]);
+  /** The social links in a piece of HTML, as [mark, href, label, drawings]. */
+  const socialLinks = (html: string) =>
+    [...html.matchAll(/<a\b([^>]*\bdata-social="(\w+)"[^>]*)>([\s\S]*?)<\/a>/g)].map(([, tag, mark, body]) => [
+      mark,
+      tag!.match(/\bhref="([^"]+)"/)?.[1],
+      tag!.match(/\baria-label="([^"]+)"/)?.[1],
+      [...body!.matchAll(/<path\b[^>]*?\sd="([^"]+)"/g)].map((m) => m[1]),
+    ]);
+  const expected = () => ACCOUNTS.map(([mark, href, label]) => [mark, href, label, official(mark)]);
+
+  it('links all 3 accounts from the footer of every page, drawn with the official marks', () => {
+    const moved = new Set(MOVED.map(([from]) => from));
+    const wrong = built
+      .filter(([route]) => !moved.has(route))
+      .filter(([, html]) => {
+        const footer = html.match(/<footer\b[\s\S]*?<\/footer>/)?.[0] ?? '';
+        return JSON.stringify(socialLinks(footer)) !== JSON.stringify(expected());
+      })
+      .map(([route]) => route);
+    expect(wrong).toEqual([]);
+  });
+
+  it('offers them under "Follow us" in the About contact panel', () => {
+    const page = built.find(([r]) => r === '/about/')![1];
+    const panel = page.match(/<section\b[^>]*aria-labelledby="contact-h"[\s\S]*?<\/section>/)?.[0] ?? '';
+    expect(panel).toMatch(/>Follow us</);
+    expect(socialLinks(panel)).toEqual(expected());
+  });
+
+  it('never writes a platform name as visible text beside its mark', () => {
+    const page = built.find(([r]) => r === '/about/')![1];
+    for (const [, , , body] of [...page.matchAll(/<a\b([^>]*\bdata-social="(\w+)"[^>]*)>([\s\S]*?)<\/a>/g)]) {
+      expect(body!.replace(/<[^>]+>/g, '').trim()).toBe('');
+    }
+  });
 });
 
 describe('newest release first (owner, 2026-10-29)', () => {

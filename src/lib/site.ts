@@ -26,9 +26,9 @@ export const site = {
   supportEmail: 'support@metkapstudio.com',
   /** The studio's own accounts, checked live on 2026-11-07 (owner, 2026-11-07). */
   social: [
-    { name: 'Facebook', href: 'https://www.facebook.com/metkapstudio' },
-    { name: 'Instagram', href: 'https://www.instagram.com/metkapstudio/' },
-    { name: 'X', href: 'https://x.com/metkapstudio' },
+    { name: 'Facebook', href: 'https://www.facebook.com/metkapstudio', icon: 'facebook' },
+    { name: 'Instagram', href: 'https://www.instagram.com/metkapstudio/', icon: 'instagram' },
+    { name: 'X', href: 'https://x.com/metkapstudio', icon: 'x' },
   ],
 } as const;
 
