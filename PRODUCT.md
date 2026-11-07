@@ -10,14 +10,17 @@ web
 
 ## Users
 
-The indie-Mac-app community — the r/macapps kind of visitor who follows small
-studios, judges craft closely, and has strong feelings about privacy, accounts,
-and subscriptions. They arrive on a Mac, usually from a link or a search, and
-they are deciding two things at once: is this piece of software any good, and is
-the person behind it trustworthy. They can tell the difference between care and
-template, and they are quick to dismiss anything that smells like marketing.
+People who follow small studios and pick their apps and games one at a time —
+on a Mac, an iPhone or an iPad today, whichever a product runs on. They judge
+craft closely and have strong feelings about privacy, accounts, and
+subscriptions. They arrive from a store listing, a link or a search, and they
+are deciding two things at once: is this product any good, and is the studio
+behind it trustworthy. They can tell the difference between care and template,
+and they are quick to dismiss anything that smells like marketing.
 
-No secondary audience is claimed; this is deliberately a single-audience site.
+The studio is cross-platform, so its own pages speak to every one of them the
+same way; only a product's page names that product's platform (owner,
+2026-11-02).
 
 ## Product Purpose
 

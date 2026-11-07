@@ -13,6 +13,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.67.5
+
+- PRODUCT.md says who the site is for today
+
 ## v0.67.4
 
 - site.ts holds only wording the site shows

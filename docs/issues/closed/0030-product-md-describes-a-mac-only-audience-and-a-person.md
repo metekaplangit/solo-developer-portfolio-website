@@ -6,7 +6,7 @@
 - Found by: health-project 0004 (left alone by health-project 0002 and 0003 too)
 - Filed: 2026-11-02
 - Tried by: —
-- Closed by: —
+- Closed by: v0.67.5, card product-md-says-who-the-site-is-for-today
 
 ## What happens
 `PRODUCT.md`:13-20 says the audience is the indie-Mac-app community, that "they
