@@ -31,6 +31,12 @@ describe('every tool runs only Playwright’s own browsers', () => {
     expect(readFileSync(file, 'utf8')).not.toMatch(INSTALLED);
   });
 
+  // A tool that finds its own browser's processes by the Chrome name also
+  // counts the owner's real Chrome — its helpers, its CPU — as its own.
+  it.each(tools)('%s never picks out processes by the Chrome name', (file) => {
+    expect(readFileSync(file, 'utf8')).not.toMatch(/\/Google Chrome\/\.test\(/);
+  });
+
   it.each(tools.filter((f) => /executablePath/.test(readFileSync(f, 'utf8'))))(
     '%s takes its browser from scripts/browsers.mjs',
     (file) => {

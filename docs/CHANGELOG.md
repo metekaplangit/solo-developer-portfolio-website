@@ -13,6 +13,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.67.6
+
+- Check plan 0021 landed, and fix what did not
+
 ## v0.67.5
 
 - PRODUCT.md says who the site is for today

@@ -577,11 +577,18 @@ if (mode === 'hold') {
   await page.goto(BASE + route, { waitUntil: 'load' });
   await sleep(1500);
   const cpu = () => {
-    const rows = execSync('ps -axo pid=,time=,rss=,command=').toString().split('\n');
-    const mine = rows.filter((r) => ENGINE === 'webkit' ? /ms-playwright\/webkit/.test(r) : /Google Chrome/.test(r) && /--headless|Helper/.test(r));
+    // Only this run's own browser: the processes descended from this node process.
+    // Matching the Chrome name counted the owner's real Chrome, and matching the
+    // Playwright cache counted every other session's test browser.
+    const rows = execSync('ps -axo pid=,ppid=,time=,rss=').toString().split('\n').map((r) => r.trim().split(/\s+/)).filter((r) => r.length === 4);
+    const kids = new Map();
+    for (const [pid, ppid] of rows) kids.set(ppid, [...(kids.get(ppid) ?? []), pid]);
+    const own = new Set();
+    const walk = (pid) => { for (const k of kids.get(pid) ?? []) if (!own.has(k)) { own.add(k); walk(k); } };
+    walk(String(process.pid));
+    const mine = rows.filter(([pid]) => own.has(pid));
     let secs = 0, rss = 0;
-    for (const r of mine) {
-      const [, , time, kb] = r.trim().match(/^(\d+)\s+(\S+)\s+(\d+)/) || [];
+    for (const [, , time, kb] of mine) {
       if (!time) continue;
       const parts = time.split(':').map(Number);
       secs += parts.length === 3 ? parts[0] * 3600 + parts[1] * 60 + parts[2] : parts[0] * 60 + parts[1];
