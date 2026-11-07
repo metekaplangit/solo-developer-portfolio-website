@@ -2,6 +2,7 @@
 // and whether it is actually drawn. Run: node scripts/probe/image-probe.mjs /apps/ [390 768 1440]
 // Answers: is a picture that looks empty missing, unloaded, or hidden by CSS?
 import puppeteer from 'puppeteer-core';
+import { chromiumPath } from '../browsers.mjs';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
@@ -19,7 +20,7 @@ const server = createServer((req, res) => {
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${server.address().port}`;
-const chrome = ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium'].find(existsSync);
+const chrome = chromiumPath();
 
 async function probe(width) {
   const browser = await puppeteer.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox'] });

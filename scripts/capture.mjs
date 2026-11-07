@@ -25,20 +25,13 @@ import { readFileSync, existsSync, statSync, mkdirSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import puppeteer from 'puppeteer-core';
 import { ROUTES } from './routes.mjs';
+import { chromiumPath } from './browsers.mjs';
 
 const DIST = 'dist';
 
 
 const WIDTHS = [1440, 390];
 
-const CHROME_PATHS = [
-  process.env.PUPPETEER_EXECUTABLE_PATH,
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  '/Applications/Chromium.app/Contents/MacOS/Chromium',
-  '/usr/bin/google-chrome',
-  '/usr/bin/chromium',
-  '/usr/bin/chromium-browser',
-].filter(Boolean);
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -83,9 +76,11 @@ if (!existsSync(join(DIST, 'index.html'))) {
   console.error('dist/ is missing — run `npm run build` first. A picture of a stale build proves nothing.');
   process.exit(1);
 }
-const chrome = CHROME_PATHS.find((p) => existsSync(p));
-if (!chrome) {
-  console.error('No Chrome or Chromium found. Set PUPPETEER_EXECUTABLE_PATH, or install one of:\n  ' + CHROME_PATHS.join('\n  '));
+let chrome;
+try {
+  chrome = chromiumPath();
+} catch (e) {
+  console.error(e.message);
   process.exit(1);
 }
 

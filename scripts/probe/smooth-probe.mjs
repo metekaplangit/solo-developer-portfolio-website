@@ -8,6 +8,7 @@ import { join } from 'node:path';
 
 const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
 const { chromium, webkit } = require('playwright');
+import { chromiumPath, webkitPath } from '../browsers.mjs';
 
 const argv = process.argv.slice(2);
 const mode = argv[0];
@@ -19,8 +20,8 @@ const BASE = opt('base', 'https://metkapstudio.com').replace(/\/$/, '');
 const ENGINE = opt('engine', 'chrome');
 const WEAK = argv.includes('--weak');
 const MINUTES = Number(opt('minutes', '5'));
-const CHROME = process.env.PUPPETEER_EXECUTABLE_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const WEBKIT = execSync('ls -d ~/Library/Caches/ms-playwright/webkit-* | tail -1').toString().trim() + '/pw_run.sh';
+const CHROME = chromiumPath();
+const WEBKIT = webkitPath();
 
 // The weak device, from step 2's research: Lighthouse's mobile profile (4x CPU, 150 ms RTT,
 // 1.6 Mbps down, 750 kbps up). Override with --cpu / --rtt / --down / --up.

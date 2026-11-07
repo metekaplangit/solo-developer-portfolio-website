@@ -2,6 +2,7 @@
 // Run: npm run build, then node scripts/probe/hunt-probe.mjs [static|drive|all] [--calibrate] [--engine chrome|webkit]   (webkit uses the global `playwright` install)
 // Answers: is anything on the built site wrong right now — a dead link, a stale fact, a control that does nothing, a page that errors?
 import puppeteer from 'puppeteer-core';
+import { chromiumPath, webkitPath } from '../browsers.mjs';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { join, extname, relative, sep } from 'node:path';
@@ -124,14 +125,14 @@ async function driveLane() {
   });
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${server.address().port}`;
-  const chrome = ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium'].find(existsSync);
+  const chrome = ENGINE === 'webkit' ? null : chromiumPath();
   const routes = [...built.keys()].filter((r) => r !== '/404');
   let browser;
   // Playwright's WebKit stands in for Safari; the few calls that differ from puppeteer are shimmed here.
   const launch = async () => {
     if (ENGINE !== 'webkit') return puppeteer.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox'] });
     const req = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
-    const b = await req('playwright').webkit.launch({ executablePath: execSync('ls -d ~/Library/Caches/ms-playwright/webkit-* | tail -1').toString().trim() + '/pw_run.sh' });
+    const b = await req('playwright').webkit.launch({ executablePath: webkitPath() });
     Object.defineProperty(b, 'connected', { get: () => b.isConnected() });
     return b;
   };

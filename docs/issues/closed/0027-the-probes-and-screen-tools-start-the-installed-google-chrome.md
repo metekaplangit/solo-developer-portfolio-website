@@ -6,7 +6,7 @@
 - Found by: session (plan 0020, card A)
 - Filed: 2026-10-31
 - Tried by: —
-- Closed by: —
+- Closed by: v0.67.1, card every-probe-and-screen-tool-runs-only-playwright-s-own-brows
 
 Doubt: no visitor ever meets it, so it could read `low`; it is `high` because
 what stops is the owner's own Chrome — Cold Turkey quits every Chrome on a

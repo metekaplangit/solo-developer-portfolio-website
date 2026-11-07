@@ -50,6 +50,7 @@ const DIST = 'dist';
 // held against the build by `tests/dist.test.ts`. No two tags may share a name:
 // the control matches a card's tag against the words of a title.
 import { ROUTES } from '../../scripts/routes.mjs';
+import { chromiumPath } from '../../scripts/browsers.mjs';
 
 /** 320 is the narrowest width this site supports; 1440 is the owner's desktop. */
 const WIDTHS = [320, 390, 768, 1440] as const;
@@ -67,28 +68,12 @@ const TEXT_MIN = 13;
  */
 const GAP_MAX = 120;
 
-/** Where a stock Chrome or Chromium lives, in the order worth trying. */
-const CHROME_PATHS = [
-  process.env.PUPPETEER_EXECUTABLE_PATH,
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  '/Applications/Chromium.app/Contents/MacOS/Chromium',
-  '/usr/bin/google-chrome',
-  '/usr/bin/chromium',
-  '/usr/bin/chromium-browser',
-].filter(Boolean) as string[];
-
-function chromePath(): string {
-  const found = CHROME_PATHS.find((p) => existsSync(p));
-  if (!found) {
-    // Never skip. A geometry suite that quietly passes because it could not
-    // find a browser is the false green this project refuses.
-    throw new Error(
-      'No Chrome or Chromium found. Set PUPPETEER_EXECUTABLE_PATH, or install one of:\n  ' +
-        CHROME_PATHS.join('\n  '),
-    );
-  }
-  return found;
-}
+/**
+ * Playwright's own Chromium, never the installed Chrome (issue 0027). Throws
+ * when there is none: a geometry suite that quietly passes because it could
+ * not find a browser is the false green this project refuses.
+ */
+const chromePath = (): string => chromiumPath();
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',

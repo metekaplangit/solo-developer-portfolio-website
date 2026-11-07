@@ -2,6 +2,7 @@
 // screenshot of it survives. Answers: is the capture failure an OOM on a very
 // tall page, or something else?
 import puppeteer from 'puppeteer-core';
+import { chromiumPath } from '../browsers.mjs';
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
@@ -15,7 +16,7 @@ const server = createServer(async (req, res) => {
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${server.address().port}`;
-const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const chrome = chromiumPath();
 const browser = await puppeteer.launch({ executablePath: chrome, headless: true, protocolTimeout: 120000, args: ['--no-sandbox','--disable-dev-shm-usage','--force-device-scale-factor=1'] });
 for (const path of ['/', '/apps/magic-notes/', '/apps/sole-focus/', '/about/']) {
   for (const width of [1440, 390]) {

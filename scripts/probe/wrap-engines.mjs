@@ -9,6 +9,7 @@ import { join, extname } from 'node:path';
 
 const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
 const { chromium, webkit } = require('playwright');
+import { chromiumPath, webkitPath } from '../browsers.mjs';
 
 const DIST = join(process.cwd(), 'dist');
 const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.json': 'application/json' };
@@ -60,9 +61,9 @@ function measure(forward) {
 
 const summary = {};
 const ENGINES = [
-  ['chromium', chromium, { executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' }],
+  ['chromium', chromium, { executablePath: chromiumPath() }],
   // The newest WebKit build Playwright left in its cache; the global install may expect an older one.
-  ['webkit', webkit, { executablePath: execSync('ls -d ~/Library/Caches/ms-playwright/webkit-* | tail -1').toString().trim() + '/pw_run.sh' }],
+  ['webkit', webkit, { executablePath: webkitPath() }],
 ];
 for (const [name, type, opts] of ENGINES) {
   const browser = await type.launch(opts);

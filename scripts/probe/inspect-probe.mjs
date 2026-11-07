@@ -10,9 +10,10 @@ import sharp from 'sharp';
 
 const require = createRequire(join(execSync('npm root -g').toString().trim(), 'noop.js'));
 const { chromium } = require('playwright');
+import { chromiumPath } from '../browsers.mjs';
 
 const DIST = 'dist';
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const CHROME = chromiumPath();
 
 const ROUTES = [
   { path: '/', file: 'home' },
