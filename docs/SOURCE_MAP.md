@@ -55,6 +55,8 @@ product.
 | `vitest.dist.config.ts` / `vitest.ui.config.ts` | The two slow suites' configs, each kept out of `npm test` |
 | `scripts/routes.mjs` | Every route, its screen tag and its built file |
 | `scripts/capture.mjs` / `scripts/rendered.mjs` / `scripts/live.mjs` | Card pictures, the screen tier, the live tier |
+| `scripts/browsers.mjs` | The one place a tool gets its browser: Playwright's own Chromium or WebKit, never the installed Chrome |
+| `scripts/probe/**` | Seeded probes the audit skills drive (chaos, smooth, hunt, inspect, image, height, wrap engines) |
 | `scripts/retired/validate-governance.py.retired` | The retired governance validator, kept as history |
 | `.github/workflows/**` | `deploy.yml` only — build + Lighthouse a11y gate + Pages publish |
 | `.github/ISSUE_TEMPLATE/**` | Issue forms + security route |
