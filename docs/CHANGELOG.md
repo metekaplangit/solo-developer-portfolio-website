@@ -2,8 +2,10 @@
 
 > **Purpose:** Human-readable version history (Keep a Changelog style).
 > **Read when:** Cutting a release or reviewing history.
-> **Update when:** Never by hand. `python3 control/loop.py finish` adds one line per
-> card at the top. Entries from `[Unreleased]` down are the retired Step Packet record.
+> **Update when:** Never by hand. `python3 control/loop.py finish` adds one line at the
+> top for each card that changes more than paperwork; a paperwork-only card takes a
+> version and a tag but writes no line here. Entries from `[Unreleased]` down are the
+> retired Step Packet record.
 > **Status:** Active.
 > **Activation:** Standard profile.
 
