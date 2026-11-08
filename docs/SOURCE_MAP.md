@@ -60,6 +60,8 @@ product.
 | `scripts/retired/validate-governance.py.retired` | The retired governance validator, kept as history |
 | `.github/workflows/**` | `deploy.yml` only — build + Lighthouse a11y gate + Pages publish |
 | `.github/ISSUE_TEMPLATE/**` | Issue forms + security route |
+| `control/**` | The work loop, this project's answers (`project.py`) and every finished card |
+| `store-assets/**` | Studio icons and covers, none of them served by the site |
 | `docs/tasks/**` | Task Cards per Step (retired) |
 | `docs/issues/LEDGER.md` | Pre-remote issue fallback (retired; issues are files in `docs/issues/open/`) |
 
