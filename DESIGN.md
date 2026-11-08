@@ -388,8 +388,9 @@ inside a set. A one-off height on a single button is the failure this names.
 - **Style:** Sticky, translucent (`72%` of the ground) with a `16px` backdrop
   blur, over a hairline bottom border.
 - **States:** Muted by default, a Lifted pill on hover; the current page is a Chrome Wash
-  pill with bold white text. On narrow screens the links become a single horizontally scrollable row
-  with a right-edge fade — never a wrapped multi-row block.
+  pill with bold white text. On narrow screens Home drops out, since the brand is the home link,
+  and the other 4 share one row with no scroll and no fade. Only where they cannot fit, in a
+  narrower window or at large text, the row wraps.
 
 ### Social Marks
 **The Official Marks Rule.** *(Added 2026-11-07.)* The studio's Facebook,
