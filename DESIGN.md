@@ -296,13 +296,13 @@ few millimetres; they never simulate a dramatic drop.
 
 ### Shadow Vocabulary
 The values live in `src/styles/global.css`; these are the roles.
-- **`--shadow-sm`**: Barely-there seat for the
-  product header block.
-- **`--shadow-md`**: The default lift for
-  cards, panels, and the screenshot frame.
-- **`--shadow-lg`**: Reserved for elements
-  that float *over* content — the featured spotlight. The gallery arrows carry
-  none since 2026-10-28: their glass and strong hairline separate them.
+- **`--shadow-sm`**: Barely-there seat for app icons, and the shadow inside
+  `--lift-1`.
+- **`--shadow-md`**: The shadow inside `--lift-2`, and for screenshots that sit on
+  the page: the gallery frame and the home mosaic.
+- **`--shadow-lg`**: Reserved for what floats *over* content: a band's screenshots,
+  `.shot-frame` and `--lift-3`. The gallery arrows carry none since 2026-10-28:
+  their glass and strong hairline separate them.
 
 **The One Light Rule.** *(Added 2026-10-28, style-project 0001.)* Light falls
 from above, so every lifted surface is brighter at its top: `--surface-fill`
