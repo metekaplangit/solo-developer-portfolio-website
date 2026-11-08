@@ -51,7 +51,8 @@ Store", "Pomodoro timer", "count-up stopwatch". The pair reads as one thing, so
 it wraps as one thing. *Machine-checked.*
 
 **T3 — CSS is not the mechanism, and must not be trusted as one.** `text-wrap:
-pretty` is applied site-wide and is worth having, but Chromium — which is what
+pretty` is applied to reading prose, short copy takes `balance`, and both are worth
+having, but Chromium — which is what
 the owner reads the site in — only adjusts the **last four lines** of a
 paragraph, so it cannot fix a break in the middle of a long one. WebKit
 evaluates the whole paragraph; Chromium does not. Both are correct per spec.

@@ -270,8 +270,9 @@ leading per role (`--leading-display` 0.96, `--leading-heading` 1.12,
 typeface. This is a performance *and* an honesty decision: a privacy-first site
 that phones out to a font CDN would contradict itself.
 
-**The Balanced-Heading Rule.** `text-wrap: balance` on h1–h3, `text-wrap: pretty`
-on prose. Headings never leave one orphan word alone on a line.
+**The Balanced-Heading Rule.** `text-wrap: balance` on h1–h3 and short copy,
+`text-wrap: pretty` on reading prose. Headings never leave one orphan word alone on
+a line.
 
 **The Wrapping Rule.** *(Added 2026-08-01, STEP-0062.)* No line of body text
 ends on a word that points forward — an article, a conjunction, a preposition,
