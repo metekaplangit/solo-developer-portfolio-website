@@ -66,8 +66,15 @@ def background(W, H):
     return big.crop((big.width - W, top, big.width, top + H))
 
 
-def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None):
-    """safe: the box (fractions of W and H) the lockup and tiles must stay inside."""
+def plain_background(a):
+    """Pixels within 1 shade of the plain gradient, read from the far-left column, which no phone reaches."""
+    return (np.abs(a - a[:, :1]) <= 1).all(axis=2)
+
+
+def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None, bg_step=1):
+    """safe: the box (fractions of W and H) the lockup and tiles must stay inside.
+    bg_step: above 1, rounds the phones' colours to this step, so a PNG shrinks with the text, tiles and plain
+    gradient exact. Rounding the gradient too merges its 1-shade steps into 2-shade bands."""
     sx0, sy0, sx1, sy1 = safe[0] * W, safe[1] * H, safe[2] * W, safe[3] * H
     # 16:9 keeps the master's proportions; wider banners show small, so their front grows to fill the box.
     cap = H if W / H < 1.9 else float('inf')
@@ -115,6 +122,12 @@ def compose(W, H, out, safe=(0, 0, 1, 1), align=0.5, quality=None):
     # Where the front landed, so the proof can check it against the safe box.
     box = (gx, min(gy, ty0), tx0 + 3 * s + 2 * gap, max(gy + g, ty0 + s, round(cy + u * 0.058 + u * 0.01)))
     rgb = bg.convert('RGB')
+    if bg_step > 1:
+        a = np.asarray(rgb, int)
+        c = (np.round(a / bg_step) * bg_step).clip(0, 255).astype(int)
+        c = np.where(plain_background(a)[..., None], a, c)
+        c[box[1]:box[3], box[0]:box[2]] = a[box[1]:box[3], box[0]:box[2]]
+        rgb = Image.fromarray(c.astype('uint8'), 'RGB')
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     if quality:
         rgb.save(out, quality=quality, subsampling=0, optimize=True, progressive=True)  # 4:4:4 keeps colour edges sharp
@@ -143,6 +156,11 @@ TARGETS = [
 ]
 
 
+# Lossless Google Play is 2.64 MB against Play Console's 2 MB. Step 2 moves the phones by at most 1 shade of 255
+# and leaves the text, tiles and plain gradient exact. JPEG's best under 2 MB (q99) was off by 6 shades, on the text.
+BACKGROUND_STEP = {'google-play': 2}
+
+
 def name_of(t):
     p, use, W, H = t[:4]
     return OUT / p / f'metkap-studio-{p}-{use}-{W}x{H}.{"jpg" if t[6] else "png"}'
@@ -155,7 +173,7 @@ if __name__ == '__main__':
     for t in TARGETS:
         if only and t[0] not in only:
             continue
-        box = compose(t[2], t[3], name_of(t), safe=t[4], align=t[5], quality=t[6])
+        box = compose(t[2], t[3], name_of(t), safe=t[4], align=t[5], quality=t[6], bg_step=BACKGROUND_STEP.get(t[0], 1))
         landed[str(name_of(t).relative_to(OUT))] = {'front': box, 'safe': t[4]}
         print(t[0], t[2], t[3], 'front', box)
     (HERE / 'landed.json').write_text(json.dumps(landed, indent=1))  # read by prove.py
