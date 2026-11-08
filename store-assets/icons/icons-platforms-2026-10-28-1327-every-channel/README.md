@@ -4,6 +4,8 @@ The gem logo picked on 2026-10-28 (see `../icons-web-2026-10-28-1320-larger-gem/
 
     node store-assets/icons/icons-platforms-2026-10-28-1327-every-channel/build.cjs
 
+The Google Play header here is the earlier one. The header in use is the studio cover, in `store-assets/covers/covers-2026-10-28-1338-studio-cover/google-play/`, under the same file name.
+
 ## The rule for each size
 
 Where the sources disagree, the file is at the **largest** size any of them recommends. A platform shrinks a big upload cleanly; it blurs a small one.
