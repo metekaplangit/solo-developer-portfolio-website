@@ -6,6 +6,7 @@ import SupportEmail from './SupportEmail.astro';
 import {
   policyFacts,
   collectedNothingText,
+  storedLabelText,
   protectionText,
   childrenText,
   rightsText,
@@ -47,6 +48,7 @@ const facts = policyFacts(policy);
 const o = policy.sections;
 const text = {
   collected: resolveSection(o.collected, collectedNothingText(facts)),
+  storedLabel: resolveSection(o.storedLabel, storedLabelText()),
   protection: resolveSection(o.protection, protectionText(facts)),
   children: resolveSection(o.children, childrenText(facts)),
   rights: resolveSection(o.rights, rightsText(facts)),
@@ -173,7 +175,7 @@ const chips: { label: string; ok: boolean }[] = [
       {
         list.storedLocally.length > 0 && (
           <>
-            <p class="sec-label">Stored only on your device:</p>
+            <p class="sec-label">{text.storedLabel}</p>
             <ul>{list.storedLocally.map((d) => <li>{d}</li>)}</ul>
           </>
         )

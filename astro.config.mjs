@@ -6,9 +6,9 @@ import satteriTie from './src/lib/satteri-tie.ts';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
-/** The wrapping rule's source files, fingerprinted — see `markdown` below. */
+/** The source files that shape every content entry, fingerprinted — see `markdown` below. */
 const RULE_DIGEST = createHash('sha256')
-  .update(['./src/lib/typography.ts', './src/lib/satteri-tie.ts'].map((f) => readFileSync(new URL(f, import.meta.url), 'utf-8')).join('\0'))
+  .update(['./src/lib/typography.ts', './src/lib/satteri-tie.ts', './src/content/schema.ts'].map((f) => readFileSync(new URL(f, import.meta.url), 'utf-8')).join('\0'))
   .digest('hex')
   .slice(0, 12);
 
@@ -44,6 +44,8 @@ export default defineConfig({
   // serialised form changes, and a function's body never reaches that form, so
   // an edit to `tie()` alone left every product's prose on the old rule. A
   // name is a string, so it does — and only an edit to the rule clears the cache.
+  // The content schema is in the fingerprint for the same reason: a new field
+  // with a default never reached a product file nobody had touched.
   markdown: {
     processor: satteri({ hastPlugins: [{ ...satteriTie, name: `tie-${RULE_DIGEST}` }] }),
   },

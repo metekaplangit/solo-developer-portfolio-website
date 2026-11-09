@@ -11,7 +11,7 @@ type: game
 # that name. The old addresses forward here (src/pages/*/wander-words.astro),
 # because a build of the game already carries them.
 status: released
-summary: A crossword game for iPhone and iPad. Trace every answer yourself, or call in lightning to reveal a letter.
+summary: A crossword game for iPhone and iPad, coming to Android phones and tablets on Google Play. Trace every answer yourself, or call in lightning to reveal a letter.
 # The home page's 3 blocks, agreed line by line with the owner on 2026-11-02.
 homeStatements:
   - title: Spell it. Strike it. Rain letters on it.
@@ -24,6 +24,12 @@ homeStatements:
 # game's Xcode project and "Shipping now: iOS on iPhone and iPad" in its
 # docs/architecture/platform.md, both read 2026-09-29.
 platforms: [ios, ipados]
+# Android is built (v1.216.13, com.metkapstudio.waypostwords, read in the game's
+# android/ on 2026-11-09) and not yet on Google Play, so it has no store link and
+# stays out of `platforms`. The day it is live: move it there, add the link.
+comingTo:
+  - platform: android
+    note: Android phones and tablets are coming to Google Play.
 storeLinks:
   - store: app-store
     url: https://apps.apple.com/us/app/waypost-words/id6817343620
@@ -33,8 +39,9 @@ storeLinks:
 # subscriptions in either direction, because those are decisions the studio
 # keeps open.
 price: "0"
-# The listing's minimum: iOS 15.0, and iPadOS 15.0 on iPad.
-requirements: iOS or iPadOS 15 or later
+# The listing's minimum: iOS 15.0, and iPadOS 15.0 on iPad. Android 7 is API 24,
+# minSdkVersion in the game's android/variables.gradle, read 2026-11-09.
+requirements: iOS or iPadOS 15 or later, or Android 7 or later
 releaseDate: 2026-10-26
 # Identity colour, read from the game rather than chosen for the site: the
 # lavender side of the lettered tile on the game's icon. The game's world is a
@@ -148,10 +155,10 @@ features:
   - Extra words you find fill a bonus jar
   - A daily puzzle, a daily gift and three daily goals
   - 26 skies to buy with your coins
-  - Made for iPhone and iPad, in portrait
-lastUpdated: 2026-10-27
+  - Made for iPhone, iPad and Android phones and tablets, in portrait
+lastUpdated: 2026-11-09
 seo:
-  title: Waypost Words — crosswords with seven skills, for iPhone and iPad
+  title: Waypost Words — crosswords for iPhone, iPad and Android phones and tablets
   description: Trace letters on a wheel to fill the crossword, or reach for one of seven skills. Three roads to walk, under weather that changes as you play.
 ---
 

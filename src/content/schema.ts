@@ -104,6 +104,14 @@ export const productSchema = z.object({
   status: z.enum(PRODUCT_STATUSES),
   summary: prose(z.string().min(1).max(200)),
   platforms: z.array(z.enum(PLATFORMS)).min(1),
+  // Announced and not yet on a store. Apart from `platforms` on purpose: that
+  // list means a visitor can get it today, and it feeds every tile and the
+  // structured data beside an in-stock offer. The product's own page names these
+  // with a plain note and no button. When one goes live it moves to `platforms`
+  // and gains a store link, and its entry here goes.
+  comingTo: z
+    .array(z.object({ platform: z.enum(PLATFORMS), note: prose(z.string().min(1)) }))
+    .default([]),
   storeLinks: z.array(storeLinkSchema).default([]),
   supportUrl: z.string().default('/support/'),
   privacyPolicyUrl: z.string().optional(),
@@ -228,6 +236,8 @@ export const privacyPolicyEntrySchema = z.object({
     .object({
       /** "What we collect", when the policy collects nothing. */
       collected: z.string().min(1).optional(),
+      /** The line above the list of what is kept on the device. */
+      storedLabel: z.string().min(1).optional(),
       /** "How your data is protected". */
       protection: z.string().min(1).optional(),
       /** "Children's privacy". */

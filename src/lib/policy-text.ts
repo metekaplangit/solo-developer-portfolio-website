@@ -54,6 +54,11 @@ export function collectedNothingText({ subject }: PolicyFacts): string {
   return `Nothing. ${subject} doesn't collect personal data.`;
 }
 
+/** The line above the list of what a product keeps on the device. */
+export function storedLabelText(): string {
+  return 'Stored only on your device:';
+}
+
 /**
  * "How your data is protected".
  *

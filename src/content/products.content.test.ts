@@ -208,12 +208,16 @@ describe('Waypost Words product content', () => {
 
   // Every value here was read from Apple's lookup endpoint for id 6817343620 on
   // 2026-10-27: free, iOS 15.0 or later, released 2026-10-26, one universal
-  // build for iPhone and iPad.
+  // build for iPhone and iPad. The Android minimum comes from the game's
+  // android/variables.gradle (minSdkVersion 24), read 2026-11-09.
   it('is a released, free iPhone and iPad game that links its App Store listing', () => {
     expect(product.type).toBe('game');
     expect(product.status).toBe('released');
     // One universal build: TARGETED_DEVICE_FAMILY "1,2" in the game's project.
+    // Android stays out of this list until it is on Google Play: this list feeds
+    // the structured data beside an in-stock offer, and every tile on the site.
     expect(product.platforms).toEqual(['ios', 'ipados']);
+    expect(product.comingTo.map((c) => c.platform)).toEqual(['android']);
     expect(product.storeLinks).toEqual([
       {
         store: 'app-store',
@@ -222,7 +226,7 @@ describe('Waypost Words product content', () => {
       },
     ]);
     expect(product.price).toBe('0');
-    expect(product.requirements).toBe('iOS or iPadOS 15 or later');
+    expect(product.requirements).toBe('iOS or iPadOS 15 or later, or Android 7 or later');
     expect(product.releaseDate?.toISOString().slice(0, 10)).toBe('2026-10-26');
   });
 
@@ -251,10 +255,32 @@ describe('Waypost Words product content', () => {
     // The game dropped its haptics setting from the save; listing it would
     // describe a build that no longer exists.
     expect(policy.storedLocally.join(' ')).not.toMatch(/haptic/i);
-    expect(policy.retention).toMatch(/iPad/);
     // Nothing that a later release may change is promised as absent.
     expect(policy.dataNotCollected).toHaveLength(0);
     expect(policy.retention).not.toMatch(/never|no account/i);
+  });
+
+  // Google Play's User Data policy (read 2026-11-09) wants the listing's entity
+  // or the app named in the policy. The owner asked for both.
+  it('covers the game on iPhone, iPad and Android, on both stores, by both names', () => {
+    const file = readFileSync(join(root, 'src/content/policies/waypost-words.md'), 'utf8');
+    const body = file.split(/^---$/m)[2].replace(/\s+/g, ' ');
+    for (const text of [policy.effectiveScope, policy.sections.changes!]) {
+      for (const word of ['iPhone', 'iPad', 'Android', 'App Store', 'Google Play', 'Waypost Words']) {
+        expect(text).toContain(word);
+      }
+    }
+    expect(policy.effectiveScope).toContain('MetKap Studio');
+    expect(body).toContain('MetKap Studio');
+    expect(body).toContain('Waypost Words');
+    expect(policy.lastUpdated.toISOString().slice(0, 10) >= '2026-11-09').toBe(true);
+  });
+
+  it('says plainly that everything stays on the phone or tablet and in its own backup', () => {
+    expect(policy.retention).toContain("stays on your own phone or tablet and in that device's own backup");
+    // A backup outlives the game on Android: it comes back on a reinstall, so
+    // "deleting the game removes it" alone would be false there.
+    expect(policy.retention).toMatch(/reinstall/i);
   });
 
   it('shows the icon the game ships with', () => {
@@ -275,10 +301,12 @@ describe('Waypost Words product content', () => {
 
   // The listing batch's website copy (COPY_PACK.md §4 in the game's
   // store-assets/listings/listings-2026-09-28-2007-skills-first-pack), word for
-  // word, so the page matches the listing a visitor arrives from.
+  // word, so the page matches the listing a visitor arrives from. The title and
+  // the devices line moved away from the batch on 2026-11-09, when the owner
+  // asked for Android phones and tablets to be named beside iPhone and iPad.
   it('carries its App Store listing words exactly', () => {
     expect(product.seo?.title).toBe(
-      'Waypost Words — crosswords with seven skills, for iPhone and iPad',
+      'Waypost Words — crosswords for iPhone, iPad and Android phones and tablets',
     );
     for (const line of [
       'Trace letters on a wheel to fill the crossword above it',
@@ -288,7 +316,7 @@ describe('Waypost Words product content', () => {
       'Weather that changes while you play',
       'Extra words you find fill a bonus jar',
       'A daily puzzle, a daily gift and three daily goals',
-      'Made for iPhone and iPad, in portrait',
+      'Made for iPhone, iPad and Android phones and tablets, in portrait',
     ]) {
       // The schema ties short words with non-breaking spaces.
       expect(product.features.map((f) => f.replace(/\u00a0/g, ' '))).toContain(line);

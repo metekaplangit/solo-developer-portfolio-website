@@ -115,6 +115,7 @@ const schema = [
           <Badge label={product.type === 'game' ? 'Game' : 'App'} tone="accent" />
           <Badge label={statusLabel(product.status)} />
           {product.platforms.map((p) => <Badge label={platformLabel(p)} tone="muted" />)}
+          {product.comingTo.map((c) => <Badge label={`${platformLabel(c.platform)}, coming soon`} tone="muted" />)}
         </div>
       </div>
     </div>
@@ -231,6 +232,7 @@ const schema = [
           <div class="identity-text">
             <h2 id="get-h" class="get-title">Get {product.name.replaceAll(' ', '\u00a0')}</h2>
             <FactsLine product={product} />
+            {product.comingTo.map((c) => <p class="coming-note">{c.note}</p>)}
           </div>
         </div>
         {
@@ -668,6 +670,12 @@ const schema = [
   }
   .get-id :global(.facts-line) {
     margin-top: var(--space-2);
+  }
+  .coming-note {
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
   }
   .get-actions {
     display: flex;

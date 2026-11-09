@@ -159,6 +159,43 @@ describe('every built page', () => {
     expect(text('/apps/')).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
   });
 
+  // Android is announced, not out (owner, 2026-11-09). The game page names it
+  // and says where it is going, and nothing on the site may offer it yet: no
+  // Google Play link on any page, no "available" wording, and no Android in the
+  // structured data, where it would sit beside an in-stock App Store offer. The
+  // day the game is live on Google Play this test is the one to change.
+  it('says Android is coming to Google Play, and offers it nowhere yet', () => {
+    const text = (route: string) =>
+      built.find(([r]) => r === route)![1].replace(/ |&nbsp;|&#160;/g, ' ');
+    const page = text('/apps/waypost-words/');
+    expect(page).toContain('Android phones and tablets');
+    expect(page).toContain('iOS or iPadOS 15 or later, or Android 7 or later');
+    // The Get panel's row states them as 2 facts, so a phone breaks between them.
+    expect(page).toMatch(/>iOS or iPadOS 15 or later<\/span>/);
+    expect(page).toMatch(/>Android 7 or later<\/span>/);
+    expect(page).toContain('coming to Android phones and tablets on Google Play');
+    expect(page).toContain('Android phones and tablets are coming to Google Play.');
+    expect(page).toContain('Android, coming soon');
+    expect(page).toContain('<title>Waypost Words — crosswords for iPhone, iPad and Android phones and tablets');
+    expect(page).toContain('"operatingSystem":"iOS, iPadOS"');
+    expect(page).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
+    for (const [route, html] of built) {
+      expect(html, route).not.toMatch(/play\.google\.com/);
+      expect(html.replace(/ |&nbsp;|&#160;/g, ' '), route).not.toMatch(
+        /(available|out|live|get it|download)( now| today)? on google play/i,
+      );
+    }
+    const policy = text('/privacy/waypost-words/');
+    expect(policy).toContain('MetKap Studio');
+    expect(policy).toContain('Google Play');
+    expect(policy).toContain("stays on your own phone or tablet and in that device's own backup".replace("'", '&#39;'));
+    // The shared template's local-only lines are false once a save can reach the
+    // player's own device backup, so this policy must not carry them.
+    expect(policy).not.toContain('Stored only on your device');
+    expect(policy).not.toContain('nothing is uploaded to a server');
+    expect(policy).toContain('and in that device&#39;s own backup:');
+  });
+
   // No app or game collects data: every policy's `dataCollected` is empty. The
   // privacy overview's lead said some did — the same false line review 0001
   // took off the studio policy, in the one place it was left.

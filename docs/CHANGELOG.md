@@ -15,6 +15,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.68.0
+
+- A visitor sees Waypost Words is coming to Android, and its privacy policy covers Google Play
+
 ## v0.67.8
 
 - The Google Play header uploads under Play Console's 2 MB limit with no visible loss

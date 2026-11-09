@@ -22,7 +22,9 @@ const { product } = Astro.props;
 const facts: string[] = [];
 if (product.price === '0') facts.push('Free');
 else if (product.price != null) facts.push(`$${product.price} (one-time)`);
-if (product.requirements) facts.push(product.requirements);
+// A requirement naming two systems is two facts here, so a narrow row breaks
+// between them. As one long fact it left "· iOS or iPadOS" alone on a phone line.
+if (product.requirements) facts.push(...product.requirements.split(', or '));
 ---
 
 {
