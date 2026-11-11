@@ -4,8 +4,8 @@
 // mark — so every relevant page can surface the download at the top. Renders
 // nothing when the product has no available link (unreleased products degrade
 // gracefully). Data-driven from the product content file; no per-page URLs.
-import type { Product } from '../content/schema';
-import { visibleStoreLinks, storeLabel } from '../lib/products';
+import type { Product, StoreLink } from '../content/schema';
+import { downloadLinks, storeOnLabel } from '../lib/products';
 
 interface Props {
   product: Product;
@@ -31,10 +31,13 @@ interface Props {
    * One Voice Per Band).
    */
   tone?: 'neutral' | 'hue';
+  /**
+   * Which store this button opens. Default: the first one a visitor can use.
+   * A product on two stores renders one button per `downloadLinks()` entry.
+   */
+  link?: StoreLink;
 }
-const { product, size = 'md', label, tone = 'neutral' } = Astro.props;
-
-const link = visibleStoreLinks(product).find((l) => l.status === 'available');
+const { product, size = 'md', label, tone = 'neutral', link = downloadLinks(product)[0] } = Astro.props;
 ---
 
 {
@@ -44,7 +47,7 @@ const link = visibleStoreLinks(product).find((l) => l.status === 'available');
       href={link.url}
       rel="noopener"
       target="_blank"
-      aria-label={`Download ${product.name} on the ${storeLabel(link.store)}`}
+      aria-label={`Download ${product.name} on ${storeOnLabel(link.store)}`}
     >
       <svg viewBox="0 0 20 20" aria-hidden="true" class="get-mark">
         <path d="M10 3v9.5M5.5 8.5 10 13l4.5-4.5M5 17h10" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" />

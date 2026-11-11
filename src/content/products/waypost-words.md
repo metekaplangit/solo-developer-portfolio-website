@@ -11,7 +11,7 @@ type: game
 # that name. The old addresses forward here (src/pages/*/wander-words.astro),
 # because a build of the game already carries them.
 status: released
-summary: A crossword game for iPhone and iPad, coming to Android phones and tablets on Google Play. Trace every answer yourself, or call in lightning to reveal a letter.
+summary: A crossword game for iPhone, iPad and Android phones and tablets. Trace every answer yourself, or call in lightning to reveal a letter.
 # The home page's 3 blocks, agreed line by line with the owner on 2026-11-02.
 homeStatements:
   - title: Spell it. Strike it. Rain letters on it.
@@ -23,18 +23,18 @@ homeStatements:
 # iPhone and iPad from one universal build: TARGETED_DEVICE_FAMILY "1,2" in the
 # game's Xcode project and "Shipping now: iOS on iPhone and iPad" in its
 # docs/architecture/platform.md, both read 2026-09-29.
-platforms: [ios, ipados]
-# Android is built (v1.216.13, com.metkapstudio.waypostwords, read in the game's
-# android/ on 2026-11-09) and not yet on Google Play, so it has no store link and
-# stays out of `platforms`. The day it is live: move it there, add the link.
-comingTo:
-  - platform: android
-    note: Android phones and tablets are coming to Google Play.
+# Android since 2026-11-09: v1.216.13, package com.metkapstudio.waypostwords.
+# The Google Play listing was read on 2026-11-11 — free, by MetKap Studio, rated
+# Everyone, "Updated on Nov 9, 2026" — and the owner reported it live that day.
+platforms: [ios, ipados, android]
 storeLinks:
   - store: app-store
     url: https://apps.apple.com/us/app/waypost-words/id6817343620
     status: available
-# Free, from the listing. The price is what the listing says today and nothing
+  - store: google-play
+    url: https://play.google.com/store/apps/details?id=com.metkapstudio.waypostwords
+    status: available
+# Free, from both listings. The price is what the listing says today and nothing
 # more; the page carries no claim about advertising, in-app purchases or
 # subscriptions in either direction, because those are decisions the studio
 # keeps open.
@@ -156,7 +156,7 @@ features:
   - A daily puzzle, a daily gift and three daily goals
   - 26 skies to buy with your coins
   - Made for iPhone, iPad and Android phones and tablets, in portrait
-lastUpdated: 2026-11-09
+lastUpdated: 2026-11-11
 seo:
   title: Waypost Words — crosswords for iPhone, iPad and Android phones and tablets
   description: Trace letters on a wheel to fill the crossword, or reach for one of seven skills. Three roads to walk, under weather that changes as you play.

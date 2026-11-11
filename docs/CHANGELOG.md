@@ -15,6 +15,10 @@ In the retired record below, internal-only work (docs, checkpoints, refactors,
 this initialization) is traceable via Step IDs and commits and did not consume
 one.
 
+## v0.69.0
+
+- A visitor can get Waypost Words on Google Play from every page that offers it
+
 ## v0.68.0
 
 - A visitor sees Waypost Words is coming to Android, and its privacy policy covers Google Play

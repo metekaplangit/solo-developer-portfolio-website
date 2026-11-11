@@ -40,6 +40,25 @@ export function storeLabel(store: StoreLink['store']): string {
 }
 
 /**
+ * The store as a sentence names it after "on": "the App Store", but "Google
+ * Play" and "Steam" with no article. Used in the download button's accessible
+ * name, which read "on the Google Play" once a second store arrived.
+ */
+export function storeOnLabel(store: StoreLink['store']): string {
+  const label = storeLabel(store);
+  return store === 'app-store' || store === 'mac-app-store' ? `the ${label}` : label;
+}
+
+/**
+ * Every store a visitor can download the product from now, in the order the
+ * content file lists them. Each surface that offers a download shows one button
+ * per link here, so a product on two stores is offered on both.
+ */
+export function downloadLinks(product: Product): StoreLink[] {
+  return visibleStoreLinks(product).filter((l) => l.status === 'available');
+}
+
+/**
  * The product the home page features: whatever the studio released last
  * (owner, 2026-10-29). Publishing a product — `status: released` and its
  * `releaseDate` — is all it takes; nothing is flagged by hand. Undefined

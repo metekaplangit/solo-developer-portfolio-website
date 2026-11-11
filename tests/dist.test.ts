@@ -137,8 +137,9 @@ describe('every built page', () => {
     expect(policy).toContain('support@metkapstudio.com');
     const [, product] = built.find(([r]) => r === '/apps/waypost-words/')!;
     expect(product).toContain('<link rel="canonical" href="https://metkapstudio.com/apps/waypost-words/"');
+    // One offer per store since Google Play went live (2026-11-11).
     expect(product).toContain(
-      '"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://apps.apple.com/us/app/waypost-words/id6817343620"}',
+      '"offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://apps.apple.com/us/app/waypost-words/id6817343620"},{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://play.google.com/store/apps/details?id=com.metkapstudio.waypostwords"}]',
     );
     expect(product).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
     expect(product).not.toContain('Not yet available');
@@ -159,32 +160,34 @@ describe('every built page', () => {
     expect(text('/apps/')).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
   });
 
-  // Android is announced, not out (owner, 2026-11-09). The game page names it
-  // and says where it is going, and nothing on the site may offer it yet: no
-  // Google Play link on any page, no "available" wording, and no Android in the
-  // structured data, where it would sit beside an in-stock App Store offer. The
-  // day the game is live on Google Play this test is the one to change.
-  it('says Android is coming to Google Play, and offers it nowhere yet', () => {
+  // Waypost Words went live on Google Play on 2026-11-09 (listing read
+  // 2026-11-11). Every place that offers the App Store now offers Google Play
+  // beside it: the game page's opening and its Get panel, the band on Apps &
+  // Games, and Home, which features the newest release. Nothing still says it is
+  // coming, and the structured data names Android with an offer per store.
+  it('offers Waypost Words on Google Play wherever it offers the App Store', () => {
     const text = (route: string) =>
-      built.find(([r]) => r === route)![1].replace(/ |&nbsp;|&#160;/g, ' ');
+      built.find(([r]) => r === route)![1].replace(/\u00a0|&nbsp;|&#160;/g, ' ');
+    const APPLE = 'href="https://apps.apple.com/us/app/waypost-words/id6817343620"';
+    const PLAY = 'href="https://play.google.com/store/apps/details?id=com.metkapstudio.waypostwords"';
+    const count = (html: string, s: string) => html.split(s).length - 1;
+    for (const route of ['/', '/apps/', '/apps/waypost-words/']) {
+      const html = text(route);
+      expect(count(html, PLAY), route).toBe(count(html, APPLE));
+      expect(count(html, PLAY), route).toBeGreaterThan(0);
+      expect(html, route).toContain('aria-label="Download Waypost Words on Google Play"');
+      expect(html, route).not.toMatch(/coming soon|coming to Google Play|coming to Android/i);
+    }
     const page = text('/apps/waypost-words/');
     expect(page).toContain('Android phones and tablets');
     expect(page).toContain('iOS or iPadOS 15 or later, or Android 7 or later');
     // The Get panel's row states them as 2 facts, so a phone breaks between them.
     expect(page).toMatch(/>iOS or iPadOS 15 or later<\/span>/);
     expect(page).toMatch(/>Android 7 or later<\/span>/);
-    expect(page).toContain('coming to Android phones and tablets on Google Play');
-    expect(page).toContain('Android phones and tablets are coming to Google Play.');
-    expect(page).toContain('Android, coming soon');
     expect(page).toContain('<title>Waypost Words — crosswords for iPhone, iPad and Android phones and tablets');
-    expect(page).toContain('"operatingSystem":"iOS, iPadOS"');
-    expect(page).toContain('href="https://apps.apple.com/us/app/waypost-words/id6817343620"');
-    for (const [route, html] of built) {
-      expect(html, route).not.toMatch(/play\.google\.com/);
-      expect(html.replace(/ |&nbsp;|&#160;/g, ' '), route).not.toMatch(
-        /(available|out|live|get it|download)( now| today)? on google play/i,
-      );
-    }
+    expect(page).toContain('"operatingSystem":"iOS, iPadOS, Android"');
+    // An Apple store still takes "the"; Google Play never does.
+    expect(page).toContain('aria-label="Download Waypost Words on the App Store"');
     const policy = text('/privacy/waypost-words/');
     expect(policy).toContain('MetKap Studio');
     expect(policy).toContain('Google Play');

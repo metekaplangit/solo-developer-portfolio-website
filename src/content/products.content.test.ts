@@ -214,14 +214,19 @@ describe('Waypost Words product content', () => {
     expect(product.type).toBe('game');
     expect(product.status).toBe('released');
     // One universal build: TARGETED_DEVICE_FAMILY "1,2" in the game's project.
-    // Android stays out of this list until it is on Google Play: this list feeds
-    // the structured data beside an in-stock offer, and every tile on the site.
-    expect(product.platforms).toEqual(['ios', 'ipados']);
-    expect(product.comingTo.map((c) => c.platform)).toEqual(['android']);
+    // Android joined on 2026-11-09, when the Google Play listing went live
+    // (read 2026-11-11: free, MetKap Studio, rated Everyone).
+    expect(product.platforms).toEqual(['ios', 'ipados', 'android']);
+    expect(product.comingTo).toEqual([]);
     expect(product.storeLinks).toEqual([
       {
         store: 'app-store',
         url: 'https://apps.apple.com/us/app/waypost-words/id6817343620',
+        status: 'available',
+      },
+      {
+        store: 'google-play',
+        url: 'https://play.google.com/store/apps/details?id=com.metkapstudio.waypostwords',
         status: 'available',
       },
     ]);

@@ -6,6 +6,8 @@ import {
   hasStoreLinks,
   storeLabel,
   downloadLabel,
+  downloadLinks,
+  storeOnLabel,
   statusLabel,
   platformLabel,
   relatedProducts,
@@ -156,6 +158,25 @@ describe('downloadLabel', () => {
     });
     expect(downloadLabel(ios)).toBe('App Store');
     expect(downloadLabel(mac)).toBe('App Store');
+  });
+
+  it('offers every store a visitor can download from now, in the file order', () => {
+    const both = make({
+      storeLinks: [
+        { store: 'app-store', url: 'https://apps.apple.com/app/id1', status: 'available' },
+        { store: 'steam', url: 'https://store.example', status: 'coming-soon' },
+        { store: 'google-play', url: 'https://play.google.com/store/apps/details?id=a', status: 'available' },
+      ],
+    });
+    expect(downloadLinks(both).map((l) => l.store)).toEqual(['app-store', 'google-play']);
+    expect(downloadLinks(make({ storeLinks: [] }))).toEqual([]);
+  });
+
+  it('names each store the way a sentence says it: the App Store, but Google Play', () => {
+    expect(storeOnLabel('app-store')).toBe('the App Store');
+    expect(storeOnLabel('mac-app-store')).toBe('the App Store');
+    expect(storeOnLabel('google-play')).toBe('Google Play');
+    expect(storeOnLabel('steam')).toBe('Steam');
   });
 
   it('is undefined when nothing can be downloaded yet', () => {

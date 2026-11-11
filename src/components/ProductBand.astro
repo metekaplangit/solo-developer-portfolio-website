@@ -14,7 +14,7 @@ import { Image } from 'astro:assets';
 import type { Product } from '../content/schema';
 import DownloadButton from './DownloadButton.astro';
 import ProductAvatar from './ProductAvatar.astro';
-import { statusLabel, productHue, productSummary, downloadLabel } from '../lib/products';
+import { statusLabel, productHue, productSummary, downloadLinks, storeLabel } from '../lib/products';
 import { tie } from '../lib/typography';
 import { canonicalPrivacyUrl } from '../lib/privacy';
 import { withBase } from '../lib/url';
@@ -116,7 +116,9 @@ const facts = [product.requirements]
       </div>
       <p class="band-summary">{productSummary(product)}</p>
       <div class="band-actions">
-        <DownloadButton product={product} tone="hue" label={downloadLabel(product)} />
+        {downloadLinks(product).map((link) => (
+          <DownloadButton product={product} tone="hue" link={link} label={storeLabel(link.store)} />
+        ))}
         <a class="btn btn-lg btn-secondary" href={withBase(`/apps/${product.slug}/`)}>
           View {product.name}
         </a>

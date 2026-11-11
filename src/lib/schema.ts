@@ -60,18 +60,21 @@ export function websiteSchema() {
  */
 export function softwareApplicationSchema(product: Product, description?: string) {
   const isGame = product.type === 'game';
-  const store = product.storeLinks.find((l) => l.status === 'available');
+  // One offer per store a visitor can use now. A single store keeps the single
+  // object it always emitted; two or more become a list (schema.org allows
+  // either), so a product on Google Play and the App Store names both.
+  const list = product.storeLinks
+    .filter((l) => l.status === 'available')
+    .map((l) => ({
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: l.url,
+    }));
   const offers =
-    product.status === 'released' && product.price != null && store
-      ? {
-          offers: {
-            '@type': 'Offer',
-            price: product.price,
-            priceCurrency: 'USD',
-            availability: 'https://schema.org/InStock',
-            url: store.url,
-          },
-        }
+    product.status === 'released' && product.price != null && list.length > 0
+      ? { offers: list.length === 1 ? list[0] : list }
       : {};
   return {
     '@context': 'https://schema.org',

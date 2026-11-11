@@ -8,7 +8,7 @@ import {
   hasStoreLinks,
   productHue,
   storeLabel,
-  downloadLabel,
+  downloadLinks,
   statusLabel,
   platformLabel,
   relatedProducts,
@@ -123,7 +123,9 @@ const schema = [
     <p class="summary measure-mid" data-land="2">{productSummary(product)}</p>
 
     <div class="action-row" data-land="3">
-      <DownloadButton product={product} label={downloadLabel(product)} />
+      {downloadLinks(product).map((link) => (
+        <DownloadButton product={product} link={link} label={storeLabel(link.store)} />
+      ))}
       <a class="btn btn-secondary" href={withBase(canonicalPrivacyUrl(product))}>Privacy policy</a>
     </div>
 
@@ -238,9 +240,9 @@ const schema = [
         {
           hasStoreLinks(product) ? (
             <div class="get-actions">
-              {stores.map((link, i) =>
-                i === 0 && link.status === 'available' ? (
-                  <DownloadButton product={product} label={downloadLabel(product)} />
+              {stores.map((link) =>
+                link.status === 'available' ? (
+                  <DownloadButton product={product} link={link} label={storeLabel(link.store)} />
                 ) : (
                   <a class="btn btn-secondary" href={link.url} rel="noopener" target="_blank">
                     {storeLabel(link.store)}

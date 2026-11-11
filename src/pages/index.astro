@@ -10,9 +10,9 @@ import { site } from '../lib/site';
 import {
   newestRelease,
   sortProducts,
-  visibleStoreLinks,
   productHue,
-  downloadLabel,
+  downloadLinks,
+  storeLabel,
 } from '../lib/products';
 import { organizationSchema, websiteSchema } from '../lib/schema';
 import { tie } from '../lib/typography';
@@ -46,8 +46,7 @@ const portraitShots = lead != null && lead.height > lead.width;
 const perRow = portraitShots ? 4 : 2;
 const mosaic = shots.slice(1, 1 + perRow * Math.floor((shots.length - 1) / perRow));
 
-const heroHasDownload =
-  spotlight != null && visibleStoreLinks(spotlight).some((l) => l.status === 'available');
+const heroHasDownload = spotlight != null && downloadLinks(spotlight).length > 0;
 
 /* "Featured" only means something when there is a set to be featured FROM.
    With a single product the catalog scaffolding advertises the emptiness
@@ -88,7 +87,9 @@ const hue = spotlight ? productHue(spotlight) : undefined;
       <div class="opening-side">
       <p class="lede" data-land="3">{site.lede}</p>
       <div class="actions" data-land="4">
-        {heroHasDownload && <DownloadButton product={spotlight} label={downloadLabel(spotlight)} />}
+        {heroHasDownload && downloadLinks(spotlight).map((link) => (
+          <DownloadButton product={spotlight} link={link} label={storeLabel(link.store)} />
+        ))}
         <a class={`btn btn-lg ${heroHasDownload ? 'btn-secondary' : 'btn-primary'}`} href="#product">
           Newest {spotlight?.type === 'game' ? 'Game' : 'App'}
         </a>
